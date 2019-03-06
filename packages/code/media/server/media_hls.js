@@ -3,16 +3,17 @@
  @component MediaHls
  */
 
-screens.media.hls = function MediaHLS(me) {
+screens.media.hls = function MediaHLS(me, packages) {
+    const { core } = packages;
     me.download = async function (path, destination) {
-        var name = me.core.path.fullName(path);
-        var targetPlaylist = me.core.path.goto(destination, name);
+        var name = core.path.fullName(path);
+        var targetPlaylist = core.path.goto(destination, name);
         var sourceFile = path;
         var targetFile = null;
         var errors = [];
-        await me.core.file.download(sourceFile, targetPlaylist);
+        await core.file.download(sourceFile, targetPlaylist);
         me.log("opening " + targetPlaylist);
-        var data = await me.core.file.readFile(targetPlaylist);
+        var data = await core.file.readFile(targetPlaylist);
         if (!data) {
             return;
         }
@@ -29,13 +30,13 @@ screens.media.hls = function MediaHLS(me) {
                     }
                 }
                 if (line.endsWith(".m3u8")) {
-                    sourceFile = me.core.path.goto(path, "../" + line);
-                    targetFile = me.core.path.goto(destination, line + "/..");
+                    sourceFile = core.path.goto(path, "../" + line);
+                    targetFile = core.path.goto(destination, line + "/..");
                     await me.download(sourceFile, targetFile);
                 }
                 if (line.endsWith(".ts")) {
-                    sourceFile = me.core.path.goto(path, "../" + line);
-                    targetFile = me.core.path.goto(destination, line);
+                    sourceFile = core.path.goto(path, "../" + line);
+                    targetFile = core.path.goto(destination, line);
                     await me.download(sourceFile, targetFile);
                 }
             }

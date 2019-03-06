@@ -3,7 +3,8 @@
  @component CoreString
  */
 
-screens.core.string = function CoreString(me) {
+screens.core.string = function CoreString(me, packages) {
+    const { core } = packages;
     me.title = function (string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
@@ -50,7 +51,7 @@ screens.core.string = function CoreString(me) {
     };
     me.nextWord = function (string) {
         var nextWord = "";
-        me.core.string.parseWords(function (words) {
+        core.string.parseWords(function (words) {
             if (words.length > 0) {
                 nextWord = words[0];
             }

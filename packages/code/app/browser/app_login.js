@@ -3,7 +3,7 @@
  @component AppLogin
  */
 
-screens.app.login = function AppLogin(me) {
+screens.app.login = function AppLogin(me, packages) {
     me.init = function () {
         me.core.listener.register(me.signin, me.core.login.id);
     };

@@ -3,15 +3,16 @@
  @component LibZoom
  */
 
-screens.lib.zoom = function LibZoom(me) {
+screens.lib.zoom = function LibZoom(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         me.request = require("request");
         me.shuffleSeed = require("shuffle-seed");
         me.chance = require("chance").Chance();
-        var keys = await me.core.private.keys("zoom");
+        var keys = await core.private.keys("zoom");
         me.meetingId = keys.meetingId;
         me._meetingInfo = null;
-        me.core.property.link("core.http.receive", "lib.zoom.receive", true);
+        core.property.link("core.http.receive", "lib.zoom.receive", true);
     };
     me.token = async function () {
         var time = (new Date()).getTime();
@@ -19,7 +20,7 @@ screens.lib.zoom = function LibZoom(me) {
             return me.currentToken;
         }
         me.expire = ((new Date()).getTime() + 5000);
-        var keys = await me.core.private.keys("zoom");
+        var keys = await core.private.keys("zoom");
         var jwt = require("jsonwebtoken");
         var payload = {
             iss: keys.key,
@@ -126,8 +127,8 @@ screens.lib.zoom = function LibZoom(me) {
     };
     me.shuffle = function (names, seed) {
         var result = [];
-        let letters = me.core.string.charArray("a", "z");
-        letters.push(...me.core.string.charArray("א", "ת"));
+        let letters = core.string.charArray("a", "z");
+        letters.push(...core.string.charArray("א", "ת"));
         letters = me.shuffleSeed.shuffle(letters, seed);
         let mapping = {};
         for (let name of names) {

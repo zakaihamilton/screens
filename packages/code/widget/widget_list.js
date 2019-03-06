@@ -3,7 +3,8 @@
  @component WidgetList
  */
 
-screens.widget.list = function WidgetList(me) {
+screens.widget.list = function WidgetList(me, packages) {
+    const { core } = packages;
     me.element = {
         dependencies: {
             properties: ["ui.element.count"]
@@ -28,17 +29,17 @@ screens.widget.list = function WidgetList(me) {
         set: function (object, value) {
             if (value) {
                 object.listElements = value;
-                me.core.property.set(object.var.container, "empty");
-                me.core.property.set(object.var.container, "ui.basic.elements", value);
-                me.core.property.notify(object.var.container, "update");
+                core.property.set(object.var.container, "empty");
+                core.property.set(object.var.container, "ui.basic.elements", value);
+                core.property.notify(object.var.container, "update");
             }
         }
     };
     me.refresh = {
         set: function (object) {
-            me.core.property.set(object.var.container, "empty");
-            me.core.property.set(object, "elements", object.listElements);
-            me.core.property.notify(object.var.container, "update");
+            core.property.set(object.var.container, "empty");
+            core.property.set(object, "elements", object.listElements);
+            core.property.notify(object.var.container, "update");
         }
     };
     me.selection = {
@@ -48,8 +49,8 @@ screens.widget.list = function WidgetList(me) {
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    var state = me.core.property.get(child, "state");
-                    var label = me.core.property.get(child, "ui.basic.text");
+                    var state = core.property.get(child, "state");
+                    var label = core.property.get(child, "ui.basic.text");
                     if (state) {
                         selection.push(label);
                         break;
@@ -63,15 +64,15 @@ screens.widget.list = function WidgetList(me) {
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    var label = me.core.property.get(child, "ui.basic.text");
-                    me.core.property.set(child, "state", value === label);
+                    var label = core.property.get(child, "ui.basic.text");
+                    core.property.set(child, "state", value === label);
                 }
             }
         }
     };
 };
 
-screens.widget.list.dropdown = function WidgetDropDownList(me) {
+screens.widget.list.dropdown = function WidgetDropDownList(me, packages) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text"]
@@ -113,9 +114,9 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
     me.back = {
         set: function (object, value) {
             if (value) {
-                var label = me.core.property.get(value, "ui.basic.text");
-                me.core.property.set(object, "ui.basic.text", label);
-                me.core.property.set(object, "onChange", label);
+                var label = core.property.get(value, "ui.basic.text");
+                core.property.set(object, "ui.basic.text", label);
+                core.property.set(object, "onChange", label);
             }
         }
     };
@@ -131,30 +132,30 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.basic.parentWidget": object.parentNode,
                 "ui.basic.elements": object.parentNode.listElements,
                 "ui.group.data": object.parentNode.listData,
-                "widget.list.popup.selection": me.core.property.get(object.parentNode, "text")
+                "widget.list.popup.selection": core.property.get(object.parentNode, "text")
             }, "workspace", "self");
         }
     };
     me.readOnly = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.readOnly");
+            return core.property.get(object.var.selection, "ui.basic.readOnly");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.readOnly", value);
-            me.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
+            core.property.set(object.var.selection, "ui.basic.readOnly", value);
+            core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.text");
+            return core.property.get(object.var.selection, "ui.basic.text");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.text", value);
+            core.property.set(object.var.selection, "ui.basic.text", value);
         }
     };
     me.monitorChange = {
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.monitor.change", value);
+            core.property.set(object.var.selection, "ui.monitor.change", value);
         }
     };
     me.elements = {
@@ -175,7 +176,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
     };
 };
 
-screens.widget.list.popup = function WidgetListPopup(me) {
+screens.widget.list.popup = function WidgetListPopup(me, packages) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -196,13 +197,13 @@ screens.widget.list.popup = function WidgetListPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.core.property.set(object.parentWidget, "back", value);
-            me.core.property.set(object, "ui.node.parent");
+            core.property.set(object.parentWidget, "back", value);
+            core.property.set(object, "ui.node.parent");
         }
     };
     me.select = {
         set: function (object, value) {
-            me.core.property.set(object, "back", value);
+            core.property.set(object, "back", value);
         }
     };
     me.selection = {
@@ -211,9 +212,9 @@ screens.widget.list.popup = function WidgetListPopup(me) {
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    var label = me.core.property.get(child, "ui.basic.text");
+                    var label = core.property.get(child, "ui.basic.text");
                     if (label === value) {
-                        me.core.property.set(child, "ui.class.add", "selected");
+                        core.property.set(child, "ui.class.add", "selected");
                         break;
                     }
                 }
@@ -223,14 +224,14 @@ screens.widget.list.popup = function WidgetListPopup(me) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.core.property.set(object.var.container, "ui.basic.elements", value);
-                me.core.property.set(object.var.container, "update");
+                core.property.set(object.var.container, "ui.basic.elements", value);
+                core.property.set(object.var.container, "update");
             }
         }
     };
 };
 
-screens.widget.list.item = function WidgetListItem(me) {
+screens.widget.list.item = function WidgetListItem(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",
@@ -245,7 +246,7 @@ screens.widget.list.item = function WidgetListItem(me) {
     };
     me.value = function (object, value) {
         if (typeof value === "string") {
-            value = me.core.property.get(object.parentNode.target, value);
+            value = core.property.get(object.parentNode.target, value);
         }
         return value;
     };
@@ -259,27 +260,27 @@ screens.widget.list.item = function WidgetListItem(me) {
     };
     me.state = {
         get: function (object) {
-            return me.core.property.get(object, "ui.class.contains", "selected");
+            return core.property.get(object, "ui.class.contains", "selected");
         },
         set: function (object, value) {
             value = me.value(object, value);
             if (value) {
-                me.core.property.set(object, "ui.class.add", "selected");
+                core.property.set(object, "ui.class.add", "selected");
             } else {
-                me.core.property.set(object, "ui.class.remove", "selected");
+                core.property.set(object, "ui.class.remove", "selected");
             }
         }
     };
     me.dblclick = {
         set: function (object) {
-            me.core.property.set(object, "click");
+            core.property.set(object, "click");
             /*TODO: call default button on window */
         }
     };
     me.click = {
         set: function (object) {
             if (object.group) {
-                me.core.property.set(object, "ui.class.add", "selected");
+                core.property.set(object, "ui.class.add", "selected");
                 var childList = me.ui.node.childList(object.parentNode);
                 if (childList) {
                     for (var childIndex = 0; childIndex < childList.length; childIndex++) {
@@ -287,14 +288,14 @@ screens.widget.list.item = function WidgetListItem(me) {
                         if (child.group !== object.group || object === child) {
                             continue;
                         }
-                        me.core.property.set(child, "ui.class.remove", "selected");
+                        core.property.set(child, "ui.class.remove", "selected");
                     }
                 }
                 var popup = me.ui.node.container(object, "widget.list.popup");
-                me.core.property.set(popup, "select", object);
+                core.property.set(popup, "select", object);
             }
             else {
-                me.core.property.set(object, "ui.class.toggle", "selected");
+                core.property.set(object, "ui.class.toggle", "selected");
             }
         }
     };

@@ -3,7 +3,8 @@
  @component CoreConsole
  */
 
-screens.core.console = function CoreConsole(me) {
+screens.core.console = function CoreConsole(me, packages) {
+    const { core } = packages;
     me.messages = [];
     me.errors = [];
     me.enabled = true;
@@ -15,7 +16,7 @@ screens.core.console = function CoreConsole(me) {
     me.init = function () {
         screens.warn = me.log_warn;
         if (me.platform === "browser" || me.platform === "service_worker") {
-            me.enabled = !me.core.util.isSecure();
+            me.enabled = !core.util.isSecure();
         }
         else {
             me.enabled = true;

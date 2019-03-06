@@ -3,7 +3,7 @@
  @component AppLinks
  */
 
-screens.app.links = function AppLinks(me) {
+screens.app.links = function AppLinks(me, packages) {
     me.maxLinkCount = 20;
     me.ready = async function () {
         await me.ui.content.attach(me);

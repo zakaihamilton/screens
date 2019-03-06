@@ -3,14 +3,15 @@
  @component LibDictionary
  */
 
-screens.lib.dictionary = function LibDictionary(me) {
+screens.lib.dictionary = function LibDictionary(me, packages) {
+    const { db } = packages;
     me.definition = async function (name) {
-        var cache = await me.db.cache.dictionary.find({ name });
+        var cache = await db.cache.dictionary.find({ name });
         if (cache) {
             return cache.definition;
         }
         var definition = await me.send(name);
-        await me.db.cache.dictionary.use({ name }, { name, definition });
+        await db.cache.dictionary.use({ name }, { name, definition });
         return definition;
     };
     me.send = async function (text) {

@@ -3,7 +3,7 @@
  @component AppProfile
  */
 
-screens.app.profile = function AppProfile(me) {
+screens.app.profile = function AppProfile(me, packages) {
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);

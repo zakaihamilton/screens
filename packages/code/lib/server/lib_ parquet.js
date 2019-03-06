@@ -3,7 +3,7 @@
  @component LibParquet
  */
 
-screens.lib.parquet = function LibParquet(me) {
+screens.lib.parquet = function LibParquet(me, packages) {
     me.init = function () {
         me.parquet = require("parquet");
     };

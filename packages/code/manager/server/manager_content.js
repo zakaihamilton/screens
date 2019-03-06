@@ -3,15 +3,16 @@
  @component ManagerContent
  */
 
-screens.manager.content = function ManagerContent(me) {
+screens.manager.content = function ManagerContent(me, packages) {
+    const { db } = packages;
     me.cache = {};
     me.lists = async function (userId) {
         if (!userId) {
             userId = this.userId;
         }
         var project = { title: 1, package: 1, component: 1 };
-        var publicList = await me.db.shared.content.list({ private: null }, { project });
-        var privateList = await me.db.shared.content.list({ private: userId }, { project });
+        var publicList = await db.shared.content.list({ private: null }, { project });
+        var privateList = await db.shared.content.list({ private: userId }, { project });
         return { publicList, privateList };
     };
     me.reset = function () {
@@ -26,7 +27,7 @@ screens.manager.content = function ManagerContent(me) {
         if (private) {
             query.private = userId;
         }
-        var result = await me.db.shared.content.list(query);
+        var result = await db.shared.content.list(query);
         return result;
     };
     me.associated = async function (title, userId) {
@@ -63,7 +64,7 @@ screens.manager.content = function ManagerContent(me) {
         if (private) {
             query.private = userId;
         }
-        var result = await me.db.shared.content.find(query);
+        var result = await db.shared.content.find(query);
         return result ? true : false;
     };
     me.load = async function (componentId, title, private, userId) {
@@ -75,7 +76,7 @@ screens.manager.content = function ManagerContent(me) {
         if (private) {
             query.private = userId;
         }
-        var result = await me.db.shared.content.find(query);
+        var result = await db.shared.content.find(query);
         result = Object.assign({}, result);
         return result;
     };
@@ -96,7 +97,7 @@ screens.manager.content = function ManagerContent(me) {
         var info = await me.load(componentId, title, private, userId);
         var result = false;
         if (!info || !info.locked || info.owner === userId || me.user.access.admin(userName)) {
-            result = await me.db.shared.content.use(query, data);
+            result = await db.shared.content.use(query, data);
         }
         return result;
     };
@@ -116,7 +117,7 @@ screens.manager.content = function ManagerContent(me) {
         var result = false;
         if (info) {
             if (!info.locked || info.owner === userId || me.user.access.admin(userName)) {
-                result = await me.db.shared.content.remove(query);
+                result = await db.shared.content.remove(query);
             }
         }
         return result;

@@ -3,7 +3,7 @@
     @component CmdExec
 */
 
-screens.cmd.exec = function CmdExec(me) {
+screens.cmd.exec = function CmdExec(me, packages) {
     me.cmd = async function (terminal, args) {
         if (args.length <= 1) {
             me.core.cmd.exit(terminal);

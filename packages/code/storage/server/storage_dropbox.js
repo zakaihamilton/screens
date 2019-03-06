@@ -3,7 +3,8 @@
  @component StorageDropBox
  */
 
-screens.storage.dropbox = function StorageDropBox(me) {
+screens.storage.dropbox = function StorageDropBox(me, packages) {
+    const { core } = packages;
     me.init = function () {
         require("es6-promise").polyfill();
         me.dropbox = require("dropbox").Dropbox;
@@ -15,7 +16,7 @@ screens.storage.dropbox = function StorageDropBox(me) {
             return me.handle;
         }
         var fetch = require("isomorphic-fetch");
-        var keys = await me.core.private.keys("dropbox");
+        var keys = await core.private.keys("dropbox");
         me.handle = new me.dropbox({ accessToken: keys["access-token"], fetch: fetch });
         return me.handle;
     };
@@ -103,16 +104,16 @@ screens.storage.dropbox = function StorageDropBox(me) {
         if (!result.fileBinary) {
             throw "No binary content for file: " + path;
         }
-        await me.core.file.writeFile(to, result.fileBinary, "binary");
+        await core.file.writeFile(to, result.fileBinary, "binary");
     };
     me.uploadFile = async function (from, to, progressCallback) {
         var service = await me.getService();
-        var fileSize = await me.core.file.size(from);
-        var fileSession = me.core.file.open(from);
+        var fileSize = await core.file.size(from);
+        var fileSession = core.file.open(from);
         var cursor = { session_id: null, offset: 0 };
         return new Promise((resolve, reject) => {
             const chunkSize = 8 * 1000 * 1000;
-            me.core.file.read(fileSession, async data => {
+            core.file.read(fileSession, async data => {
                 if (!data) {
                     return;
                 }
@@ -128,11 +129,11 @@ screens.storage.dropbox = function StorageDropBox(me) {
                                 commit: commit,
                                 contents: data
                             });
-                            me.log("finished uploading in parts: " + to + " size: " + me.core.string.formatBytes(fileSize) + " result: " + result);
+                            me.log("finished uploading in parts: " + to + " size: " + core.string.formatBytes(fileSize) + " result: " + result);
                             resolve();
                         }
                         catch (err) {
-                            me.log("failed to upload in parts: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
+                            me.log("failed to upload in parts: " + to + " size: " + core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                             reject(err);
                         }
                     }
@@ -142,18 +143,18 @@ screens.storage.dropbox = function StorageDropBox(me) {
                                 path: to,
                                 contents: data
                             });
-                            me.log("finished uploading: " + to + " size: " + me.core.string.formatBytes(fileSize) + " result: " + JSON.stringify(result));
+                            me.log("finished uploading: " + to + " size: " + core.string.formatBytes(fileSize) + " result: " + JSON.stringify(result));
                             resolve();
                         }
                         catch (err) {
-                            me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
+                            me.log("failed to upload: " + to + " size: " + core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                             reject(err);
                         }
                     }
                     return;
                 }
                 else if (cursor.offset) {
-                    me.core.file.pause(fileSession);
+                    core.file.pause(fileSession);
                     try {
                         await service.filesUploadSessionAppendV2({
                             cursor: cursor,
@@ -162,16 +163,16 @@ screens.storage.dropbox = function StorageDropBox(me) {
                         });
                     }
                     catch (err) {
-                        me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
+                        me.log("failed to upload: " + to + " size: " + core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                         reject(err);
                         return;
                     }
                     cursor.offset += data.length;
-                    me.core.file.resume(fileSession);
-                    me.log("uploading " + to + ":" + me.core.string.formatBytes(cursor.offset) + " / " + me.core.string.formatBytes(fileSize));
+                    core.file.resume(fileSession);
+                    me.log("uploading " + to + ":" + core.string.formatBytes(cursor.offset) + " / " + core.string.formatBytes(fileSize));
                 }
                 else {
-                    me.core.file.pause(fileSession);
+                    core.file.pause(fileSession);
                     try {
                         var response = await service.filesUploadSessionStart({
                             close: false,
@@ -179,14 +180,14 @@ screens.storage.dropbox = function StorageDropBox(me) {
                         });
                     }
                     catch (err) {
-                        me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
+                        me.log("failed to upload: " + to + " size: " + core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                         reject(err);
                         return;
                     }
                     cursor.session_id = response.session_id;
                     cursor.offset += data.length;
-                    me.core.file.resume(fileSession);
-                    me.log("uploading " + to + ":" + me.core.string.formatBytes(cursor.offset) + " / " + me.core.string.formatBytes(fileSize));
+                    core.file.resume(fileSession);
+                    me.log("uploading " + to + ":" + core.string.formatBytes(cursor.offset) + " / " + core.string.formatBytes(fileSize));
                 }
             }, chunkSize);
         });
@@ -194,13 +195,13 @@ screens.storage.dropbox = function StorageDropBox(me) {
     return "server";
 };
 
-screens.storage.dropbox.protocol = function StorageDropBoxProtocol(me) {
+screens.storage.dropbox.protocol = function StorageDropBoxProtocol(me, packages) {
     me.get = async function (path, format = "utf8") {
-        var result = await me.core.file.protocol.get(path, format);
+        var result = await core.file.protocol.get(path, format);
         if (result) {
             return result;
         }
-        var pathInfo = me.core.object.pathInfo(path);
+        var pathInfo = core.object.pathInfo(path);
         var metadata = await me.upper.metadata("/" + pathInfo.direct);
         if (metadata[".tag"] === "folder") {
             var listing = await me.upper.getChildren("/" + pathInfo.direct);
@@ -223,11 +224,11 @@ screens.storage.dropbox.protocol = function StorageDropBoxProtocol(me) {
         }
     };
     me.set = async function (path, data) {
-        var result = await me.core.file.protocol.set(path, data);
+        var result = await core.file.protocol.set(path, data);
         if (result) {
             return result;
         }
-        var pathInfo = me.core.object.pathInfo(path);
+        var pathInfo = core.object.pathInfo(path);
         var metadata = await me.upper.metadata("/" + pathInfo.direct);
         if (metadata[".tag"] !== "folder") {
             result = await me.upper.uploadData("/" + pathInfo.direct, data);

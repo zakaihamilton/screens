@@ -3,10 +3,11 @@
  @component UIScreenshot
  */
 
-screens.ui.screenshot = function UIScreenshot(me) {
+screens.ui.screenshot = function UIScreenshot(me, packages) {
+    const { core } = packages;
     me.capture = async function (object) {
         var window = me.widget.window.get(object);
-        var label = me.core.property.get(window, "widget.window.label");
+        var label = core.property.get(window, "widget.window.label");
         var content = me.widget.window.content(window);
         var altContent = me.ui.node.findByName(content, "content");
         var dataUrl = await domtoimage.toPng(altContent ? altContent : content);

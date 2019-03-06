@@ -3,7 +3,7 @@
     @component CmdPwd
 */
 
-screens.cmd.pwd = function CmdPwd(me) {
+screens.cmd.pwd = function CmdPwd(me, packages) {
     me.cmd = function (terminal, args) {
         var current_dir = terminal.current_dir;
         if (!current_dir) {

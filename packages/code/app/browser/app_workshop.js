@@ -3,7 +3,7 @@
  @component AppWorkshop
  */
 
-screens.app.workshop = function AppWorkshop(me) {
+screens.app.workshop = function AppWorkshop(me, packages) {
     me.ready = async function () {
         await me.ui.shared.attach(me);
     };

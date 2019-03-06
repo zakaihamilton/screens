@@ -3,7 +3,7 @@
  @component AppLauncher
  */
 
-screens.app.launcher = function AppLauncher(me) {
+screens.app.launcher = function AppLauncher(me, packages) {
     me.init = function () {
         me.searchCounter = 0;
     };

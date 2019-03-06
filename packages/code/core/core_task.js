@@ -3,14 +3,15 @@
     @component CoreTask
 */
 
-screens.core.task = function CoreTask(me) {
+screens.core.task = function CoreTask(me, packages) {
+    const { core } = packages;
     me.tasks = [];
     me.push = function (method, delay) {
         var task = {
             method,
             delay
         };
-        me.log("Scheduled task: " + method + " to run in " + me.core.string.formatDuration(delay / 1000, true));
+        me.log("Scheduled task: " + method + " to run in " + core.string.formatDuration(delay / 1000, true));
         task.handle = setInterval(async () => {
             if (task.running) {
                 me.log("Task already running: " + method);
@@ -19,7 +20,7 @@ screens.core.task = function CoreTask(me) {
             task.running = true;
             me.log("Running task: " + method);
             try {
-                await me.core.message.send(task.method, task);
+                await core.message.send(task.method, task);
             }
             finally {
                 task.running = false;

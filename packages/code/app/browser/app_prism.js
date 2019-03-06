@@ -3,7 +3,7 @@
  @component AppPrism
  */
 
-screens.app.prism = function AppPrism(me) {
+screens.app.prism = function AppPrism(me, packages) {
     me.init = async function () {
         await me.ui.transform.attach(me);
     };

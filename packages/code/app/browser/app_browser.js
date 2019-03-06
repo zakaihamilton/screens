@@ -3,7 +3,7 @@
  @component AppBrowser
  */
 
-screens.app.browser = function AppBrowser(me) {
+screens.app.browser = function AppBrowser(me, packages) {
     me.launch = function () {
         return me.ui.element.create(me.json, "workspace", "self");
     };

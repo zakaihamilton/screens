@@ -3,7 +3,8 @@
  @component WidgetSpinner
  */
 
-screens.widget.spinner = function WidgetSpinner(me) {
+screens.widget.spinner = function WidgetSpinner(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.class.class": "loader",
@@ -21,10 +22,10 @@ screens.widget.spinner = function WidgetSpinner(me) {
         }
     };
     me.percent = function (object, value) {
-        me.core.property.set(object.var.text, "ui.basic.text", object.spinner_text + " " + value + "%");
+        core.property.set(object.var.text, "ui.basic.text", object.spinner_text + " " + value + "%");
     };
     me.text = function (object, value) {
         object.spinner_text = value;
-        me.core.property.set(object.var.text, "ui.basic.text", value);
+        core.property.set(object.var.text, "ui.basic.text", value);
     };
 };

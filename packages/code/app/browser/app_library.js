@@ -3,7 +3,7 @@
  @component AppLibrary
  */
 
-screens.app.library = function AppLibrary(me) {
+screens.app.library = function AppLibrary(me, packages) {
     me.launch = function (args) {
         var search = args[0];
         var params = { search };

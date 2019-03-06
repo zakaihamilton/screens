@@ -3,7 +3,8 @@
  @component UITransform
  */
 
-screens.ui.transform = function UITransform(me) {
+screens.ui.transform = function UITransform(me, packages) {
+    const { core } = packages;
     me.transform = {
         menu: function () {
             var prefix = me.id + ".";
@@ -202,7 +203,7 @@ screens.ui.transform = function UITransform(me) {
                 array = [text];
             }
             var options = Object.assign({}, window.options);
-            var result = await me.core.util.map(array, async (text) => {
+            var result = await core.util.map(array, async (text) => {
                 var info = await me.kab.text.parse(language, text, options);
                 if (!window.termData) {
                     window.termData = { terms: {} };

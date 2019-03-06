@@ -3,7 +3,8 @@
  @component WidgetTransform
  */
 
-screens.widget.transform = function WidgetTransform(me) {
+screens.widget.transform = function WidgetTransform(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.element = {
             properties: me.json
@@ -57,7 +58,7 @@ screens.widget.transform = function WidgetTransform(me) {
             pages: me.reflow,
             snap: (object) => {
                 var widget = me.findWidget(object);
-                me.core.property.set(widget.var.layout, {
+                core.property.set(widget.var.layout, {
                     "ui.scroll.snap": widget.options.snap,
                     "ui.scroll.scrolled": null
                 });
@@ -82,9 +83,9 @@ screens.widget.transform = function WidgetTransform(me) {
             language: me.transform,
             fontSize: (object, value) => {
                 var widget = me.findWidget(object);
-                me.core.property.set([widget.var.layout], "ui.style.fontSize", value);
+                core.property.set([widget.var.layout], "ui.style.fontSize", value);
                 widget.forceReflow = true;
-                me.core.property.notify(widget, "update");
+                core.property.notify(widget, "update");
             },
             voiceEnglish: me.player.changeVoice,
             voiceHebrew: me.player.changeVoice,
@@ -124,15 +125,15 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
         widget.inTransform = true;
-        me.core.property.set(widget.var.spinner, "text", "Transform");
-        me.core.property.set(widget, "ui.work.state", true);
+        core.property.set(widget.var.spinner, "text", "Transform");
+        core.property.set(widget, "ui.work.state", true);
         var language = widget.options.language.toLowerCase();
         if (language === "auto") {
             if (text && text.startsWith("<")) {
                 language = "none";
             }
             else {
-                language = me.core.string.language(text);
+                language = core.string.language(text);
             }
             me.log("detected language: " + language);
         }
@@ -143,7 +144,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var info = { text, terms: {}, data: null };
         if (language !== "none") {
             info = await me.kab.text.parse(language, text, options, (percent) => {
-                me.core.property.set(widget.var.spinner, "percent", percent);
+                core.property.set(widget.var.spinner, "percent", percent);
             });
         }
         if (!info) {
@@ -154,30 +155,30 @@ screens.widget.transform = function WidgetTransform(me) {
         var data = info.data;
         var diagrams = info.diagrams;
         if (widget.language) {
-            me.core.property.set(widget.var.layout, "ui.class.remove", widget.language);
+            core.property.set(widget.var.layout, "ui.class.remove", widget.language);
         }
-        me.core.property.set(widget.var.layout, "ui.class.add", language);
+        core.property.set(widget.var.layout, "ui.class.add", language);
         widget.language = language;
-        me.core.property.set(widget.var.output, "ui.basic.html", text);
+        core.property.set(widget.var.output, "ui.basic.html", text);
         if (text) {
             widget.termData = { terms, data, diagrams };
         }
         else {
             widget.termData = null;
         }
-        me.core.property.set(widget.var.output, "ui.style.display", "none");
-        me.core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
+        core.property.set(widget.var.output, "ui.style.display", "none");
+        core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
         me.widget.transform.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
-        await me.core.property.set(widget, "update");
-        me.core.property.set(widget, "ui.work.state", false);
+        await core.property.set(widget, "update");
+        core.property.set(widget, "ui.work.state", false);
     };
     me.reflow = function (object) {
         var widget = me.findWidget(object);
         widget.forceReflow = true;
-        me.core.property.notify(widget, "update");
+        core.property.notify(widget, "update");
     };
     me.work = function (object, value) {
         var widget = me.findWidget(object);
@@ -185,14 +186,14 @@ screens.widget.transform = function WidgetTransform(me) {
             clearTimeout(widget.workTimeout);
             widget.workTimeout = null;
         }
-        var text = me.core.property.get(widget, "text");
+        var text = core.property.get(widget, "text");
         if (value && text) {
-            me.core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", 0);
-            me.core.property.set(widget.var.spinner, "ui.style.visibility", "visible");
+            core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", 0);
+            core.property.set(widget.var.spinner, "ui.style.visibility", "visible");
         } else {
             widget.workTimeout = setTimeout(function () {
-                me.core.property.set(widget.var.spinner, "ui.style.visibility", "hidden");
-                me.core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", "");
+                core.property.set(widget.var.spinner, "ui.style.visibility", "hidden");
+                core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", "");
                 me.updateScrolling(widget);
             }, 250);
         }
@@ -202,8 +203,8 @@ screens.widget.transform = function WidgetTransform(me) {
         var reflow = false;
         var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
         var window = me.widget.window.get(object);
-        var fullscreen = me.core.property.get(window, "fullscreen");
-        if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
+        var fullscreen = core.property.get(window, "fullscreen");
+        if (core.property.get(window, "visible") && !core.property.get(window, "conceal")) {
             if (widget.pageSize && (pageSize.height !== widget.pageSize.height || pageSize.width !== widget.pageSize.width)) {
                 reflow = true;
             }
@@ -225,7 +226,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (widget.options.pipVideo) {
             modifiers.push("pipVideo");
         }
-        if (me.core.property.get(widget, "fullscreen")) {
+        if (core.property.get(widget, "fullscreen")) {
             modifiers.push("fullscreen");
         }
         modifiers = modifiers.map((modifier) => {
@@ -251,11 +252,11 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = false;
         widget.contentChanged = false;
         widget.pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
-        me.core.property.set(widget.var.spinner, "text", "Layout");
+        core.property.set(widget.var.spinner, "text", "Layout");
         var window = me.widget.window.get(object);
-        var fullscreen = me.core.property.get(window, "fullscreen");
+        var fullscreen = core.property.get(window, "fullscreen");
         widget.fullscreen = fullscreen;
-        me.core.property.set(widget, "ui.work.state", true);
+        core.property.set(widget, "ui.work.state", true);
         widget.var.layout.style.opacity = 0;
         if (widget.options.pages) {
             widget.var.layout.style.margin = "";
@@ -274,14 +275,14 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         me.media.voice.stop();
         await me.widget.transform.layout.reflow(widget.var.output, widget.var.layout, reflowOptions);
-        me.core.property.set(widget, "ui.work.state", false);
-        var name = me.core.property.get(widget, "widget.transform.name");
-        me.core.property.set(widget, "widget.window.name", name);
+        core.property.set(widget, "ui.work.state", false);
+        var name = core.property.get(widget, "widget.transform.name");
+        core.property.set(widget, "widget.window.name", name);
     };
     me.scrolled = {
         set: function (object, value) {
             var widget = me.findWidget(object);
-            if (me.core.property.get(widget, "ui.work.state") || me.core.property.get(widget, "conceal")) {
+            if (core.property.get(widget, "ui.work.state") || core.property.get(widget, "conceal")) {
                 return;
             }
             me.widget.transform.layout.updatePages(widget.var.layout);
@@ -289,15 +290,15 @@ screens.widget.transform = function WidgetTransform(me) {
                 clearTimeout(widget.scrolledTimer);
             }
             widget.scrolledTimer = setTimeout(function () {
-                if (me.core.property.get(widget, "ui.work.state") || me.core.property.get(widget, "conceal")) {
+                if (core.property.get(widget, "ui.work.state") || core.property.get(widget, "conceal")) {
                     return;
                 }
                 if (value && "vertical" in value) {
-                    me.core.property.set(widget, "widget.transform.scrollPos", value.vertical);
+                    core.property.set(widget, "widget.transform.scrollPos", value.vertical);
                 }
             }, 2000);
-            me.core.property.set([widget.var.scrollToTop, widget.var.previousPage], "ui.class.disabled", !widget.var.layout.scrollTop);
-            me.core.property.set([widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
+            core.property.set([widget.var.scrollToTop, widget.var.previousPage], "ui.class.disabled", !widget.var.layout.scrollTop);
+            core.property.set([widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
         }
     };
     me.diagramList = {
@@ -308,7 +309,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 diagrams = [];
             }
             diagrams = diagrams.map(name => {
-                return { title: me.core.string.title(name), name };
+                return { title: core.string.title(name), name };
             });
             if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", name: "table_of_phases", params: me.tableOfPhasesParams(widget) });
@@ -317,7 +318,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 var result = {
                     text: item.title,
                     select: function () {
-                        me.core.app.launch("diagram", item.name, widget.options, null, item.params);
+                        core.app.launch("diagram", item.name, widget.options, null, item.params);
                     },
                     options: {
                         enabled: widget.transformText !== null
@@ -372,11 +373,11 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.updateWidgets = function (object, hasText, update = true) {
         var widget = me.findWidget(object);
-        me.core.property.set([widget.var.output, widget.var.layout], {
+        core.property.set([widget.var.output, widget.var.layout], {
             "ui.style.fontSize": widget.options.fontSize
         });
         if (update) {
-            me.core.property.notify(widget, "update");
+            core.property.notify(widget, "update");
         }
     };
     me.classes = {
@@ -474,7 +475,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);
         var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
-        me.core.property.set(widget.var.layout, {
+        core.property.set(widget.var.layout, {
             "ui.scroll.pageSize": pageSize.height,
             "ui.scroll.scrollTo": widget.options.scrollPos,
             "ui.scroll.scrolled": null,
@@ -484,11 +485,11 @@ screens.widget.transform = function WidgetTransform(me) {
     me.clear = function (object) {
         var widget = me.findWidget(object);
         widget.transformText = "";
-        me.core.property.set(widget.var.output, "ui.basic.html", "");
+        core.property.set(widget.var.output, "ui.basic.html", "");
         me.widget.transform.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
-        me.core.property.set(widget.var.layout, "ui.style.display", "none");
+        core.property.set(widget.var.layout, "ui.style.display", "none");
         me.transform(object);
     };
     me.contentTitle = {
@@ -510,8 +511,8 @@ screens.widget.transform = function WidgetTransform(me) {
         get: function (object) {
             var widget = me.findWidget(object);
             var window = me.widget.window.get(widget);
-            var title = me.core.property.get(widget, "widget.transform.contentTitle");
-            var key = me.core.property.get(window, "widget.window.key");
+            var title = core.property.get(widget, "widget.transform.contentTitle");
+            var key = core.property.get(window, "widget.window.key");
             if (title) {
                 return title;
             }
@@ -534,12 +535,12 @@ screens.widget.transform = function WidgetTransform(me) {
             var filter = null;
             if (useFilter) {
                 filter = (element) => {
-                    return me.core.property.get(element, "ui.class.kab-term-highlight");
+                    return core.property.get(element, "ui.class.kab-term-highlight");
                 };
             }
             var modify = (element, text) => {
                 if (useSource) {
-                    text = me.core.property.get(element, "ui.attribute.#source");
+                    text = core.property.get(element, "ui.attribute.#source");
                 }
                 if (text) {
                     if (element.tagName && element.tagName.toLowerCase() === "h4") {
@@ -568,7 +569,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!text) {
             text = me.transformedText(object, false);
         }
-        me.core.property.set(target, "importData", text);
+        core.property.set(target, "importData", text);
     };
     me.visualize = function (object) {
         var widget = me.findWidget(object);
@@ -576,7 +577,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var terms = [];
         me.ui.node.iterate(currentPage, (element) => {
-            var term = me.core.property.get(element, "ui.attribute.kab-term");
+            var term = core.property.get(element, "ui.attribute.kab-term");
             if (term) {
                 terms.push(term);
             }
@@ -585,12 +586,12 @@ screens.widget.transform = function WidgetTransform(me) {
         terms = terms.map(term => {
             return [term];
         });
-        var fullscreen = me.core.property.get(window, "fullscreen");
+        var fullscreen = core.property.get(window, "fullscreen");
         var params = {
             terms,
             fullscreen
         };
-        me.core.app.launch("visualize", params);
+        core.app.launch("visualize", params);
     };
     me.removeHighlights = function (object) {
         var widget = me.findWidget(object);
@@ -600,7 +601,8 @@ screens.widget.transform = function WidgetTransform(me) {
     };
 };
 
-screens.widget.transform.popup = function WidgetTransformPopup(me) {
+screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.counter = 0;
     };
@@ -637,14 +639,14 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         if (phase !== "root") {
             classes += "kab-term-phase-" + phase;
         }
-        me.core.property.set(widgets.phase, "ui.class.class", classes);
+        core.property.set(widgets.phase, "ui.class.class", classes);
         me.update(widget, term);
-        me.core.property.set(widget.var.popup, "ui.class.add", "show");
+        core.property.set(widget.var.popup, "ui.class.add", "show");
     };
     me.update = async function (widget, term) {
         var counter = ++me.counter;
         let field = me.ui.node.findByName(widget.var.popup, "definition");
-        me.core.property.set(field, "ui.basic.html", "");
+        core.property.set(field, "ui.basic.html", "");
         var definition = await me.lib.dictionary.definition(term.text);
         var text = "";
         if (definition) {
@@ -663,25 +665,26 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         if (counter !== me.counter) {
             return;
         }
-        me.core.property.set(field, "ui.basic.html", text);
+        core.property.set(field, "ui.basic.html", text);
     };
     me.close = function (object) {
         var modal = me.ui.node.classParent(object, "modal");
         if (modal) {
-            me.core.property.set(modal, "ui.class.remove", "show");
+            core.property.set(modal, "ui.class.remove", "show");
         }
     };
     me.click = function (object) {
         var element = object.nextElementSibling;
-        var name = me.core.property.get(element, "ui.attribute.name");
+        var name = core.property.get(element, "ui.attribute.name");
         if (name === "hebrew") {
             me.close(object);
-            me.core.app.launch("letters", [element.textContent], "");
+            core.app.launch("letters", [element.textContent], "");
         }
     };
 };
 
-screens.widget.transform.player = function WidgetTransformPlayer(me) {
+screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
+    const { core } = packages;
     me.changeVoice = function (object) {
         var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
@@ -715,8 +718,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.setPlayState = function (object, isPaused) {
         var widget = me.upper.findWidget(object);
         var widgets = me.ui.node.childList(widget.var.iconbar);
-        me.core.property.set(widgets, "ui.class.play", me.media.voice.isPlaying());
-        me.core.property.set(widgets, "ui.class.pause", isPaused);
+        core.property.set(widgets, "ui.class.play", me.media.voice.isPlaying());
+        core.property.set(widgets, "ui.class.pause", isPaused);
     };
     me.pause = function (object) {
         if (!me.media.voice.isPlaying()) {
@@ -767,21 +770,21 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         }
                         if (!currentPage.last) {
                             setTimeout(() => {
-                                me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
+                                core.property.set(widget.var.layout, "ui.scroll.nextPage");
                                 setTimeout(() => {
-                                    me.core.property.set(object, "widget.transform.player.play");
+                                    core.property.set(object, "widget.transform.player.play");
                                 }, 1000);
                             }, 1000);
                         }
                     }
                 },
                 onprevious: () => {
-                    var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
+                    var pageNumber = core.property.get(currentPage, "ui.attribute.pageNumber");
                     if (pageNumber > 1) {
                         me.widget.transform.layout.clearPage(currentPage);
                         me.focusParagraph(object, null);
-                        me.core.property.set(widget.var.layout, "ui.scroll.previousPage");
-                        me.core.property.set(object, "widget.transform.player.play", -1);
+                        core.property.set(widget.var.layout, "ui.scroll.previousPage");
+                        core.property.set(object, "widget.transform.player.play", -1);
                     }
                     else {
                         me.media.voice.replay();
@@ -794,8 +797,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         me.currentPlayingPage = null;
                     }
                     else {
-                        me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
-                        me.core.property.set(object, "widget.transform.player.play");
+                        core.property.set(widget.var.layout, "ui.scroll.nextPage");
+                        core.property.set(object, "widget.transform.player.play");
                     }
                 },
                 onchange: (widgetIndex, textIndex, text) => {
@@ -849,7 +852,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.voices = function () {
         var languages = ["english", "hebrew"];
         var menu = languages.map(language => {
-            let title = me.core.string.title(language);
+            let title = core.string.title(language);
             let voiceList = me.media.voice.voices(language);
             voiceList = voiceList.sort((a, b) => {
                 if (a.name < b.name) return -1;
@@ -922,7 +925,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     };
 };
 
-screens.widget.transform.layout = function WidgetTransformLayout(me) {
+screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
+    const { core } = packages;
     me.move = function (source, target) {
         do {
             var widget = source.firstElementChild;
@@ -1041,7 +1045,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             target.reflowInterval = setInterval(function () {
                 var window = me.widget.window.get(target);
                 for (; ;) {
-                    var concealed = me.core.property.get(window, "conceal");
+                    var concealed = core.property.get(window, "conceal");
                     var widget = source.firstElementChild;
                     if (!widget || concealed) {
                         clearInterval(target.reflowInterval);
@@ -1053,7 +1057,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         if (target.page) {
                             target.page.last = true;
                             target.page.var.separator.style.display = "block";
-                            me.core.property.set(target.page.var.separator, "ui.class.add", "last");
+                            core.property.set(target.page.var.separator, "ui.class.add", "last");
                         }
                         me.completeReflow(resolve, target, options, false);
                         me.updatePages(target);
@@ -1125,7 +1129,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         if (showInProgress) {
                             me.completeReflow(resolve, target, options);
                         }
-                        me.core.property.set(target, "update");
+                        core.property.set(target, "update");
                         break;
                     } else if (widget) {
                         previousWidget = widget;
@@ -1151,7 +1155,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             if (options.scrollWidget && scrollToWidget) {
                 me.ui.scroll.toWidget(options.scrollWidget, target);
             }
-            me.core.property.set(target, "update");
+            core.property.set(target, "update");
         }
     };
     me.widgetByOrder = function (page, order) {
@@ -1227,27 +1231,27 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     me.previousPage = {
         set: function (object) {
             var widget = me.upper.findWidget(object);
-            me.core.property.set(widget.var.layout, "ui.scroll.previousPage");
+            core.property.set(widget.var.layout, "ui.scroll.previousPage");
         }
     };
     me.nextPage = {
         set: function (object) {
             var widget = me.upper.findWidget(object);
-            me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
+            core.property.set(widget.var.layout, "ui.scroll.nextPage");
         }
     };
     me.scrollToTop = {
         set: function (object) {
             var widget = me.upper.findWidget(object);
-            me.core.property.set(widget.var.layout, "ui.scroll.to", 0);
+            core.property.set(widget.var.layout, "ui.scroll.to", 0);
         }
     };
     me.applyNumPages = function (target, numPages) {
         var widget = target.firstElementChild;
         while (widget) {
             if (widget.var && widget.var.pageNumber) {
-                var pageNumber = me.core.property.get(widget, "ui.attribute.pageNumber");
-                me.core.property.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
+                var pageNumber = core.property.get(widget, "ui.attribute.pageNumber");
+                core.property.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextElementSibling;
         }
@@ -1257,7 +1261,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         if (!page) {
             return;
         }
-        var pageNumber = me.core.property.get(page, "ui.attribute.pageNumber");
+        var pageNumber = core.property.get(page, "ui.attribute.pageNumber");
         if (pageNumber === "1" || showPage) {
             page.style.display = "";
             page.pageOffset = page.offsetTop;
@@ -1318,8 +1322,8 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         if (widget.style) {
             widget.style.border = "1px solid transparent";
-            var language = me.core.string.language(widget.innerText);
-            me.core.property.set(widget, "ui.class.hebrew", language === "hebrew");
+            var language = core.string.language(widget.innerText);
+            core.property.set(widget, "ui.class.hebrew", language === "hebrew");
         }
     };
     me.currentPage = function (target) {
@@ -1384,9 +1388,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             if (element.getAttribute("hidden")) {
                 return;
             }
-            me.core.property.set(element, "ui.class.highlight", false);
+            core.property.set(element, "ui.class.highlight", false);
         });
-        me.core.property.set(childElement, "ui.class.highlight", true);
+        core.property.set(childElement, "ui.class.highlight", true);
     };
     me.clearWidget = function (widget, modifiers) {
         if (!widget.getAttribute) {
@@ -1397,7 +1401,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         me.markElement(widget, true, -1);
         if (widget.innerText) {
-            me.core.property.set(widget, "ui.class.add", ["widget.transform.widget", modifiers]);
+            core.property.set(widget, "ui.class.add", ["widget.transform.widget", modifiers]);
         }
         widget.classList.remove("mark");
     };

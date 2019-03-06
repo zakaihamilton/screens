@@ -3,7 +3,7 @@
  @component AppKeyboard
  */
 
-screens.app.keyboard = function AppKeyboard(me) {
+screens.app.keyboard = function AppKeyboard(me, packages) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             if (me.core.property.get(me.singleton, "temp")) {

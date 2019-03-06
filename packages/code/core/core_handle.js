@@ -3,10 +3,11 @@
     @component CoreHandle
 */
 
-screens.core.handle = function CoreHandle(me) {
+screens.core.handle = function CoreHandle(me, packages) {
+    const { core } = packages;
     me.handles = {};
     me.isHandle = function (ref, type = "handle") {
-        return me.core.ref.isRef(ref, type);
+        return core.ref.isRef(ref, type);
     };
     me.find = function (ref) {
         var result = null;
@@ -28,7 +29,7 @@ screens.core.handle = function CoreHandle(me) {
     me.push = function (object, type = "handle") {
         var ref = null;
         if (object) {
-            ref = me.core.ref.gen(type);
+            ref = core.ref.gen(type);
             me.handles[ref] = object;
         }
         return ref;

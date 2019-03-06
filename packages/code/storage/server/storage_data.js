@@ -3,11 +3,12 @@
  @component StorageData
  */
 
-screens.storage.data = function StorageData(me) {
+screens.storage.data = function StorageData(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         me.log("initialising storage data");
         me.datastore = require("@google-cloud/datastore");
-        var keys = await me.core.private.keys("google");
+        var keys = await core.private.keys("google");
         me.projectId = keys.project_id;
     };
     me.getService = function () {
@@ -20,7 +21,7 @@ screens.storage.data = function StorageData(me) {
         }
         me.handle = me.datastore({
             projectId: me.projectId,
-            keyFilename: me.core.private.path("google")
+            keyFilename: core.private.path("google")
         });
         return me.handle;
     };

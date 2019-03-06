@@ -3,7 +3,7 @@
  @component CoreMutex
  */
 
-screens.core.mutex = function CoreMutex(me) {
+screens.core.mutex = function CoreMutex(me, packages) {
     me.use = function (id) {
         if (!me.locks) {
             me.locks = {};

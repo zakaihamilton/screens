@@ -3,7 +3,8 @@
  @component UIContent
  */
 
-screens.ui.content = function UIContent(me) {
+screens.ui.content = function UIContent(me, packages) {
+    const { core } = packages;
     me.content = {
         init: async function () {
             if (!me.ui.content.lists) {
@@ -188,10 +189,10 @@ screens.ui.content = function UIContent(me) {
                     json = true;
                 }
                 if (info._title) {
-                    title = me.core.string.title(info._title);
+                    title = core.string.title(info._title);
                 }
                 if (!title) {
-                    title = me.core.property.get(window, "widget.window.key");
+                    title = core.property.get(window, "widget.window.key");
                 }
                 if (!title) {
                     title = date.toLocaleDateString();
@@ -224,7 +225,7 @@ screens.ui.content = function UIContent(me) {
                 if (info) {
                     var locked = info._locked;
                     var title = info._title;
-                    var access = !info._owner || info._owner === me.core.util.userId || me.core.util.isAdmin;
+                    var access = !info._owner || info._owner === core.util.userId || core.util.isAdmin;
                     return !locked && title && access;
                 }
                 return false;
@@ -238,7 +239,7 @@ screens.ui.content = function UIContent(me) {
                     title = info._title;
                 }
                 if (!title) {
-                    title = me.core.property.get(window, "widget.window.key");
+                    title = core.property.get(window, "widget.window.key");
                 }
                 if (!title) {
                     var date = new Date();
@@ -258,7 +259,7 @@ screens.ui.content = function UIContent(me) {
                 var appName = me.id.split(".").pop();
                 var window = me.widget.window.get(object);
                 var info = me.content.info(window);
-                me.core.util.copyUrl(appName, [info._title]);
+                core.util.copyUrl(appName, [info._title]);
             }
         },
         title: {
@@ -272,7 +273,7 @@ screens.ui.content = function UIContent(me) {
                 var info = me.content.info(window);
                 var text = title;
                 if (typeof text !== "string") {
-                    text = me.core.property.get(object, "ui.basic.text");
+                    text = core.property.get(object, "ui.basic.text");
                 }
                 if (info._title !== text) {
                     info._title = text;
@@ -353,7 +354,7 @@ screens.ui.content = function UIContent(me) {
                     list.push([
                         "Player",
                         (object, appName) => {
-                            me.core.app.launch(appName.toLowerCase(), group, name);
+                            core.app.launch(appName.toLowerCase(), group, name);
                         },
                         {
 
@@ -374,11 +375,11 @@ screens.ui.content = function UIContent(me) {
                     if ("app." + app === me.id) {
                         continue;
                     }
-                    var title = me.core.string.title(app);
+                    var title = core.string.title(app);
                     list.push([
                         title,
                         (object, appName) => {
-                            me.core.app.launch(appName.toLowerCase(), name, private);
+                            core.app.launch(appName.toLowerCase(), name, private);
                         },
                         {
 

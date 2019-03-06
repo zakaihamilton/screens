@@ -3,7 +3,8 @@
  @component UIBasic
  */
 
-screens.ui.basic = function UIBasic(me) {
+screens.ui.basic = function UIBasic(me, packages) {
+    const { core } = packages;
     me.tag = {
         get: function (object) {
             return object.tagName.toLowerCase();
@@ -31,7 +32,7 @@ screens.ui.basic = function UIBasic(me) {
             var parent = object.parentNode;
             if (parent) {
                 if (!parent.ref) {
-                    parent.ref = me.core.ref.gen();
+                    parent.ref = core.ref.gen();
                 }
                 ref = parent.ref;
             }
@@ -203,16 +204,16 @@ screens.ui.basic = function UIBasic(me) {
         set: function (object, options = {}) {
             var text = "";
             if (options && options.method) {
-                text = me.core.property.get(object, options.method);
+                text = core.property.get(object, options.method);
                 if (options.json) {
                     text = JSON.stringify(text);
                 }
             }
             else {
-                text = me.core.property.get(object, "ui.basic.text");
+                text = core.property.get(object, "ui.basic.text");
             }
-            me.core.property.set(object, "storage.local.store", text);
-            me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
+            core.property.set(object, "storage.local.store", text);
+            core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };
     me.metadata = {

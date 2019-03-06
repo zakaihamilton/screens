@@ -3,7 +3,7 @@
  @component WidgetEditor
  */
 
-screens.widget.editor = function WidgetEditor(me) {
+screens.widget.editor = function WidgetEditor(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "textarea",

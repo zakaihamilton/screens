@@ -3,12 +3,13 @@
  @component CoreFile
  */
 
-screens.core.file = function CoreFile(me) {
+screens.core.file = function CoreFile(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");
         me.https = require("https");
-        me.core.file.path = me.core.file.alias.path;
+        core.file.path = core.file.alias.path;
     };
     me.readFile = function (path, options, optional) {
         path = me.path(path);
@@ -197,7 +198,7 @@ screens.core.file = function CoreFile(me) {
     };
     me.download = async function (source, target) {
         target = me.path(target);
-        var folder = me.core.path.goto(target, "..");
+        var folder = core.path.goto(target, "..");
         me.log("downloading: " + source + " to: " + target);
         await me.makeDirEx(folder);
         var file = me.fs.createWriteStream(target);
@@ -222,25 +223,25 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.open = function (path) {
-        var session = me.core.session.open();
+        var session = core.session.open();
         session.path = path;
         return session.handle;
     };
     me.pause = function (handle) {
-        var session = me.core.session.get(handle);
+        var session = core.session.get(handle);
         if (session.stream) {
             session.stream.pause();
         }
     };
     me.resume = function (handle) {
-        var session = me.core.session.get(handle);
+        var session = core.session.get(handle);
         if (session.stream) {
             session.stream.resume();
         }
     };
     me.read = function (handle, callback, chunkSize) {
         var result = false;
-        var session = me.core.session.get(handle);
+        var session = core.session.get(handle);
         if (!session.stream) {
             var params = {};
             if (chunkSize) {
@@ -267,7 +268,7 @@ screens.core.file = function CoreFile(me) {
     };
     me.write = function (handle, data) {
         var result = false;
-        var session = me.core.session.get(handle);
+        var session = core.session.get(handle);
         if (!session.stream) {
             session.stream = me.fs.createWriteStream(session.path);
             session.close = () => {
@@ -285,12 +286,12 @@ screens.core.file = function CoreFile(me) {
         return result;
     };
     me.close = function (handle) {
-        me.core.session.close(handle);
+        core.session.close(handle);
     };
     return "server";
 };
 
-screens.core.file.buffer = function CoreFileBuffer(me) {
+screens.core.file.buffer = function CoreFileBuffer(me, packages) {
     me.read = function (path, options) {
         var buffer = undefined;
         path = me.upper.path(path);
@@ -305,7 +306,7 @@ screens.core.file.buffer = function CoreFileBuffer(me) {
     };
 };
 
-screens.core.file.alias = function CoreFileAlias(me) {
+screens.core.file.alias = function CoreFileAlias(me, packages) {
     me.aliases = {};
     me.set = function (source, target) {
         if (target) {
@@ -341,9 +342,10 @@ screens.core.file.alias = function CoreFileAlias(me) {
     return "server";
 };
 
-screens.core.file.protocol = function CoreFileProtocol(me) {
+screens.core.file.protocol = function CoreFileProtocol(me, packages) {
+    const { core } = packages;
     me.get = async function (path, format = "utf8") {
-        var pathInfo = me.core.object.pathInfo(path);
+        var pathInfo = core.object.pathInfo(path);
         var exists = me.upper.exists(pathInfo.direct);
         if (!exists) {
             return null;
@@ -372,7 +374,7 @@ screens.core.file.protocol = function CoreFileProtocol(me) {
         return null;
     };
     me.set = async function (path, data, options) {
-        var pathInfo = me.core.object.pathInfo(path);
+        var pathInfo = core.object.pathInfo(path);
         var exists = me.upper.exists(pathInfo.folder.direct);
         if (!exists) {
             return null;

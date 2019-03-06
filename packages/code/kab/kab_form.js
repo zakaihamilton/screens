@@ -3,7 +3,8 @@
  @component KabForm
  */
 
-screens.kab.form = function KabForm(me) {
+screens.kab.form = function KabForm(me, packages) {
+    const { core, kab } = packages;
     me.index = function (form) {
         for (var index = -1; form; index++) {
             form = form.cause;
@@ -26,7 +27,7 @@ screens.kab.form = function KabForm(me) {
         for (var key in values) {
             var value = values[key];
             var formValue = me.get(form, key);
-            if (!me.core.json.compare(formValue, value)) {
+            if (!core.json.compare(formValue, value)) {
                 equal = false;
                 break;
             }
@@ -44,7 +45,7 @@ screens.kab.form = function KabForm(me) {
             for (var key in values) {
                 var value = values[key];
                 var formValue = me.get(form, key);
-                if (!me.core.json.compare(formValue, value)) {
+                if (!core.json.compare(formValue, value)) {
                     newForm[key] = value;
                 }
             }
@@ -56,7 +57,7 @@ screens.kab.form = function KabForm(me) {
         if (!me._root) {
             var form = me._root = {};
             ["expand", "restrict", "look", "reflect"].map(name => {
-                form = me.kab.rule.run(form, name);
+                form = kab.rule.run(form, name);
             });
         }
         return me._root;

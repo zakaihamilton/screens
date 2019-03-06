@@ -3,7 +3,8 @@
  @component WidgetPlayer
  */
 
-screens.widget.player = function WidgetPlayer(me) {
+screens.widget.player = function WidgetPlayer(me, packages) {
+    const { core } = packages;
     me.log_errorEvent = function (e) {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
@@ -56,11 +57,12 @@ screens.widget.player = function WidgetPlayer(me) {
         if (widget.wavesurfer) {
             widget.wavesurfer.setHeight(background.offsetHeight);
         }
-        me.core.property.set(widget, "update");
+        core.property.set(widget, "update");
     };
 };
 
-screens.widget.player.audio = function WidgetPlayerAudio(me) {
+screens.widget.player.audio = function WidgetPlayerAudio(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -102,22 +104,23 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                 return;
             }
             if (path) {
-                var extension = me.core.path.extension(path);
-                me.core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
+                var extension = core.path.extension(path);
+                core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
             }
-            me.core.property.set(object.var.source, "ui.attribute.src", path);
+            core.property.set(object.var.source, "ui.attribute.src", path);
             object.var.player.src = path;
             object.src = path;
             object.var.player.load();
-            me.core.property.set(object, "widget.player.controls.load");
-            me.core.property.set(object, "widget.player.controls.update");
+            core.property.set(object, "widget.player.controls.load");
+            core.property.set(object, "widget.player.controls.update");
         }
     };
 };
 
-screens.widget.player.video = function WidgetPlayerVideo(me) {
+screens.widget.player.video = function WidgetPlayerVideo(me, packages) {
+    const { core } = packages;
     me.init = function () {
-        me.core.property.link("ui.style.display", "update", false);
+        core.property.link("ui.style.display", "update", false);
     };
     me.element = {
         properties: {
@@ -162,8 +165,8 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
         var heightText = "";
         var percent = (((windowRegion.height - playerRegion.top - controlsRegion.height) / windowRegion.height) * 100);
         heightText = parseInt(percent) + "%";
-        me.core.property.set(widget.var.player, "ui.style.width", widthText);
-        me.core.property.set(widget.var.player, "ui.style.height", heightText);
+        core.property.set(widget.var.player, "ui.style.width", widthText);
+        core.property.set(widget.var.player, "ui.style.height", heightText);
     };
     me.source = {
         get: function (object) {
@@ -173,20 +176,21 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
             if ((!object.src && !path) || object.src === path) {
                 return;
             }
-            var extension = me.core.path.extension(path);
-            me.core.property.set(object.var.source, "ui.attribute.src", path);
-            me.core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
+            var extension = core.path.extension(path);
+            core.property.set(object.var.source, "ui.attribute.src", path);
+            core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
             object.var.player.src = path;
             object.src = path;
             object.var.player.load();
             me.update(object);
-            me.core.property.set(object, "widget.player.controls.load");
-            me.core.property.set(object, "widget.player.controls.update");
+            core.property.set(object, "widget.player.controls.load");
+            core.property.set(object, "widget.player.controls.update");
         }
     };
 };
 
-screens.widget.player.controls = function WidgetPlayerControls(me) {
+screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.var": "controls",
@@ -322,7 +326,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             var widget = me.upper.mainWidget(object);
             var background = object.var.controls.var.progress.var.background;
             var plugins = [];
-            if (!me.core.device.isMobile()) {
+            if (!core.device.isMobile()) {
                 plugins.push(WaveSurfer.cursor.create({
                     showTime: true,
                     opacity: 0.75,
@@ -379,19 +383,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     };
     me.updatePlayer = function (object) {
         var widget = me.upper.mainWidget(object);
-        me.core.property.set(widget, "update");
+        core.property.set(widget, "update");
     };
     me.updateFullscreen = function (object) {
         var window = me.widget.window.get(object);
         var widget = me.upper.mainWidget(object);
-        var fullscreen = me.core.property.get(window, "fullscreen");
-        me.core.property.set(widget, "ui.class.fullscreen", fullscreen);
+        var fullscreen = core.property.get(window, "fullscreen");
+        core.property.set(widget, "ui.class.fullscreen", fullscreen);
     };
     me.updateLink = function (object) {
         var widget = me.upper.mainWidget(object);
         var controls = widget.var.controls;
         var player = widget.var.player;
-        me.core.property.set(controls.var.download, "ui.attribute.href", player.src);
+        core.property.set(controls.var.download, "ui.attribute.href", player.src);
     };
     me.formatTime = function (currentTime) {
         var current_hour = parseInt(currentTime / 3600) % 24,
@@ -413,19 +417,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         if (percentage < 0) {
             percentage = 0;
         }
-        me.core.property.set(progress, "value", percentage);
+        core.property.set(progress, "value", percentage);
         var label = me.formatTime(player.currentTime);
         if (player.duration) {
             label += " / " + me.formatTime(player.duration) +
                 " ( " + me.formatTime(player.duration - player.currentTime) + " left)";
         }
-        me.core.property.set(progress, "label", label);
+        core.property.set(progress, "label", label);
     };
     me.updateButtons = function (object) {
         var widget = me.upper.mainWidget(object);
         var controls = widget.var.controls;
         var showPause = !widget.var.player.paused && !widget.var.player.ended;
-        me.core.property.set(controls.var.play, "ui.class.pause", showPause);
+        core.property.set(controls.var.play, "ui.class.pause", showPause);
     };
     me.seekStart = function (object, event) {
         object.seeking = true;
@@ -517,15 +521,15 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             }
         }
         else {
-            me.core.property.set(object, "widget.window.fullscreen");
+            core.property.set(object, "widget.window.fullscreen");
         }
     };
     me.timestamp = async function (object) {
-        var url = me.core.property.get(object, me.core.property.get(object, "widget.window.method", "url"));
-        var label = me.core.property.get(object, me.core.property.get(object, "widget.window.method", "timestampLabel"));
-        var notes = await me.core.app.launch("notes");
+        var url = core.property.get(object, core.property.get(object, "widget.window.method", "url"));
+        var label = core.property.get(object, core.property.get(object, "widget.window.method", "timestampLabel"));
+        var notes = await core.app.launch("notes");
         if (notes) {
-            me.core.property.set(notes, "ui.property.after", {
+            core.property.set(notes, "ui.property.after", {
                 "app.notes.insertLink": {
                     label,
                     url
@@ -535,11 +539,11 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     };
     me.previous = async function (object) {
         var widget = me.upper.mainWidget(object);
-        me.core.property.set(widget, "previous");
+        core.property.set(widget, "previous");
     };
     me.next = async function (object) {
         var widget = me.upper.mainWidget(object);
-        me.core.property.set(widget, "next");
+        core.property.set(widget, "next");
     };
     me.speedName = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -610,12 +614,12 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             var id = "ui.class." + size;
             var properties = {};
             properties[id] = flag;
-            me.core.property.set(controls, "ui.property.broadcast", properties);
+            core.property.set(controls, "ui.property.broadcast", properties);
         });
         var isSmall = iconSize === "small";
         var isNormal = iconSize === "normal";
         var isLarge = iconSize === "large";
-        me.core.property.set(controls, "ui.property.broadcast", {
+        core.property.set(controls, "ui.property.broadcast", {
             "ui.class.small": isSmall,
             "ui.class.normal": isNormal,
             "ui.class.large": isLarge
@@ -626,7 +630,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var widget = me.upper.mainWidget(object);
         var background = widget.var.controls.var.progress.var.background;
         widget.enablePeaks = flag;
-        me.core.property.set(background, "ui.basic.show", flag);
+        core.property.set(background, "ui.basic.show", flag);
     };
     me.loadPeaks = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -640,7 +644,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         if (widget.item) {
             peaks = widget.item.peaks;
         }
-        if (peaks || !me.core.device.isMobile()) {
+        if (peaks || !core.device.isMobile()) {
             widget.wavesurfer.load(widget.var.player, peaks);
         }
     };
@@ -648,7 +652,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var widget = me.upper.mainWidget(object);
         var item = null;
         if (widget.src) {
-            var name = me.core.path.fileName(widget.src);
+            var name = core.path.fileName(widget.src);
             if (!widget.item) {
                 item = await me.db.cache.metadata.find({ name });
                 if (!item) {

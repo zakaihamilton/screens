@@ -3,7 +3,8 @@
     @component CorePerformance
 */
 
-screens.core.performance = function CorePerformance(me) {
+screens.core.performance = function CorePerformance(me, packages) {
+    const { core } = packages;
     me.users = {};
     me.profile = function (name, userId, userName) {
         var userInfo = me.users[userId];
@@ -32,7 +33,7 @@ screens.core.performance = function CorePerformance(me) {
             " userId: " + userId +
             " userName: " + userName;
         }
-        userProfile.start = me.core.util.start();
+        userProfile.start = core.util.start();
         return userProfile.start;
     };
     me.duration = function (name, userId, userName) {
@@ -53,7 +54,7 @@ screens.core.performance = function CorePerformance(me) {
             " userId: " + userId +
             " userName: " + userName;
         }
-        userProfile.duration = me.core.util.duration(userProfile.start);
+        userProfile.duration = core.util.duration(userProfile.start);
         return userProfile.duration;
     };
     return "server";

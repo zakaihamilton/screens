@@ -3,7 +3,8 @@
  @component WidgetToast
  */
 
-screens.widget.toast = function WidgetToast(me) {
+screens.widget.toast = function WidgetToast(me, packages) {
+    const { core } = packages;
     me.timeout = 3000;
     me.messages = {};
     me.currentType = null;
@@ -20,7 +21,7 @@ screens.widget.toast = function WidgetToast(me) {
         var toast = document.body.var.desktop.var.toast;
         if (me.currentType === type) {
             if (message) {
-                me.core.property.set(toast, "ui.basic.html", message);
+                core.property.set(toast, "ui.basic.html", message);
                 me.restartTimer();
             }
             else {
@@ -36,8 +37,8 @@ screens.widget.toast = function WidgetToast(me) {
             }
         }
         else if (message) {
-            me.core.property.set(toast, "ui.basic.html", message);
-            me.core.property.set(toast, "ui.class.show", true);
+            core.property.set(toast, "ui.basic.html", message);
+            core.property.set(toast, "ui.class.show", true);
             me.currentType = type;
             me.restartTimer();
         }
@@ -58,11 +59,11 @@ screens.widget.toast = function WidgetToast(me) {
             var message = me.messages[type];
             delete me.messages[type];
             me.currentType = type;
-            me.core.property.set(toast, "ui.basic.html", message);
+            core.property.set(toast, "ui.basic.html", message);
             me.restartTimer();
         }
         else {
-            me.core.property.set(toast, "ui.class.show", false);
+            core.property.set(toast, "ui.class.show", false);
             me.currentType = null;
         }
     };

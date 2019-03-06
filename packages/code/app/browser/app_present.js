@@ -3,7 +3,7 @@
  @component AppPresent
  */
 
-screens.app.present = function AppPresent(me) {
+screens.app.present = function AppPresent(me, packages) {
     me.ready = async function () {
         await me.ui.content.attach(me);
         await me.ui.shared.attach(me);

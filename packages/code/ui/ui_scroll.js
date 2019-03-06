@@ -3,7 +3,8 @@
  @component UIScroll
  */
 
-screens.ui.scroll = function UIScroll(me) {
+screens.ui.scroll = function UIScroll(me, packages) {
+    const { core } = packages;
     me.isScrollable = function (object) {
         var result = true;
         if (object.scrollWidth > object.offsetWidth) {
@@ -22,7 +23,7 @@ screens.ui.scroll = function UIScroll(me) {
         } else {
             object.scrollTop += distance;
         }
-        me.core.property.set(object, "scrolled");
+        core.property.set(object, "scrolled");
     };
     me.container = function (object) {
         var container = null;
@@ -36,12 +37,12 @@ screens.ui.scroll = function UIScroll(me) {
     me.previousPage = function (object) {
         var container = me.container(object);
         me.by(container, -container.ui_scroll_pageSize);
-        me.core.property.set(container, "scrolled");
+        core.property.set(container, "scrolled");
     };
     me.nextPage = function (object) {
         var container = me.container(object);
         me.by(container, container.ui_scroll_pageSize);
-        me.core.property.set(container, "scrolled");
+        core.property.set(container, "scrolled");
     };
     me.isLastPage = function (object) {
         var container = me.container(object);
@@ -53,7 +54,7 @@ screens.ui.scroll = function UIScroll(me) {
     me.to = function (object, value) {
         var container = me.container(object);
         container.scrollTop = value;
-        me.core.property.set(container, "scrolled");
+        core.property.set(container, "scrolled");
     };
     me.pageSize = {
         get: function (object) {
@@ -96,7 +97,7 @@ screens.ui.scroll = function UIScroll(me) {
                         behavior: 'smooth'
                     };
                     container.scroll(params);
-                    me.core.property.notify(container, "scrolled");
+                    core.property.notify(container, "scrolled");
                 }, 1000);
             }
         }

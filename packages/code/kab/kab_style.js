@@ -3,7 +3,8 @@
  @component KabStyle
  */
 
-screens.kab.style = function KabStyle(me) {
+screens.kab.style = function KabStyle(me, packages) {
+    const { core } = packages;
     me.process = function (session, instance, replacement, expansion) {
         var nightModeClass = session.options.nightMode ? "night-mode" : "";
         var styles = instance.item.style;
@@ -66,7 +67,7 @@ screens.kab.style = function KabStyle(me) {
                 if (instance.item.transliterated) {
                     tooltip = instance.item.transliterated;
                 }
-                tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
+                tooltip = instance.item.hebrew + core.string.optional(" &#xa; " + tooltip, tooltip);
                 if (session.options.subHeadings) {
                     subHeading = tooltip;
                 }

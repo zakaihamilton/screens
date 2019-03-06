@@ -3,7 +3,8 @@
  @component UINode
  */
 
-screens.ui.node = function UINode(me) {
+screens.ui.node = function UINode(me, packages) {
+    const { core } = packages;
     me.childList = function (object) {
         if (!object) {
             return [];
@@ -66,7 +67,7 @@ screens.ui.node = function UINode(me) {
     me.findByText = function (object, text) {
         var element = object.firstElementChild;
         while (element) {
-            var elementText = me.core.property.get(element, "ui.basic.text");
+            var elementText = core.property.get(element, "ui.basic.text");
             if (text === elementText) {
                 break;
             }
@@ -364,7 +365,7 @@ screens.ui.node = function UINode(me) {
             for (let value of values) {
                 if (value.startsWith(".")) {
                     let path = value.substring(1);
-                    var info = me.core.json.traverse(data, path);
+                    var info = core.json.traverse(data, path);
                     value = info.value;
                     if (!info.found || typeof value !== "string") {
                         continue;
@@ -374,7 +375,7 @@ screens.ui.node = function UINode(me) {
                     widget.value = value;
                 }
                 else {
-                    me.core.property.set(widget, "ui.basic.html", value);
+                    core.property.set(widget, "ui.basic.html", value);
                 }
                 break;
             }

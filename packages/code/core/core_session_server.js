@@ -3,7 +3,7 @@
  @component CoreSession
  */
 
-screens.core.session = function CoreSession(me) {
+screens.core.session = function CoreSession(me, packages) {
     me.init = function () {
         me.sessions = {};
     };

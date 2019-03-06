@@ -3,7 +3,8 @@
  @component KabCommentary
  */
 
-screens.kab.commentary = function KabCommentary(me) {
+screens.kab.commentary = function KabCommentary(me, packages) {
+    const { core, db } = packages;
     me.query = function (options) {
         var query = {};
         var userName = options.commentaryUser;
@@ -48,9 +49,9 @@ screens.kab.commentary = function KabCommentary(me) {
         var text = element.value;
         var user = "$userId";
         var name = "$userName";
-        var hash = me.core.property.get(element, "ui.attribute.#hash");
-        var source = me.core.property.get(element, "ui.attribute.#source");
-        var data = await me.db.shared.commentary.find({
+        var hash = core.property.get(element, "ui.attribute.#hash");
+        var source = core.property.get(element, "ui.attribute.#source");
+        var data = await db.shared.commentary.find({
             "user": "$userId",
             "hash": hash
         });
@@ -65,13 +66,13 @@ screens.kab.commentary = function KabCommentary(me) {
         });
         data[field] = text;
         if (text) {
-            me.db.shared.commentary.use({
+            db.shared.commentary.use({
                 "user": "$userId",
                 "hash": hash
             }, data);
         }
         else {
-            me.db.shared.commentary.remove({
+            db.shared.commentary.remove({
                 "user": "$userId"
             });
         }

@@ -3,7 +3,8 @@
  @component CoreMessage
  */
 
-screens.core.message = function CoreMessage(me) {
+screens.core.message = function CoreMessage(me, packages) {
+    const { core } = packages;
     me.send_server = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "server") {
@@ -14,7 +15,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send_browser.apply(null, args);
         }
         else {
-            return me.core.interface.send.apply(null, args);
+            return core.interface.send.apply(null, args);
         }
     };
     me.send_browser = function () {
@@ -26,7 +27,7 @@ screens.core.message = function CoreMessage(me) {
         } else if (me.platform === "browser") {
             return me.send.apply(this, args);
         } else if (me.platform === "server") {
-            return me.core.interface.send.apply(null, args);
+            return core.interface.send.apply(null, args);
         }
     };
     me.send_client = function () {
@@ -52,7 +53,7 @@ screens.core.message = function CoreMessage(me) {
     me.send_socket = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         return me.send_info((info) => {
-            return me.core.socket.send(this, "send", info);
+            return core.socket.send(this, "send", info);
         }, args);
     };
     me.send_info = async function (send_callback, args) {
@@ -62,8 +63,8 @@ screens.core.message = function CoreMessage(me) {
             platform: me.platform
         };
         me.prepareArgs(info);
-        me.core.property.object.create(me, info);
-        await me.core.property.set(info, "headers", null);
+        core.property.object.create(me, info);
+        await core.property.set(info, "headers", null);
         var result = send_callback(info);
         return result;
     };
@@ -95,7 +96,7 @@ screens.core.message = function CoreMessage(me) {
         }
         if (me.platform === "browser") {
             if (Element && arg instanceof Element) {
-                arg = me.core.handle.push(arg, "element");
+                arg = core.handle.push(arg, "element");
                 return arg;
             }
         }
@@ -113,7 +114,7 @@ screens.core.message = function CoreMessage(me) {
                         arg = arg.replace("$" + varName, info[varName]);
                     }
                 }
-                if (me.core.handle.isHandle(arg, "function")) {
+                if (core.handle.isHandle(arg, "function")) {
                     let handle = arg;
                     arg = function () {
                         var sendArgs = Array.prototype.slice.call(arguments, 0);
@@ -124,7 +125,7 @@ screens.core.message = function CoreMessage(me) {
             }
         }
         else if (me.platform === "client") {
-            if (me.core.handle.isHandle(arg, "function")) {
+            if (core.handle.isHandle(arg, "function")) {
                 let handle = arg;
                 arg = function () {
                     var sendArgs = Array.prototype.slice.call(arguments, 0);
@@ -135,10 +136,10 @@ screens.core.message = function CoreMessage(me) {
         }
         else if (me.platform === "browser") {
             if (typeof arg === "function") {
-                arg = me.core.handle.push(arg, typeof arg);
+                arg = core.handle.push(arg, typeof arg);
             }
             else if (arg instanceof Element) {
-                arg = me.core.handle.push(arg, "element");
+                arg = core.handle.push(arg, "element");
             }
         }
         return arg;
@@ -165,11 +166,11 @@ screens.core.message = function CoreMessage(me) {
                 }
                 if (me.platform === "browser") {
                     if (typeof arg === "string") {
-                        if (me.core.handle.isHandle(arg, "function")) {
-                            arg = me.core.handle.pop(arg, "function");
+                        if (core.handle.isHandle(arg, "function")) {
+                            arg = core.handle.pop(arg, "function");
                         }
-                        if (me.core.handle.isHandle(arg, "element")) {
-                            arg = me.core.handle.pop(arg, "element");
+                        if (core.handle.isHandle(arg, "element")) {
+                            arg = core.handle.pop(arg, "element");
                         }
                     }
                 }
@@ -230,7 +231,8 @@ screens.core.message = function CoreMessage(me) {
     };
 };
 
-screens.core.message.worker = function CoreMessageWorker(me) {
+screens.core.message.worker = function CoreMessageWorker(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         if (me.platform === "browser") {
             window.module = {};
@@ -246,16 +248,16 @@ screens.core.message.worker = function CoreMessageWorker(me) {
                 return;
             }
             if (info.callback) {
-                info.callback = me.core.handle.find(info.callback, "function");
+                info.callback = core.handle.find(info.callback, "function");
                 if (info.callback) {
                     return await info.callback.apply(null, info.args);
                 }
             }
             else {
-                me.core.property.object.create(me, info);
-                me.core.message.prepareArgs(info);
-                var args = await me.core.message.send.apply(null, info.args);
-                me.core.message.releaseArgs(info);
+                core.property.object.create(me, info);
+                core.message.prepareArgs(info);
+                var args = await core.message.send.apply(null, info.args);
+                core.message.releaseArgs(info);
                 return args;
             }
         });
@@ -272,12 +274,13 @@ screens.core.message.worker = function CoreMessageWorker(me) {
     };
 };
 
-screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
+screens.core.message.service_worker = function CoreMessageServiceWorker(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         if (me.platform === "service_worker") {
             await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
             me.register();
-            me.core.event.register(null, self, "activate", me.activate);
+            core.event.register(null, self, "activate", me.activate);
         }
     };
     me.activate = async function () {
@@ -320,16 +323,16 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                 return;
             }
             if (info.callback) {
-                info.callback = me.core.handle.find(info.callback, "function");
+                info.callback = core.handle.find(info.callback, "function");
                 if (info.callback) {
                     return await info.callback.apply(null, info.args);
                 }
             }
             else {
-                me.core.property.object.create(me, info);
-                me.core.message.prepareArgs(info);
-                var args = await me.core.message.send.apply(null, info.args);
-                me.core.message.releaseArgs(info);
+                core.property.object.create(me, info);
+                core.message.prepareArgs(info);
+                var args = await core.message.send.apply(null, info.args);
+                core.message.releaseArgs(info);
                 return args;
             }
         });

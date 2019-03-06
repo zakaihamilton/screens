@@ -3,7 +3,8 @@
  @component WidgetProgress
  */
 
-screens.widget.progress = function WidgetProgress(me) {
+screens.widget.progress = function WidgetProgress(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -79,10 +80,10 @@ screens.widget.progress = function WidgetProgress(me) {
     };
     me.showPercentage = {
         get: function (object) {
-            return me.core.property.set(object.var.percent, "ui.basic.show");
+            return core.property.set(object.var.percent, "ui.basic.show");
         },
         set: function (object, show) {
-            me.core.property.set(object.var.percent, "ui.basic.show", show);
+            core.property.set(object.var.percent, "ui.basic.show", show);
         }
     };
     me.update = function (object) {
@@ -90,12 +91,12 @@ screens.widget.progress = function WidgetProgress(me) {
             object.min = 0;
         }
         var percent = (object.value - object.min) / (object.max - object.min) * 100;
-        me.core.property.set(object.var.percent, "ui.basic.text", parseInt(percent) + "%");
-        me.core.property.set(object.var.label, "ui.basic.text", object.label);
-        me.core.property.set(object.var.bar, "ui.style.width", percent + "%");
+        core.property.set(object.var.percent, "ui.basic.text", parseInt(percent) + "%");
+        core.property.set(object.var.label, "ui.basic.text", object.label);
+        core.property.set(object.var.bar, "ui.style.width", percent + "%");
         if (percent > 99) {
             percent = 99;
         }
-        me.core.property.set(object.var.handle, "ui.style.left", percent + "%");
+        core.property.set(object.var.handle, "ui.style.left", percent + "%");
     };
 };

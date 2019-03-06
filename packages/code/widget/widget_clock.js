@@ -3,7 +3,8 @@
  @component WidgetClock
  */
 
-screens.widget.clock = function WidgetClock(me) {
+screens.widget.clock = function WidgetClock(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.class.class": "container"
@@ -16,7 +17,7 @@ screens.widget.clock = function WidgetClock(me) {
                 if (m < 10) {
                     m = "0" + m;
                 }
-                me.core.property.set(object, "ui.basic.text", h + ":" + m);
+                core.property.set(object, "ui.basic.text", h + ":" + m);
             }, 1000);
         }
     };

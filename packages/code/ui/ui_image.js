@@ -3,10 +3,11 @@
  @component UIImage
  */
 
-screens.ui.image = function UIImage(me) {
+screens.ui.image = function UIImage(me, packages) {
+    const { core } = packages;
     me.images = [];
     me.preload = async function (path) {
-        var items = await me.core.file.readDir(path);
+        var items = await core.file.readDir(path);
         for (var item of items) {
             var image = me.images.find(image => image.src === path + "/" + item);
             if (image) {

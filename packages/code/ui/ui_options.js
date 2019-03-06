@@ -3,7 +3,8 @@
  @component UIOptions
  */
 
-screens.ui.options = function UIOptions(me) {
+screens.ui.options = function UIOptions(me, packages) {
+    const { core } = packages;
     me.getStorage = function (component, object) {
         var storage = "local";
         if (object && object.storageName) {
@@ -101,7 +102,7 @@ screens.ui.options = function UIOptions(me) {
                 }
                 options[key] = !options[key];
                 if (callback) {
-                    me.core.message.send(callback, object, options[key], key, options);
+                    core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
                     me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
@@ -152,7 +153,7 @@ screens.ui.options = function UIOptions(me) {
                 }
                 options[key] = value;
                 if (callback) {
-                    me.core.message.send(callback, object, options[key], key, options);
+                    core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
                     me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
@@ -206,7 +207,7 @@ screens.ui.options = function UIOptions(me) {
                 }
                 options[key] = value;
                 if (callback) {
-                    me.core.message.send(callback, object, options[key], key, options);
+                    core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
                     me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));

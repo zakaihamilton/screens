@@ -3,7 +3,7 @@
  @component UIAttribute
  */
 
-screens.ui.attribute = function UIAttribute(me) {
+screens.ui.attribute = function UIAttribute(me, packages) {
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {

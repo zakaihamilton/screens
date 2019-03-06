@@ -3,7 +3,7 @@
     @component CmdPackets
 */
 
-screens.cmd.packets = function CmdPackets(me) {
+screens.cmd.packets = function CmdPackets(me, packages) {
     me.cmd = async function (terminal, args) {
         var effects = await me.manager.packet.retrieveEffects();
         if (!effects) {

@@ -3,7 +3,7 @@
     @component CmdAccess
 */
 
-screens.cmd.access = function CmdAccess(me) {
+screens.cmd.access = function CmdAccess(me, packages) {
     me.cmd = async function (terminal, args) {
         var appName = args[1] || "";
         var toggle = args[2] || "";

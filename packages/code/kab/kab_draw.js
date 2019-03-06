@@ -3,7 +3,8 @@
  @component KabDraw
  */
 
-screens.kab.draw = function KabDraw(me) {
+screens.kab.draw = function KabDraw(me, packages) {
+    const { core } = packages;
     me.options = {
         circleMultiplier: 2.5,
         animation: true
@@ -97,7 +98,7 @@ screens.kab.draw = function KabDraw(me) {
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
-                var text = await me.core.property.get(object, options.termMethod, term);
+                var text = await core.property.get(object, options.termMethod, term);
                 var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
                 if (!phase) {
                     borderColor = "darkgray";

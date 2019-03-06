@@ -3,7 +3,8 @@
     @component CorePack
 */
 
-screens.core.pack = function CorePack(me) {
+screens.core.pack = function CorePack(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.postcss = require("postcss");
         me.autoprefixer = require("autoprefixer");
@@ -16,9 +17,9 @@ screens.core.pack = function CorePack(me) {
         var list = [];
         var packages = {};
         for (let ext of extInclude) {
-            await me.core.file.iterate(root, true, async (path) => {
-                let fileExt = me.core.path.extension(path);
-                let fileName = me.core.path.fileName(path);
+            await core.file.iterate(root, true, async (path) => {
+                let fileExt = core.path.extension(path);
+                let fileName = core.path.fileName(path);
                 let folderName = path.split("/").slice(-2, -1)[0];
                 if (fileExt !== ext) {
                     return;
@@ -76,7 +77,7 @@ screens.core.pack = function CorePack(me) {
             }
         }
         for (let info of list) {
-            var data = await me.core.file.readFile(info.path, format);
+            var data = await core.file.readFile(info.path, format);
             var handler = me[info.ext];
             if (handler) {
                 var result = await handler(info, data);
@@ -91,12 +92,12 @@ screens.core.pack = function CorePack(me) {
         return body;
     };
     me.minify = function (path, data) {
-        if (!me.core.util.isSecure()) {
+        if (!core.util.isSecure()) {
             return data;
         }
-        var hash = me.core.string.hash(data);
+        var hash = core.string.hash(data);
         var cachePath = me.cachePath + "/hash_" + path.replace(/[/.]/g, "_") + "_" + hash + ".txt";
-        var cacheBuffer = me.core.file.buffer.read(cachePath, "utf8");
+        var cacheBuffer = core.file.buffer.read(cachePath, "utf8");
         if (cacheBuffer) {
             return cacheBuffer;
         }
@@ -119,17 +120,17 @@ screens.core.pack = function CorePack(me) {
                 me.log_error("minify path: " + path + " error: " + minify.error);
             }
         }
-        me.core.file.buffer.write(cachePath, data, "utf8");
+        core.file.buffer.write(cachePath, data, "utf8");
         return data;
     };
     me.js = function (info, data) {
         var body = "";
         var platforms = ["server", "service", "browser", "client", "service_worker"];
         if (platforms.includes(info.folder) && info.folder !== info.target) {
-            body += `screens.${info.package}.${info.component} = function (me) { return "${info.folder}"; };\n`;
+            body += `screens.${info.package}.${info.component} = function (me, packages) { return "${info.folder}"; };\n`;
         }
         else if (info.platform && info.platform !== info.target) {
-            body += `screens.${info.package}.${info.component} = function (me) { return "${info.platform}"; };\n`;
+            body += `screens.${info.package}.${info.component} = function (me, packages) { return "${info.platform}"; };\n`;
         }
         else {
             body += me.minify(info.path, data) + "\n";

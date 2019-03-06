@@ -3,7 +3,7 @@
  @component CoreMethod
  */
 
-screens.core.method = function CoreMethod(me) {
+screens.core.method = function CoreMethod(me, packages) {
     me.content = {
         name: "Components",
         search: function (text) {

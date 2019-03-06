@@ -3,21 +3,22 @@
  @component CoreApp
  */
 
-screens.core.app = function CoreApp(me) {
+screens.core.app = function CoreApp(me, packages) {
+    const { core, storage, ui, user, app } = packages;
     me.init = async function () {
-        me.core.listener.register(me.sendReady, me.core.login.id);
-        me.list = await me.storage.local.db.get(me.id, "appList");
+        core.listener.register(me.sendReady, core.login.id);
+        me.list = await storage.local.db.get(me.id, "appList");
     };
     me.sendReady = async function () {
-        me.list = await me.user.access.appList();
-        await me.storage.local.db.set(me.id, "appList", me.list);
+        me.list = await user.access.appList();
+        await storage.local.db.set(me.id, "appList", me.list);
         for (var name of screens.components) {
             if (!(name.includes("app."))) {
                 continue;
             }
-            await me.core.util.performance(name + ".ready", async () => {
+            await core.util.performance(name + ".ready", async () => {
                 try {
-                    await me.core.message.send(name + ".ready");
+                    await core.message.send(name + ".ready");
                 }
                 catch (err) {
                     me.log_error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
@@ -26,7 +27,7 @@ screens.core.app = function CoreApp(me) {
         }
     };
     me.available = function (name) {
-        var available = me.core.util.isAdmin || (me.list && me.list.includes(name));
+        var available = core.util.isAdmin || (me.list && me.list.includes(name));
         return available;
     };
     me.lookup = {
@@ -46,22 +47,22 @@ screens.core.app = function CoreApp(me) {
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
-        var progress = me.ui.modal.launch("progress", {
-            "title": me.core.string.title(appName),
+        var progress = ui.modal.launch("progress", {
+            "title": core.string.title(appName),
             "delay": "500"
         });
-        result = await me.core.message.send("app." + appName + ".launch", appArgs);
-        me.core.property.set(result, "show", true);
-        me.core.property.set(progress, "close");
+        result = await core.message.send("app." + appName + ".launch", appArgs);
+        core.property.set(result, "show", true);
+        core.property.set(progress, "close");
         return result;
     };
     me.singleton = function (appName) {
         var singleton = null;
-        var app = me.app[appName];
-        if (app) {
-            singleton = app.singleton;
-            if (me.core.property.get(app.singleton, "ui.node.parent")) {
-                return app.singleton;
+        var component = app[appName];
+        if (component) {
+            singleton = component.singleton;
+            if (core.property.get(component.singleton, "ui.node.parent")) {
+                return component.singleton;
             }
         }
         return singleton;

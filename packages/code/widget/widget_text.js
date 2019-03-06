@@ -3,7 +3,7 @@
  @component WidgetText
  */
 
-screens.widget.text = function WidgetText(me) {
+screens.widget.text = function WidgetText(me, packages) {
     me.element = {
         dependencies: {
             properties: ["ui.basic.text"]

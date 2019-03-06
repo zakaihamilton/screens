@@ -3,7 +3,8 @@
  @component UITheme
  */
 
-screens.ui.theme = function UITheme(me) {
+screens.ui.theme = function UITheme(me, packages) {
+    const { core } = packages;
     me.themes = [];
     me.init = async function () {
         me.ui.options.load(me, null, {
@@ -26,16 +27,16 @@ screens.ui.theme = function UITheme(me) {
         me.updateElements();
     };
     me.toggleFontSize = function () {
-        var fontSize = me.core.property.get(window.document.body, "ui.style.fontSize");
-        me.core.property.set(me, "ui.theme.fontSize", fontSize !== "16px" ? "1em" : "1.5em");
+        var fontSize = core.property.get(window.document.body, "ui.style.fontSize");
+        core.property.set(me, "ui.theme.fontSize", fontSize !== "16px" ? "1em" : "1.5em");
     };
     me.updateFontSize = function () {
         var fontSize = me.options.fontSize;
-        me.core.property.set(window.document.body, "ui.style.fontSize", fontSize);
+        core.property.set(window.document.body, "ui.style.fontSize", fontSize);
         window.dispatchEvent(new Event("resize"));
     };
     me.updateElements = function (parent) {
-        var isMobile = me.core.device.isMobile();
+        var isMobile = core.device.isMobile();
         var nightMode = me.options.nightMode;
         if (!parent) {
             parent = document.body;

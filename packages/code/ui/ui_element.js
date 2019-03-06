@@ -3,7 +3,8 @@
  @component UIElement
  */
 
-screens.ui.element = function UIElement(me) {
+screens.ui.element = function UIElement(me, packages) {
+    const { core } = packages;
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -131,7 +132,7 @@ screens.ui.element = function UIElement(me) {
     };
     me.create = function (properties, parent, context = null, params = null) {
         if (typeof properties === "string") {
-            properties = me.core.property.get(parent, properties, context, params);
+            properties = core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
             for (var item of properties) {
@@ -183,7 +184,7 @@ screens.ui.element = function UIElement(me) {
         }
         if (!object) {
             object = document.createElement(tag);
-            me.core.property.object.create(component, object);
+            core.property.object.create(component, object);
         }
         object.var = {};
         if (context === "self") {
@@ -192,7 +193,7 @@ screens.ui.element = function UIElement(me) {
         object.context = context ? context : parent;
         if (params) {
             for (var key in params) {
-                me.core.property.set(object, "ui.param." + key, params[key]);
+                core.property.set(object, "ui.param." + key, params[key]);
             }
         }
         if (component.element) {
@@ -202,7 +203,7 @@ screens.ui.element = function UIElement(me) {
             }
         }
         if (parent && !exists) {
-            me.core.property.set(object, "ui.node.parent", parent);
+            core.property.set(object, "ui.node.parent", parent);
         }
         if (component.element) {
             var create = component.element.create;
@@ -222,7 +223,7 @@ screens.ui.element = function UIElement(me) {
         }
         if (defaultProperties) {
             for (let key in defaultProperties) {
-                me.core.property.set(object, key, defaultProperties[key]);
+                core.property.set(object, key, defaultProperties[key]);
             }
         }
         if (redirect) {
@@ -230,11 +231,11 @@ screens.ui.element = function UIElement(me) {
         }
         object.context = context ? context : parent;
         for (let key in properties) {
-            me.core.property.set(object, key, properties[key]);
+            core.property.set(object, key, properties[key]);
         }
         if (component.element && component.element.extend) {
             for (var extension of component.element.extend) {
-                me.core.property.set(object, extension + ".extend");
+                core.property.set(object, extension + ".extend");
             }
         }
         if (component.element) {

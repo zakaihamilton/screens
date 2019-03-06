@@ -3,7 +3,8 @@
  @component KabData
  */
 
-screens.kab.data = function KabData(me) {
+screens.kab.data = function KabData(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.files = {};
     };
@@ -11,7 +12,7 @@ screens.kab.data = function KabData(me) {
         language = language.toLowerCase();
         var json = null;
         if (language && language !== "none") {
-            json = await me.core.json.loadFile("/packages/res/terms/" + language + ".json");
+            json = await core.json.loadFile("/packages/res/terms/" + language + ".json");
         }
         if (json) {
             me.files[language] = json;

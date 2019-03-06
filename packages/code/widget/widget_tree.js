@@ -3,7 +3,8 @@
  @component WidgetTree
  */
 
-screens.widget.tree = function WidgetTree(me) {
+screens.widget.tree = function WidgetTree(me, packages) {
+    const { core } = packages;
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "widget.tree.collapse"]
@@ -41,16 +42,16 @@ screens.widget.tree = function WidgetTree(me) {
         set: function (object, value) {
             if (value) {
                 object.treeElements = value;
-                me.core.property.set(object.var.container, "ui.basic.elements", value);
-                me.core.property.notify(object.var.container, "update");
+                core.property.set(object.var.container, "ui.basic.elements", value);
+                core.property.notify(object.var.container, "update");
             }
         }
     };
     me.refresh = {
         set: function (object) {
-            me.core.property.set(object.var.container, "empty");
-            me.core.property.set(object, "elements", object.treeElements);
-            me.core.property.notify(object.var.container, "update");
+            core.property.set(object.var.container, "empty");
+            core.property.set(object, "elements", object.treeElements);
+            core.property.notify(object.var.container, "update");
         }
     };
     me.selection = {
@@ -60,7 +61,7 @@ screens.widget.tree = function WidgetTree(me) {
     };
 };
 
-screens.widget.tree.dropdown = function WidgetDropDownList(me) {
+screens.widget.tree.dropdown = function WidgetDropDownList(me, packages) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
@@ -102,9 +103,9 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.back = {
         set: function (object, value) {
             if (value) {
-                var label = me.core.property.get(value, "ui.basic.text");
-                me.core.property.set(object, "ui.basic.text", label);
-                me.core.property.set(object, "onChange", label);
+                var label = core.property.get(value, "ui.basic.text");
+                core.property.set(object, "ui.basic.text", label);
+                core.property.set(object, "onChange", label);
             }
         }
     };
@@ -119,31 +120,31 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
                 "ui.style.height": "100px",
                 "ui.basic.elements": object.parentNode.treeElements,
                 "ui.group.data": object.parentNode.treeData,
-                "widget.tree.popup.selection": me.core.property.get(object.parentNode, "text"),
+                "widget.tree.popup.selection": core.property.get(object.parentNode, "text"),
                 "ui.basic.window": object.parentNode
             });
         }
     };
     me.readOnly = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.readOnly");
+            return core.property.get(object.var.selection, "ui.basic.readOnly");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.readOnly", value);
-            me.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
+            core.property.set(object.var.selection, "ui.basic.readOnly", value);
+            core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.text");
+            return core.property.get(object.var.selection, "ui.basic.text");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.text", value);
+            core.property.set(object.var.selection, "ui.basic.text", value);
         }
     };
     me.monitorChange = {
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.monitor.change", value);
+            core.property.set(object.var.selection, "ui.monitor.change", value);
         }
     };
     me.elements = {
@@ -163,7 +164,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
         }
     };
 };
-screens.widget.tree.popup = function WidgetListPopup(me) {
+screens.widget.tree.popup = function WidgetListPopup(me, packages) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -184,13 +185,13 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.core.property.set(object.window, "back", value);
-            me.core.property.set(object, "ui.node.parent");
+            core.property.set(object.window, "back", value);
+            core.property.set(object, "ui.node.parent");
         }
     };
     me.select = {
         set: function (object, value) {
-            me.core.property.set(object, "back", value);
+            core.property.set(object, "back", value);
         }
     };
     me.selection = {
@@ -199,9 +200,9 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    var label = me.core.property.get(child, "ui.basic.text");
+                    var label = core.property.get(child, "ui.basic.text");
                     if (label === value) {
-                        me.core.property.set(child, "ui.class.add", "selected");
+                        core.property.set(child, "ui.class.add", "selected");
                         break;
                     }
                 }
@@ -211,14 +212,14 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.core.property.set(object.var.container, "ui.basic.elements", value);
-                me.core.property.set(object.var.container, "update");
+                core.property.set(object.var.container, "ui.basic.elements", value);
+                core.property.set(object.var.container, "update");
             }
         }
     };
 };
 
-screens.widget.tree.list = function WidgetTreeList(me) {
+screens.widget.tree.list = function WidgetTreeList(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "ul",
@@ -227,7 +228,7 @@ screens.widget.tree.list = function WidgetTreeList(me) {
     };
 };
 
-screens.widget.tree.item = function WidgetTreeItem(me) {
+screens.widget.tree.item = function WidgetTreeItem(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "li",
@@ -272,7 +273,7 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.value = function (object, value) {
         if (typeof value === "string") {
-            value = me.core.property.get(object.parentNode.target, value);
+            value = core.property.get(object.parentNode.target, value);
         }
         return value;
     };
@@ -296,15 +297,15 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
                         "ui.basic.var": "list"
                     }, object, object.context);
                 }
-                me.core.property.set(object.var.icon, "ui.class.add", "parent");
+                core.property.set(object.var.icon, "ui.class.add", "parent");
                 me.ui.element.create(value, object.var.list, object.context);
-                me.core.property.set(object, "update");
+                core.property.set(object, "update");
             }
         }
     };
     me.dblclick = {
         set: function (object) {
-            me.core.property.set(object, "click");
+            core.property.set(object, "click");
             /*TODO: call default button on window */
         }
     };
@@ -312,25 +313,25 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
         set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
             if (container.selected) {
-                me.core.property.set(container.selected, "ui.property.broadcast", {
+                core.property.set(container.selected, "ui.property.broadcast", {
                     "ui.class.remove": "selected"
                 });
             }
             container.selected = object;
-            me.core.property.set(object, "ui.property.broadcast", {
+            core.property.set(object, "ui.property.broadcast", {
                 "ui.class.add": "selected"
             });
-            me.core.property.set(object.var.list, "ui.property.broadcast", {
+            core.property.set(object.var.list, "ui.property.broadcast", {
                 "ui.class.remove": "selected"
             });
             var popup = me.ui.node.container(object, "widget.tree.popup");
-            me.core.property.set(popup, "select", object);
+            core.property.set(popup, "select", object);
         }
     };
     me.click = {
         set: function (object) {
             var item = me.ui.node.container(object, me.id);
-            me.core.property.set(item, "select");
+            core.property.set(item, "select");
         }
     };
     me.text = {
@@ -345,9 +346,9 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
         set: function (object) {
             var item = me.ui.node.container(object, me.id);
             if (item) {
-                me.core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
+                core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
             }
-            me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
+            core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };
     me.state = {

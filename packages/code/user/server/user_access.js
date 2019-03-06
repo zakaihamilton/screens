@@ -3,9 +3,10 @@
  @component UserAccess
  */
 
-screens.user.access = function UserAccess(me) {
+screens.user.access = function UserAccess(me, packages) {
+    const { core } = packages;
     me.init = function () {
-        me.core.property.link("core.socket.access", "user.access.access", true);
+        core.property.link("core.socket.access", "user.access.access", true);
     };
     me.access = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {

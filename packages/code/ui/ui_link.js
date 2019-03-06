@@ -3,7 +3,8 @@
  @component UILink
  */
 
-screens.ui.link = function UILink(me) {
+screens.ui.link = function UILink(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         window.addEventListener("click", me.handleClick);
     };
@@ -34,19 +35,19 @@ screens.ui.link = function UILink(me) {
             query = href.substring(query_offset + 1);
         }
         url = decodeURIComponent(url);
-        query = me.core.http.parse_query(query);
+        query = core.http.parse_query(query);
 
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
         var args = [url];
         if (query.args) {
-            let app_args = JSON.parse(me.core.string.decode(query.args));
+            let app_args = JSON.parse(core.string.decode(query.args));
             args.push(...app_args);
         }
-        me.core.app.launch.apply(null, args).then((window) => {
+        core.app.launch.apply(null, args).then((window) => {
             if (window) {
-                me.core.property.set(window, "widget.window.show", true);
+                core.property.set(window, "widget.window.show", true);
             }
         });
 

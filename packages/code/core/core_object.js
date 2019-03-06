@@ -3,7 +3,8 @@
     @component CoreObject
 */
 
-screens.core.object = function CoreObject(me) {
+screens.core.object = function CoreObject(me, packages) {
+    const { core } = packages;
     me.protocols = {};
     me.register = function (path, protocol) {
         for (let key in protocol) {
@@ -69,8 +70,8 @@ screens.core.object = function CoreObject(me) {
         }
         return {
             folder: {
-                virtual: me.core.path.folderPath(virtualPath),
-                direct: me.core.path.folderPath(directPath)
+                virtual: core.path.folderPath(virtualPath),
+                direct: core.path.folderPath(directPath)
             },
             virtual: virtualPath,
             direct: directPath

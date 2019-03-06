@@ -3,7 +3,7 @@
  @component AppNotes
  */
 
-screens.app.notes = function AppNotes(me) {
+screens.app.notes = function AppNotes(me, packages) {
     me.ready = async function () {
         await me.ui.content.attach(me);
     };

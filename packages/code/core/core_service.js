@@ -3,7 +3,8 @@
  @component CoreService
  */
 
-screens.core.service = function CoreService(me) {
+screens.core.service = function CoreService(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         if (me.platform === "service") {
             me.log("arguments: " + JSON.stringify(process.argv));
@@ -16,13 +17,13 @@ screens.core.service = function CoreService(me) {
                 me.log("loading service: " + serviceName + "...");
                 await me.include("service." + serviceName);
                 me.log("setup service: " + serviceName + "...");
-                await me.core.message.send("service." + serviceName + ".setup");
+                await core.message.send("service." + serviceName + ".setup");
                 me.log("setup service: " + serviceName + " complete");
             }
         }
     };
     me.config = async function (name) {
-        return await me.core.util.config("settings." + name);
+        return await core.util.config("settings." + name);
     };
     me.sendAll = async function (method) {
         var responses = [];
@@ -30,12 +31,12 @@ screens.core.service = function CoreService(me) {
         if (me.platform === "service") {
             for (var serviceName of me.serviceNames) {
                 args[0] = "service." + serviceName + "." + method;
-                responses.push(await me.core.message.send.apply(null, args));
+                responses.push(await core.message.send.apply(null, args));
             }
             return responses;
         }
         else {
-            return me.core.socket.sendAll("service", ...args);
+            return core.socket.sendAll("service", ...args);
         }
     };
 };

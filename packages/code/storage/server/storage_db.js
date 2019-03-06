@@ -3,22 +3,23 @@
  @component StorageDB
  */
 
-screens.storage.db = function StorageDB(me) {
+screens.storage.db = function StorageDB(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.mongodb = require("mongodb");
         me.databases = {};
-        me.core.mutex.enable(me.id, true);
+        core.mutex.enable(me.id, true);
     };
     me.database = async function (name) {
         var db = null;
-        var unlock = await me.core.mutex.lock(me.id);
+        var unlock = await core.mutex.lock(me.id);
         try {
             var database = me.databases[name];
             if (database) {
                 unlock();
                 return database;
             }
-            var keys = await me.core.private.keys("mongodb");
+            var keys = await core.private.keys("mongodb");
             var info = keys[name];
             if (!info) {
                 unlock();
@@ -81,7 +82,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await me.core.util.performance(location.componentId + ".findById: " + id, async () => {
+        var result = await core.util.performance(location.componentId + ".findById: " + id, async () => {
             return await collection.findOne(query);
         });
         me.setCache(location, hash, result);
@@ -93,7 +94,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await me.core.util.performance(location.componentId + ".find: " + JSON.stringify(query), async () => {
+        var result = await core.util.performance(location.componentId + ".find: " + JSON.stringify(query), async () => {
             return await collection.findOne(query);
         });
         me.setCache(location, hash, result);
@@ -165,7 +166,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        array = await me.core.util.performance(location.componentId + ".list: " + queryString, async () => {
+        array = await core.util.performance(location.componentId + ".list: " + queryString, async () => {
             var cursor = await collection.find(query);
             if (params) {
                 for (var param in params) {
@@ -194,7 +195,7 @@ screens.storage.db = function StorageDB(me) {
         collection.createIndex(index);
     };
     me.queryAsString = function (query) {
-        var string = JSON.stringify(me.core.json.map(query, item => {
+        var string = JSON.stringify(core.json.map(query, item => {
             if (item && item.source) {
                 return item.source;
             }
@@ -206,7 +207,7 @@ screens.storage.db = function StorageDB(me) {
         var args = Array.prototype.slice.call(arguments, 1);
         var result = null;
         var string = me.queryAsString(args);
-        var hash = me.core.string.hash(string);
+        var hash = core.string.hash(string);
         if (location.cache) {
             result = location.cache[hash];
             if (result) {

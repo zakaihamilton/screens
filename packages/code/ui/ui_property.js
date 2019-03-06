@@ -3,7 +3,8 @@
  @component UIProperty
  */
 
-screens.ui.property = function UIProperty(me) {
+screens.ui.property = function UIProperty(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.afterQueue = [];
         me.afterQueueTimer = null;
@@ -20,7 +21,7 @@ screens.ui.property = function UIProperty(me) {
                 if (prefix) {
                     name = prefix + key;
                 }
-                me.core.property.set(object, name, properties[key]);
+                core.property.set(object, name, properties[key]);
             }
         }
     };
@@ -56,7 +57,7 @@ screens.ui.property = function UIProperty(me) {
     me.broadcast = {
         set: function (object, properties) {
             for (let key in properties) {
-                me.core.property.set(object, key, properties[key]);
+                core.property.set(object, key, properties[key]);
             }
             var childList = me.ui.node.childList(object);
             if (childList) {
@@ -70,7 +71,7 @@ screens.ui.property = function UIProperty(me) {
                     }
                     if (child.getAttribute("noBroadcast")) {
                         for (let key in properties) {
-                            me.core.property.set(child, key, properties[key]);
+                            core.property.set(child, key, properties[key]);
                         }
                         continue;
                     }
@@ -91,14 +92,14 @@ screens.ui.property = function UIProperty(me) {
     };
     me.themedProperties = function (object, mapping) {
         for (var name in mapping) {
-            me.core.property.set(object, "core.property.object." + name, {
+            core.property.set(object, "core.property.object." + name, {
                 "set": function (object, value, name) {
                     if (value) {
-                        me.core.property.set(object, "ui.property.broadcast", {
+                        core.property.set(object, "ui.property.broadcast", {
                             "ui.class.add": name
                         });
                     } else {
-                        me.core.property.set(object, "ui.property.broadcast", {
+                        core.property.set(object, "ui.property.broadcast", {
                             "ui.class.remove": name
                         });
                     }

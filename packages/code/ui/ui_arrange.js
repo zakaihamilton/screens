@@ -3,7 +3,8 @@
  @component UIArrange
  */
 
-screens.ui.arrange = function UIArrange(me) {
+screens.ui.arrange = function UIArrange(me, packages) {
+    const { core } = packages;
     me.cascade = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
@@ -14,7 +15,7 @@ screens.ui.arrange = function UIArrange(me) {
             if (window) {
                 object = window;
             }
-            var windows = me.core.property.get(object, "widget.window.visibleWindows");
+            var windows = core.property.get(object, "widget.window.visibleWindows");
             var left = 0, top = 0, numWindows = windows.length;
             for (let child of windows) {
                 me.reposition(child, function (region) {
@@ -31,7 +32,7 @@ screens.ui.arrange = function UIArrange(me) {
     };
     me.reposition = function (object, callback) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "unmaximize");
+        core.property.set(window, "unmaximize");
         var parent = me.widget.window.parent(window);
         var container = null;
         if (parent) {
@@ -40,17 +41,17 @@ screens.ui.arrange = function UIArrange(me) {
             container = me.ui.element.workspace();
         }
         var parent_region = me.ui.rect.relativeRegion(container);
-        var isFixed = me.core.property.get(window, "fixed");
+        var isFixed = core.property.get(window, "fixed");
         callback(parent_region);
         me.ui.rect.setRelativeRegion(window, parent_region, container, isFixed);
-        me.core.property.set(window, "ui.property.broadcast", {
+        core.property.set(window, "ui.property.broadcast", {
             "update": null
         });
-        me.core.property.set(parent, "ui.property.broadcast", {
+        core.property.set(parent, "ui.property.broadcast", {
             "update": null
         });
         if (window.child_window) {
-            me.core.property.set(window.child_window, "ui.property.broadcast", {
+            core.property.set(window.child_window, "ui.property.broadcast", {
                 "update": null
             });
         }
@@ -148,15 +149,15 @@ screens.ui.arrange = function UIArrange(me) {
         if (window) {
             object = window;
         }
-        var windows = me.core.property.get(object, "widget.window.visibleWindows");
+        var windows = core.property.get(object, "widget.window.visibleWindows");
         if (windows) {
             if (windows.length > 0) {
                 var left = windows[windows.length - 1];
-                me.core.property.set(left, "ui.arrange.alignToLeft");
+                core.property.set(left, "ui.arrange.alignToLeft");
             }
             if (windows.length > 1) {
                 var right = windows[windows.length - 2];
-                me.core.property.set(right, "ui.arrange.alignToRight");
+                core.property.set(right, "ui.arrange.alignToRight");
             }
         }
     };
@@ -169,15 +170,15 @@ screens.ui.arrange = function UIArrange(me) {
         if (window) {
             object = window;
         }
-        var windows = me.core.property.get(object, "widget.window.visibleWindows");
+        var windows = core.property.get(object, "widget.window.visibleWindows");
         if (windows) {
             if (windows.length > 0) {
                 var top = windows[windows.length - 1];
-                me.core.property.set(top, "ui.arrange.alignToTop");
+                core.property.set(top, "ui.arrange.alignToTop");
             }
             if (windows.length > 1) {
                 var bottom = windows[windows.length - 2];
-                me.core.property.set(bottom, "ui.arrange.alignToBottom");
+                core.property.set(bottom, "ui.arrange.alignToBottom");
             }
         }
     };

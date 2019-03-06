@@ -3,7 +3,7 @@
     @component CmdFiles
 */
 
-screens.cmd.files = function CmdFiles(me) {
+screens.cmd.files = function CmdFiles(me, packages) {
     me.cmd = async function (terminal, args) {
         if (args.length === 1) {
             args.push(...["/Kab/concepts/private/american", "cache"]);

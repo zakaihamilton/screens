@@ -3,7 +3,7 @@
  @component AppDiagram
  */
 
-screens.app.diagram = function AppDiagram(me) {
+screens.app.diagram = function AppDiagram(me, packages) {
     me.init = async function () {
         me.core.property.set(me, {
             "core.property.object.path": null,

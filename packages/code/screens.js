@@ -38,7 +38,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         screens[package_name][component_name] = component_obj;
     }
     var constructor = node;
-    var platform = constructor(component_obj, child_name);
+    var platform = constructor(component_obj, screens);
     if (typeof platform !== "string") {
         platform = null;
     }
@@ -74,7 +74,7 @@ function screens_setup(package_name, component_name, child_name, node) {
     }
     else {
         component_obj.attach = async (me) => {
-            var context = constructor(me);
+            var context = constructor(me, screens);
             var result = null;
             if (context.init) {
                 result = await context.init();
@@ -259,16 +259,16 @@ function screens_load(items, state) {
 
 async function screens_include(packages) {
     if (typeof packages === "string" && packages) {
-        var names = packages.split(".");
-        var package_name = names[0];
-        var component_name = names[1];
+        let names = packages.split(".");
+        let package_name = names[0];
+        let component_name = names[1];
         packages = {};
         packages[package_name] = [component_name];
     }
     var collection = {};
-    for (var package_name in packages) {
-        var components = packages[package_name];
-        var items = [];
+    for (let package_name in packages) {
+        let components = packages[package_name];
+        let items = [];
         if (!(package_name in screens)) {
             screens[package_name] = {};
         }
@@ -283,7 +283,7 @@ async function screens_include(packages) {
         collection[package_name] = items;
     }
     var promises = [];
-    for (package_name in packages) {
+    for (let package_name in packages) {
         for (var item of collection[package_name]) {
             if (item.promises) {
                 promises.push(...item.promises);
@@ -293,10 +293,10 @@ async function screens_include(packages) {
     if (promises) {
         await Promise.all(promises);
     }
-    for (package_name in packages) {
+    for (let package_name in packages) {
         collection[package_name] = screens_load(collection[package_name], "setup");
     }
-    for (package_name in packages) {
+    for (let package_name in packages) {
         await screens_init(collection[package_name]);
     }
 }

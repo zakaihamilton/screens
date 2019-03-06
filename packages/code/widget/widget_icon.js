@@ -3,7 +3,8 @@
  @component WidgetIcon
  */
 
-screens.widget.icon = function WidgetIcon(me) {
+screens.widget.icon = function WidgetIcon(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.element = {
             dependencies: {
@@ -35,11 +36,11 @@ screens.widget.icon = function WidgetIcon(me) {
     };
     me.type = {
         get: function (object) {
-            var isHidden = me.core.property.get(object, "ui.basic.show");
+            var isHidden = core.property.get(object, "ui.basic.show");
             if (isHidden) {
                 return "hidden";
             }
-            var isIcon = me.core.property.get(object, "ui.class.contains", "widget.icon.icon");
+            var isIcon = core.property.get(object, "ui.class.contains", "widget.icon.icon");
             if (isIcon) {
                 return "icon";
             }
@@ -49,17 +50,17 @@ screens.widget.icon = function WidgetIcon(me) {
         },
         set: function (object, value) {
             if (value === "hidden") {
-                me.core.property.set(object, "ui.basic.show", false);
+                core.property.set(object, "ui.basic.show", false);
             }
             else if (value === "icon") {
-                me.core.property.set(object, "ui.class.remove", "widget.icon.list");
+                core.property.set(object, "ui.class.remove", "widget.icon.list");
             }
             else if (value === "list") {
-                me.core.property.set(object, "ui.class.remove", "widget.icon.icon");
+                core.property.set(object, "ui.class.remove", "widget.icon.icon");
             }
-            me.core.property.set(object, "ui.class.add", "widget.icon." + value);
-            me.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
-            me.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
+            core.property.set(object, "ui.class.add", "widget.icon." + value);
+            core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
+            core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
         }
     };
 };

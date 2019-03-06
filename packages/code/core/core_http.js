@@ -3,7 +3,8 @@
  @component CoreHttp
  */
 
-screens.core.http = function CoreHttp(me) {
+screens.core.http = function CoreHttp(me, packages) {
+    const { core } = packages;
     if (screens.platform === "server") {
         me.port = process.env.PORT || 4040;
     } else if (screens.platform === "service") {
@@ -88,7 +89,7 @@ screens.core.http = function CoreHttp(me) {
             });
         };
         if (secure) {
-            var keys = await me.core.private.keys("https");
+            var keys = await core.private.keys("https");
             if (keys && keys.key && keys.cert && keys.ca) {
                 return new Promise((resolve, reject) => {
                     try {
@@ -136,7 +137,7 @@ screens.core.http = function CoreHttp(me) {
     me.clientIp = function (request) {
         var ip = null;
         if (request) {
-            ip = me.core.json.value(request, {
+            ip = core.json.value(request, {
                 "headers.x-forwarded-for": value => value ? value.split(",").pop() : null,
                 "connection.remoteAddress": null,
                 "connection.socket.remoteAddress": null,
@@ -160,7 +161,7 @@ screens.core.http = function CoreHttp(me) {
             secure: secure,
             method: request.method,
             url: decodeURIComponent(url),
-            query: me.core.http.parse_query(query),
+            query: core.http.parse_query(query),
             headers: request.headers,
             code: 200,
             "content-type": "application/json",
@@ -171,16 +172,16 @@ screens.core.http = function CoreHttp(me) {
             clientIp: me.clientIp(request),
             responseHeaders: {}
         };
-        me.core.property.object.create(me, info);
+        core.property.object.create(me, info);
         me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query));
         var messages = ["receive", "compress", "end"];
-        me.core.util.performance("http request url: " + info.url, async () => {
+        core.util.performance("http request url: " + info.url, async () => {
             for (var message of messages) {
                 if (info.stop) {
                     break;
                 }
                 try {
-                    await me.core.property.set(info, message);
+                    await core.property.set(info, message);
                 }
                 catch (err) {
                     info.stop = true;
@@ -206,14 +207,14 @@ screens.core.http = function CoreHttp(me) {
 
     };
     me.send = async function (info) {
-        me.core.property.object.create(me, info);
+        core.property.object.create(me, info);
         if (!info.headers) {
             info.headers = {};
         }
-        await me.core.property.set(info, "headers", null);
+        await core.property.set(info, "headers", null);
         var headers = Object.assign({}, info.headers);
         if (me.platform === "service") {
-            return await me.core.message.send_server(me.id + ".send", info);
+            return await core.message.send_server(me.id + ".send", info);
         } else if (me.platform === "server") {
             return new Promise((resolve, reject) => {
                 var request = {

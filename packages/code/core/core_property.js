@@ -3,7 +3,8 @@
  @component CoreProperty
  */
 
-screens.core.property = function CoreProperty(me) {
+screens.core.property = function CoreProperty(me, packages) {
+    const { core } = packages;
     me.fullname = function (object, name, default_name = null) {
         if (typeof name !== "string") {
             throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;
@@ -46,7 +47,7 @@ screens.core.property = function CoreProperty(me) {
             if (object.context) {
                 object = object.context;
             }
-            path = me.core.property.fullname(object, path, path);
+            path = core.property.fullname(object, path, path);
         }
         return path;
     };
@@ -58,7 +59,7 @@ screens.core.property = function CoreProperty(me) {
         if (Array.isArray(object)) {
             let results = [];
             for (let item of object) {
-                let result = me.core.property.get(item, name, value, method);
+                let result = core.property.get(item, name, value, method);
                 results.push(result);
             }
             return results;
@@ -67,7 +68,7 @@ screens.core.property = function CoreProperty(me) {
             let results = {};
             for (let subName in name) {
                 var subValue = name[subName];
-                let result = me.core.property.get(object, subName, subValue, method);
+                let result = core.property.get(object, subName, subValue, method);
                 results[subName] = result;
             }
             return results;
@@ -79,7 +80,7 @@ screens.core.property = function CoreProperty(me) {
             }
             if (typeof info.name === "string") {
                 if (info.name.startsWith("@")) {
-                    info.value = me.core.property.get(info.object, info.name.substring(1), info.value);
+                    info.value = core.property.get(info.object, info.name.substring(1), info.value);
                     if (info.value && info.value.then) {
                         info.value.then((newValue) => {
                             me.get(object, info.name, newValue, method, check);
@@ -90,7 +91,7 @@ screens.core.property = function CoreProperty(me) {
             }
             if (typeof info.value === "string") {
                 if (info.value.startsWith("@")) {
-                    info.value = me.core.property.get(info.object, info.value.substring(1));
+                    info.value = core.property.get(info.object, info.value.substring(1));
                     if (info.value && info.value.then) {
                         info.value.then((newValue) => {
                             me.get(object, info.name, newValue, method, check);
@@ -181,7 +182,7 @@ screens.core.property = function CoreProperty(me) {
                         object = args[0];
                     }
                     else if (args[0] !== "this") {
-                        object = me.core.property.get(object, args[0]);
+                        object = core.property.get(object, args[0]);
                     }
                     value = args[1];
                 } else if (args.length === 1) {
@@ -197,10 +198,10 @@ screens.core.property = function CoreProperty(me) {
         }
         if (object && object !== me) {
             if (typeof source === "string") {
-                source = me.core.property.fullname(object, source);
+                source = core.property.fullname(object, source);
             }
             if (typeof target === "string") {
-                target = me.core.property.fullname(object, target);
+                target = core.property.fullname(object, target);
             }
         }
         var forwarding_list = object._forwarding_list;
@@ -227,19 +228,19 @@ screens.core.property = function CoreProperty(me) {
                 clearTimeout(object.notifications[name]);
                 object.notifications[name] = null;
             }
-            return me.core.property.set(object, name, value);
+            return core.property.set(object, name, value);
         }
         if (object.notifications[name]) {
             return;
         }
         object.notifications[name] = setTimeout(function () {
             object.notifications[name] = null;
-            me.core.property.set(object, name, value);
+            core.property.set(object, name, value);
         }, 250);
     };
     me.sendToLinks = function (object, name, value, beforeProperty) {
         var allPromises = [];
-        var source_method = me.core.property.fullname(object, name);
+        var source_method = core.property.fullname(object, name);
         var promises = me.setTo(me._forwarding_list, object, source_method, value, beforeProperty);
         if (promises) {
             allPromises.push(...promises);
@@ -256,14 +257,14 @@ screens.core.property = function CoreProperty(me) {
         }
         if (Array.isArray(object)) {
             var results = object.map((item) => {
-                return me.core.property.set(item, name, value);
+                return core.property.set(item, name, value);
             });
             return results;
         }
         if (Array.isArray(name)) {
             let results = [];
             for (var item of name) {
-                results.push(me.core.property.set(object, item, value));
+                results.push(core.property.set(object, item, value));
             }
             return results;
         }
@@ -277,10 +278,10 @@ screens.core.property = function CoreProperty(me) {
         else if (typeof name !== "function") {
             for (var key in name) {
                 let value = name[key];
-                me.core.property.set(object, key, value);
+                core.property.set(object, key, value);
             }
         }
-        var result = me.core.property.get(object, name, value, "set");
+        var result = core.property.get(object, name, value, "set");
         if (typeof name === "string") {
             let subPromises = me.sendToLinks(object, name, value, false);
             if (subPromises.length) {
@@ -303,7 +304,7 @@ screens.core.property = function CoreProperty(me) {
             if (forwarding_list) {
                 forwarding_list.forEach((propertyState, target) => {
                     if (propertyState === beforeProperty) {
-                        var result = me.core.property.set(object, target, value);
+                        var result = core.property.set(object, target, value);
                         if (result && result.then) {
                             promises.push(result);
                         }
@@ -320,14 +321,14 @@ screens.core.property = function CoreProperty(me) {
             }
             for (var property of properties) {
                 for (var key in property) {
-                    me.core.property.set(object, key, property[key]);
+                    core.property.set(object, key, property[key]);
                 }
             }
         }
     };
 };
 
-screens.core.property.object = function CorePropertyObject(me) {
+screens.core.property.object = function CorePropertyObject(me, packages) {
     me.create = function (component, object = null) {
         if (!object) {
             object = {};

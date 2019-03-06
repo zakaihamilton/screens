@@ -3,7 +3,7 @@
     @component CoreHash
 */
 
-screens.core.hash = function CoreHash(me) {
+screens.core.hash = function CoreHash(me, packages) {
     me.init = function () {
         me.bcrypt = require("bcryptjs");
     };

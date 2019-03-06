@@ -3,35 +3,36 @@
  @component MediaSpeech
  */
 
-screens.media.speech = function MediaSpeech(me) {
+screens.media.speech = function MediaSpeech(me, packages) {
+    const { core } = packages;
     me.init = function () {
         const ffprobePath = require("@ffprobe-installer/ffprobe").path;
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
     };
     me.exists = function (path) {
-        var transcriptPath = me.core.path.replaceExtension(path, "txt");
-        return me.core.file.exists(transcriptPath);
+        var transcriptPath = core.path.replaceExtension(path, "txt");
+        return core.file.exists(transcriptPath);
     };
     me.load = async function (path) {
-        var transcriptPath = me.core.path.replaceExtension(path, "txt");
-        var exists = me.core.file.exists(transcriptPath);
+        var transcriptPath = core.path.replaceExtension(path, "txt");
+        var exists = core.file.exists(transcriptPath);
         var data = null;
         if (exists) {
-            data = await me.core.file.readFile(transcriptPath, "utf8");
+            data = await core.file.readFile(transcriptPath, "utf8");
         }
         return data;
     };
     me.save = async function (path, data) {
-        var transcriptPath = me.core.path.replaceExtension(path, "txt");
-        await me.core.file.writeFile(transcriptPath, data, "utf8");
+        var transcriptPath = core.path.replaceExtension(path, "txt");
+        await core.file.writeFile(transcriptPath, data, "utf8");
     };
     me.transcribe = async function (path) {
         if (!path) {
             return null;
         }
-        path = me.core.path.replaceExtension(path, "m4a");
-        var transcriptPath = me.core.path.replaceExtension(path, "txt");
+        path = core.path.replaceExtension(path, "m4a");
+        var transcriptPath = core.path.replaceExtension(path, "txt");
 
         var request = require("request");
         var fs = require("fs");
@@ -47,10 +48,10 @@ screens.media.speech = function MediaSpeech(me) {
         var totalDuration = 0;
 
         function getRequestOptions() {
-            var pair = me.core.util.random();
+            var pair = core.util.random();
             var streamUrl = "https://www.google.com/speech-api/full-duplex/v1/";
             var upstreamUrl = streamUrl + "up?";
-            var upstreamParams = me.core.http.urlEncode({
+            var upstreamParams = core.http.urlEncode({
                 "output": "json",
                 "lang": "en-us",
                 "pfilter": 2,
@@ -67,7 +68,7 @@ screens.media.speech = function MediaSpeech(me) {
                 },
             };
             var downstreamUrl = streamUrl + "down?";
-            var downstreamParams = me.core.http.urlEncode({
+            var downstreamParams = core.http.urlEncode({
                 "pair": pair
             });
             var downstreamOpts = {
@@ -227,9 +228,9 @@ screens.media.speech = function MediaSpeech(me) {
                     });
 
                     var result = timedTranscript.map(entry => {
-                        return me.core.string.formatDuration(entry.start) + " - " + entry.text;
+                        return core.string.formatDuration(entry.start) + " - " + entry.text;
                     }).join("\n");
-                    me.core.file.writeFile(transcriptPath, result);
+                    core.file.writeFile(transcriptPath, result);
                     me.log("Transcript written to " + transcriptPath);
                     resolve(transcriptPath);
                 });

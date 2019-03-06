@@ -3,7 +3,8 @@
  @component WidgetRichEditor
  */
 
-screens.widget.richeditor = function WidgetRichEditor(me) {
+screens.widget.richeditor = function WidgetRichEditor(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -39,9 +40,9 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
                 });
                 let showTooltip = (el) => {
                     let name = el.className.replace("ql-", "");
-                    var tooltip = me.core.string.title(name);
+                    var tooltip = core.string.title(name);
                     if (el.value) {
-                        tooltip = me.core.string.title(el.value) + " " + tooltip;
+                        tooltip = core.string.title(el.value) + " " + tooltip;
                     }
                     var replacements = {
                         "1 Header": "Heading 1",
@@ -73,7 +74,7 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
         var result = me.ui.speech.toggle(object);
         var toolbar = me.ui.node.classMember(window, "ql-toolbar");
         var button = me.ui.node.classMember(toolbar, "ql-speech");
-        me.core.property.set(button, "ui.class.speechActive", result);
+        core.property.set(button, "ui.class.speechActive", result);
     };
     me.contents = {
         get: function (object) {

@@ -3,7 +3,8 @@
  @component UIHtml
  */
 
-screens.ui.html = function UIHtml(me) {
+screens.ui.html = function UIHtml(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.files = {};
     };
@@ -70,7 +71,7 @@ screens.ui.html = function UIHtml(me) {
             };
             var html = "";
             try {
-                html = await me.core.http.send(info);
+                html = await core.http.send(info);
             }
             catch (err) {
                 err = "Cannot load html file: " + path + " err: " + err.message || err;
@@ -89,14 +90,14 @@ screens.ui.html = function UIHtml(me) {
             html = html.replace(/<mark style="">/gi, "");
         }
         if (text) {
-            var find = me.core.string.regex("/(" + me.core.string.escape(text) + ")", "gi");
+            var find = core.string.regex("/(" + core.string.escape(text) + ")", "gi");
             var replace = "<mark>$1</mark>";
             html = html.replace(find, replace);
         }
         return html;
     };
     me.surround = function (html, text, prefix, suffix) {
-        var find = me.core.string.regex("/(" + me.core.string.escape(text) + ")", "gi");
+        var find = core.string.regex("/(" + core.string.escape(text) + ")", "gi");
         var replace = prefix + "$1" + suffix;
         html = html.replace(find, replace);
         return html;

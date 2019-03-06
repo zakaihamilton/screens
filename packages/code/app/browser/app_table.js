@@ -3,7 +3,7 @@
  @component AppTable
  */
 
-screens.app.table = function AppTable(me) {
+screens.app.table = function AppTable(me, packages) {
     me.init = async function () {
         await me.ui.transform.attach(me);
     };

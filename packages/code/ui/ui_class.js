@@ -3,18 +3,19 @@
  @component UIClass
  */
 
-screens.ui.class = function UIClass(me) {
+screens.ui.class = function UIClass(me, packages) {
+    const { core } = packages;
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {
-            return me.core.property.get(object, "ui.class.contains", property);
+            return core.property.get(object, "ui.class.contains", property);
         },
         set: function (object, value, property) {
             if (value) {
-                me.core.property.set(object, "ui.class.add", property);
+                core.property.set(object, "ui.class.add", property);
             }
             else {
-                me.core.property.set(object, "ui.class.remove", property);
+                core.property.set(object, "ui.class.remove", property);
             }
         }
     };
@@ -107,7 +108,7 @@ screens.ui.class = function UIClass(me) {
         }
         else {
             if (path) {
-                path = me.core.property.to_full_name(object, path);
+                path = core.property.to_full_name(object, path);
                 class_name = me.to_class(object, path);
             }
             var nightMode = me.ui.theme.options.nightMode;

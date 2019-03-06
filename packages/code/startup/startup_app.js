@@ -3,11 +3,12 @@
  @component StartupApp
  */
 
-screens.startup.app = function StartupApp(me) {
+screens.startup.app = function StartupApp(me, packages) {
+    const { core } = packages;
     me.firstTime = true;
     me.init = function () {
-        me.core.startup.register(me);
-        me.core.listener.register(me.ready, me.core.login.id);
+        core.startup.register(me);
+        core.listener.register(me.ready, core.login.id);
     };
     me.run = async function () {
         me.ui.element.create([
@@ -21,20 +22,20 @@ screens.startup.app = function StartupApp(me) {
                 "title": "Login",
                 "delay": "1000"
             });
-            await me.core.login.load();
+            await core.login.load();
         }
         catch (err) {
             document.body.innerHTML = me.html.replace("__error__", err.message || err);
             throw err;
         }
         finally {
-            me.core.property.set(progress, "close");
+            core.property.set(progress, "close");
         }
-        if (!me.core.login.isSignedIn()) {
-            var window = await me.core.app.launch("login", true);
+        if (!core.login.isSignedIn()) {
+            var window = await core.app.launch("login", true);
             if (window) {
-                me.core.property.set(window, "widget.window.show", true);
-                me.core.property.set(window, "widget.window.maximize");
+                core.property.set(window, "widget.window.show", true);
+                core.property.set(window, "widget.window.maximize");
             }
         }
     };
@@ -45,22 +46,22 @@ screens.startup.app = function StartupApp(me) {
         }
     };
     me.start = async function () {
-        var app = me.core.startup.app;
+        var app = core.startup.app;
         if (!app.name || app.name !== "none") {
-            if (app.name && await me.core.app.available(app.name)) {
+            if (app.name && await core.app.available(app.name)) {
                 var args = [app.name];
                 if (app.params) {
                     args.push(...app.params);
                 }
-                me.core.app.launch.apply(null, args).then((window) => {
+                core.app.launch.apply(null, args).then((window) => {
                     if (window) {
-                        me.core.property.set(window, "widget.window.show", true);
-                        me.core.property.set(window, "widget.window.maximize");
+                        core.property.set(window, "widget.window.show", true);
+                        core.property.set(window, "widget.window.maximize");
                     }
                 });
             }
             else {
-                me.core.app.launch("launcher");
+                core.app.launch("launcher");
             }
         }
     };

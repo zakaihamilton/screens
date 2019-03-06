@@ -3,7 +3,8 @@
  @component UIMove
  */
 
-screens.ui.move = function UIMove(me) {
+screens.ui.move = function UIMove(me, packages) {
+    const { core } = packages;
     me.snapSensitivity = 75;
     me.enabled = {
         get: function (object) {
@@ -39,7 +40,7 @@ screens.ui.move = function UIMove(me) {
     };
     me.extend = function (object, type) {
         object.move_type = type;
-        me.core.property.set(object, "ui.touch.down", "ui.move.down");
+        core.property.set(object, "ui.touch.down", "ui.move.down");
     };
     me.down = function (object, event) {
         var target = object.move_target;
@@ -54,7 +55,7 @@ screens.ui.move = function UIMove(me) {
             return;
         }
         if (!target.move_enabled) {
-            me.core.property.set(target, "ui.focus.active", true);
+            core.property.set(target, "ui.focus.active", true);
             return;
         }
         var regionMethod = target.move_relative ? me.ui.rect.relativeRegion : me.ui.rect.absoluteRegion;
@@ -66,8 +67,8 @@ screens.ui.move = function UIMove(me) {
             width: target.offsetWidth,
             height: target.offsetHeight
         };
-        me.core.property.set(target, "ui.focus.active", true);
-        me.core.property.set(target, "ui.property.broadcast", {
+        core.property.set(target, "ui.focus.active", true);
+        core.property.set(target, "ui.property.broadcast", {
             "transition": true
         });
         event.preventDefault();
@@ -75,7 +76,7 @@ screens.ui.move = function UIMove(me) {
         if (object.move_method) {
             move_method = object.move_method;
         }
-        me.core.property.set(object, {
+        core.property.set(object, {
             "ui.touch.move": move_method,
             "ui.touch.up": "ui.move.up",
             "ui.style.transition": "none",
@@ -95,17 +96,17 @@ screens.ui.move = function UIMove(me) {
     };
     me.up = function (object, event) {
         var type = object.move_type;
-        me.core.property.set(object, {
+        core.property.set(object, {
             "ui.touch.move": null,
             "ui.touch.up": null,
             "ui.class.transition": false,
             "ui.style.transition": ""
         });
-        me.core.property.set(me.info.target, "ui.property.broadcast", {
+        core.property.set(me.info.target, "ui.property.broadcast", {
             "transition": false
         });
         var window = me.widget.window.get(me.info.target);
-        me.core.property.notify(window, "update");
+        core.property.notify(window, "update");
 
         if (type === "window") {
             me.snap(object, false);
@@ -121,7 +122,7 @@ screens.ui.move = function UIMove(me) {
             var workspace = me.ui.element.workspace();
             parent_region = me.ui.rect.absoluteRegion(workspace);
         }
-        me.core.property.notify(parent, "update");
+        core.property.notify(parent, "update");
         var alignToLeft = target_region.left + me.snapSensitivity < parent_region.left;
         var alignToRight = target_region.right - me.snapSensitivity > parent_region.right;
         var alignToTop = target_region.top + me.snapSensitivity < parent_region.top;
@@ -162,10 +163,10 @@ screens.ui.move = function UIMove(me) {
                 me.ui.arrange.alignToBottom(object);
             }
         }
-        me.core.property.set(parent.var.align, "ui.class.show", signalOnly);
-        me.core.property.set(parent.var.align, "ui.class.left", alignToLeft);
-        me.core.property.set(parent.var.align, "ui.class.right", alignToRight);
-        me.core.property.set(parent.var.align, "ui.class.top", alignToTop);
-        me.core.property.set(parent.var.align, "ui.class.bottom", alignToBottom);
+        core.property.set(parent.var.align, "ui.class.show", signalOnly);
+        core.property.set(parent.var.align, "ui.class.left", alignToLeft);
+        core.property.set(parent.var.align, "ui.class.right", alignToRight);
+        core.property.set(parent.var.align, "ui.class.top", alignToTop);
+        core.property.set(parent.var.align, "ui.class.bottom", alignToBottom);
     };
 };

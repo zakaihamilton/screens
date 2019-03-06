@@ -3,12 +3,13 @@
  @component StorageUpload
  */
 
-screens.storage.upload = function StorageUpload(me) {
+screens.storage.upload = function StorageUpload(me, packages) {
+    const { core } = packages;
     me.chunkSize = 1024 * 256;
     me.file = async function (file, path, progress) {
         var chunkSize = me.chunkSize;
         var chunkCount = file.size / chunkSize;
-        var fileHandle = await me.core.file.open(path);
+        var fileHandle = await core.file.open(path);
         me.log(
             "name: " + file.name +
             " size: " + file.size +
@@ -31,12 +32,12 @@ screens.storage.upload = function StorageUpload(me) {
             );
             var chunk = await me.readChunk(file, start, end);
             me.log("writing chunk");
-            await me.core.file.write(fileHandle, chunk);
+            await core.file.write(fileHandle, chunk);
             if (progress) {
                 progress(chunkIndex, chunkCount);
             }
         }
-        await me.core.file.close(fileHandle);
+        await core.file.close(fileHandle);
     };
     me.readFile = async function (file, isText = false) {
         return new Promise((resolve, reject) => {

@@ -3,7 +3,8 @@
  @component UIModal
  */
 
-screens.widget.modal = function WidgetModal(me) {
+screens.widget.modal = function WidgetModal(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.touch.click": "click",
@@ -12,7 +13,7 @@ screens.widget.modal = function WidgetModal(me) {
     };
     me.click = {
         set: function (object, value) {
-            me.core.property.set(object.parentNode, "back");
+            core.property.set(object.parentNode, "back");
             value.stopPropagation();
         }
     };

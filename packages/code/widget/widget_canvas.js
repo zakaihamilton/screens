@@ -3,7 +3,7 @@
  @component WidgetCanvas
  */
 
-screens.widget.canvas = function WidgetCanvas(me) {
+screens.widget.canvas = function WidgetCanvas(me, packages) {
     me.element = {
         dependencies: {
             properties: ["mode"]

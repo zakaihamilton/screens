@@ -3,7 +3,7 @@
  @component UIExec
  */
 
-screens.ui.exec = function UIExec(me) {
+screens.ui.exec = function UIExec(me, packages) {
     me.lookup = {
         set: function (object, value, property) {
             document.designMode = "on";

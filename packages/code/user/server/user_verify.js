@@ -3,7 +3,7 @@
  @component UserVerify
  */
 
-screens.user.verify = function UserVerify(me) {
+screens.user.verify = function UserVerify(me, packages) {
     me.init = async function () {
         me.core.property.link("core.socket.verify", "user.verify.verify", true);
         var login = await me.core.util.config("settings.core.login");

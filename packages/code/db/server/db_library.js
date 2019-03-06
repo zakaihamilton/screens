@@ -3,7 +3,8 @@
  @component DbLibrary
  */
 
-screens.db.library = function DbLibrary(me) {
+screens.db.library = function DbLibrary(me, packages) {
+    const { storage } = packages;
     me.findContentById = function (id) {
         return me.content.findById(id);
     };
@@ -85,7 +86,7 @@ screens.db.library = function DbLibrary(me) {
             }
             doQuery = true;
         }
-        me.log("query: " + me.storage.db.queryAsString(query) + " tags: " + me.storage.db.queryAsString(tags) + " filter: " + filter);
+        me.log("query: " + storage.db.queryAsString(query) + " tags: " + storage.db.queryAsString(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
             tagList.push(...await me.db.library.tags.list(tags));
         }
@@ -128,18 +129,21 @@ screens.db.library = function DbLibrary(me) {
     return "server";
 };
 
-screens.db.library.tags = function DbLibraryTag(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.library.tags = function DbLibraryTag(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.library.content = function DbLibraryContent(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.library.content = function DbLibraryContent(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     return "server";
 };
 
-screens.db.library.query = function DbLibraryQuery(me) {
+screens.db.library.query = function DbLibraryQuery(me, packages) {
+    const { core } = packages;
     me.tokens = function (query) {
         const regex = /(?:[^\s,"]|"(?:\\.|[^"])*")+/gm;
         let m;
@@ -165,7 +169,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
                 var [key, value] = token.split(":");
                 key = key.trim().toLowerCase();
                 if (value) {
-                    var regex = new RegExp(["^", me.core.string.escape(value.trim()), "$"].join(""), "i");
+                    var regex = new RegExp(["^", core.string.escape(value.trim()), "$"].join(""), "i");
                     tags[key] = regex;
                 }
                 else {

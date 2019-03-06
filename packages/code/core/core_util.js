@@ -3,17 +3,18 @@
  @component CoreUtil
  */
 
-screens.core.util = function CoreUtil(me) {
+screens.core.util = function CoreUtil(me, packages) {
+    const { core, storage } = packages;
     me.init = async function () {
         if (me.platform === "browser") {
-            me.isAdmin = await me.storage.local.db.get(me.id, "admin");
-            me.userId = await me.storage.local.db.get(me.id, "userId");
-            me.core.listener.register(async () => {
+            me.isAdmin = await storage.local.db.get(me.id, "admin");
+            me.userId = await storage.local.db.get(me.id, "userId");
+            core.listener.register(async () => {
                 me.isAdmin = await me.user.access.admin();
                 me.userId = await me.user.access.userId();
-                await me.storage.local.db.set(me.id, "admin", me.isAdmin);
-                await me.storage.local.db.set(me.id, "userId", me.userId);
-            }, me.core.login.id);
+                await storage.local.db.set(me.id, "admin", me.isAdmin);
+                await storage.local.db.set(me.id, "userId", me.userId);
+            }, core.login.id);
         }
     };
     me.removeLast = function (string, separator) {
@@ -35,9 +36,9 @@ screens.core.util = function CoreUtil(me) {
         });
     };
     me.config = async function (path) {
-        var item = await me.core.json.loadFile("/package.json");
+        var item = await core.json.loadFile("/package.json");
         if (item && path) {
-            item = me.core.json.traverse(item, path).value;
+            item = core.json.traverse(item, path).value;
         }
         return item;
     };
@@ -46,12 +47,12 @@ screens.core.util = function CoreUtil(me) {
             return true;
         }
         else {
-            return me.core.network.isOnline();
+            return core.network.isOnline();
         }
     };
     me.isSecure = function () {
         if (me.platform === "server") {
-            return !me.core.http.localhost;
+            return !core.http.localhost;
         }
         else if (me.platform === "browser") {
             return location.protocol === "https:";
@@ -91,7 +92,7 @@ screens.core.util = function CoreUtil(me) {
         var start = me.start();
         var result = await callback();
         var duration = me.duration(start);
-        me.log("performance: " + me.core.string.padNumber(parseInt(duration), 6) + " - " + this.id + " - " + name);
+        me.log("performance: " + core.string.padNumber(parseInt(duration), 6) + " - " + this.id + " - " + name);
         return result;
     };
     me.condense = function (callback) {
@@ -104,7 +105,7 @@ screens.core.util = function CoreUtil(me) {
         }, 250);
     };
     me.sync = async function () {
-        await me.storage.cache.empty();
+        await storage.cache.empty();
     };
     me.url = function (appName, args, local) {
         var url = "";
@@ -116,7 +117,7 @@ screens.core.util = function CoreUtil(me) {
         }
         if (appName) {
             url += `/${appName}?args=`;
-            url += me.core.string.encode(JSON.stringify(args));
+            url += core.string.encode(JSON.stringify(args));
         }
         return url;
     };

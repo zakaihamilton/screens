@@ -3,7 +3,7 @@
     @component CmdParse
 */
 
-screens.cmd.parse = function CmdParse(me) {
+screens.cmd.parse = function CmdParse(me, packages) {
     me.cmd = async function (terminal, args) {
         if (args.length <= 1) {
             me.core.cmd.exit(terminal);

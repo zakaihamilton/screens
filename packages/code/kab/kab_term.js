@@ -3,7 +3,8 @@
  @component KabTerm
  */
 
-screens.kab.term = function KabTerm(me) {
+screens.kab.term = function KabTerm(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.terms = {};
     };
@@ -51,7 +52,7 @@ screens.kab.term = function KabTerm(me) {
             theTerm.source = source;
         }
         theTerm.item = item;
-        theTerm.source = me.core.string.unparseWords(theTerm.source);
+        theTerm.source = core.string.unparseWords(theTerm.source);
         if (item.style) {
             var style = item.style;
             if (typeof style === "string" && styles) {

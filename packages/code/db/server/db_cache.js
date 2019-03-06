@@ -3,12 +3,13 @@
  @component DbCache
  */
 
-screens.db.cache = function DbCache(me) {
+screens.db.cache = function DbCache(me, packages) {
     return "server";
 };
 
-screens.db.cache.data = function DbCacheData(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.cache.data = function DbCacheData(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -19,8 +20,9 @@ screens.db.cache.data = function DbCacheData(me) {
     return "server";
 };
 
-screens.db.cache.dictionary = function DbCacheDictionary(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.cache.dictionary = function DbCacheDictionary(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -30,8 +32,9 @@ screens.db.cache.dictionary = function DbCacheDictionary(me) {
     return "server";
 };
 
-screens.db.cache.metadata = function DbCacheMetadata(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.cache.metadata = function DbCacheMetadata(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -41,8 +44,9 @@ screens.db.cache.metadata = function DbCacheMetadata(me) {
     return "server";
 };
 
-screens.db.cache.tokens = function DbCacheTokens(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.cache.tokens = function DbCacheTokens(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -52,8 +56,9 @@ screens.db.cache.tokens = function DbCacheTokens(me) {
     return "server";
 };
 
-screens.db.cache.file = function DbCacheFile(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.cache.file = function DbCacheFile(me, packages) {
+    const { core, storage, db } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -62,10 +67,10 @@ screens.db.cache.file = function DbCacheFile(me) {
     ];
     me.listing = async function (folder, update, callback) {
         var files = [];
-        await me.core.util.performance(folder + (update ? " update" : ""), async () => {
-            files = await me.db.cache.file.list({ folder });
+        await core.util.performance(folder + (update ? " update" : ""), async () => {
+            files = await db.cache.file.list({ folder });
             if (!files || !files.length || update) {
-                var children = await me.storage.dropbox.getChildren(folder);
+                var children = await storage.dropbox.getChildren(folder);
                 for (let file of children) {
                     file.folder = folder;
                     var exists = files && files.find(item => item.name === file.name);
@@ -73,7 +78,7 @@ screens.db.cache.file = function DbCacheFile(me) {
                         if (callback) {
                             await callback(file);
                         }
-                        await me.db.cache.file.use({ folder, name: file.name }, file);
+                        await db.cache.file.use({ folder, name: file.name }, file);
                         files.push(file);
                     }
                 }

@@ -3,7 +3,8 @@
  @component WidgetChart
  */
 
-screens.widget.chart = function WidgetChart(me) {
+screens.widget.chart = function WidgetChart(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -52,7 +53,7 @@ screens.widget.chart = function WidgetChart(me) {
                 value = {};
             }
             object.chartInfo = value;
-            me.core.property.notify(object, "update");
+            core.property.notify(object, "update");
         }
     };
     me.reset = {
@@ -81,7 +82,7 @@ screens.widget.chart = function WidgetChart(me) {
                 if (object.chartType) {
                     object.chartInfo.type = object.chartType;
                 }
-                var context = me.core.property.get(object, "context");
+                var context = core.property.get(object, "context");
                 clearTimeout(object.chartTimer);
                 object.chart = new Chart(context, object.chartInfo);
             }

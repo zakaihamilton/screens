@@ -3,7 +3,7 @@
  @component AppGematria
  */
 
-screens.app.letters = function AppGematria(me) {
+screens.app.letters = function AppGematria(me, packages) {
     me.ready = async function () {
         await me.ui.content.attach(me);
     };

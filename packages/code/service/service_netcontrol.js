@@ -3,7 +3,8 @@
  @component ServiceNetControl
  */
 
-screens.service.netcontrol = function ServiceNetControl(me) {
+screens.service.netcontrol = function ServiceNetControl(me, packages) {
+    const { core } = packages;
     me.setup = function (ref) {
 
     };
@@ -14,7 +15,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
     };
     me.effects = Object.assign({}, me.defaultEffects);
     me.init = function () {
-        me.cmd = require('node-cmd');
+        me.cmd = require("node-cmd");
     };
     me.newStream = function () {
 
@@ -78,7 +79,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.log("toggle interval: " + interval + " effects are: " + (effects.useEffects ? "on" : "off"));
         me.effects = effects;
-        if (me.core.socket.isConnected) {
+        if (core.socket.isConnected) {
             await me.manager.packet.updateEffects(effects);
         }
         if (!effects.useEffects) {

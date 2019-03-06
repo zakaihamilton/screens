@@ -3,7 +3,8 @@
     @component CoreJson
 */
 
-screens.core.json = function CoreJson(me) {
+screens.core.json = function CoreJson(me, packages) {
+    const { core } = packages;
     me.init = function () {
         if (me.platform === "server") {
             me.request = require("request");
@@ -37,7 +38,7 @@ screens.core.json = function CoreJson(me) {
             });
         }
         else {
-            return me.core.message.send_server("core.json.get", url);
+            return core.message.send_server("core.json.get", url);
         }
     };
     me.loadFile = async function (path) {
@@ -45,7 +46,7 @@ screens.core.json = function CoreJson(me) {
         if (path && path.startsWith("/")) {
             path = path.substring(1);
         }
-        if (!me.core.util.isOnline()) {
+        if (!core.util.isOnline()) {
             json = await me.storage.local.db.get(me.id, path);
             if (json) {
                 return json;
@@ -57,7 +58,7 @@ screens.core.json = function CoreJson(me) {
         };
         let buffer = "{}";
         try {
-            buffer = await me.core.http.send(info);
+            buffer = await core.http.send(info);
         }
         catch (err) {
             var error = "Cannot load json file: " + path + " err: " + err.message || err;
@@ -174,10 +175,10 @@ screens.core.json = function CoreJson(me) {
                     return new Date().toString();
                 }
                 else {
-                    var info = me.core.property.split(object, path);
+                    var info = core.property.split(object, path);
                     let item = me.traverse(root, info.value);
                     if (item.found) {
-                        return me.core.property.get(object, info.name, item.value);
+                        return core.property.get(object, info.name, item.value);
                     }
                     return "";
                 }

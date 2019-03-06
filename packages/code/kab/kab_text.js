@@ -3,9 +3,10 @@
  @component KabText
  */
 
-screens.kab.text = function KabText(me) {
+screens.kab.text = function KabText(me, packages) {
+    const { core } = packages;
     me.splitWords = function (session, wordsString) {
-        wordsString = me.core.string.parseWords(function (words) {
+        wordsString = core.string.parseWords(function (words) {
             if (session.json.options && session.json.options.splitPartial) {
                 for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                     var word = words[wordIndex];
@@ -43,14 +44,14 @@ screens.kab.text = function KabText(me) {
             wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
             wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
         }
-        wordsString = me.core.string.parseWords(function (words) {
+        wordsString = core.string.parseWords(function (words) {
             var wasPrefix = false;
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                 if (!parentInstance && session.progressCallback) {
                     var percent = parseInt(wordIndex / words.length * 100);
                     if (session.percent !== percent) {
                         session.percent = percent;
-                        me.core.util.condense(() => {
+                        core.util.condense(() => {
                             session.progressCallback(percent);
                         });
                     }
@@ -68,7 +69,7 @@ screens.kab.text = function KabText(me) {
                 var termLookup = session.terms[word];
                 if (!termLookup) {
                     if (word.length > 2) {
-                        let match = me.core.string.match;
+                        let match = core.string.match;
                         term = session.terms["*"].find(function (term) {
                             return match(word, term, wordStyle);
                         });
@@ -137,18 +138,18 @@ screens.kab.text = function KabText(me) {
                         wordStyle = item.word;
                     }
                     let match = term;
-                    if (!me.core.string.match(collectedWords, term, wordStyle)) {
+                    if (!core.string.match(collectedWords, term, wordStyle)) {
                         if (!("case" in item) || !item.case) {
                             match = term.toUpperCase();
                             if (!item.case) {
-                                if (me.core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
+                                if (core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
                                     term = collectedWords;
                                 }
                                 else {
                                     continue;
                                 }
                             }
-                            else if (!me.core.string.match(collectedWords, match, wordStyle)) {
+                            else if (!core.string.match(collectedWords, match, wordStyle)) {
                                 continue;
                             } else {
                                 upperCase = true;
@@ -161,7 +162,7 @@ screens.kab.text = function KabText(me) {
                         item: item,
                         session: session,
                         parent: parentInstance,
-                        source: me.core.string.middleLetters(collectedWords, match),
+                        source: core.string.middleLetters(collectedWords, match),
                         term,
                         target: item.source ? item.source : term,
                         upperCase: upperCase,
@@ -170,8 +171,8 @@ screens.kab.text = function KabText(me) {
                         words: words,
                         wordIndex: wordIndex,
                         span: numTermWords,
-                        prefixLetters: me.core.string.prefixLetters(collectedWords, match),
-                        suffixLetters: me.core.string.suffixLetters(collectedWords, match),
+                        prefixLetters: core.string.prefixLetters(collectedWords, match),
+                        suffixLetters: core.string.suffixLetters(collectedWords, match),
                         textOnly: textOnly
                     };
                     if (item.debug) {
@@ -192,7 +193,7 @@ screens.kab.text = function KabText(me) {
     };
     me.hash = function (string) {
         var clean = me.clean(string);
-        var hash = me.core.string.hash(clean);
+        var hash = core.string.hash(clean);
         return hash;
     };
     me.parse = async function (language, wordsString, options, progressCallback) {
@@ -204,9 +205,9 @@ screens.kab.text = function KabText(me) {
         if (!globalJson) {
             return { text: wordsString };
         }
-        me.core.message.send("kab.term.clear");
+        core.message.send("kab.term.clear");
         if (wordsString.includes("\n")) {
-            wordsString = me.core.message.send("kab.format.process", wordsString, globalJson.pre);
+            wordsString = core.message.send("kab.format.process", wordsString, globalJson.pre);
         }
         var lines = wordsString.split("\n");
         var hashes = lines.map(line => {
@@ -223,17 +224,17 @@ screens.kab.text = function KabText(me) {
         var languages = {};
         for (let language of ["english", "hebrew"]) {
             let json = await me.kab.data.load(language);
-            let terms = me.core.message.send("kab.text.prepare", json, json.term, options);
+            let terms = core.message.send("kab.text.prepare", json, json.term, options);
             languages[language] = {
                 json,
                 terms
             };
         }
         lines = lines.map(async (line, index) => {
-            var language = me.core.string.language(me.clean(line));
+            var language = core.string.language(me.clean(line));
             let json = languages[language].json;
             let terms = languages[language].terms;
-            line = me.core.message.send("kab.format.replace", line, json.replace);
+            line = core.message.send("kab.format.replace", line, json.replace);
             var hash = me.hash(line);
             var session = {
                 hash,
@@ -250,7 +251,7 @@ screens.kab.text = function KabText(me) {
             if (session.terms) {
                 line = me.parseSingle(session, null, line);
             }
-            line = me.core.message.send("kab.format.process", line, json.post);
+            line = core.message.send("kab.format.process", line, json.post);
             if (line === "<br>") {
                 return line;
             }
@@ -412,7 +413,7 @@ screens.kab.text = function KabText(me) {
         }
         if (!session.options.doTranslation && !session.options.doExplanation) {
             replacement = term;
-        } else if (keepSource && !me.core.string.caselessCompare(term, replacement)) {
+        } else if (keepSource && !core.string.caselessCompare(term, replacement)) {
             replacement = term + prefix + replacement + suffix;
         }
         me.kab.format.replaceDuplicate(session, instance, replacement);

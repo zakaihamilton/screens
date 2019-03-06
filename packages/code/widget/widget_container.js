@@ -3,7 +3,8 @@
  @component WidgetContainer
  */
 
-screens.widget.container = function WidgetContainer(me) {
+screens.widget.container = function WidgetContainer(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.class.class": "root",
@@ -24,14 +25,14 @@ screens.widget.container = function WidgetContainer(me) {
     me.empty = {
         set: function (object) {
             me.ui.node.empty(object);
-            me.core.property.notify(object, "update");
+            core.property.notify(object, "update");
         }
     };
     me.scroll = function (object) {
         var container = me.ui.node.container(object, me.widget.container.id);
         if (container) {
             if (!me.widget.container.isChild(container)) {
-                me.core.property.set(container, "ui.scroll.scrolled");
+                core.property.set(container, "ui.scroll.scrolled");
             }
         }
     };

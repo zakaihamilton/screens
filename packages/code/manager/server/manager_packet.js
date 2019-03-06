@@ -3,7 +3,8 @@
  @component ManagerPacket
  */
 
-screens.manager.packet = function ManagerPacket(me) {
+screens.manager.packet = function ManagerPacket(me, packages) {
+    const { core } = packages;
     me.packetInfo = {
         streamRequests: [],
         effects: {},
@@ -11,7 +12,7 @@ screens.manager.packet = function ManagerPacket(me) {
         runIndex: 0
     };
     me.init = function () {
-        me.core.property.link("core.service.ready", "manager.packet.ready", true);
+        core.property.link("core.service.ready", "manager.packet.ready", true);
     };
     me.push = function (packets) {
         var info = me.packetInfo;
@@ -91,8 +92,8 @@ screens.manager.packet = function ManagerPacket(me) {
             runIndex: 0,
             streamIndex: 0
         };
-        await me.core.service.sendAll("service.netmonitor.reset");
-        await me.core.service.sendAll("service.netcontrol.reset");
+        await core.service.sendAll("service.netmonitor.reset");
+        await core.service.sendAll("service.netcontrol.reset");
     };
     me.ready = {
         set: async function () {
@@ -100,7 +101,7 @@ screens.manager.packet = function ManagerPacket(me) {
         }
     };
     me.retrieveEffects = async function () {
-        var response = await me.core.service.sendAll("service.netcontrol.retrieveEffects");
+        var response = await core.service.sendAll("service.netcontrol.retrieveEffects");
         if (response) {
             var effects = response[0];
             if (!effects) {
@@ -114,20 +115,20 @@ screens.manager.packet = function ManagerPacket(me) {
     me.applyEffects = async function (params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
         me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
-        await me.core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
+        await core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
     };
     me.updateEffects = function (effects) {
         me.packetInfo.effects = effects;
     };
     me.getMonitorOptions = async function () {
-        var response = await me.core.service.sendAll("service.netmonitor.getOptions");
+        var response = await core.service.sendAll("service.netmonitor.getOptions");
         if (response) {
             var options = response[0];
             return options;
         }
     };
     me.setMonitorOptions = async function (options) {
-        await me.core.service.sendAll("service.netmonitor.setOptions", options);
+        await core.service.sendAll("service.netmonitor.setOptions", options);
     };
     return "server";
 };

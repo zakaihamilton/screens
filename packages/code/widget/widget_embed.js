@@ -3,7 +3,8 @@
  @component WidgetEmbed
  */
 
-screens.widget.embed = function WidgetEmbed(me) {
+screens.widget.embed = function WidgetEmbed(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "iframe",
@@ -13,10 +14,10 @@ screens.widget.embed = function WidgetEmbed(me) {
     me.transition = {
         set: function (object, value) {
             if (value) {
-                me.core.property.set(object, "ui.class.add", "transition");
+                core.property.set(object, "ui.class.add", "transition");
             }
             else {
-                me.core.property.set(object, "ui.class.remove", "transition");
+                core.property.set(object, "ui.class.remove", "transition");
             }
         }
     };

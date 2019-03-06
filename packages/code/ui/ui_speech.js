@@ -3,7 +3,8 @@
  @component UISpeech
  */
 
-screens.ui.speech = function UISpeech(me) {
+screens.ui.speech = function UISpeech(me, packages) {
+    const { core } = packages;
     me.start = function (object, options = null) {
         var recognition = null;
         me.stop(object);
@@ -23,7 +24,7 @@ screens.ui.speech = function UISpeech(me) {
             var last = event.results.length - 1;
             if (last !== -1) {
                 var text = event.results[last][0].transcript;
-                me.core.property.set(object, "insertText", text);
+                core.property.set(object, "insertText", text);
             }
         };
         if (options) {

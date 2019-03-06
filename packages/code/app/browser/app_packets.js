@@ -3,7 +3,7 @@
  @component AppPackets
  */
 
-screens.app.packets = function AppPackets(me) {
+screens.app.packets = function AppPackets(me, packages) {
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);

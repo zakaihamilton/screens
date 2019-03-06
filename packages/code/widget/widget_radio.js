@@ -3,7 +3,7 @@
  @component WidgetRadio
  */
 
-screens.widget.radio = function WidgetRadio(me) {
+screens.widget.radio = function WidgetRadio(me, packages) {
     me.element = {
         dependencies: {
             properties: ["ui.basic.text", "state", "group"]

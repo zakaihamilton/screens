@@ -3,7 +3,8 @@
  @component ManagerSchedule
  */
 
-screens.manager.schedule = function ManagerSchedule(me) {
+screens.manager.schedule = function ManagerSchedule(me, packages) {
+    const { core } = packages;
     me.events = async function (query) {
         var events = [];
         var { start, end } = query;
@@ -13,7 +14,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
         for (let group of groups) {
             let sessions = group.sessions;
             sessions = sessions.filter(item => {
-                return me.core.path.extension(item.name) === "m4a";
+                return core.path.extension(item.name) === "m4a";
             });
             for (let item of sessions) {
                 let [year, month, day, name] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+).m4a/g).slice(1);
@@ -29,9 +30,9 @@ screens.manager.schedule = function ManagerSchedule(me) {
                         name,
                         group: group.name,
                         path: item.path,
-                        title: me.core.path.fileName(item.name),
+                        title: core.path.fileName(item.name),
                         app: "Player",
-                        launch: ["player", group.name, me.core.path.fileName(item.name)]
+                        launch: ["player", group.name, core.path.fileName(item.name)]
                     });
                 }
             }
@@ -45,7 +46,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
                     month = parseInt(month) - 1;
                     let eventDate = me.toDate({ year, month, day });
                     if (startDate <= eventDate && eventDate <= endDate) {
-                        var group = me.core.string.language(title) === "english" ? "American" : "Israel";
+                        var group = core.string.language(title) === "english" ? "American" : "Israel";
                         events.push({
                             date: {
                                 year: parseInt(year),
@@ -55,7 +56,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
                             name,
                             group,
                             title,
-                            app: me.core.string.title(app),
+                            app: core.string.title(app),
                             launch: [app, title, source === "privateList"]
                         });
                     }

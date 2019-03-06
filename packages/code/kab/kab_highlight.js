@@ -3,7 +3,8 @@
  @component KabHighlight
  */
 
-screens.kab.highlight = function KabHighlight(me) {
+screens.kab.highlight = function KabHighlight(me, packages) {
+    const { core } = packages;
     me.query = function () {
         var query = { user: "$userId" };
         return query;
@@ -51,17 +52,17 @@ screens.kab.highlight = function KabHighlight(me) {
         return html;
     };
     me.toggle = async function (element) {
-        me.core.property.set(element, "ui.class.toggle", "kab-term-highlight");
+        core.property.set(element, "ui.class.toggle", "kab-term-highlight");
     };
     me.remove = async function (element) {
         var user = "$userId";
         var name = "$userName";
-        if (!me.core.property.get(element, "ui.class.contains", "kab-term-highlight")) {
+        if (!core.property.get(element, "ui.class.contains", "kab-term-highlight")) {
             return;
         }
-        me.core.property.set(element, "ui.class.remove", "kab-term-highlight");
-        var hash = me.core.property.get(element, "ui.attribute.#hash");
-        var source = me.core.property.get(element, "ui.attribute.#source");
+        core.property.set(element, "ui.class.remove", "kab-term-highlight");
+        var hash = core.property.get(element, "ui.attribute.#hash");
+        var source = core.property.get(element, "ui.attribute.#source");
         var data = await me.db.shared.highlight.find({
             "user": "$userId",
             "hash": hash
@@ -82,10 +83,10 @@ screens.kab.highlight = function KabHighlight(me) {
     me.store = async function (element) {
         var user = "$userId";
         var name = "$userName";
-        me.core.property.set(element, "ui.class.toggle", "kab-term-highlight");
-        var highlight = me.core.property.get(element, "ui.class.kab-term-highlight");
-        var hash = me.core.property.get(element, "ui.attribute.#hash");
-        var source = me.core.property.get(element, "ui.attribute.#source");
+        core.property.set(element, "ui.class.toggle", "kab-term-highlight");
+        var highlight = core.property.get(element, "ui.class.kab-term-highlight");
+        var hash = core.property.get(element, "ui.attribute.#hash");
+        var source = core.property.get(element, "ui.attribute.#source");
         var data = await me.db.shared.highlight.find({
             "user": "$userId",
             "hash": hash

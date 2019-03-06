@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-screens.app.player = function AppPlayer(me) {
+screens.app.player = function AppPlayer(me, packages) {
     me.ready = async function () {
         me.playerCounter = 0;
         await me.ui.content.attach(me);

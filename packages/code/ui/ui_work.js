@@ -3,7 +3,8 @@
  @component UIWork
  */
 
-screens.ui.work = function UIWork(me) {
+screens.ui.work = function UIWork(me, packages) {
+    const { core } = packages;
     me.state = {
         get: function (object) {
             return object.inWork;
@@ -15,13 +16,13 @@ screens.ui.work = function UIWork(me) {
             if (state) {
                 object.inWork++;
                 if (object.inWork === 1) {
-                    me.core.property.set(object, "work", true);
+                    core.property.set(object, "work", true);
                 }
             }
             else {
                 object.inWork--;
                 if (object.inWork === 0) {
-                    me.core.property.set(object, "work", false);
+                    core.property.set(object, "work", false);
                 }
             }
         }

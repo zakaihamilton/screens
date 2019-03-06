@@ -3,7 +3,7 @@
  @component AppTranscribe
  */
 
-screens.app.transcribe = function AppTranscribe(me) {
+screens.app.transcribe = function AppTranscribe(me, packages) {
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;

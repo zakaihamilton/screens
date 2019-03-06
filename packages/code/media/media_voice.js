@@ -3,7 +3,8 @@
  @component MediaVoice
  */
 
-screens.media.voice = function MediaVoice(me) {
+screens.media.voice = function MediaVoice(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.synth = window.speechSynthesis;
         me.utterances = [];
@@ -93,7 +94,7 @@ screens.media.voice = function MediaVoice(me) {
             var processedTexts = groups.map((text) => me.process(text));
             totalPartCount += processedTexts.length;
             processedTexts.map((text, processedIndex) => {
-                let language = me.core.string.language(text);
+                let language = core.string.language(text);
                 let voiceName = params.voices[language];
                 let voices = me.voices(language);
                 let voice = voices.find(voice => voice.name === voiceName);
@@ -261,7 +262,7 @@ screens.media.voice = function MediaVoice(me) {
             text = "";
         }
         if (me.params.language) {
-            if (me.params.language === "english" && me.core.string.language(text) === me.params.language) {
+            if (me.params.language === "english" && core.string.language(text) === me.params.language) {
                 text = text.replace(/[ֿ\u0590-\u05FF]+/g, "\n");
             }
         }

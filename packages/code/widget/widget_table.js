@@ -3,17 +3,18 @@
  @component WidgetTable
  */
 
-screens.widget.table = function WidgetTable(me) {
+screens.widget.table = function WidgetTable(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "table"
         },
         create: function (object) {
-            me.core.property.set(object, "firstRowHeader", true);
+            core.property.set(object, "firstRowHeader", true);
         }
     };
     me.init = function () {
-        me.core.property.set(me, {
+        core.property.set(me, {
             "core.property.object.firstRowHeader": null
         });
     };
@@ -30,14 +31,14 @@ screens.widget.table = function WidgetTable(me) {
                     });
                 });
             }
-            me.core.property.set(object, "dataByRows", result);
+            core.property.set(object, "dataByRows", result);
         }
     };
     me.dataByRows = {
         set: function (object, data) {
             me.ui.node.removeChildren(object);
             if (data) {
-                var firstRowHeader = me.core.property.get(object, "firstRowHeader");
+                var firstRowHeader = core.property.get(object, "firstRowHeader");
                 data.map(function (row, index) {
                     me.ui.element.create({
                         "ui.element.component": "widget.table.row",
@@ -55,7 +56,7 @@ screens.widget.table = function WidgetTable(me) {
     };
 };
 
-screens.widget.table.header = function WidgetTableHeader(me) {
+screens.widget.table.header = function WidgetTableHeader(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "th"
@@ -63,7 +64,7 @@ screens.widget.table.header = function WidgetTableHeader(me) {
     };
 };
 
-screens.widget.table.row = function WidgetTableRow(me) {
+screens.widget.table.row = function WidgetTableRow(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "tr"
@@ -71,7 +72,7 @@ screens.widget.table.row = function WidgetTableRow(me) {
     };
 };
 
-screens.widget.table.data = function WidgetTableData(me) {
+screens.widget.table.data = function WidgetTableData(me, packages) {
     me.element = {
         properties: {
             "ui.basic.tag": "td"

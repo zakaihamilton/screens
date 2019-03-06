@@ -3,7 +3,8 @@
  @component StorageLocal
  */
 
-screens.storage.local = function StorageLocal(me) {
+screens.storage.local = function StorageLocal(me, packages) {
+    const { core } = packages;
     me.get = function (key) {
         key = me.validKey(key);
         return localStorage.getItem(key);
@@ -35,7 +36,7 @@ screens.storage.local = function StorageLocal(me) {
     };
     me.store = {
         set: function (object, value) {
-            var key = me.core.property.get(object, "storage.local.key");
+            var key = core.property.get(object, "storage.local.key");
             if (key) {
                 me.set(key, value);
             }
@@ -43,10 +44,10 @@ screens.storage.local = function StorageLocal(me) {
     };
     me.restore = {
         set: function (object, method) {
-            var key = me.core.property.get(object, "storage.local.key");
+            var key = core.property.get(object, "storage.local.key");
             if (key) {
                 var value = me.get(key);
-                me.core.property.set(object, method, value);
+                core.property.set(object, method, value);
             }
         }
     };
@@ -69,11 +70,12 @@ screens.storage.local = function StorageLocal(me) {
     return "browser";
 };
 
-screens.storage.local.db = function StorageLocalDb(me) {
+screens.storage.local.db = function StorageLocalDb(me, packages) {
+    const { core } = packages;
     me.databases = {};
     me.database = async function (dbName, storeName) {
-        me.core.mutex.enable(me.id, true);
-        var unlock = await me.core.mutex.lock(me.id);
+        core.mutex.enable(me.id, true);
+        var unlock = await core.mutex.lock(me.id);
         let handle = me.databases[dbName];
         if (handle) {
             unlock();

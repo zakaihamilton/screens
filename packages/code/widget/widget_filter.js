@@ -3,7 +3,8 @@
  @component WidgetFilter
  */
 
-screens.widget.filter = function WidgetFilter(me) {
+screens.widget.filter = function WidgetFilter(me, packages) {
+    const { core } = packages;
     me.element = {
         dependencies: {
             properties: ["line"]
@@ -58,7 +59,7 @@ screens.widget.filter = function WidgetFilter(me) {
     };
     me.updatePrefixes = function (object) {
         var widget = me.ui.node.container(object, me.id);
-        var prefixesList = me.core.property.get(widget, widget.prefixes);
+        var prefixesList = core.property.get(widget, widget.prefixes);
         if (prefixesList) {
             for (var prefixItem of prefixesList) {
                 var option = document.createElement("option");
@@ -73,7 +74,7 @@ screens.widget.filter = function WidgetFilter(me) {
         if (!widget) {
             return;
         }
-        me.core.property.set(widget, widget.filter, {
+        core.property.set(widget, widget.filter, {
             prefix: widget.var.select.value,
             text: widget.var.filter.value
         });

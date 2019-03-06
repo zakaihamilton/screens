@@ -3,7 +3,7 @@
     @component CmdSize
 */
 
-screens.cmd.size = function CmdSize(me) {
+screens.cmd.size = function CmdSize(me, packages) {
     me.cmd = async function (terminal, args) {
         var file_path = terminal.current_dir;
         if (!file_path) {

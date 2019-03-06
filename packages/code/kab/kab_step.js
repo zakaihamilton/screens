@@ -3,7 +3,7 @@
  @component KabStep
  */
 
-screens.kab.step = function KabStep(me) {
+screens.kab.step = function KabStep(me, packages) {
     me.step = function (object) {
 
     };

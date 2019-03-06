@@ -3,10 +3,11 @@
  @component LibZLib
  */
 
-screens.lib.zlib = function LibZLib(me) {
+screens.lib.zlib = function LibZLib(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.zlib = require("zlib");
-        me.core.property.link("core.http.compress", "lib.zlib.compress", true);
+        core.property.link("core.http.compress", "lib.zlib.compress", true);
     };
     me.compress = async function (info) {
         var encoding = info.headers["accept-encoding"];

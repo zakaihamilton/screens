@@ -3,7 +3,7 @@
     @component CmdMigrate
 */
 
-screens.cmd.migrate = function CmdMigrate(me) {
+screens.cmd.migrate = function CmdMigrate(me, packages) {
     me.cmd = async function (terminal, args) {
         var input = args[1];
         var output = args[2];

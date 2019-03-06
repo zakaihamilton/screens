@@ -3,7 +3,7 @@
     @component CmdLs
 */
 
-screens.cmd.ls = function CmdLs(me) {
+screens.cmd.ls = function CmdLs(me, packages) {
     me.cmd = async function (terminal, args) {
         var current_dir = terminal.current_dir;
         if (!current_dir) {

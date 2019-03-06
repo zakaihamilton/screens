@@ -3,9 +3,10 @@
  @component ManagerService
  */
 
-screens.manager.service = function ManagerService(me) {
+screens.manager.service = function ManagerService(me, packages) {
+    const { core } = packages;
     me.items = function () {
-        return me.core.socket.list("service");
+        return core.socket.list("service");
     };
     return "server";
 };

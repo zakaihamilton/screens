@@ -3,14 +3,15 @@
  @component UIFocus
  */
 
-screens.ui.focus = function UIFocus(me) {
+screens.ui.focus = function UIFocus(me, packages) {
+    const { core } = packages;
     me.focus_window = null;
     me.extend = {
         set: function (object) {
             object.addEventListener(me.ui.touch.eventNames.down, function (e) {
                 var branch = me.find_branch(object, e.clientX, e.clientY);
                 if (branch) {
-                    me.core.property.set(branch, "ui.focus.active", true);
+                    core.property.set(branch, "ui.focus.active", true);
                 }
             }, false);
         }
@@ -47,10 +48,10 @@ screens.ui.focus = function UIFocus(me) {
     };
     me.deactivate = function (from, to) {
         while (from && from !== to) {
-            me.core.property.set(from, "ui.property.broadcast", {
+            core.property.set(from, "ui.property.broadcast", {
                 "ui.class.remove": "focus"
             });
-            me.core.property.set(from, "ui.property.broadcast", {
+            core.property.set(from, "ui.property.broadcast", {
                 "blur": from
             });
             from = me.widget.window.parent(from);
@@ -58,15 +59,15 @@ screens.ui.focus = function UIFocus(me) {
     };
     me.activate = function (from, to) {
         while (from && from !== to) {
-            me.core.property.set(from, "ui.property.broadcast", {
+            core.property.set(from, "ui.property.broadcast", {
                 "ui.class.add": "focus"
             });
-            me.core.property.set(from, "ui.property.broadcast", {
+            core.property.set(from, "ui.property.broadcast", {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);
             var parent = me.widget.window.parent(from);
-            if (parent && me.core.property.get(parent, "embed")) {
+            if (parent && core.property.get(parent, "embed")) {
                 parent = me.widget.window.parent(parent);
             }
             if (parent) {
@@ -89,19 +90,19 @@ screens.ui.focus = function UIFocus(me) {
             if (childList[childOrder].component !== "widget.window") {
                 continue;
             }
-            if (me.core.property.get(childList[childOrder], "alwaysOnTop")) {
+            if (core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
-            me.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
+            core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
         for (let childOrder = childList.length - 1; childOrder >= 0; childOrder--) {
-            if (!me.core.property.get(childList[childOrder], "alwaysOnTop")) {
+            if (!core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
-            me.core.property.set(childList[childOrder], "ui.style.zIndex", 999 - childOrder);
+            core.property.set(childList[childOrder], "ui.style.zIndex", 999 - childOrder);
         }
         if (object) {
-            me.core.property.notify(object, "update");
+            core.property.notify(object, "update");
         }
     };
     me.common = function (source, target) {
@@ -115,7 +116,7 @@ screens.ui.focus = function UIFocus(me) {
         for (var index = 0; index < length; index++) {
             if (sources[index] === targets[index]) {
                 common = sources[index];
-                if (common.component === "widget.window" && !me.core.property.get(common, "embed")) {
+                if (common.component === "widget.window" && !core.property.get(common, "embed")) {
                     focusable = common;
                     break;
                 }
@@ -159,15 +160,15 @@ screens.ui.focus = function UIFocus(me) {
     };
     me.focus = function (window) {
         /* Check if window is visible */
-        if (!me.core.property.get(window, "visible")) {
+        if (!core.property.get(window, "visible")) {
             return;
         }
-        if (me.core.property.get(window, "embed")) {
+        if (core.property.get(window, "embed")) {
             window = me.widget.window.parent(window);
         }
         /* Find bottom window to focus on */
         window = me.findLeaf(window);
-        me.core.property.set(window, "showInBackground", false);
+        core.property.set(window, "showInBackground", false);
         /* Find common window between previous and new window */
         var common = me.common(me.focus_window, window);
         me.inChange = true;

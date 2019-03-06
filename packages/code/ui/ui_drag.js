@@ -3,45 +3,47 @@
  @component UIDrag
  */
 
-screens.ui.drag = function UIDrag(me) {
+screens.ui.drag = function UIDrag(me, packages) {
+    const { core } = packages;
     me.start = {
         set: function (object, value) {
-            me.core.event.register(null, object, "dragstart", value);
+            core.event.register(null, object, "dragstart", value);
         }
     };
     me.enter = {
         set: function (object, value) {
-            me.core.event.register(null, object, "dragenter", value);
+            core.event.register(null, object, "dragenter", value);
         }
     };
     me.over = {
         set: function (object, value) {
-            me.core.event.register(null, object, "dragover", value);
+            core.event.register(null, object, "dragover", value);
         }
     };
     me.leave = {
         set: function (object, value) {
-            me.core.event.register(null, object, "dragleave", value);
+            core.event.register(null, object, "dragleave", value);
         }
     };
     me.drop = {
         set: function (object, value) {
-            me.core.event.register(null, object, "drop", value);
+            core.event.register(null, object, "drop", value);
         }
     };
     me.end = {
         set: function (object, value) {
-            me.core.event.register(null, object, "dragend", value);
+            core.event.register(null, object, "dragend", value);
         }
     };
     me.drag = {
         set: function (object, value) {
-            me.core.event.register(null, object, "drag", value);
+            core.event.register(null, object, "drag", value);
         }
     };
 }
 
-screens.ui.drag.icon = function UIDragIcon(me) {
+screens.ui.drag.icon = function UIDragIcon(me, packages) {
+    const { core } = packages;
     me.source = null;
     me.target = null;
     me.element = {
@@ -54,7 +56,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
     me.extend = {
         set: function (object) {
             object.setAttribute("draggable", true);
-            me.core.property.set(object, {
+            core.property.set(object, {
                 "ui.drag.start": "ui.drag.icon.start",
                 "ui.drag.enter": "ui.drag.icon.enter",
                 "ui.drag.over": "ui.drag.icon.over",
@@ -97,7 +99,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
                 me.target = target;
-                me.core.property.set(target, "ui.class.add", "over");
+                core.property.set(target, "ui.class.add", "over");
             }
         }
     };
@@ -109,7 +111,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
                 me.target = target;
-                me.core.property.set(target, "ui.class.add", "over");
+                core.property.set(target, "ui.class.add", "over");
             }
             return false;
         }
@@ -118,7 +120,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
         set: function (object, event) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
-                me.core.property.set(target, "ui.class.remove", "over");
+                core.property.set(target, "ui.class.remove", "over");
                 me.target = null;
             }
         }
@@ -142,8 +144,8 @@ screens.ui.drag.icon = function UIDragIcon(me) {
             if (me.source) {
                 if (me.source.style.position !== "absolute") {
                     var target = me.parent_draggable(event.target);
-                    me.core.property.set(me.target, "ui.class.remove", "over");
-                    me.core.property.set(target, "ui.class.remove", "over");
+                    core.property.set(me.target, "ui.class.remove", "over");
+                    core.property.set(target, "ui.class.remove", "over");
                 }
                 me.source = me.target = null;
             }

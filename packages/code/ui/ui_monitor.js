@@ -3,15 +3,16 @@
  @component UIMonitor
  */
 
-screens.ui.monitor = function UIMonitor(me) {
+screens.ui.monitor = function UIMonitor(me, packages) {
+    const { core } = packages;
     me.change = {
         set: function (object, value) {
-            me.core.event.register(null, object, "change", value);
+            core.event.register(null, object, "change", value);
         }
     };
     me.search = {
         set: function (object, value) {
-            me.core.event.register(null, object, "search", value);
+            core.event.register(null, object, "search", value);
         }
     };
 };

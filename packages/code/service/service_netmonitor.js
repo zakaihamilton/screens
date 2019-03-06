@@ -4,7 +4,8 @@
  @prerequisites npm install pcap2
  */
 
-screens.service.netmonitor = function ServiceNetMonitor(me) {
+screens.service.netmonitor = function ServiceNetMonitor(me, packages) {
+    const { core } = packages;
     me.setup = async function () {
         me.device = null;
         me.packets = [];
@@ -19,9 +20,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             searchFilter: ""
         };
         me.statistics = {};
-        me.pcap = require('pcap2');
-        me.util = require('util');
-        me.config = await me.core.service.config(me.id);
+        me.pcap = require("pcap2");
+        me.util = require("util");
+        me.config = await core.service.config(me.id);
         if (me.config) {
             me.reload();
             if (me.interval) {
@@ -33,7 +34,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 if (!me.options.pushPackets) {
                     return;
                 }
-                if (!me.core.socket.isConnected) {
+                if (!core.socket.isConnected) {
                     me.log("Server not connected, packets in queue: " + me.packets.length);
                     return;
                 }
@@ -64,7 +65,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             filter = me.options.monitorFilter;
         }
         if (filter) {
-            filter = filter.replace("@port", me.core.http.port);
+            filter = filter.replace("@port", core.http.port);
             me.log("using filter: " + filter);
         }
         for (var device of devices) {
@@ -94,17 +95,17 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 var fullPacket = me.pcap.decode.packet(rawPacket);
                 var fullPacketString = JSON.stringify(fullPacket);
                 var fullPacket = JSON.parse(fullPacketString);
-                var packet_sec = me.core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
-                var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
-                var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
-                var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
-                var packet_data = me.core.json.traverse(fullPacket, "payload.payload.payload.data.data").value;
+                var packet_sec = core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
+                var packet_len = core.json.traverse(fullPacket, "pcap_header.len").value;
+                var packet_source = core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
+                var packet_target = core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
+                var packet_data = core.json.traverse(fullPacket, "payload.payload.payload.data.data").value;
                 var match = null;
                 if (packet_data) {
                     var packet_string = String.fromCharCode.apply(null, packet_data);
                     var packet_lines = packet_string.split("\n");
                     if (me.options.searchFilter) {
-                        var searchFilter = me.core.string.regex(me.options.searchFilter);
+                        var searchFilter = core.string.regex(me.options.searchFilter);
                         for (line of packet_lines) {
                             if (line.search(searchFilter) != -1) {
                                 match = line;

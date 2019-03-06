@@ -3,7 +3,8 @@
  @component UserProfile
  */
 
-screens.user.profile = function UserProfile(me) {
+screens.user.profile = function UserProfile(me, packages) {
+    const { db, storage } = packages;
     me.profiles = null;
     me.reset = function () {
         me.profiles = null;
@@ -12,21 +13,21 @@ screens.user.profile = function UserProfile(me) {
         if (!user) {
             user = this.userId;
         }
-        return await me.storage.data.load("app.profile", user);
+        return await storage.data.load("app.profile", user);
     };
     me.set = async function (profile, user) {
         if (!user) {
             user = this.userId;
         }
-        await me.storage.data.save(profile, "app.profile", user);
-        await me.storage.data.save(profile, me.id, user);
-        me.db.events.msg.send(me.id + ".reset");
+        await storage.data.save(profile, "app.profile", user);
+        await storage.data.save(profile, me.id, user);
+        db.events.msg.send(me.id + ".reset");
     };
     me.list = async function () {
         if (me.profiles) {
             return me.profiles;
         }
-        var profiles = await me.storage.data.query("app.profile");
+        var profiles = await storage.data.query("app.profile");
         me.profiles = profiles;
         return profiles;
     };

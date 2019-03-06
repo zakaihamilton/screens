@@ -3,12 +3,13 @@
  @component DbShared
  */
 
-screens.db.shared = function DbShared(me) {
+screens.db.shared = function DbShared(me, packages) {
+    const { db } = packages;
     me.hashResults = async function (queries, hashes) {
         var results = {};
         for (let key in queries) {
             results[key] = [];
-            var list = await me.db.shared[key].list(queries[key]);
+            var list = await db.shared[key].list(queries[key]);
             for (let hash of hashes) {
                 var result = list.filter(item => item.hash === hash);
                 results[key].push(result);
@@ -19,26 +20,30 @@ screens.db.shared = function DbShared(me) {
     return "server";
 };
 
-screens.db.shared.present = function DbSharedPresent(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.present = function DbSharedPresent(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.shared.chat = function DbSharedChat(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.chat = function DbSharedChat(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.shared.workshop = function DbSharedWorkshop(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.workshop = function DbSharedWorkshop(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.shared.highlight = function DbSharedHighlight(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.highlight = function DbSharedHighlight(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {
@@ -49,20 +54,23 @@ screens.db.shared.highlight = function DbSharedHighlight(me) {
     return "server";
 };
 
-screens.db.shared.content = function DbSharedContent(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.content = function DbSharedContent(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.shared.metadata = function DbSharedContent(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.metadata = function DbSharedContent(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.shared.commentary = function DbSharedCommentary(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.commentary = function DbSharedCommentary(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.users = async function () {
         var users = await me.list({}, { project: { name: 1, _id: 0 } });
@@ -81,8 +89,9 @@ screens.db.shared.commentary = function DbSharedCommentary(me) {
     return "server";
 };
 
-screens.db.shared.message = function DbSharedContent(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.message = function DbSharedContent(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.listing = async function (user) {
         if (!user) {
@@ -116,8 +125,9 @@ screens.db.shared.message = function DbSharedContent(me) {
     return "server";
 };
 
-screens.db.shared.user = function DbSharedUser(me) {
-    me.init = () => me.storage.db.extension(me);
+screens.db.shared.user = function DbSharedUser(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
         {

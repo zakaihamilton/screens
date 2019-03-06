@@ -3,7 +3,7 @@
  @component AppChat
  */
 
-screens.app.messages = function AppMessages(me) {
+screens.app.messages = function AppMessages(me, packages) {
     me.init = function () {
         me.messages = [];
     };

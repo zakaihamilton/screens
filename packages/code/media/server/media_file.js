@@ -3,7 +3,8 @@
  @component MediaFile
  */
 
-screens.media.file = function MediaFile(me) {
+screens.media.file = function MediaFile(me, packages) {
+    const { core } = packages;
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.init = function () {
@@ -12,10 +13,10 @@ screens.media.file = function MediaFile(me) {
         me.ffmpeg.setFfprobePath(ffprobePath);
         me.os = require("os");
         me.tempDir = me.os.tmpdir();
-        if (!me.core.file.exists(me.cachePath)) {
-            me.core.file.makeDir(me.cachePath);
+        if (!core.file.exists(me.cachePath)) {
+            core.file.makeDir(me.cachePath);
         }
-        me.core.mutex.enable(me.id, true);
+        core.mutex.enable(me.id, true);
     };
     me.info = function (path) {
         return new Promise(resolve => {
@@ -43,7 +44,7 @@ screens.media.file = function MediaFile(me) {
     me.groups = async function (update = false) {
         var files = [];
         try {
-            var unlock = await me.core.mutex.lock(me.id);
+            var unlock = await core.mutex.lock(me.id);
             files = await me.db.cache.file.listing(me.rootPath, update);
             for (let file of files) {
                 file.path = me.rootPath + "/" + file.name;
@@ -74,9 +75,9 @@ screens.media.file = function MediaFile(me) {
     me.listing = async function (parent, update = false) {
         var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
             file.group = parent.name;
-            file.session = me.core.path.fileName(file.name);
-            file.extension = me.core.path.extension(file.name);
-            file.label = me.core.string.title(me.core.path.fileName(file.name));
+            file.session = core.path.fileName(file.name);
+            file.extension = core.path.extension(file.name);
+            file.label = core.string.title(core.path.fileName(file.name));
             file.remote = parent.path + "/" + file.name;
             file.local = me.cachePath + "/" + file.name;
             if (file.local.endsWith(".m4a")) {
@@ -90,7 +91,7 @@ screens.media.file = function MediaFile(me) {
                 if (metadata) {
                     if (metadata.format) {
                         file.duration = metadata.format.duration;
-                        file.durationText = me.core.string.formatDuration(file.duration);
+                        file.durationText = core.string.formatDuration(file.duration);
                     }
                 }
             }
@@ -104,13 +105,13 @@ screens.media.file = function MediaFile(me) {
         var group = groups.find(item => item.name === "american");
         var listing = await me.listing(group, true);
         listing = listing.filter(item => {
-            return me.core.path.extension(item.name) === "m4a";
+            return core.path.extension(item.name) === "m4a";
         });
         var diskSize = listing.reduce((total, item) => total + item.size, 0);
-        me.log("Requires " + me.core.string.formatBytes(diskSize) + " Disk space for listing");
+        me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for listing");
         for (var item of listing) {
-            var target = "cache/" + me.core.path.fullName(item.path);
-            var extension = me.core.path.extension(target);
+            var target = "cache/" + core.path.fullName(item.path);
+            var extension = core.path.extension(target);
             if (!item.downloaded) {
                 try {
                     await me.manager.file.download(item.path, target);

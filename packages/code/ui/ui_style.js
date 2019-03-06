@@ -3,7 +3,8 @@
  @component UIStyle
  */
 
-screens.ui.style = function UIStyle(me) {
+screens.ui.style = function UIStyle(me, packages) {
+    const { core } = packages;
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {
@@ -55,13 +56,13 @@ screens.ui.style = function UIStyle(me) {
     me.hover = {
         set: function (object, value) {
             if (value.over) {
-                me.core.property.set(object, "ui.touch.over", () => {
-                    me.core.property.set(object, "ui.property.style", value.over);
+                core.property.set(object, "ui.touch.over", () => {
+                    core.property.set(object, "ui.property.style", value.over);
                 });
             }
             if (value.leave) {
-                me.core.property.set(object, "ui.touch.leave", () => {
-                    me.core.property.set(object, "ui.property.style", value.leave);
+                core.property.set(object, "ui.touch.leave", () => {
+                    core.property.set(object, "ui.property.style", value.leave);
                 });
             }
         }

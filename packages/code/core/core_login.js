@@ -3,23 +3,24 @@
  @component CoreLogin
  */
 
-screens.core.login = function CoreLogin(me) {
+screens.core.login = function CoreLogin(me, packages) {
+    const { core, storage } = packages;
     me.init = async function () {
         me.state = false;
         me.wasLoggedIn = false;
-        me.info = await me.storage.local.db.get(me.id, "info");
+        me.info = await storage.local.db.get(me.id, "info");
         if (!me.info) {
             me.info = {};
         }
-        me.core.property.link("core.http.headers", "core.login.headers", true);
-        me.core.property.link("core.message.headers", "core.login.headers", true);
+        core.property.link("core.http.headers", "core.login.headers", true);
+        core.property.link("core.message.headers", "core.login.headers", true);
     };
     me.load = function () {
-        if (!me.core.util.isOnline()) {
-            me.core.listener.signal(me.id);
+        if (!core.util.isOnline()) {
+            core.listener.signal(me.id);
             return;
         }
-        var login = me.core.util.config("settings.core.login");
+        var login = core.util.config("settings.core.login");
         return new Promise((resolve, reject) => {
             gapi.load("auth2", async function () {
                 login = await login;
@@ -34,13 +35,13 @@ screens.core.login = function CoreLogin(me) {
                     if (state) {
                         me.setStatus("Signed in");
                         me.updateInfo();
-                        await me.core.listener.signal(me.id);
+                        await core.listener.signal(me.id);
                     }
                     else {
                         me.log("sign in state: " + state);
                         me.setStatus("Signing in...");
                         await me.auth2.signIn();
-                        await me.core.listener.wait(me.id);
+                        await core.listener.wait(me.id);
                         me.setStatus("Sign in occured");
                     }
                     resolve();
@@ -78,21 +79,21 @@ screens.core.login = function CoreLogin(me) {
     };
     me.signin = {
         set: function () {
-            me.core.listener.reset(me.id);
+            core.listener.reset(me.id);
             me.auth2.signIn().then(() => {
-                me.core.listener.signal(me.id);
+                core.listener.signal(me.id);
             }).catch((err) => {
                 me.setStatus(me.log_errors[err.error]);
-                me.core.listener.signal(me.id);
+                core.listener.signal(me.id);
             });
         }
     };
     me.signout = {
         set: function () {
-            me.core.listener.reset(me.id);
+            core.listener.reset(me.id);
             me.auth2.signOut().then(() => {
                 me.setStatus("Signed out");
-                me.core.listener.signal(me.id);
+                core.listener.signal(me.id);
             });
         }
     };
@@ -100,7 +101,7 @@ screens.core.login = function CoreLogin(me) {
         set: function () {
             me.auth2.disconnect().then(() => {
                 me.setStatus("Disconnected");
-                me.core.listener.signal(me.id);
+                core.listener.signal(me.id);
             });
         }
     };
@@ -115,11 +116,11 @@ screens.core.login = function CoreLogin(me) {
         me.state = state;
         if (state) {
             me.setStatus("Changed to signed in");
-            me.core.listener.signal(me.id);
+            core.listener.signal(me.id);
         }
         else {
             me.setStatus("Changed to not signed in");
-            me.core.listener.signal(me.id);
+            core.listener.signal(me.id);
         }
     };
     me.updateInfo = function () {
@@ -139,7 +140,7 @@ screens.core.login = function CoreLogin(me) {
             token,
             login
         };
-        me.storage.local.db.set(me.id, "info", me.info);
+        storage.local.db.set(me.id, "info", me.info);
     };
     me.userChanged = function (user) {
         if (user) {
@@ -147,7 +148,7 @@ screens.core.login = function CoreLogin(me) {
                 me.updateInfo();
                 me.setStatus("Sign in successful");
                 me.log("User now: " + name);
-                me.core.listener.signal(me.id);
+                core.listener.signal(me.id);
             }
             else {
                 me.setStatus("User not signed in");

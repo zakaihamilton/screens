@@ -3,7 +3,7 @@
  @component AppVisualize
  */
 
-screens.app.visualize = function AppVisualize(me) {
+screens.app.visualize = function AppVisualize(me, packages) {
     me.init = async function () {
         await me.ui.transform.attach(me);
     };

@@ -3,7 +3,8 @@
  @component UIKey
  */
 
-screens.ui.key = function UIKey(me) {
+screens.ui.key = function UIKey(me, packages) {
+    const { core } = packages;
     me.handle = {
         keydown: function (object, method, event) {
             return true;
@@ -17,22 +18,22 @@ screens.ui.key = function UIKey(me) {
     };
     me.down = {
         set: function (object, value) {
-            me.core.event.register(me.handle, object, "keydown", value);
+            core.event.register(me.handle, object, "keydown", value);
         }
     };
     me.up = {
         set: function (object, value) {
-            me.core.event.register(me.handle, object, "keyup", value);
+            core.event.register(me.handle, object, "keyup", value);
         }
     };
     me.enter = {
         set: function (object, value) {
-            me.core.event.register(me.handle, object, "keyup", value, "enter");
+            core.event.register(me.handle, object, "keyup", value, "enter");
         }
     };
     me.press = {
         set: function (object, value) {
-            me.core.event.register(me.handle, object, "keypress", value);
+            core.event.register(me.handle, object, "keypress", value);
         }
     };
 };

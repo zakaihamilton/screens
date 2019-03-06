@@ -3,7 +3,7 @@
  @component UIParam
  */
 
-screens.ui.param = function UIParam(me) {
+screens.ui.param = function UIParam(me, packages) {
     me.lookup = {
         get: function (object, value, property) {
             var param = value;

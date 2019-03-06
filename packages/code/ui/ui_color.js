@@ -3,7 +3,7 @@
  @component UIColor
  */
 
-screens.ui.color = function UIColor(me) {
+screens.ui.color = function UIColor(me, packages) {
     me.lookup = {
         get: function (object, value, property) {
             return me.get(property);

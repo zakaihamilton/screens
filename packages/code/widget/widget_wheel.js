@@ -3,7 +3,8 @@
  @component WidgetWheel
  */
 
-screens.widget.wheel = function WidgetWheel(me) {
+screens.widget.wheel = function WidgetWheel(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -63,7 +64,7 @@ screens.widget.wheel = function WidgetWheel(me) {
             items = [];
         }
         items = [...items, null];
-        var id = me.core.property.get(object, "ui.attribute.#id");
+        var id = core.property.get(object, "ui.attribute.#id");
         var wheel = object.wheel = new wheelnav(id);
         wheel.slicePathFunction = slicePath().DonutSlice;
         wheel.markerPathFunction = markerPath().PieLineMarker;
@@ -87,7 +88,7 @@ screens.widget.wheel = function WidgetWheel(me) {
                 object.navigate_index = navIndex;
                 object.navigate_name = object.nav_items[navIndex];
                 if (!object.ignore_handler && object.navigate_method) {
-                    me.core.property.set(object, object.navigate_method, object.navigate_name);
+                    core.property.set(object, object.navigate_method, object.navigate_name);
                 }
             };
         }

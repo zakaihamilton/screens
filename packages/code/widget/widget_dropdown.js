@@ -3,7 +3,8 @@
  @component WidgetDropdown
  */
 
-screens.widget.dropdown = function WidgetDropDown(me) {
+screens.widget.dropdown = function WidgetDropDown(me, packages) {
+    const { core } = packages;
     me.element = {
         redirect: {
             "ui.basic.text": "text",
@@ -39,24 +40,24 @@ screens.widget.dropdown = function WidgetDropDown(me) {
     };
     me.readOnly = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.readOnly");
+            return core.property.get(object.var.selection, "ui.basic.readOnly");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.readOnly", value);
-            me.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
+            core.property.set(object.var.selection, "ui.basic.readOnly", value);
+            core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {
         get: function (object) {
-            return me.core.property.get(object.var.selection, "ui.basic.text");
+            return core.property.get(object.var.selection, "ui.basic.text");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.basic.text", value);
+            core.property.set(object.var.selection, "ui.basic.text", value);
         }
     };
     me.monitorChange = {
         set: function (object, value) {
-            me.core.property.set(object.var.selection, "ui.monitor.change", value);
+            core.property.set(object.var.selection, "ui.monitor.change", value);
         }
     };
 };

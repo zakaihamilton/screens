@@ -3,9 +3,10 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me) {
+screens.core.module = function CoreModule(me, packages) {
+    const { core } = packages;
     me.init = function () {
-        me.core.property.link("core.http.receive", "core.module.receive", true);
+        core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
         me.postcss = require("postcss");
         me.mime = require("mime");
@@ -21,7 +22,7 @@ screens.core.module = function CoreModule(me) {
     };
     me.loadTextFile = async function (filePath, optional) {
         try {
-            var data = await me.core.file.readFile(filePath, "utf8", optional);
+            var data = await core.file.readFile(filePath, "utf8", optional);
         }
         catch (err) {
             var error = "Cannot load text file: " + filePath + " err: " + err;
@@ -31,7 +32,7 @@ screens.core.module = function CoreModule(me) {
         return data;
     };
     me.loadBinaryFile = async function (filePath) {
-        var data = await me.core.file.readFile(filePath);
+        var data = await core.file.readFile(filePath);
         return data;
     };
     me.handleStylesheet = async function (filePath, params) {
@@ -39,7 +40,7 @@ screens.core.module = function CoreModule(me) {
             filePath = filePath.substring(1);
         }
         if (filePath === "screens.css") {
-            return await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"], false, "utf8");
+            return await core.pack.collect("packages/code", "browser", ["platform"], ["css"], false, "utf8");
         }
         var data = await me.loadTextFile(filePath, params.optional);
         if (!data && params.optional) {
@@ -49,7 +50,7 @@ screens.core.module = function CoreModule(me) {
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
         });
-        data = me.core.pack.minify(filePath, result.css);
+        data = core.pack.minify(filePath, result.css);
         return data;
     };
     me.handleCode = async function (filePath, params, info) {
@@ -58,15 +59,15 @@ screens.core.module = function CoreModule(me) {
         }
         if (filePath.startsWith("platform/")) {
             let platform = filePath.split("/").pop().split(".")[0];
-            let code = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
+            let code = await core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
             return code;
         }
         if (filePath.startsWith("res/")) {
             let type = filePath.split("/").pop().split(".")[0];
-            let icons = await me.core.pack.collect("packages/res/" + type, null, null, ["png", "svg"], false, null, "ui", "image");
+            let icons = await core.pack.collect("packages/res/" + type, null, null, ["png", "svg"], false, null, "ui", "image");
             return icons;
         }
-        var component_path = me.core.module.path_file_to_component(filePath);
+        var component_path = core.module.path_file_to_component(filePath);
         var target_platform = null;
         if (component_path) {
             try {
@@ -109,16 +110,16 @@ screens.core.module = function CoreModule(me) {
                 data += originalData;
             }
         }
-        data = me.core.pack.minify(filePath, data);
+        data = core.pack.minify(filePath, data);
         return data;
     };
     me.handleMultiFiles = async function (filePath, params, info) {
         var files = filePath.split(",");
         var file = files[0];
-        var folder = me.core.path.folderPath(file);
-        var name = me.core.path.fileName(file);
+        var folder = core.path.folderPath(file);
+        var name = core.path.fileName(file);
         if (name.includes("*")) {
-            var items = await me.core.file.readDir(folder);
+            var items = await core.file.readDir(folder);
             files = items.map((filePath) => {
                 return folder + "/" + filePath;
             });
@@ -150,24 +151,24 @@ screens.core.module = function CoreModule(me) {
                 /* Check if to inject file */
                 var result = line.match(/\s<script\ssrc="([^"]*)"><\/script>/);
                 if (result && result.length > 1) {
-                    var filePath = me.core.string.trimEnd(result[1], "?");
+                    var filePath = core.string.trimEnd(result[1], "?");
                     if (filePath.startsWith("http")) {
                         return line;
                     }
                     let codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
-                    let codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
+                    let codeContent = await core.module.handleMultiFiles(filePath, codeParams, info);
                     line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</" + "script>\n";
                     return line;
                 }
                 result = line.match(/\s<link\srel="stylesheet"\shref="([^"]*)">/);
                 if (result && result.length > 1) {
                     ignoreNextLine = true;
-                    let filePath = me.core.string.trimEnd(result[1], "?");
+                    let filePath = core.string.trimEnd(result[1], "?");
                     if (filePath.startsWith("http")) {
                         return line;
                     }
                     let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css" });
-                    let styleContent = await me.core.module.handleMultiFiles(filePath, styleParams, info);
+                    let styleContent = await core.module.handleMultiFiles(filePath, styleParams, info);
                     line = "<style id=\"" + filePath + "\">\n" + styleContent + "\n</style>\n";
                     return line;
                 }
@@ -187,16 +188,16 @@ screens.core.module = function CoreModule(me) {
             params.method = me.handleCode;
             params.extension = ".js";
             info["content-type"] = "application/javascript";
-            info.body = await me.core.module.handleMultiFiles(filePath, params, info);
+            info.body = await core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".css")) {
             params = Object.assign({}, params);
             params.method = me.handleStylesheet;
             params.extension = ".css";
             info["content-type"] = "text/css";
-            info.body = await me.core.module.handleMultiFiles(filePath, params, info);
+            info.body = await core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            var useCache = me.core.util.isSecure();
+            var useCache = core.util.isSecure();
             var data = null;
             if (useCache) {
                 data = me.cache[filePath];
@@ -231,20 +232,20 @@ screens.core.module = function CoreModule(me) {
         } else if (filePath.endsWith(".m4a")) {
             let mimeType = "audio/mp4";
             info.custom = true;
-            me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+            core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else if (filePath.endsWith(".mp4")) {
             let mimeType = "video/mp4";
             info.custom = true;
-            me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+            core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else if (filePath.endsWith(".mp3")) {
             let mimeType = "audio/mpeg";
             info.custom = true;
-            me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+            core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else {
-            var extension = me.core.path.extension(filePath);
+            var extension = core.path.extension(filePath);
             let mimeType = me.mime.getType(extension);
             info.custom = true;
-            me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+            core.stream.serve(info.headers, info.response, filePath, mimeType);
         }
     };
     me.handleMeta = function (info) {
@@ -299,12 +300,12 @@ screens.core.module = function CoreModule(me) {
                 }
                 if (info.url.startsWith("/upgrade")) {
                     me.db.events.msg.send(me.id + ".emptyCache");
-                    await me.core.server.upgrade();
+                    await core.server.upgrade();
                     info.body = "Upgrade complete";
                     return;
                 }
                 if (info.url.startsWith("/reload")) {
-                    me.core.server.run("pm2 reload all");
+                    core.server.run("pm2 reload all");
                     info.body = "Reload complete";
                     return;
                 }

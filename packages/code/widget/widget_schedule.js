@@ -3,7 +3,8 @@
  @component WidgetSchedule
  */
 
-screens.widget.schedule = function WidgetSchedule(me) {
+screens.widget.schedule = function WidgetSchedule(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -300,32 +301,32 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 });
             });
         }
-        me.core.property.set(object.var.grid, "ui.basic.html", html);
+        core.property.set(object.var.grid, "ui.basic.html", html);
         me.ui.scroll.positions.set(object, positions);
     };
     me.click = function (object, index) {
         var widget = me.ui.node.container(object, me.id);
         if (widget.schedule_methods.event) {
             var event = widget.schedule_events[index];
-            me.core.property.set(widget, widget.schedule_methods.event, event);
+            core.property.set(widget, widget.schedule_methods.event, event);
         }
     };
     me.previous = function (object) {
         var widget = me.ui.node.container(object, me.id);
         if (widget.schedule_methods.previous) {
-            me.core.property.set(widget, widget.schedule_methods.previous);
+            core.property.set(widget, widget.schedule_methods.previous);
         }
     };
     me.next = function (object) {
         var widget = me.ui.node.container(object, me.id);
         if (widget.schedule_methods.next) {
-            me.core.property.set(widget, widget.schedule_methods.next);
+            core.property.set(widget, widget.schedule_methods.next);
         }
     };
     me.today = function (object) {
         var widget = me.ui.node.container(object, me.id);
         if (widget.schedule_methods.next) {
-            me.core.property.set(widget, widget.schedule_methods.today);
+            core.property.set(widget, widget.schedule_methods.today);
         }
     };
 };

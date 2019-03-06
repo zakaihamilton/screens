@@ -3,7 +3,7 @@
  @component CoreData
  */
 
-screens.core.data = function CoreData(me) {
+screens.core.data = function CoreData(me, packages) {
     me.lookup = {
         get: function (object, value, property) {
             var data = null;

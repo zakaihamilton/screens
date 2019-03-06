@@ -3,7 +3,8 @@
  @component UIData
  */
 
-screens.ui.data = function UIData(me) {
+screens.ui.data = function UIData(me, packages) {
+    const { core } = packages;
     me.default = {
         get: function (object) {
             return object.data_default;
@@ -68,7 +69,7 @@ screens.ui.data = function UIData(me) {
             if (object.data_parent) {
                 parent = object.data_parent;
             }
-            me.core.property.set(parent, "ui.basic.elements", elements);
+            core.property.set(parent, "ui.basic.elements", elements);
         }
     };
     me.collect = function (object, elements, items) {
@@ -79,7 +80,7 @@ screens.ui.data = function UIData(me) {
             if (typeof values === "string") {
                 let prefix = object.data_prefix || "";
                 let suffix = object.data_suffix || "";
-                values = me.core.property.get(object, prefix + values + suffix);
+                values = core.property.get(object, prefix + values + suffix);
                 if (Array.isArray(values)) {
                     me.collect(object, elements, values);
                 }

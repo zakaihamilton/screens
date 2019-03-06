@@ -3,7 +3,7 @@
     @component CmdYoutube
 */
 
-screens.cmd.youtube = function CmdYoutube(me) {
+screens.cmd.youtube = function CmdYoutube(me, packages) {
     me.cmd = function (terminal, args) {
         if (args.length < 2) {
             me.core.property.set(terminal, "print", "youtube: title video_id");

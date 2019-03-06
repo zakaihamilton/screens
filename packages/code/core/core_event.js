@@ -3,7 +3,8 @@
  @component CoreEvent
  */
 
-screens.core.event = function CoreEvent(me) {
+screens.core.event = function CoreEvent(me, packages) {
+    const { core } = packages;
     me.events = {};
     me.lookup = {
         set: function (object, value, property) {
@@ -12,7 +13,7 @@ screens.core.event = function CoreEvent(me) {
     };
     me.send_event = function (object, method, event) {
         if (!object || !object.getAttribute || !object.getAttribute("disabled")) {
-            return me.core.property.set(object, method, event);
+            return core.property.set(object, method, event);
         }
     };
     me.enabled = {
@@ -40,7 +41,7 @@ screens.core.event = function CoreEvent(me) {
             object.event_types = {};
         }
         if (method) {
-            method = me.core.property.to_full_name(object, method);
+            method = core.property.to_full_name(object, method);
         }
         var listener_callback = function (event) {
             var enabled = true;
