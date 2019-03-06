@@ -524,5 +524,8 @@ screens.app.player = function AppPlayer(me, packages) {
             me.log("session: " + session.session + " is cached " + (size / session.size) * 100 + "%");
             return (size === session.size);
         }
+        else {
+            me.log("session: " + session.session + " is not cached ");
+        }
     };
 };

@@ -323,7 +323,6 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
         }
     };
     me.work = function (object, state) {
-        me.log("menu state: " + state);
         if (object.workTimeout) {
             clearTimeout(object.workTimeout);
             object.workTimeout = null;
