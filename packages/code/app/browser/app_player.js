@@ -521,6 +521,7 @@ screens.app.player = function AppPlayer(me, packages) {
         var matches = await core.message.service_worker.getCachedItems(session.session);
         if (matches) {
             var size = matches[0].size;
+            me.log("session: " + session.session + " is cached " + (size / session.size) * 100 + "%");
             return (size === session.size);
         }
     };

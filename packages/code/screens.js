@@ -335,10 +335,10 @@ var screens = {
     import: screens_import,
     browse: screens_browse,
     require: screens_require,
-    log: (message, componentId, userName) => {
+    log: function (message, componentId, userName) {
         screens.core.console.log.call(this, message, componentId, userName);
     },
-    log_error: (message, stack, componentId, userName) => {
+    log_error: function (message, stack, componentId, userName) {
         screens.core.console.log_error.call(this, message, stack, componentId, userName);
     }
 };
