@@ -6,6 +6,7 @@
         "width": "640px",
         "height": "480px"
     },
+    "maximize": null,
     "icon": "terminal",
     "ui.style.background": "black",
     "ui.basic.elements": [
