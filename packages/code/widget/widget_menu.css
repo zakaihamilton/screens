@@ -156,13 +156,13 @@
 .widget-menu-vertical li.checked:before, .widget-menu-vertical tr.checked td:first-child:before, .widget-menu-vertical span.checked:before {
     content: '\2713';
     position: absolute;
-    left: 3px;
+    left: 0.1em;
 }
 
 .widget-menu-vertical input.mark:after, .widget-menu-vertical li.mark:after, .widget-menu-vertical tr.mark:after, .widget-menu-vertical span.mark:after {
     content: '\2022';
     position: absolute;
-    right: 3px;
+    right: 0.3em;
 }
 
 .widget-menu-vertical input.separator, .widget-menu-vertical li.separator, .widget-menu-vertical tr.separator, .widget-menu-vertical span.separator {

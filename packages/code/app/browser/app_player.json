@@ -118,7 +118,8 @@
                     "options": {
                         "state": "select",
                         "enabled": "app.player.hasAudio",
-                        "separator": true
+                        "separator": true,
+                        "mark": "app.player.isCached"
                     }
                 },
                 {

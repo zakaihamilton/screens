@@ -650,6 +650,9 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                 me.handleValue(object, options, "state", (value) => {
                     core.property.set(object, "ui.class.checked", value);
                 });
+                me.handleValue(object, options, "mark", (value) => {
+                    core.property.set(object, "ui.class.mark", value);
+                });
                 me.handleValue(object, options, "menu", (value) => {
                     core.property.set(object, "ui.class.has-menu", value);
                 });

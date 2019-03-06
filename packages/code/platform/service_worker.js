@@ -20,14 +20,14 @@ workbox.routing.registerRoute(
         }
         return false;
     },
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: "dynamic-cache",
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:html)$/,
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: "html-cache",
     })
 );
@@ -39,14 +39,14 @@ workbox.routing.registerRoute(
         }
         return false;
     },
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: "js-cache",
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:json)$/,
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: "json-cache",
     })
 );
@@ -57,7 +57,7 @@ workbox.routing.registerRoute(
     // Use cache but update in the background.
     new workbox.strategies.StaleWhileRevalidate({
         // Use a custom cache name.
-        cacheName: "css-cache",
+        cacheName: "css-cache"
     })
 );
 
@@ -65,34 +65,18 @@ workbox.routing.registerRoute(
     // Cache image files.
     /\.(?:woff2|ttf)$/,
     // Use the cache if it's available.
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         // Use a custom cache name.
-        cacheName: "font-cache",
-        plugins: [
-            new workbox.expiration.Plugin({
-                // Cache only 100 images.
-                maxEntries: 100,
-                // Cache for a maximum of a week.
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-            })
-        ],
+        cacheName: "font-cache"
     })
 );
 workbox.routing.registerRoute(
     // Cache image files.
     /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
     // Use the cache if it's available.
-    new workbox.strategies.CacheFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         // Use a custom cache name.
-        cacheName: "image-cache",
-        plugins: [
-            new workbox.expiration.Plugin({
-                // Cache only 100 images.
-                maxEntries: 100,
-                // Cache for a maximum of a week.
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-            })
-        ],
+        cacheName: "image-cache"
     })
 );
 
@@ -104,7 +88,7 @@ workbox.routing.registerRoute(
             new workbox.cacheableResponse.Plugin({ statuses: [200] }),
             new workbox.rangeRequests.Plugin(),
             new workbox.expiration.Plugin({
-                // Cache only 10 images.
+                // Cache only 10 files.
                 maxEntries: 10,
                 // Cache for a maximum of a week.
                 maxAgeSeconds: 7 * 24 * 60 * 60,

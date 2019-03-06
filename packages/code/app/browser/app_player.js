@@ -199,6 +199,7 @@ screens.app.player = function AppPlayer(me, packages) {
             name = "";
         }
         me.hasAudio = audioFound !== null && audioFound.length;
+        me.audioItem = audioFound && audioFound[0];
         me.hasVideo = videoFound !== null && videoFound.length;
         me.metadata = await me.db.shared.metadata.find({ group: groupName, title: name, user: "$userId" });
         if (!me.metadata) {
@@ -514,5 +515,13 @@ screens.app.player = function AppPlayer(me, packages) {
         }
         await me.updateSession(object, list[index - 1].session);
         core.property.notify(object, "app.player.updatePlayer");
+    };
+    me.isCached = async function (object) {
+        var session = me.audioItem;
+        var matches = await core.message.service_worker.getCachedItems(session.session);
+        if (matches) {
+            var size = matches[0].size;
+            return (size === session.size);
+        }
     };
 };

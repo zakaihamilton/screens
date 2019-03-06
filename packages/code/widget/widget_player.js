@@ -79,6 +79,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me, packages) {
                     "ui.basic.tag": "audio",
                     "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
+                    "ui.attribute.crossOrigin": "anonymous",
                     "core.event.error": "widget.player.errorEvent",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
