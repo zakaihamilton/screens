@@ -4,7 +4,7 @@
  */
 
 screens.app.diagram = function AppDiagram(me, packages) {
-    const { core } = packages;
+    const { core, ui, widget } = packages;
     me.init = async function () {
         core.property.set(me, {
             "core.property.object.path": null,
@@ -30,7 +30,7 @@ screens.app.diagram = function AppDiagram(me, packages) {
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
         }
-        var window = me.ui.element.create(json, parent, "self", params);
+        var window = ui.element.create(json, parent, "self", params);
         return window;
     };
     me.fullPath = function (name) {
@@ -58,7 +58,7 @@ screens.app.diagram = function AppDiagram(me, packages) {
         }
     };
     me.reload = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var path = core.property.get(window, "app.diagram.path");
         var diagramJson = await core.json.loadFile(path);
         core.property.set(window, "app.diagram.diagramData", diagramJson);
@@ -67,13 +67,13 @@ screens.app.diagram = function AppDiagram(me, packages) {
     };
     me.refresh = {
         set: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             core.property.set(window.var.viewer, {
                 "ui.basic.html": null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
             });
             var diagramData = core.property.get(window, "app.diagram.diagramData");
-            me.ui.element.create(diagramData.layers, window.var.viewer);
+            ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
                 core.property.set(window, "name", diagramData.title);
             }

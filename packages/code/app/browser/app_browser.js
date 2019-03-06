@@ -4,13 +4,13 @@
  */
 
 screens.app.browser = function AppBrowser(me, packages) {
-    const { core } = packages;
+    const { core, ui, widget } = packages;
     me.launch = function () {
-        return me.ui.element.create(me.json, "workspace", "self");
+        return ui.element.create(me.json, "workspace", "self");
     };
     me.load = {
         set: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var url = core.property.get(window.var.url, "text");
             if (!url.startsWith("www.")) {
                 url = "www." + url;

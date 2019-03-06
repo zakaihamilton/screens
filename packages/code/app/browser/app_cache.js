@@ -4,18 +4,18 @@
  */
 
 screens.app.cache = function AppCache(me, packages) {
-    const { core } = packages;
+    const { core, ui, storage } = packages;
     me.launch = function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         return me.singleton;
     };
     me.keyList = {
         get: function () {
-            var keys = me.storage.local.keyList();
+            var keys = storage.local.keyList();
             return keys.map(function (item) {
                 return [item];
             });
@@ -26,7 +26,7 @@ screens.app.cache = function AppCache(me, packages) {
             var key = core.property.get(me.singleton.var.key, "ui.basic.text");
             var value = core.property.get(me.singleton.var.value, "ui.basic.text");
             if (key) {
-                me.storage.local.set(key, value);
+                storage.local.set(key, value);
             }
         }
     };
@@ -34,14 +34,14 @@ screens.app.cache = function AppCache(me, packages) {
         set: function () {
             var key = core.property.get(me.singleton.var.key, "ui.basic.text");
             if (key) {
-                me.storage.local.set(key, "");
+                storage.local.set(key, "");
                 core.property.set([me.singleton.var.key, me.singleton.var.value], "ui.basic.text", "");
             }
         }
     };
     me.clearAll = {
         set: function () {
-            me.storage.local.empty();
+            storage.local.empty();
         }
     };
     me.onChangeStorage = {
