@@ -294,6 +294,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, pack
         return result;
     };
     me.load = async function (path) {
+        me.path = path;
         if ("serviceWorker" in navigator) {
             me.log("Service worker registeration for path: " + path);
             try {
@@ -326,24 +327,29 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, pack
         }
     };
     me.register = function () {
-        registerPromiseWorker(async (info) => {
-            if (!info) {
-                return;
-            }
-            if (info.callback) {
-                info.callback = core.handle.find(info.callback, "function");
-                if (info.callback) {
-                    return await info.callback.apply(null, info.args);
+        if (me.platform === "browser") {
+            me.load(me.path);
+        }
+        else {
+            registerPromiseWorker(async (info) => {
+                if (!info) {
+                    return;
                 }
-            }
-            else {
-                core.property.object.create(me, info);
-                core.message.prepareArgs(info);
-                var args = await core.message.send.apply(null, info.args);
-                core.message.releaseArgs(info);
-                return args;
-            }
-        });
+                if (info.callback) {
+                    info.callback = core.handle.find(info.callback, "function");
+                    if (info.callback) {
+                        return await info.callback.apply(null, info.args);
+                    }
+                }
+                else {
+                    core.property.object.create(me, info);
+                    core.message.prepareArgs(info);
+                    var args = await core.message.send.apply(null, info.args);
+                    core.message.releaseArgs(info);
+                    return args;
+                }
+            });
+        }
     };
     me.getCachedItems = async function (filter) {
         const cacheNames = await caches.keys();
