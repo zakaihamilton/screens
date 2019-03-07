@@ -600,17 +600,17 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                 }
             }
             if (param && param.then) {
-                callback(false);
+                callback("");
                 param.then(param => {
                     if (param && Array.isArray(param) && !param.length) {
-                        param = false;
+                        param = "";
                     }
                     callback(param);
                 });
             }
             else {
                 if (param && Array.isArray(param) && !param.length) {
-                    param = false;
+                    param = "";
                 }
                 callback(param);
             }
@@ -651,6 +651,9 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                 });
                 me.handleValue(object, options, "mark", (value) => {
                     core.property.set(object, "ui.class.mark", value);
+                });
+                me.handleValue(object, options, "status", (value) => {
+                    core.property.set(object, "ui.attribute.#widget-menu-status", value);
                 });
                 me.handleValue(object, options, "menu", (value) => {
                     core.property.set(object, "ui.class.has-menu", value);

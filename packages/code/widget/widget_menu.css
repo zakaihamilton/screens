@@ -165,6 +165,15 @@
     right: 0.3em;
 }
 
+[widget-menu-status]:after {
+    content: attr(widget-menu-status);
+    position: absolute;
+    font-size: 0.75em;
+    right: 0.3em;
+    top:0.35em;
+    color: var(--chrome-disabled-color);    
+}
+
 .widget-menu-vertical input.separator, .widget-menu-vertical li.separator, .widget-menu-vertical tr.separator, .widget-menu-vertical span.separator {
     border-top: 1px solid var(--border-color);
 }
