@@ -35,10 +35,6 @@
     filter: brightness(150%);
 }
 
-.widget-taskbar-tasks.collapse {
-    right: 3em;
-}
-
 .widget-taskbar-task {
     display: flex;
     flex: 0;

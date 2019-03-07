@@ -50,7 +50,7 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
     };
     me.expandShortcuts = function (object, expand) {
         var taskbar = me.ui.node.container(object, me.id);
-        core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.collapse", !expand);
+        core.property.set(taskbar.var.shortcuts, "ui.class.collapse", !expand);
         var isCollapsed = core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
         var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
         core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", name);
