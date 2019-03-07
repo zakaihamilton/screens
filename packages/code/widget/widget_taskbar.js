@@ -39,20 +39,26 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
             label,
             () => {
                 me.core.property.set(object, method);
+                if (method !== "widget.taskbar.toggleShortcuts") {
+                    me.expandShortcuts(object, false);
+                }
             }
         ]];
     };
     me.prepare = function (object) {
-        if (core.device.isMobile()) {
-            me.toggleShortcuts(object);
-        }
+        me.toggleShortcuts(object);
+    };
+    me.expandShortcuts = function (object, expand) {
+        var taskbar = me.ui.node.container(object, me.id);
+        core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.collapse", !expand);
+        var isCollapsed = core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
+        var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
+        core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", name);
     };
     me.toggleShortcuts = function (object) {
         var taskbar = me.ui.node.container(object, me.id);
-        core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
         var isCollapsed = core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
-        var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
-        core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", "" + name);
+        me.expandShortcuts(object, isCollapsed);
     };
     return "browser";
 };
