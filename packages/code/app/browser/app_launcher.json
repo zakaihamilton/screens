@@ -54,19 +54,19 @@
                     ],
                     [
                         "Login",
-                        "utilities"
+                        "other"
                     ],
                     [
                         "Logger",
-                        "utilities"
+                        "other"
                     ],
                     [
                         "Terminal",
-                        "utilities"
+                        "other"
                     ],
                     [
                         "Packets",
-                        "work"
+                        "other"
                     ],
                     [
                         "Zoom",
@@ -106,7 +106,7 @@
                     ],
                     [
                         "Propagate",
-                        "work"
+                        "other"
                     ],
                     [
                         "Visualize",
