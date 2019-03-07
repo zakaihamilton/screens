@@ -328,16 +328,27 @@ screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
             var background = object.var.controls.var.progress.var.background;
             var plugins = [];
             if (!core.device.isMobile()) {
-                plugins.push(WaveSurfer.cursor.create({
+                let plugin = WaveSurfer.cursor.create({
                     showTime: true,
                     opacity: 0.75,
                     customShowTimeStyle: {
                         "background-color": "var(--chrome-background)",
                         color: "var(--chrome-color)",
                         padding: "0.2em",
-                        "margin-left": "0.4em"
+                        "margin-left": "0.4em",
+                        "z-index": "1000"
                     }
-                }));
+                });
+                plugin.instance.prototype.formatTime = function (cursorTime) {
+                    return [cursorTime].map(function (time) {
+                        return [
+                            ("00" + Math.floor(time % (3600 * 60) / 60 / 60)).slice(-2),
+                            ("00" + Math.floor(time % 3600 / 60)).slice(-2),
+                            ("00" + Math.floor(time % 60)).slice(-2)
+                        ].join(":");
+                    });
+                };
+                plugins.push(plugin);
             }
             widget.wavesurfer = WaveSurfer.create({
                 container: background,
