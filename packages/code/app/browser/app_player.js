@@ -495,6 +495,29 @@ screens.app.player = function AppPlayer(me, packages) {
         });
         return results;
     };
+    me.latestSession = {
+        get: async function (object) {
+            var window = me.widget.window.get(object);
+            var groupName = window.options.groupName.toLowerCase();
+            var list = me.groups.find(group => groupName === group.name).sessions;
+            list = list.filter(session => session.extension === "m4a");
+            if (!list.length) {
+                return;
+            }
+            return "<b>Latest:</b>\t" + list[0].session;
+        },
+        set: async function (object) {
+            var window = me.widget.window.get(object);
+            var groupName = window.options.groupName.toLowerCase();
+            var list = me.groups.find(group => groupName === group.name).sessions;
+            list = list.filter(session => session.extension === "m4a");
+            if (!list.length) {
+                return;
+            }
+            await me.updateSession(object, list[0].session);
+            core.property.notify(object, "app.player.updatePlayer");
+        }
+    };
     me.nextSession = async function (object) {
         var window = me.widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();

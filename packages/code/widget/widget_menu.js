@@ -143,8 +143,8 @@ screens.widget.menu = function WidgetMenu(me, packages) {
                 }
             }
             core.property.set(window.var.menu, "ui.group.data", {
-                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                "ui.data.mapping": { "text": "ui.basic.text", "tooltip": "ui.attribute.title" },
+                "ui.data.keyList": ["ui.basic.html", "select", "options", "properties"],
+                "ui.data.mapping": { "text": "ui.basic.html", "tooltip": "ui.attribute.title" },
                 "ui.data.values": value
             });
             me.updateTheme(window);
@@ -231,8 +231,8 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
     me.values = function (object, values) {
         if (core.property.get(object, "ui.node.parent")) {
             core.property.set(object, "ui.group.data", {
-                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                "ui.data.mapping": { "text": "ui.basic.text" },
+                "ui.data.keyList": ["ui.basic.html", "select", "options", "properties"],
+                "ui.data.mapping": { "text": "ui.basic.html" },
                 "ui.data.values": values
             });
             core.property.set(object, "ui.property.broadcast", {
@@ -258,7 +258,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
         core.property.set(object, "ui.property.broadcast", {
             "ui.class.remove": "selected"
         });
-        var label = core.property.get(item, "ui.basic.text");
+        var label = core.property.get(item, "ui.basic.html");
         values = [{ text: label, select: "header" }, ...values];
         core.property.set(item, "ui.class.add", "selected");
         core.property.set(object.var.modal, "ui.style.display", "block");
@@ -287,10 +287,10 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
             }
             if (typeof text === "undefined") {
                 if (core.property.get(item, "ui.basic.tag") === "tr") {
-                    text = core.property.get(item.firstElementChild, "ui.basic.text");
+                    text = core.property.get(item.firstElementChild, "ui.basic.html");
                 }
                 else {
-                    text = core.property.get(item, "ui.basic.text");
+                    text = core.property.get(item, "ui.basic.html");
                 }
             }
             if (prefix) {
@@ -414,7 +414,7 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
             var isFirst = core.property.get(list.var.members, "ui.basic.tag") === "table";
             for (var child of list.members) {
                 var prefix = core.property.get(child, "prefix");
-                var childText = core.property.get(child, "ui.basic.text");
+                var childText = core.property.get(child, "ui.basic.html");
                 if (!childText) {
                     continue;
                 }
@@ -434,7 +434,7 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
             if (!found) {
                 members.appendChild(me.ui.element.create({
                     "ui.basic.tag": "div",
-                    "ui.basic.text": "No Match Found",
+                    "ui.basic.html": "No Match Found",
                     "ui.class.add": "no-match"
                 }));
             }
@@ -511,7 +511,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
         },
         dependencies: {
             parent: ["widget.menu", "widget.menu.popup"],
-            properties: ["ui.basic.text"]
+            properties: ["ui.basic.html"]
         },
         use: (properties, parent) => {
             var unique = true;
@@ -525,7 +525,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                     return null;
                 }
             }
-            var text = properties["ui.basic.text"];
+            var text = properties["ui.basic.html"];
             if (!text) {
                 return null;
             }
@@ -590,7 +590,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                     value = object.menu_ref;
                 }
                 if (typeof value === "undefined") {
-                    value = core.property.get(object, "ui.basic.text");
+                    value = core.property.get(object, "ui.basic.html");
                 }
                 if (method === "admin") {
                     param = core.util.isAdmin;
@@ -675,8 +675,8 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                             "core.link.close": () => {
                                 core.property.set(object, options.edit, object.value);
                             },
-                            "ui.basic.text": value,
-                            "ui.attribute.placeholder": core.property.get(object, "ui.basic.text")
+                            "ui.basic.html": value,
+                            "ui.attribute.placeholder": core.property.get(object, "ui.basic.html")
                         });
                     }
                     else {
@@ -777,7 +777,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                 me.ui.element.create({
                     "ui.basic.tag": "input",
                     "ui.basic.type": "file",
-                    "ui.basic.text": "",
+                    "ui.basic.html": "",
                     "ui.class.add": "upload",
                     "ui.basic.var": "upload",
                     "ui.style.userSelect": "none",
@@ -799,7 +799,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
         for (var key in value) {
             elements.push({
                 "ui.basic.tag": tag,
-                "ui.basic.text": tag === "th" ? key : value[key],
+                "ui.basic.html": tag === "th" ? key : value[key],
                 "ui.touch.down": tag === "th" ? "widget.menu.list.sort" : undefined
             });
         }

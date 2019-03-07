@@ -32,12 +32,20 @@
                     ]
                 },
                 {
+                    "text": "@app.player.latestSession",
+                    "select": "app.player.latestSession",
+                    "options": {
+                        "separator": true
+                    }
+                },
+                {
                     "text": "Favourites",
                     "select": [
                         "app.player.metadataMenuList(isFavourite)"
                     ],
                     "options": {
-                        "visible": "app.player.hasMetadata(isFavourite)"
+                        "visible": "app.player.hasMetadata(isFavourite)",
+                        "separator": true
                     }
                 },
                 {
