@@ -461,10 +461,13 @@ screens.app.player = function AppPlayer(me, packages) {
     for (let property of metadataProperties) {
         me[property] = {
             get: function () {
-                return me.metadata[property];
+                return me.metadata ? me.metadata[property] : null;
             },
             set: async function () {
                 var metadata = me.metadata;
+                if (!metadata) {
+                    metadata = {};
+                }
                 metadata[property] = !metadata[property];
                 await me.db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
                 me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
