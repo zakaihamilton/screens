@@ -177,6 +177,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me, packages) {
 };
 
 screens.widget.list.popup = function WidgetListPopup(me, packages) {
+    const { core } = packages;
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -232,6 +233,7 @@ screens.widget.list.popup = function WidgetListPopup(me, packages) {
 };
 
 screens.widget.list.item = function WidgetListItem(me, packages) {
+    const { core } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "span",

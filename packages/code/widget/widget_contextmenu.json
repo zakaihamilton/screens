@@ -24,15 +24,6 @@
         }
     ],
     [
-        "Close",
-        "widget.window.close",
-        {
-            "separator": "widget.contextmenu.resizable",
-            "visible": "widget.contextmenu.notEmbed",
-            "enabled": "select"
-        }
-    ],
-    [
         "Always On Top",
         "widget.window.alwaysOnTop",
         {
@@ -73,11 +64,12 @@
         }
     ],
     [
-        "Switch To...",
-        "core.app.tasks",
+        "Close",
+        "widget.window.close",
         {
-            "separator": true,
-            "visible": "widget.contextmenu.switchable"
+            "separator": "widget.contextmenu.resizable",
+            "visible": "widget.contextmenu.notEmbed",
+            "enabled": "select"
         }
     ]
 ]
