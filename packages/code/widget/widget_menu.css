@@ -170,8 +170,8 @@
     position: absolute;
     font-size: 0.75em;
     right: 0.3em;
-    top:0.35em;
-    color: var(--chrome-disabled-color);    
+    top: 0.35em;
+    color: var(--chrome-disabled-color);
 }
 
 .widget-menu-vertical input.separator, .widget-menu-vertical li.separator, .widget-menu-vertical tr.separator, .widget-menu-vertical span.separator {
@@ -201,17 +201,22 @@
 }
 
 .widget-menu-vertical li.has-menu:after, .widget-menu-vertical tr.has-menu td:first-child:after, .widget-menu-vertical span.has-menu:after {
-    border-color: var(--border-color);
-    border-style: solid;
-    border-width: 2px 2px 0 0;
-    content: '';
-    height: 0.4em;
-    right: 0.4em;
+    content: "\f0d7";
+    font-family: "Font Awesome 5 Free";
     position: absolute;
-    vertical-align: top;
-    width: 0.4em;
-    top: 0.6em;
-    transform: rotate(135deg);
+    font-size: 0.75em;
+    right: 0.3em;
+    top: 0.35em;
+    color: var(--color);
+}
+
+[widget-menu-status].has-menu:after {
+    content: attr(widget-menu-status) "\00a0\00a0\f0d7" !important;
+    position: absolute;
+    font-size: 1em !important;
+    right: 0.3em;
+    top: 0.0em !important;
+    color: var(--chrome-disabled-color);
 }
 
 .widget-menu-vertical li.selected, .widget-menu-vertical tr.selected td:first-child, .widget-menu-vertical span.selected {

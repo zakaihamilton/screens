@@ -560,4 +560,14 @@ screens.app.player = function AppPlayer(me, packages) {
             }
         }
     };
+    me.currentGroupName = function (object) {
+        var window = me.widget.window.get(object);
+        return me.core.string.title(window.options.groupName);
+    };
+    me.currentSessionDate = function (object) {
+        var window = me.widget.window.get(object);
+        let sessionName = window.options.sessionName;
+        let [date] = sessionName.split(/(\d{4}-\d{2}-\d{2})\s(.+)/g).slice(1);
+        return date;
+    };
 };

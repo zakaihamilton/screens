@@ -19,7 +19,8 @@
                 {
                     "text": "Group",
                     "options": {
-                        "separator": true
+                        "separator": true,
+                        "status": "app.player.currentGroupName"
                     },
                     "select": [
                         "app.player.groupMenuList"
@@ -29,7 +30,10 @@
                     "text": "Session",
                     "select": [
                         "app.player.sessionMenuList"
-                    ]
+                    ],
+                    "options": {
+                        "status": "app.player.currentSessionDate"
+                    }
                 },
                 {
                     "text": "@app.player.latestSession",
