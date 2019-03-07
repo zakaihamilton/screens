@@ -730,9 +730,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
     me.play = function (object, value, toggle = true) {
         var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.media.voice.isPlaying();
         var isPaused = me.media.voice.isPaused();
-        if (toggle && isPlaying && isPaused) {
+        if (toggle && isPaused) {
             me.media.voice.resume();
             var focusElement = me.widget.transform.layout.focusElement(me.currentPlayingPage);
             me.focusParagraph(object, focusElement);
