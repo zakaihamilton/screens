@@ -53,7 +53,7 @@ screens.user.verify = function UserVerify(me, packages) {
                 info.userId = profile.userid;
                 info.userName = profile.name;
                 info.userEmail = profile.email;
-                let user = db.shared.user.find({ user: info.userId });
+                let user = await db.shared.user.find({ user: info.userId });
                 if (!user || user.name !== info.userName || user.email !== info.userEmail) {
                     db.shared.user.use({ user: info.userId }, { name: info.userName, email: info.userEmail });
                 }

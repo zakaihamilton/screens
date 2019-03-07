@@ -43,7 +43,7 @@ screens.db.events.msg = function DbEventsParticipants(me, packages) {
             }
             for (index++; index < list.length; index++) {
                 var item = list[index];
-                me.log("running message: " + item.date + " - " + JSON.stringify(item.args));
+                me.log("running message: " + index + " - " + item.date + " - " + JSON.stringify(item.args));
                 await core.message.send.apply(null, item.args);
                 me.lastMsgId = item._id;
             }
