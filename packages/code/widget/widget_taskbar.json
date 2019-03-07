@@ -36,7 +36,8 @@
                     "keyboard",
                     "ui.theme.nightMode",
                     "ui.resize.toggleLockRotation",
-                    "ui.theme.toggleFontSize"
+                    "ui.theme.toggleFontSize",
+                    "core.util.reload"
                 ]
             }
         }

@@ -181,4 +181,9 @@ screens.core.util = function CoreUtil(me, packages) {
         };
         module.exports = handle;
     };
+    me.reload = async function () {
+        await core.message.service_worker.unregister();
+        await core.message.service_worker.register();
+        location.reload(true);
+    }
 };

@@ -28,9 +28,7 @@ screens.startup.version = function StartupVersion(me, packages) {
             let version = me.storage.local.get(me.id);
             if (version !== config.version) {
                 me.storage.local.set(me.id, config.version);
-                await core.message.service_worker.unregister();
-                await core.message.service_worker.register();
-                location.reload(true);
+                await core.util.reload();
             }
         }
     };
