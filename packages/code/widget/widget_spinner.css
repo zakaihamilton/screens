@@ -17,7 +17,7 @@
 .widget-spinner-spinner {
   border-radius: 50%;
   box-shadow: 3px 0 1px -1px var(--spinner-color), 5px 0 5px rgba(30, 144, 255, 0.5), inset -10px 0 10px -5px rgba(30, 144, 255, 0.5);
-  animation: widget-spinner-loading 1s linear infinite;
+  animation: widget-spinner-loading 2s linear infinite;
 }
 
 .widget-spinner-spinner:before {

@@ -143,9 +143,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
         var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
         var info = { text, terms: {}, data: null };
         if (language !== "none") {
-            info = await me.kab.text.parse(language, text, options, (percent) => {
-                core.property.set(widget.var.spinner, "percent", percent);
-            });
+            info = await me.kab.text.parse(language, text, options);
         }
         if (!info) {
             info = { text: "", terms: {}, data: null };

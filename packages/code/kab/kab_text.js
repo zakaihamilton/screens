@@ -47,15 +47,6 @@ screens.kab.text = function KabText(me, packages) {
         wordsString = core.string.parseWords(function (words) {
             var wasPrefix = false;
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-                if (!parentInstance && session.progressCallback) {
-                    var percent = parseInt(wordIndex / words.length * 100);
-                    if (session.percent !== percent) {
-                        session.percent = percent;
-                        core.util.condense(() => {
-                            session.progressCallback(percent);
-                        });
-                    }
-                }
                 let word = words[wordIndex];
                 var isPrefix = prefix ? word.toLowerCase() in prefix : null;
                 if (isPrefix) {
@@ -196,7 +187,7 @@ screens.kab.text = function KabText(me, packages) {
         var hash = core.string.hash(clean);
         return hash;
     };
-    me.parse = async function (language, wordsString, options, progressCallback) {
+    me.parse = async function (language, wordsString, options) {
         var diagrams = [];
         if (!wordsString) {
             wordsString = "";
@@ -230,6 +221,8 @@ screens.kab.text = function KabText(me, packages) {
                 terms
             };
         }
+        let linesPercent = 0;
+        let linesComplete = 0;
         lines = lines.map(async (line, index) => {
             var language = core.string.language(me.clean(line));
             let json = languages[language].json;
@@ -242,9 +235,7 @@ screens.kab.text = function KabText(me, packages) {
                 language,
                 options,
                 terms,
-                json,
-                progressCallback,
-                percent: 0
+                json
             };
             line = me.splitWords(session, line);
             session.text = wordsString;
@@ -376,7 +367,12 @@ screens.kab.text = function KabText(me, packages) {
             match = true;
         } else if (source) {
             if (typeof stam === "undefined" || stam) {
-                source = me.kab.style.formatHebrewText(source);
+                if (Array.isArray(source)) {
+                    source = source.map(text => me.kab.style.formatHebrewText(text));
+                }
+                else {
+                    source = me.kab.style.formatHebrewText(source);
+                }
             }
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(source)) {
