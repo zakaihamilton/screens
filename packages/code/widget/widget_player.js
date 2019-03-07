@@ -330,7 +330,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
             if (!core.device.isMobile()) {
                 let plugin = WaveSurfer.cursor.create({
                     showTime: true,
-                    opacity: 0.75,
+                    opacity: 1,
                     customShowTimeStyle: {
                         "background-color": "var(--chrome-background)",
                         color: "var(--chrome-color)",
