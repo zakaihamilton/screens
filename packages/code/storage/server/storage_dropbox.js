@@ -98,13 +98,18 @@ screens.storage.dropbox = function StorageDropBox(me, packages) {
         return response;
     };
     me.downloadFile = async function (from, to) {
-        var service = await me.getService();
         var path = me.fixPath(from);
-        var result = await service.filesDownload({ path: path });
-        if (!result.fileBinary) {
-            throw "No binary content for file: " + path;
-        }
-        await core.file.writeFile(to, result.fileBinary, "binary");
+        return new Promise(async (resolve, reject) => {
+            var service = await me.getService();
+            var result = await service.filesGetTemporaryLink({
+                path
+            });
+            const req = me.https.get(result.link, res => {
+                res.pipe(me.fs.createWriteStream(to));
+            });
+            req.on("close", resolve);
+            req.on("error", reject);
+        });
     };
     me.uploadFile = async function (from, to, progressCallback) {
         var service = await me.getService();
