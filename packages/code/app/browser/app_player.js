@@ -521,18 +521,20 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.cacheStatus = async function (object) {
         let session = me.audioItem;
-        let matches = await core.message.service_worker.getCachedItems(session.session);
-        if (matches && matches.length) {
-            let size = matches[0].size;
-            let percent = (size / session.size) * 100;
-            me.log("session: " + session.session + " is cached " + percent + "%");
-            if (percent >= 100) {
-                return "Cached";
+        if (session) {
+            let matches = await core.message.service_worker.getCachedItems(session.session);
+            if (matches && matches.length) {
+                let size = matches[0].size;
+                let percent = (size / session.size) * 100;
+                me.log("session: " + session.session + " is cached " + percent + "%");
+                if (percent >= 100) {
+                    return "Cached";
+                }
+                return percent + "%";
             }
-            return percent + "%";
-        }
-        else {
-            return "0%";
+            else {
+                return "0%";
+            }
         }
     };
 };
