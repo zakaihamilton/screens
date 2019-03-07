@@ -1371,6 +1371,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         var childElement = null;
         if (mark) {
             if (textIndex !== -1) {
+                if (textIndex >= element.children.length) {
+                    textIndex = element.children.length - 1;
+                }
                 childElement = element.children[textIndex];
             }
             else {

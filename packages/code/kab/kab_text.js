@@ -221,8 +221,6 @@ screens.kab.text = function KabText(me, packages) {
                 terms
             };
         }
-        let linesPercent = 0;
-        let linesComplete = 0;
         lines = lines.map(async (line, index) => {
             var language = core.string.language(me.clean(line));
             let json = languages[language].json;
