@@ -23,7 +23,7 @@ screens.core.stream = function CoreStream(me, packages) {
             var partialend = parts[1];
 
             var start = parseInt(partialstart, 10);
-            var end = partialend ? parseInt(partialend, 10) : total - 1;
+            var end = partialend ? parseInt(partialend, 10) - 1 : total - 1;
             var chunkSize = (end - start) + 1;
             let headers = {
                 "Content-Range": "bytes " + start + "-" + end + "/" + total,
