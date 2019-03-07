@@ -37,7 +37,9 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
             core.string.title(label),
             label,
             label,
-            method
+            () => {
+                me.core.property.set(object, method);
+            }
         ]];
     };
     me.prepare = function (object) {

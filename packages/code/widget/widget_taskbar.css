@@ -47,28 +47,34 @@
 
 .widget-taskbar-shortcuts {
     position: absolute;
-    right: 0.5em;
+    right: 0em;
     display: flex;
     flex-wrap: nowrap;
     overflow: hidden;
-    flex-direction: row-reverse;
-    height: 2.2em;
-    width: 13.5em;
-    top: 0.2em;
+    flex-direction: column-reverse;
+    height: 13.5em;
+    bottom: 0em;
     flex: 0;
-    transition: width 0.5s linear;
-    border-left: 3px solid #3c3f42;
+    transition: height 0.5s linear;
     align-items: stretch;
+    z-index: 1000;
+    background: black;
+    border: 1px solid #3c3f42;
+    border-top-left-radius: 10px;
 }
 
 .widget-taskbar-shortcuts.collapse {
-    width: 2.5em;
+    border: 1px solid transparent;
+    height: 2.3em;
+    border-top-left-radius: 0px;
 }
 
 .widget-taskbar-shortcut {
     flex: none;
     width: 2.0em;
+    height: 2.0em;
     border: 1px solid transparent;
+    border-radius: 10px;
     padding: 0.2em;
     margin: 0.1em;
     user-select: none;
