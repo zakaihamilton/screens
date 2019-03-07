@@ -5,37 +5,41 @@
 
 screens.storage.db = function StorageDB(me, packages) {
     const { core } = packages;
-    me.init = function () {
+    me.init = async function () {
         me.mongodb = require("mongodb");
-        me.databases = {};
+        me.clusterHandle = null;
         core.mutex.enable(me.id, true);
+        me.keys = await core.private.keys("mongodb");
     };
-    me.database = async function (name) {
-        var db = null;
+    me.cluster = async function () {
+        var clusterHandle = null;
         var unlock = await core.mutex.lock(me.id);
         try {
-            var database = me.databases[name];
-            if (database) {
+            clusterHandle = me.clusterHandle;
+            if (clusterHandle) {
                 unlock();
-                return database;
+                return clusterHandle;
             }
-            var keys = await core.private.keys("mongodb");
-            var info = keys[name];
-            if (!info) {
-                unlock();
-                var err = name + " mongodb key not defined in private";
-                me.log_error(err);
-                throw err;
-            }
-            var url = info.url;
-            var client = await me.mongodb.MongoClient.connect(url, { useNewUrlParser: true });
-            db = client.db(info.db);
-            me.log("connected to db: " + db.databaseName);
-            me.databases[name] = db;
+            var url = me.keys.url;
+            clusterHandle = await me.mongodb.MongoClient.connect(url, { useNewUrlParser: true });
+            me.clusterHandle = clusterHandle;
+            me.log("connected to cluster: " + url);
         }
         finally {
             unlock();
         }
+        return clusterHandle;
+    };
+    me.database = async function (name) {
+        var cluster = await me.cluster();
+        var db = null;
+        var info = me.keys[name];
+        if (!info) {
+            var err = name + " mongodb key not defined in private";
+            me.log_error(err);
+            throw err;
+        }
+        db = cluster.db(info.db);
         return db;
     };
     me.collection = async function (location) {
