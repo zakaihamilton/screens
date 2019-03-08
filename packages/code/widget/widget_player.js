@@ -657,7 +657,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
             peaks = widget.item.peaks;
         }
         if (peaks || !core.device.isMobile()) {
+            var currentTime = widget.var.player.currentTime;
             widget.wavesurfer.load(widget.var.player, peaks);
+            widget.var.player.currentTime = currentTime;
         }
     };
     me.updatePeaks = async function (object) {
