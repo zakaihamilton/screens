@@ -41,14 +41,14 @@ screens.media.file = function MediaFile(me, packages) {
             me.cachePath + "/" + path);
         return target;
     };
-    me.groups = async function (update = false) {
+    me.groups = async function (update = false, video = false) {
         var files = [];
         try {
             var unlock = await core.mutex.lock(me.id);
             files = await me.db.cache.file.listing(me.rootPath, update);
             for (let file of files) {
                 file.path = me.rootPath + "/" + file.name;
-                var sessions = await me.listing(file, update);
+                var sessions = await me.listing(file, update, video);
                 sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
                 sessions.reverse();
                 file.sessions = sessions;
@@ -72,7 +72,7 @@ screens.media.file = function MediaFile(me, packages) {
         }
         return null;
     };
-    me.listing = async function (parent, update = false) {
+    me.listing = async function (parent, update = false, video = false) {
         var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
             file.group = parent.name;
             file.session = core.path.fileName(file.name);
@@ -80,7 +80,7 @@ screens.media.file = function MediaFile(me, packages) {
             file.label = core.string.title(core.path.fileName(file.name));
             file.remote = parent.path + "/" + file.name;
             file.local = me.cachePath + "/" + file.name;
-            if (file.local.endsWith(".m4a")) {
+            if (file.local.endsWith(".m4a") || (video && file.local.endsWith(".mp4"))) {
                 try {
                     await me.manager.file.download(file.remote, file.local);
                 }
