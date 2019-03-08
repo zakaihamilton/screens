@@ -99,41 +99,47 @@ screens.media.file = function MediaFile(me, packages) {
         files.reverse();
         return files;
     };
+    me.size = async function () {
+        me.log("updateListing");
+        var sizes = {};
+        var groups = await me.groups(true, true);
+        for (let group of groups) {
+            var files = group.sessions;
+            var diskSize = files.reduce((total, item) => total + item.size, 0);
+            sizes[group.name] = core.string.formatBytes(diskSize);
+        }
+        return sizes;
+    };
     me.updateListing = async function () {
         me.log("updateListing");
-        var groups = await me.groups();
+        var groups = await me.groups(true, true);
         for (let group of groups) {
-            var listing = group.sessions;
-            var diskSize = listing.reduce((total, item) => total + item.size, 0);
-            me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for listing");
-            for (var item of listing) {
-                var target = "cache/" + core.path.fullName(item.path);
-                var extension = core.path.extension(target);
-                if (!item.downloaded) {
-                    try {
-                        await me.manager.file.download(item.path, target);
-                    }
-                    catch (err) {
-                        me.log_error("Failed to download: " + item.path);
-                    }
-                    item.downloaded = true;
+            var files = group.sessions;
+            var diskSize = files.reduce((total, item) => total + item.size, 0);
+            me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for files");
+            for (var file of files) {
+                try {
+                    await me.manager.file.download(file.remote, file.local);
                 }
-                if (extension === "m4a") {
+                catch (err) {
+                    me.log_error("Failed to download: " + file.remote);
+                }
+                if (file.extension === "m4a") {
                     try {
-                        if (!me.media.speech.exists(target)) {
-                            me.log("transcribing: " + target);
-                            await me.media.speech.transcribe(target);
+                        if (!me.media.speech.exists(file.local)) {
+                            me.log("transcribing: " + file.local);
+                            await me.media.speech.transcribe(file.local);
                             var info = await me.manager.download.clean(me.tempDir, "flac");
                             me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                         }
                     }
                     catch (err) {
-                        me.log_error("Failed to transcribe: " + target);
+                        me.log_error("Failed to transcribe: " + file.local);
                     }
                 }
             }
         }
-        me.log("finished updateListing");
+        me.log("finished update");
     };
     return "server";
 };
