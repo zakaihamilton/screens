@@ -81,15 +81,17 @@ screens.core.path = function CorePath(me, packages) {
     };
     me.extension = function (path) {
         var extension = "";
-        var last = path.split("/").pop();
-        if (last) {
-            var name = last;
-            if (last.startsWith(".")) {
-                name = name.substring(1);
-            }
-            var period = name.lastIndexOf(".");
-            if (period !== -1) {
-                extension = name.substr(period + 1);
+        if (path) {
+            var last = path.split("/").pop();
+            if (last) {
+                var name = last;
+                if (last.startsWith(".")) {
+                    name = name.substring(1);
+                }
+                var period = name.lastIndexOf(".");
+                if (period !== -1) {
+                    extension = name.substr(period + 1);
+                }
             }
         }
         return extension;

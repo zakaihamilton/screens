@@ -37,7 +37,7 @@ screens.media.hls = function MediaHLS(me, packages) {
                     targetFile = core.path.goto(destination, line + "/..");
                     await me.download(sourceFile, targetFile);
                 }
-                if (line.endsWith(".ts")) {
+                if (line.endsWith(".ts") || line.endsWith(".mp4")) {
                     sourceFile = core.path.goto(path, "../" + line);
                     targetFile = core.path.goto(destination, line);
                     await me.download(sourceFile, targetFile);
@@ -73,9 +73,10 @@ screens.media.hls = function MediaHLS(me, packages) {
                         };
                         let video_codec = "avc1." + profile[video_stream.profile] + video_stream.level.toString(16);
                         let resolution = video_stream.width + "x" + video_stream.height;
+                        let extension = me.core.path.extension(source.info.format.filename) || "ts";
                         body += `#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=${source.info.format.bit_rate},RESOLUTION=${resolution},CODECS="${video_codec}, mp4a.40.2"\n`;
                         let m3u8_file = core.path.replaceExtension(source_dir + "/" + source_file, "m3u8");
-                        body += core.util.url() + "/api/hls/vod/" + m3u8_file + "?duration=" + duration;
+                        body += core.util.url() + "/api/hls/vod/" + m3u8_file + "?duration=" + duration + "&extension=" + extension;
                         body += "\n";
                     }
                 }
@@ -86,6 +87,7 @@ screens.media.hls = function MediaHLS(me, packages) {
                 let body = "#EXTM3U\n";
                 let source_file = info.url.match(/api\/hls\/vod\/(.*).m3u8/)[1] + ".json";
                 let duration = parseFloat(info.query["duration"]) || 4.0;
+                let extension = info.query["extension"] || "ts";
                 let path = core.path.replaceExtension(source_file);
                 let source_buffer = await core.file.readFile(source_file, "utf8");
                 let source = JSON.parse(source_buffer);
@@ -95,7 +97,8 @@ screens.media.hls = function MediaHLS(me, packages) {
                 body += "#EXT-X-MEDIA-SEQUENCE:0\n";
                 let parts = me.genParts(source, {
                     duration,
-                    path
+                    path,
+                    extension
                 });
                 for (let part of parts) {
                     body += "#EXTINF:" + part.duration + "\n" + part.url + "\n";
@@ -105,9 +108,10 @@ screens.media.hls = function MediaHLS(me, packages) {
                 info.body = body;
             }
         }
-        if (info.url.startsWith("/api/hls/stream/") && info.url.endsWith(".ts")) {
+        if (info.url.startsWith("/api/hls/stream/")) {
             let path = info.url.match(/api\/hls\/stream\/(.*)/)[1];
-            let ts_file = core.path.folderPath(path) + ".ts";
+            let extension = core.path.extension(path);
+            let sourceFile = core.path.folderPath(path) + "." + extension;
             let offset = parseInt(core.path.fileName(path));
             let size = parseInt(info.query["size"]) | 0;
             let headers = Object.assign({}, info.headers);
@@ -116,7 +120,8 @@ screens.media.hls = function MediaHLS(me, packages) {
                 headers.total = size;
             }
             info.custom = true;
-            core.stream.serve(headers, info.response, ts_file, "video/MP2T");
+            var mimeType = me.mime.getType(extension);
+            core.stream.serve(headers, info.response, sourceFile, mimeType);
         }
     };
     me.genParts = function (source, params) {
@@ -142,7 +147,7 @@ screens.media.hls = function MediaHLS(me, packages) {
         return parts;
     };
     me.genUrl = function (source, params, part) {
-        return core.util.url() + "/api/hls/stream/" + params.path + "/" + part.offset + ".ts?size=" + part.size;
+        return core.util.url() + "/api/hls/stream/" + params.path + "/" + part.offset + "." + params.extension + "?size=" + part.size;
     };
     me.manageFolder = async function (path) {
         var files = await core.file.readDir(path);
@@ -156,7 +161,7 @@ screens.media.hls = function MediaHLS(me, packages) {
         }
     };
     me.manageFile = async function (path, name) {
-        if (!name.endsWith(".ts")) {
+        if (!name.endsWith(".ts") && !name.endsWith(".mp4")) {
             return;
         }
         var info = await core.server.spawn(me.ffprobePath + " -i " + path + "/" + name + " -v quiet -print_format json -show_format -show_streams -hide_banner ");
