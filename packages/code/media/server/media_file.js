@@ -101,9 +101,9 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.updateListing = async function () {
         me.log("updateListing");
-        var groups = me.groups();
+        var groups = await me.groups();
         for (let group of groups) {
-            var listing = await me.listing(group, true);
+            var listing = group.sessions;
             var diskSize = listing.reduce((total, item) => total + item.size, 0);
             me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for listing");
             for (var item of listing) {
