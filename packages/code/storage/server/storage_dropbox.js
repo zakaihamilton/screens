@@ -26,6 +26,9 @@ screens.storage.dropbox = function StorageDropBox(me, packages) {
         }
         return path;
     };
+    me.list = function (path) {
+        return me.getChildren(path);
+    };
     me.getChildren = async function (path, recursive = false) {
         me.log("requesting items for path: " + path + " recursive: " + recursive);
         var entries = [];
