@@ -176,7 +176,7 @@ screens.app.player = function AppPlayer(me, packages) {
         var window = me.widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window, "app.player.format", "Audio");
-        me.groups = await me.media.file.groups(true);
+        me.groups = await me.media.file.groups(true, true);
         me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);

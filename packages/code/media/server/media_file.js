@@ -102,36 +102,34 @@ screens.media.file = function MediaFile(me, packages) {
     me.updateListing = async function () {
         me.log("updateListing");
         var groups = me.groups();
-        var group = groups.find(item => item.name === "american");
-        var listing = await me.listing(group, true);
-        listing = listing.filter(item => {
-            return core.path.extension(item.name) === "m4a";
-        });
-        var diskSize = listing.reduce((total, item) => total + item.size, 0);
-        me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for listing");
-        for (var item of listing) {
-            var target = "cache/" + core.path.fullName(item.path);
-            var extension = core.path.extension(target);
-            if (!item.downloaded) {
-                try {
-                    await me.manager.file.download(item.path, target);
-                }
-                catch (err) {
-                    me.log_error("Failed to download: " + item.path);
-                }
-                item.downloaded = true;
-            }
-            if (extension === "m4a") {
-                try {
-                    if (!me.media.speech.exists(target)) {
-                        me.log("transcribing: " + target);
-                        await me.media.speech.transcribe(target);
-                        var info = await me.manager.download.clean(me.tempDir, "flac");
-                        me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
+        for (let group of groups) {
+            var listing = await me.listing(group, true);
+            var diskSize = listing.reduce((total, item) => total + item.size, 0);
+            me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for listing");
+            for (var item of listing) {
+                var target = "cache/" + core.path.fullName(item.path);
+                var extension = core.path.extension(target);
+                if (!item.downloaded) {
+                    try {
+                        await me.manager.file.download(item.path, target);
                     }
+                    catch (err) {
+                        me.log_error("Failed to download: " + item.path);
+                    }
+                    item.downloaded = true;
                 }
-                catch (err) {
-                    me.log_error("Failed to transcribe: " + target);
+                if (extension === "m4a") {
+                    try {
+                        if (!me.media.speech.exists(target)) {
+                            me.log("transcribing: " + target);
+                            await me.media.speech.transcribe(target);
+                            var info = await me.manager.download.clean(me.tempDir, "flac");
+                            me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
+                        }
+                    }
+                    catch (err) {
+                        me.log_error("Failed to transcribe: " + target);
+                    }
                 }
             }
         }
