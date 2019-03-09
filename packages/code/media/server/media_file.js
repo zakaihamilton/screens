@@ -141,7 +141,7 @@ screens.media.file = function MediaFile(me, packages) {
                     me.log_error("Failed to download: " + file.remote);
                 }
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await me.storage.aws.uploadFile(file.local, "screens/" + file.local);
+                await me.storage.aws.uploadFile(file.local, "screens/" + group.name + "/" + file.name);
                 if (file.extension === "mp4") {
                     await core.file.delete(file.local);
                     me.log("Deleted file: " + file.local);
