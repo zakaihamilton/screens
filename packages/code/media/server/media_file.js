@@ -101,14 +101,30 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.size = async function () {
         me.log("updateListing");
-        var sizes = {};
+        var info = { groups: {}, total: 0 };
         var groups = await me.groups(true, true);
         for (let group of groups) {
             var files = group.sessions;
-            var diskSize = files.reduce((total, item) => total + item.size, 0);
-            sizes[group.name] = core.string.formatBytes(diskSize);
+            ["m4a", "mp4"].map(extension => {
+                let list = files.filter(file => file.extension === extension);
+                var diskSize = list.reduce((total, item) => total + item.size, 0);
+                let infoGroup = info.groups[group.name];
+                if (!infoGroup) {
+                    infoGroup = info.groups[group.name] = { total: 0 };
+                }
+                infoGroup[extension] = diskSize;
+                infoGroup.total += diskSize;
+                info.total += diskSize;
+            });
         }
-        return sizes;
+        for (let infoName in info.groups) {
+            let group = info.groups[infoName];
+            for (let key in group) {
+                group[key] = core.string.formatBytes(group[key]);
+            }
+        }
+        info.total = core.string.formatBytes(info.total);
+        return info;
     };
     me.updateListing = async function () {
         me.log("updateListing");
@@ -124,7 +140,14 @@ screens.media.file = function MediaFile(me, packages) {
                 catch (err) {
                     me.log_error("Failed to download: " + file.remote);
                 }
-                if (file.extension === "m4a") {
+                me.log("Uploading file: " + file.local + ", size: " + file.size);
+                await me.storage.aws.uploadFile(file.local, "screens/" + file.local);
+                if (file.extension === "mp4") {
+                    await core.file.delete(file.local);
+                    me.log("Deleted file: " + file.local);
+                }
+                me.log("Finished uploading file: " + file.local);
+                if (false && file.extension === "m4a") {
                     try {
                         if (!me.media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);

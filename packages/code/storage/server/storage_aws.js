@@ -1,15 +1,15 @@
 /*
  @author Zakai Hamilton
- @component StorageData
+ @component StorageAWS
  */
 
-screens.storage.data = function StorageData(me, packages) {
+screens.storage.aws = function StorageAWS(me, packages) {
     const { core } = packages;
     me.init = async function () {
         let AWS = require("aws-sdk");
         let keys = await core.private.keys("aws");
         let { accessKeyId, secretAccessKey, endpoint } = keys;
-        endpoint = new me.AWS.Endpoint(endpoint);
+        endpoint = new AWS.Endpoint(endpoint);
         me.s3 = new AWS.S3({
             endpoint,
             accessKeyId,
