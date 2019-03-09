@@ -139,11 +139,19 @@ screens.ui.basic = function UIBasic(me, packages) {
     };
     me.html = {
         get: function (object) {
+            if (object.tagName && object.tagName.toLowerCase() === "input") {
+                return object.value;
+            }
             return object.innerHTML;
         },
         set: function (object, value) {
-            object.innerHTML = value;
-            me.ui.theme.updateElements(object.parentNode);
+            if (object.tagName && object.tagName.toLowerCase() === "input") {
+                object.value = value;
+            }
+            else {
+                object.innerHTML = value;
+                me.ui.theme.updateElements(object.parentNode);
+            }
         }
     };
     me.readOnly = {
