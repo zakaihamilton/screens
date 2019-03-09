@@ -134,19 +134,18 @@ screens.media.file = function MediaFile(me, packages) {
             var diskSize = files.reduce((total, item) => total + item.size, 0);
             me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for files");
             for (var file of files) {
-                try {
+                let awsPath = "screens/" + group.name + "/" + file.name;
+                if (!await me.storage.aws.exists(awsPath)) {
+                    me.log("Downloading file: " + file.local + ", size: " + file.size);
                     await me.manager.file.download(file.remote, file.local);
+                    me.log("Uploading file: " + file.local + ", size: " + file.size);
+                    await me.storage.aws.uploadFile(file.local, awsPath);
+                    if (file.extension === "mp4") {
+                        await core.file.delete(file.local);
+                        me.log("Deleted file: " + file.local);
+                    }
+                    me.log("Finished uploading file: " + file.local);
                 }
-                catch (err) {
-                    me.log_error("Failed to download: " + file.remote);
-                }
-                me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await me.storage.aws.uploadFile(file.local, "screens/" + group.name + "/" + file.name);
-                if (file.extension === "mp4") {
-                    await core.file.delete(file.local);
-                    me.log("Deleted file: " + file.local);
-                }
-                me.log("Finished uploading file: " + file.local);
                 if (false && file.extension === "m4a") {
                     try {
                         if (!me.media.speech.exists(file.local)) {

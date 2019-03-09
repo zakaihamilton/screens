@@ -58,6 +58,25 @@ screens.storage.aws = function StorageAWS(me, packages) {
             });
         });
     };
+    me.exists = function (path) {
+        let tokens = path.split("/");
+        let bucketName = tokens.shift();
+        path = tokens.join("/");
+        var params = {
+            Bucket: bucketName,
+            Key: path
+        };
+        return new Promise(resolve => {
+            me.s3.headObject(params, function (err, resp, body) {
+                if (err) {
+                    resolve(false);
+                }
+                else {
+                    resolve(true);
+                }
+            });
+        });
+    };
     me.list = function (path) {
         let tokens = path.split("/");
         let bucketName = tokens.shift();
