@@ -43,10 +43,11 @@ screens.user.verify = function UserVerify(me, packages) {
                     profile = { userid, name, email, request: 0 };
                 }
                 profile.date = new Date().toString();
+                let previous = profile.previous;
                 profile.previous = profile.utc;
                 profile.utc = Date.now();
                 profile.request++;
-                if (profile.request === 1 || profile.previous + 60000 < profile.utc) {
+                if (profile.request === 1 || previous + 60000 < profile.utc) {
                     me.log("Storing profile: " + JSON.stringify(profile));
                     await db.cache.tokens.use({ hash }, profile);
                 }
