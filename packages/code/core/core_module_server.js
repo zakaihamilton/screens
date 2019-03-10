@@ -50,7 +50,7 @@ screens.core.module = function CoreModule(me, packages) {
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
         });
-        data = core.pack.minify(filePath, result.css);
+        data = await core.pack.minify(filePath, result.css);
         return data;
     };
     me.handleCode = async function (filePath, params, info) {

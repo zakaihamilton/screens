@@ -99,7 +99,9 @@ screens.core.pack = function CorePack(me, packages) {
             return cacheBuffer;
         }
         cacheBuffer = await callback(path, data);
-        core.file.buffer.write(cachePath, cacheBuffer, "utf8");
+        if (cacheBuffer) {
+            core.file.buffer.write(cachePath, cacheBuffer, "utf8");
+        }
         return cacheBuffer;
     };
     me.minify = function (path, data) {
@@ -126,6 +128,7 @@ screens.core.pack = function CorePack(me, packages) {
                     me.log_error("minify path: " + path + " error: " + minify.error);
                 }
             }
+            return data;
         });
     };
     me.js = async function (info, data) {
