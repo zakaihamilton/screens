@@ -6,7 +6,6 @@
 screens.app.player = function AppPlayer(me, packages) {
     const { core } = packages;
     me.ready = async function () {
-        me.playerCounter = 0;
         await me.ui.content.attach(me);
         me.content.search = me.search;
     };
@@ -245,7 +244,6 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.updatePlayer = async function (object) {
         var window = me.widget.window.get(object);
-        var counter = ++me.playerCounter;
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
         var showAudioPlayer = groupName && sessionName && window.options.format === "Audio";
@@ -256,38 +254,22 @@ screens.app.player = function AppPlayer(me, packages) {
             showVideoPlayer = false;
         }
         core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-        var audioPath = sessionName + "." + "m4a";
-        var videoPath = sessionName + "." + "mp4";
         var source = null;
         var player = null;
+        var extension = null;
         if (showAudioPlayer || showVideoPlayer) {
             player = window.var.audioPlayer;
-            var path = audioPath;
+            extension = "m4a";
             if (showVideoPlayer) {
                 player = window.var.videoPlayer;
-                path = videoPath;
+                extension = "mp4";
             }
             source = core.property.get(player, "source");
         }
         var time = window.options.time;
+        var target = await me.media.file.streamingPath(groupName, sessionName, extension);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
-        if (player) {
-            try {
-                core.property.set(window, "ui.work.state", true);
-                var target = await me.media.file.download(groupName, path);
-            }
-            catch (err) {
-                alert("Failed to download file. Error: " + JSON.stringify(err));
-            }
-            finally {
-                core.property.set(window, "ui.work.state", false);
-            }
-        }
-        if (counter !== me.playerCounter) {
-            me.log("counter: " + counter + " does not match: " + me.playerCounter);
-            return;
-        }
         core.property.set(player, "source", target);
         core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");

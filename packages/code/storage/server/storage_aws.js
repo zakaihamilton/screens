@@ -102,5 +102,16 @@ screens.storage.aws = function StorageAWS(me, packages) {
             });
         });
     };
+    me.url = function (path, timeout) {
+        let tokens = path.split("/");
+        let bucketName = tokens.shift();
+        path = tokens.join("/");
+        const url = me.s3.getSignedUrl("getObject", {
+            Bucket: bucketName,
+            Key: path,
+            Expires: timeout
+        });
+        return url;
+    };
     return "server";
 };
