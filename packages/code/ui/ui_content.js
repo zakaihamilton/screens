@@ -14,7 +14,7 @@ screens.ui.content = function UIContent(me, packages) {
         },
         info: function (window) {
             if (!window.content) {
-                window.content = { _locked: true };
+                window.content = { _locked: true, _private: true };
             }
             return window.content;
         },

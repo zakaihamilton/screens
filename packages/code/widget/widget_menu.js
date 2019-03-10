@@ -675,7 +675,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                             "core.link.close": () => {
                                 core.property.set(object, options.edit, object.value);
                             },
-                            "ui.basic.html": value,
+                            "ui.basic.html": value ? value : "",
                             "ui.attribute.placeholder": core.property.get(object, "ui.basic.html")
                         });
                     }
