@@ -100,8 +100,7 @@ screens.media.file = function MediaFile(me, packages) {
         return files;
     };
     me.size = async function () {
-        me.log("updateListing");
-        var info = { groups: {}, total: 0 };
+        var info = { groups: {}, total: 0, count: 0 };
         var groups = await me.groups(true, true);
         for (let group of groups) {
             var files = group.sessions;
@@ -110,18 +109,23 @@ screens.media.file = function MediaFile(me, packages) {
                 var diskSize = list.reduce((total, item) => total + item.size, 0);
                 let infoGroup = info.groups[group.name];
                 if (!infoGroup) {
-                    infoGroup = info.groups[group.name] = { total: 0 };
+                    infoGroup = info.groups[group.name] = { total: 0, count: 0 };
                 }
-                infoGroup[extension] = diskSize;
                 infoGroup.total += diskSize;
+                infoGroup.count += list.length;
                 info.total += diskSize;
+                info.total += list.length;
             });
         }
         for (let infoName in info.groups) {
             let group = info.groups[infoName];
             for (let key in group) {
-                group[key] = core.string.formatBytes(group[key]);
+                if (key === "total") {
+                    continue;
+                }
+                group[key].total = core.string.formatBytes(group[key].total);
             }
+            group.total = core.string.formatBytes(group.total);
         }
         info.total = core.string.formatBytes(info.total);
         return info;
