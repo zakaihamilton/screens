@@ -10,7 +10,7 @@ screens.core.pack = function CorePack(me, packages) {
         me.autoprefixer = require("autoprefixer");
         me.uglify = require("uglify-es");
         me.cleanCSS = require("clean-css");
-        me.cachePath = "cache/hash";
+        me.cachePath = "hash";
     };
     me.collect = async function (root, target, folderExclude, extInclude, componentHeaders, format, defaultPackage, defaultComponent) {
         var body = "";
@@ -91,37 +91,42 @@ screens.core.pack = function CorePack(me, packages) {
         }
         return body;
     };
-    me.minify = function (path, data) {
-        if (!core.util.isSecure()) {
-            return data;
-        }
+    me.cache = async function (path, data, callback) {
         var hash = core.string.hash(data);
         var cachePath = me.cachePath + "/hash_" + path.replace(/[/.]/g, "_") + "_" + hash + ".txt";
         var cacheBuffer = core.file.buffer.read(cachePath, "utf8");
         if (cacheBuffer) {
             return cacheBuffer;
         }
-        if (path.endsWith(".css")) {
-            var output = new me.cleanCSS({}).minify(data);
-            if (output && output.styles) {
-                data = output.styles;
-            }
+        cacheBuffer = await callback(path, data);
+        core.file.buffer.write(cachePath, cacheBuffer, "utf8");
+        return cacheBuffer;
+    };
+    me.minify = function (path, data) {
+        if (!core.util.isSecure()) {
+            return data;
         }
-        else {
-            var minify = me.uglify.minify(data, {
-                mangle: {
-                    reserved: ["me"]
+        return me.cache(path, data, () => {
+            if (path.endsWith(".css")) {
+                var output = new me.cleanCSS({}).minify(data);
+                if (output && output.styles) {
+                    data = output.styles;
                 }
-            });
-            if (minify.code) {
-                data = minify.code;
             }
             else {
-                me.log_error("minify path: " + path + " error: " + minify.error);
+                var minify = me.uglify.minify(data, {
+                    mangle: {
+                        reserved: ["me"]
+                    }
+                });
+                if (minify.code) {
+                    data = minify.code;
+                }
+                else {
+                    me.log_error("minify path: " + path + " error: " + minify.error);
+                }
             }
-        }
-        core.file.buffer.write(cachePath, data, "utf8");
-        return data;
+        });
     };
     me.js = function (info, data) {
         var body = "";
