@@ -88,8 +88,8 @@ workbox.routing.registerRoute(
             new workbox.cacheableResponse.Plugin({ statuses: [200] }),
             new workbox.rangeRequests.Plugin(),
             new workbox.expiration.Plugin({
-                // Cache only 10 files.
-                maxEntries: 10,
+                // Cache only 3 files.
+                maxEntries: 3,
                 // Cache for a maximum of a week.
                 maxAgeSeconds: 7 * 24 * 60 * 60,
             })
