@@ -20,15 +20,23 @@ screens.user.access = function UserAccess(me, packages) {
             }
         }
     };
+    me.info = async function () {
+        let info = {
+            userId: me.userId.apply(this),
+            admin: me.admin.apply(this),
+            appList: await me.appList.apply(this)
+        };
+        return info;
+    };
     me.userId = function () {
         return this.userId;
     };
-    me.admin = async function (user) {
+    me.admin = function (user) {
         if (!user || typeof user !== "string") {
             user = this.userName;
         }
         var isMatch = me.admins.includes(user);
-        me.log("isAdmin: " + user + " = " + isMatch);
+        me.log("admin: " + user + " = " + isMatch);
         return isMatch;
     };
     me.get = async function (user) {

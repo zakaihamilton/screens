@@ -225,7 +225,7 @@ screens.ui.content = function UIContent(me, packages) {
                 if (info) {
                     var locked = info._locked;
                     var title = info._title;
-                    var access = !info._owner || info._owner === core.util.userId || core.util.isAdmin;
+                    var access = !info._owner || info._owner === core.util.info.userId || core.util.info.admin;
                     return !locked && title && access;
                 }
                 return false;

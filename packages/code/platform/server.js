@@ -20,6 +20,7 @@ screens.api = [
     "user.verify.match",
     "user.access.userId",
     "user.access.admin",
+    "user.access.info",
     "user.access.appList",
     "user.access.get",
     "user.access.isAPIAllowed",

@@ -4,14 +4,11 @@
  */
 
 screens.core.app = function CoreApp(me, packages) {
-    const { core, storage, ui, user, app } = packages;
+    const { core, ui, app } = packages;
     me.init = async function () {
         core.listener.register(me.sendReady, core.login.id);
-        me.list = await storage.local.db.get(me.id, "appList");
     };
     me.sendReady = async function () {
-        me.list = await user.access.appList();
-        await storage.local.db.set(me.id, "appList", me.list);
         for (var name of screens.components) {
             if (!(name.includes("app."))) {
                 continue;
@@ -27,7 +24,8 @@ screens.core.app = function CoreApp(me, packages) {
         }
     };
     me.available = function (name) {
-        var available = core.util.isAdmin || (me.list && me.list.includes(name));
+        let appList = core.util.info.appList;
+        var available = core.util.info.admin || (appList && appList.includes(name));
         return available;
     };
     me.lookup = {

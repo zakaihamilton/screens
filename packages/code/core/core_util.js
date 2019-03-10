@@ -7,13 +7,10 @@ screens.core.util = function CoreUtil(me, packages) {
     const { core, storage } = packages;
     me.init = async function () {
         if (me.platform === "browser") {
-            me.isAdmin = await storage.local.db.get(me.id, "admin");
-            me.userId = await storage.local.db.get(me.id, "userId");
+            me.info = await storage.local.db.get(me.id, "info");
             core.listener.register(async () => {
-                me.isAdmin = await me.user.access.admin();
-                me.userId = await me.user.access.userId();
-                await storage.local.db.set(me.id, "admin", me.isAdmin);
-                await storage.local.db.set(me.id, "userId", me.userId);
+                me.info = await me.user.access.info();
+                await storage.local.db.set(me.id, "info", me.info);
             }, core.login.id);
         }
     };

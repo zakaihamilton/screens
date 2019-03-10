@@ -8,7 +8,7 @@ screens.core.method = function CoreMethod(me, packages) {
     me.content = {
         name: "Components",
         search: function (text) {
-            if (!core.util.isAdmin) {
+            if (!core.util.info.admin) {
                 return;
             }
             var components = screens.components.sort();

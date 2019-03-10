@@ -593,7 +593,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                     value = core.property.get(object, "ui.basic.html");
                 }
                 if (method === "admin") {
-                    param = core.util.isAdmin;
+                    param = core.util.info.admin;
                 }
                 else {
                     param = core.property.get(parentMenu.window || object, method, value);
