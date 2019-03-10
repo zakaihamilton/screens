@@ -41,14 +41,14 @@ screens.media.file = function MediaFile(me, packages) {
             me.cachePath + "/" + path);
         return target;
     };
-    me.groups = async function (update = false, video = false) {
+    me.groups = async function (update = false) {
         var files = [];
         try {
             var unlock = await core.mutex.lock(me.id);
             files = await me.db.cache.file.listing(me.rootPath, update);
             for (let file of files) {
                 file.path = me.rootPath + "/" + file.name;
-                var sessions = await me.listing(file, update, video);
+                var sessions = await me.listing(file, update);
                 sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
                 sessions.reverse();
                 file.sessions = sessions;
@@ -72,7 +72,7 @@ screens.media.file = function MediaFile(me, packages) {
         }
         return null;
     };
-    me.listing = async function (parent, update = false, video = false) {
+    me.listing = async function (parent, update = false) {
         var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
             file.group = parent.name;
             file.session = core.path.fileName(file.name);
@@ -80,13 +80,19 @@ screens.media.file = function MediaFile(me, packages) {
             file.label = core.string.title(core.path.fileName(file.name));
             file.remote = parent.path + "/" + file.name;
             file.local = me.cachePath + "/" + file.name;
-            if (file.local.endsWith(".m4a") || (video && file.local.endsWith(".mp4"))) {
-                try {
-                    await me.manager.file.download(file.remote, file.local);
+            let awsPath = "screens/" + parent.name + "/" + file.name;
+            if (!await me.storage.aws.exists(awsPath)) {
+                me.log("Downloading file: " + file.local + ", size: " + file.size);
+                await me.manager.file.download(file.remote, file.local);
+                me.log("Uploading file: " + file.local + ", size: " + file.size);
+                await me.storage.aws.uploadFile(file.local, awsPath);
+                if (file.extension === "mp4") {
+                    await core.file.delete(file.local);
+                    me.log("Deleted file: " + file.local);
                 }
-                catch (err) {
-                    me.log_error("Failed to download: " + file.remote);
-                }
+                me.log("Finished uploading file: " + file.local);
+            }
+            if (file.local.endsWith(".m4a")) {
                 var metadata = await me.info(file.local);
                 if (metadata) {
                     if (metadata.format) {
@@ -138,19 +144,7 @@ screens.media.file = function MediaFile(me, packages) {
             var diskSize = files.reduce((total, item) => total + item.size, 0);
             me.log("Requires " + core.string.formatBytes(diskSize) + " Disk space for files");
             for (var file of files) {
-                let awsPath = "screens/" + group.name + "/" + file.name;
-                if (!await me.storage.aws.exists(awsPath)) {
-                    me.log("Downloading file: " + file.local + ", size: " + file.size);
-                    await me.manager.file.download(file.remote, file.local);
-                    me.log("Uploading file: " + file.local + ", size: " + file.size);
-                    await me.storage.aws.uploadFile(file.local, awsPath);
-                    if (file.extension === "mp4") {
-                        await core.file.delete(file.local);
-                        me.log("Deleted file: " + file.local);
-                    }
-                    me.log("Finished uploading file: " + file.local);
-                }
-                if (false && file.extension === "m4a") {
+                if (file.extension === "m4a") {
                     try {
                         if (!me.media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);
