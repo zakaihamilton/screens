@@ -666,7 +666,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
         var widget = me.upper.mainWidget(object);
         var item = null;
         if (widget.src) {
-            var name = core.path.fileName(widget.src);
+            var name = core.path.fileName(decodeURIComponent(widget.src));
             if (!widget.item) {
                 item = await me.db.cache.metadata.find({ name });
                 if (!item) {
