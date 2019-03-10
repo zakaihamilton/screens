@@ -34,9 +34,6 @@ screens.core.mutex = function CoreMutex(me, packages) {
     me.lock = function (id) {
         var lock = me.use(id);
         if (lock) {
-            if (lock._locks) {
-                me.log(id + " is already locked");
-            }
             lock._locks += 1;
             let unlockNext;
             let willLock = new Promise(resolve => unlockNext = () => {
