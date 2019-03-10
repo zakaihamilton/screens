@@ -200,7 +200,7 @@ screens.app.player = function AppPlayer(me, packages) {
         me.hasAudio = audioFound !== null && audioFound.length;
         me.audioItem = audioFound && audioFound[0];
         me.hasVideo = videoFound !== null && videoFound.length;
-        me.metadata = await me.db.shared.metadata.find({ group: groupName, title: name, user: "$userId" });
+        me.metadata = me.metadataList.find(metadata => metadata.title === name && metadata.group === groupName);
         if (!me.metadata) {
             me.metadata = {};
         }
