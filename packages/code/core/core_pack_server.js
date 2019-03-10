@@ -128,7 +128,7 @@ screens.core.pack = function CorePack(me, packages) {
             }
         });
     };
-    me.js = function (info, data) {
+    me.js = async function (info, data) {
         var body = "";
         var platforms = ["server", "service", "browser", "client", "service_worker"];
         if (platforms.includes(info.folder) && info.folder !== info.target) {
@@ -138,7 +138,7 @@ screens.core.pack = function CorePack(me, packages) {
             body += `screens.${info.package}.${info.component} = function (me, packages) { return "${info.platform}"; };\n`;
         }
         else {
-            body += me.minify(info.path, data) + "\n";
+            body += await me.minify(info.path, data) + "\n";
         }
         return body;
     };
