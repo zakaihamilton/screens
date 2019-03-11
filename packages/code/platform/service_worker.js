@@ -20,14 +20,14 @@ workbox.routing.registerRoute(
         }
         return false;
     },
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: "dynamic-cache",
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:html)$/,
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: "html-cache",
     })
 );
@@ -39,43 +39,34 @@ workbox.routing.registerRoute(
         }
         return false;
     },
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: "js-cache",
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:json)$/,
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: "json-cache",
     })
 );
 
 workbox.routing.registerRoute(
-    // Cache CSS files.
     /\.css$/,
-    // Use cache but update in the background.
     new workbox.strategies.StaleWhileRevalidate({
-        // Use a custom cache name.
         cacheName: "css-cache"
     })
 );
 
 workbox.routing.registerRoute(
-    // Cache image files.
     /\.(?:woff2|ttf)$/,
-    // Use the cache if it's available.
-    new workbox.strategies.StaleWhileRevalidate({
-        // Use a custom cache name.
+    new workbox.strategies.CacheFirst({
         cacheName: "font-cache"
     })
 );
 workbox.routing.registerRoute(
-    // Cache image files.
     /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
-    // Use the cache if it's available.
-    new workbox.strategies.StaleWhileRevalidate({
-        // Use a custom cache name.
+    new workbox.strategies.CacheFirst({
         cacheName: "image-cache"
     })
 );
