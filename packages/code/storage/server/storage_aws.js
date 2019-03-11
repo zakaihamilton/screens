@@ -107,7 +107,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
         let tokens = path.split("/");
         let bucketName = tokens.shift();
         path = tokens.join("/");
-        var url = "https://" + bucketName + ".sfo2.cdn.digitaloceanspaces.com/" + path;
+        var url = "https://" + bucketName + ".sfo2.cdn.digitaloceanspaces.com/" + encodeURIComponent(path);
         return url;
     };
     return "server";
