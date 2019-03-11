@@ -26,7 +26,7 @@ screens.startup.version = function StartupVersion(me, packages) {
         else if (me.platform === "browser") {
             let config = await core.util.config();
             let version = me.storage.local.get(me.id);
-            if (version !== config.version) {
+            if (version && config.version && version !== config.version) {
                 me.storage.local.set(me.id, config.version);
                 await core.util.reload();
             }
