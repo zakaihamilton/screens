@@ -162,7 +162,7 @@ screens.media.file = function MediaFile(me, packages) {
         me.log("finished update");
     };
     me.streamingPath = function (group, name, extension) {
-        return me.storage.aws.url("screens/" + group + "/" + name + "." + extension, 86400);
+        return me.storage.aws.url("screens/" + group + "/" + name + "." + extension);
     };
     return "server";
 };

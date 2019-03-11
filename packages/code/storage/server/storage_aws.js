@@ -102,15 +102,11 @@ screens.storage.aws = function StorageAWS(me, packages) {
             });
         });
     };
-    me.url = function (path, timeout) {
+    me.url = function (path) {
         let tokens = path.split("/");
         let bucketName = tokens.shift();
         path = tokens.join("/");
-        const url = me.s3.getSignedUrl("getObject", {
-            Bucket: bucketName,
-            Key: path,
-            Expires: timeout
-        });
+        var url = bucketName + ".sfo2.cdn.digitaloceanspaces.com/" + path;
         return url;
     };
     return "server";
