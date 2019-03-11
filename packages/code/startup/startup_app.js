@@ -8,7 +8,7 @@ screens.startup.app = function StartupApp(me, packages) {
     me.firstTime = true;
     me.init = function () {
         core.startup.register(me);
-        core.listener.register(me.ready, core.login.id);
+        core.listener.register(me.start, core.login.id);
     };
     me.run = async function () {
         me.ui.element.create([
@@ -39,13 +39,11 @@ screens.startup.app = function StartupApp(me, packages) {
             }
         }
     };
-    me.ready = async function () {
-        if (me.firstTime) {
-            me.firstTime = false;
-            await me.start();
-        }
-    };
     me.start = async function () {
+        if (!me.firstTime) {
+            return;
+        }
+        me.firstTime = false;
         var app = core.startup.app;
         if (!app.name || app.name !== "none") {
             if (app.name && await core.app.available(app.name)) {

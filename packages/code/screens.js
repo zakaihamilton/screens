@@ -64,7 +64,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             }
         };
         component_obj = new Proxy(() => { return id; }, handler);
-        component_obj = Object.assign(component_obj, screens, { id });
+        component_obj = Object.assign(component_obj, screens, { id, remote: true });
         if (child_name) {
             screens[package_name][component_name][child_name] = component_obj;
             component_obj.upper = screens[package_name][component_name];

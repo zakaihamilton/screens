@@ -159,6 +159,7 @@ screens.core.login = function CoreLogin(me, packages) {
         }
     };
     me.headers = function (info) {
+        var hasToken = false;
         var token = me.info.token;
         if (me.info.login) {
             if (token) {
@@ -168,7 +169,11 @@ screens.core.login = function CoreLogin(me, packages) {
                 info.headers["user_name"] = encodeURIComponent(me.info.name);
                 info.headers["token"] = token;
                 info.headers["user_email"] = encodeURIComponent(me.info.email);
+                hasToken = true;
             }
+        }
+        if (!hasToken) {
+            throw "No token available";
         }
     };
     return "browser";

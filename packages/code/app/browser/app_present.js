@@ -5,7 +5,7 @@
 
 screens.app.present = function AppPresent(me, packages) {
     const { core } = packages;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.content.attach(me);
         await me.ui.shared.attach(me);
     };
@@ -17,6 +17,7 @@ screens.app.present = function AppPresent(me, packages) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        await me.content.update();
         var params = {};
         if (typeof args[0] === "string") {
             [params.text, params.title] = await me.content.get(args[0]);

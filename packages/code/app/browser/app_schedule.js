@@ -4,13 +4,13 @@
  */
 
 screens.app.schedule = function AppSchedule(me, packages) {
-    const { core } = packages;
+    const { core, app } = packages;
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.groupListData = await me.media.file.groups();
+        me.groupListData = app.player.groups;
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
         await me.prepare(me.singleton);
         return me.singleton;

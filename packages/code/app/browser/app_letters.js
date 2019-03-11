@@ -5,10 +5,10 @@
 
 screens.app.letters = function AppGematria(me, packages) {
     const { core } = packages;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.content.attach(me);
     };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             if (typeof args[0] === "string") {
@@ -19,6 +19,7 @@ screens.app.letters = function AppGematria(me, packages) {
             }
             return me.singleton;
         }
+        await me.content.update();
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.initOptions(me.singleton);
         me.updateLetters(me.singleton);

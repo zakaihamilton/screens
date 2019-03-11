@@ -7,10 +7,6 @@ screens.ui.content = function UIContent(me, packages) {
     const { core } = packages;
     me.content = {
         init: async function () {
-            if (!me.ui.content.lists) {
-                me.ui.content.lists = me.manager.content.lists();
-            }
-            me.content.update();
         },
         info: function (window) {
             if (!window.content) {
@@ -96,7 +92,7 @@ screens.ui.content = function UIContent(me, packages) {
         },
         update: async function () {
             var [package, component] = me.id.split(".");
-            var lists = await me.ui.content.lists;
+            var lists = me.ui.content.data.lists;
             var filter = item => item.package === package && item.component === component;
             me.content.publicList = lists.publicList.filter(filter);
             me.content.privateList = lists.privateList.filter(filter);
@@ -420,4 +416,13 @@ screens.ui.content = function UIContent(me, packages) {
         }
     };
     return me.content;
+};
+
+screens.ui.content.data = function (me, packages) {
+    me.ready = function (methods) {
+        methods["ui.content.data.setLists"] = ["manager.content.lists"];
+    };
+    me.setLists = function (lists) {
+        me.lists = lists;
+    };
 };

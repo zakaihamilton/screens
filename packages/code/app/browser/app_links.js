@@ -6,13 +6,14 @@
 screens.app.links = function AppLinks(me, packages) {
     const { core } = packages;
     me.maxLinkCount = 20;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.content.attach(me);
     };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (!args) {
             args = [""];
         }
+        await me.content.update();
         var window = me.ui.element.create(me.json, "workspace", "self");
         if (typeof args[0] === "string") {
             me.content.import(window, args[0], args[1]);

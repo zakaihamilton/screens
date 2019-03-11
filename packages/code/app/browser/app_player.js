@@ -5,9 +5,19 @@
 
 screens.app.player = function AppPlayer(me, packages) {
     const { core } = packages;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.content.attach(me);
         me.content.search = me.search;
+    };
+    me.ready = function (methods) {
+        methods["app.player.setGroups"] = ["media.file.groups"];
+        methods["app.player.setMetadataList"] = ["db.shared.metadata.list", { user: "$userId" }];
+    };
+    me.setGroups = function (groups) {
+        me.groups = groups;
+    };
+    me.setMetadataList = function (metadataList) {
+        me.metadataList = metadataList;
     };
     me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {
@@ -22,10 +32,7 @@ screens.app.player = function AppPlayer(me, packages) {
         if (args[3]) {
             params.showInBackground = true;
         }
-        if (!me.groups) {
-            me.groups = await me.media.file.groups();
-        }
-        me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
+        await me.content.update();
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
             me.singleton.resolve = resolve;

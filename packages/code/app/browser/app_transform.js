@@ -5,17 +5,16 @@
 
 screens.app.transform = function AppTransform(me, packages) {
     const { core } = packages;
-    me.launch = function () {
+    me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        await me.content.update();
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
     };
     me.init = async function () {
         core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
-    };
-    me.ready = async function () {
         await me.ui.content.attach(me);
     };
     me.initOptions = {

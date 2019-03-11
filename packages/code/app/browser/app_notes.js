@@ -5,7 +5,7 @@
 
 screens.app.notes = function AppNotes(me, packages) {
     const { core } = packages;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.content.attach(me);
     };
     me.launch = async function (args) {
@@ -19,6 +19,7 @@ screens.app.notes = function AppNotes(me, packages) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        await me.content.update();
         var window = me.ui.element.create(me.json, "workspace", "self");
         if (typeof args[0] === "string") {
             await me.content.import(window, args[0], args[1]);

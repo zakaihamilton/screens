@@ -7,11 +7,9 @@ screens.app.visualize = function AppVisualize(me, packages) {
     const { core } = packages;
     me.init = async function () {
         await me.ui.transform.attach(me);
-    };
-    me.ready = async function () {
         await me.ui.content.attach(me);
     };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.close");
         }
@@ -23,6 +21,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
         if (params && params.fullscreen) {
             json["widget.window.fullscreen"] = null;
         }
+        await me.content.update();
         var window = me.singleton = me.ui.element.create(json, "workspace", "self", params);
         if (window.var.terms) {
             window.var.terms.focus();

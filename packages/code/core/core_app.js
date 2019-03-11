@@ -9,18 +9,24 @@ screens.core.app = function CoreApp(me, packages) {
         core.listener.register(me.sendReady, core.login.id);
     };
     me.sendReady = async function () {
+        let methods = {};
         for (var name of screens.components) {
-            if (!(name.includes("app."))) {
-                continue;
-            }
             await core.util.performance(name + ".ready", async () => {
+                let component = me.browse(name);
+                if (component.remote) {
+                    return;
+                }
                 try {
-                    await core.message.send(name + ".ready");
+                    await core.message.send(name + ".ready", methods);
                 }
                 catch (err) {
-                    me.log_error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
+                    me.log_error(screens.platform + ": Failed to notify: " + name + " for ready message with error: " + err);
                 }
             });
+        }
+        let results = await me.core.client.send(methods);
+        for (let method in results) {
+            await core.message.send(method, results[method]);
         }
     };
     me.available = function (name) {

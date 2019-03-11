@@ -8,11 +8,14 @@ screens.core.util = function CoreUtil(me, packages) {
     me.init = async function () {
         if (me.platform === "browser") {
             me.info = await storage.local.db.get(me.id, "info");
-            core.listener.register(async () => {
-                me.info = await me.user.access.info();
-                await storage.local.db.set(me.id, "info", me.info);
-            }, core.login.id);
         }
+    };
+    me.ready = function (methods) {
+        methods["core.util.setInfo"] = ["user.access.info"];
+    };
+    me.setInfo = async function (info) {
+        me.info = info;
+        await storage.local.db.set(me.id, "info", me.info);
     };
     me.removeLast = function (string, separator) {
         var array = string.split(separator);

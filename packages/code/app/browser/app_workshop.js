@@ -5,7 +5,7 @@
 
 screens.app.workshop = function AppWorkshop(me, packages) {
     const { core } = packages;
-    me.ready = async function () {
+    me.init = async function () {
         await me.ui.shared.attach(me);
     };
     me.launch = async function () {
