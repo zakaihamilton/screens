@@ -24,7 +24,8 @@ screens.storage.aws = function StorageAWS(me, packages) {
         var params = {
             Bucket: bucketName,
             Key: path,
-            Body: me.fs.createReadStream(from)
+            Body: me.fs.createReadStream(from),
+            ACL: "public-read"
         };
         var options = {
             partSize: 10 * 1024 * 1024,
