@@ -8,7 +8,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
     me.init = async function () {
         let AWS = require("aws-sdk");
         let keys = await core.private.keys("aws");
-        let { accessKeyId, secretAccessKey, endpoint } = keys;
+        let { accessKeyId, secretAccessKey, endpoint, cdn } = keys;
         endpoint = new AWS.Endpoint(endpoint);
         me.s3 = new AWS.S3({
             endpoint,
@@ -16,6 +16,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
             secretAccessKey
         });
         me.fs = require("fs");
+        me.cdn = cdn;
     };
     me.uploadFile = function (from, to) {
         let tokens = to.split("/");
@@ -108,7 +109,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
         let bucketName = tokens.shift();
         let groupName = tokens.shift().toLowerCase();
         path = tokens.join("/");
-        var url = "https://" + bucketName + ".sfo2.cdn.digitaloceanspaces.com/" + groupName + "/" + encodeURIComponent(path);
+        var url = "https://" + bucketName + "." + me.cdn + "/" + groupName + "/" + encodeURIComponent(path);
         return url;
     };
     return "server";

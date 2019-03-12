@@ -205,7 +205,7 @@ function screens_load(items, state) {
                     if (item.package_name in screens && item.component_name in screens[item.package_name]) {
                         continue;
                     }
-                    var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+                    let path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
                     console.log(screens.platform + ": Loading " + path);
                     item.promises = [screens_import(path)];
                 }
@@ -231,7 +231,7 @@ function screens_load(items, state) {
             });
             paths = paths.filter(Boolean);
             if (paths.length) {
-                var path = paths.join(",") + "?platform=" + screens.platform;
+                let path = paths.join(",") + "?platform=" + screens.platform;
                 if (state === "import") {
                     console.log(screens.platform + ": Loading " + path);
                     var promises = items[0].promises = [];
