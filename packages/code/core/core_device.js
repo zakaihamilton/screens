@@ -11,19 +11,3 @@ screens.core.device = function CoreDevice(me, packages) {
         return !me.isMobile();
     };
 };
-
-class CoreDevice extends CoreObject {
-    constructor() {
-        super({
-            id: "core.device"
-        });
-    }
-    isMobile() {
-        return navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    }
-    isNotMobile() {
-        return !this.isMobile();
-    }
-}
-
-new CoreDevice();

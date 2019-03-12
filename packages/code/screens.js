@@ -343,26 +343,7 @@ var screens = {
     }
 };
 
-class CoreObject {
-    constructor(options) {
-        this.id = options.id;
-        CoreObject.components.push(this);
-        if (options.use) {
-            for (let alias in options.use) {
-                const id = options.use[alias];
-                const match = CoreObject.components.find(component => component.id === id);
-                if (match) {
-                    this[alias] = options.use[alias];
-                }
-            }
-        }
-    }
-}
-
-CoreObject.components = [];
-
 if (screens.platform === "server" ||
     screens.platform === "service") {
     global.screens = screens;
-    global.CoreObject = CoreObject;
 }
