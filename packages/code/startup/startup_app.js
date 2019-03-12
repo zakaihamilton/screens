@@ -19,7 +19,7 @@ screens.startup.app = function StartupApp(me, packages) {
         ]);
         try {
             var progress = me.ui.modal.launch("progress", {
-                "title": "Login",
+                "title": "Loading",
                 "delay": "1000"
             });
             await core.login.load();
