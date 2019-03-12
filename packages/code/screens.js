@@ -326,6 +326,34 @@ async function screens_require(items) {
     await screens_init([{ initializers: inits }]);
 }
 
+async function screens_requireAll(root, exclude) {
+    var fs = require("fs");
+    var components = [];
+    var names = fs.readdirSync(root);
+    for (var name of names) {
+        var path = root + "/" + name;
+        var isDirectory = fs.statSync(path).isDirectory();
+        if (isDirectory) {
+            if (exclude && exclude.includes(name)) {
+                continue;
+            }
+            components.push(... await screens_requireAll(path, exclude));
+        }
+        if (name.endsWith(".js")) {
+            var module = path.split(".")[0].replace("packages", "..");
+            var [package, component] = name.split(".")[0].split("_");
+            if (!component) {
+                continue;
+            }
+            if (!screens[package]) {
+                screens[package] = {};
+            }
+            components.push({ package, component, module });
+        }
+    }
+    return components;
+}
+
 var screens = {
     components: [],
     imports: [],
@@ -335,6 +363,7 @@ var screens = {
     import: screens_import,
     browse: screens_browse,
     require: screens_require,
+    requireAll: screens_requireAll,
     log: function (message, componentId, userName) {
         screens.core.console.log.call(this, message, componentId, userName);
     },
