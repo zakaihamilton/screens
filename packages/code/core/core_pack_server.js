@@ -11,6 +11,7 @@ screens.core.pack = function CorePack(me, packages) {
         me.uglify = require("uglify-es");
         me.cleanCSS = require("clean-css");
         me.cachePath = "hash";
+        core.file.makeDir(me.cachePath);
     };
     me.collect = async function (root, target, folderExclude, extInclude, componentHeaders, format, defaultPackage, defaultComponent) {
         var body = "";

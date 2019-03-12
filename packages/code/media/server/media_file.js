@@ -13,9 +13,7 @@ screens.media.file = function MediaFile(me, packages) {
         me.ffmpeg.setFfprobePath(ffprobePath);
         me.os = require("os");
         me.tempDir = me.os.tmpdir();
-        if (!core.file.exists(me.cachePath)) {
-            core.file.makeDir(me.cachePath);
-        }
+        core.file.makeDir(me.cachePath);
         core.mutex.enable(me.id, true);
         core.broadcast.register(me, {
             startup: "media.file.groups"
