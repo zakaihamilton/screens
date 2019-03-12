@@ -7,10 +7,12 @@ screens.startup.app = function StartupApp(me, packages) {
     const { core } = packages;
     me.firstTime = true;
     me.init = function () {
-        core.startup.register(me);
         core.listener.register(me.start, core.login.id);
+        core.broadcast.register(me, {
+            startup: "startup.app.startup"
+        });
     };
-    me.run = async function () {
+    me.startup = async function () {
         me.ui.element.create([
             {
                 "ui.element.component": "widget.desktop",

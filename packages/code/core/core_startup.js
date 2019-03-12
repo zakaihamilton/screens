@@ -4,25 +4,13 @@
  */
 
 screens.core.startup = function CoreStartup(me, packages) {
+    const { core } = packages;
     me.app = {
         name: "",
         params: null
     };
-    me.registered = [];
-    me.register = function (component) {
-        me.registered.push(component);
-    };
     me.run = async function () {
-        var components = me.registered;
-        for (let component of components) {
-            if (component.prepare) {
-                await component.prepare();
-            }
-        }
-        for (let component of components) {
-            if (component.run) {
-                await component.run();
-            }
-        }
+        await core.broadcast.send("prepare");
+        await core.broadcast.send("startup");
     };
 };

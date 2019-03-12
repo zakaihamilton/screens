@@ -6,7 +6,9 @@
 screens.startup.version = function StartupVersion(me, packages) {
     const { core } = packages;
     me.init = function () {
-        core.startup.register(me);
+        core.broadcast.register(me, {
+            prepare: "startup.version.prepare"
+        });
     };
     me.prepare = async function () {
         if (me.platform === "server") {
