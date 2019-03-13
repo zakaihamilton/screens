@@ -81,6 +81,7 @@ screens.core.http = function CoreHttp(me, packages) {
                 body.push(chunk);
             }).on("end", async function () {
                 if (request.url.includes("private") && !await db.shared.settings.get("system.private")) {
+                    me.log_error("private files not authorized" + request.url);
                     response.writeHead(403);
                     response.end();
                 } else {
