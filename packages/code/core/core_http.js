@@ -92,12 +92,15 @@ screens.core.http = function CoreHttp(me, packages) {
         if (secure) {
             var keys = await core.private.keys("https");
             if (keys && keys.key && keys.cert && keys.ca) {
+                let caBuffer = core.private.file(keys.ca);
+                let keyBuffer = core.private.file(keys.key);
+                let certBuffer = core.private.file(keys.cert);
                 return new Promise((resolve, reject) => {
                     try {
                         var options = {
-                            ca: me.fs.readFileSync(keys.ca),
-                            key: me.fs.readFileSync(keys.key),
-                            cert: me.fs.readFileSync(keys.cert)
+                            ca: caBuffer,
+                            key: keyBuffer,
+                            cert: certBuffer
                         };
                         var https = require("https");
                         server = https.createServer(options, requestHandler);
