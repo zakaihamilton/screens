@@ -81,8 +81,8 @@ screens.core.http = function CoreHttp(me, packages) {
                 body.push(chunk);
             }).on("end", async function () {
                 if (request.url.includes("private") && !await db.shared.settings.get("system.private")) {
-                    response.writeHead(200);
-                    response.end("cannot load private files remotely");
+                    response.writeHead(403);
+                    response.end();
                 } else {
                     me.handleRequest(request, response, body);
                 }
