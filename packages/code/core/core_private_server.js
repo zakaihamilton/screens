@@ -28,7 +28,7 @@ screens.core.private = function CorePrivate(me, packages) {
             const url = core.util.remoteUrl() + "/" + path;
             data = await new Promise((resolve, reject) => {
                 request.get(url, (error, response, body) => {
-                    if (response.statusCode !== 200) {
+                    if (response && response.statusCode !== 200) {
                         reject("Failed with status code: " + response.statusCode);
                     }
                     else if (error) {
