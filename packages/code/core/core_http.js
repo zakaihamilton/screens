@@ -4,7 +4,7 @@
  */
 
 screens.core.http = function CoreHttp(me, packages) {
-    const { core } = packages;
+    const { core, db } = packages;
     if (screens.platform === "server") {
         me.port = process.env.PORT || 4040;
     } else if (screens.platform === "service") {
@@ -79,8 +79,8 @@ screens.core.http = function CoreHttp(me, packages) {
                 me.log_error("found http error: " + err);
             }).on("data", function (chunk) {
                 body.push(chunk);
-            }).on("end", function () {
-                if (request.url.includes("private")) {
+            }).on("end", async function () {
+                if (request.url.includes("private") && !await db.shared.settings.get("system.private")) {
                     response.writeHead(200);
                     response.end("cannot load private files remotely");
                 } else {
