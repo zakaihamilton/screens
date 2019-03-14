@@ -311,9 +311,14 @@ screens.core.string = function CoreString(me, packages) {
         var i = string.length;
         var hash1 = 5381;
         var hash2 = 52711;
-
+        let char = null;
         while (i--) {
-            const char = string.charCodeAt(i);
+            if (string instanceof Buffer) {
+                char = string[i];
+            }
+            else {
+                char = string.charCodeAt(i);
+            }
             hash1 = (hash1 * 33) ^ char;
             hash2 = (hash2 * 33) ^ char;
         }
