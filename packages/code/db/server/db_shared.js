@@ -136,3 +136,32 @@ screens.db.shared.user = function DbSharedUser(me, packages) {
     ];
     return "server";
 };
+
+screens.db.shared.settings = function DbSharedSettings(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
+    me.cache = {};
+    me.indexes = [
+        {
+            "key": 1
+        }
+    ];
+    me.get = async function (key) {
+        let item = await me.find({ key });
+        if (item) {
+            return item.value;
+        }
+        else {
+            return null;
+        }
+    };
+    me.set = function (key, value) {
+        if (value) {
+            me.use({ key }, { value });
+        }
+        else {
+            me.remove({ key });
+        }
+    };
+    return "server";
+};

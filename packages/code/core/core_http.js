@@ -4,7 +4,7 @@
  */
 
 screens.core.http = function CoreHttp(me, packages) {
-    const { core } = packages;
+    const { core, db } = packages;
     if (screens.platform === "server") {
         me.port = process.env.PORT || 4040;
     } else if (screens.platform === "service") {
@@ -79,10 +79,11 @@ screens.core.http = function CoreHttp(me, packages) {
                 me.log_error("found http error: " + err);
             }).on("data", function (chunk) {
                 body.push(chunk);
-            }).on("end", function () {
-                if (request.url.includes("private")) {
-                    response.writeHead(200);
-                    response.end("cannot load private files remotely");
+            }).on("end", async function () {
+                if (request.url.includes("private") && !await db.shared.settings.get("system.private")) {
+                    me.log_error("private files not authorized" + request.url);
+                    response.writeHead(403);
+                    response.end();
                 } else {
                     me.handleRequest(request, response, body);
                 }
@@ -91,12 +92,15 @@ screens.core.http = function CoreHttp(me, packages) {
         if (secure) {
             var keys = await core.private.keys("https");
             if (keys && keys.key && keys.cert && keys.ca) {
+                let caBuffer = await core.private.file(keys.ca);
+                let keyBuffer = await core.private.file(keys.key);
+                let certBuffer = await core.private.file(keys.cert);
                 return new Promise((resolve, reject) => {
                     try {
                         var options = {
-                            ca: me.fs.readFileSync(keys.ca),
-                            key: me.fs.readFileSync(keys.key),
-                            cert: me.fs.readFileSync(keys.cert)
+                            ca: caBuffer,
+                            key: keyBuffer,
+                            cert: certBuffer
                         };
                         var https = require("https");
                         server = https.createServer(options, requestHandler);

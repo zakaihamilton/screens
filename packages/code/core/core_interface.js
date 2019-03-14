@@ -65,7 +65,13 @@ screens.core.interface = function CoreInterface(me, packages) {
             url: "/interface/" + method.replace(/\./g, "/"),
             body
         };
-        result = me.fromTypeFormat(await core.http.send(info));
+        result = await core.http.send(info);
+        if (result[0] === "[" || result[0] === "{") {
+            result = me.fromTypeFormat(result);
+        }
+        else {
+            result = [result];
+        }
         if (result[0]) {
             throw result[0];
         }

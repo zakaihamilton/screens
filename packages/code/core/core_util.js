@@ -107,10 +107,14 @@ screens.core.util = function CoreUtil(me, packages) {
     me.sync = async function () {
         await storage.cache.empty();
     };
+    me.remoteUrl = function () {
+        let url = "https://www.screensview.com";
+        return url;
+    };
     me.url = function (appName, args, local) {
         var url = "";
         if (!local) {
-            url = "https://www.screensview.com";
+            url = me.remoteUrl();
             if (!me.isSecure()) {
                 url = "http://localhost:4040";
             }

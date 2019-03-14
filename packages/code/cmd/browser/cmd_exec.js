@@ -19,11 +19,20 @@ screens.cmd.exec = function CmdExec(me, packages) {
             else {
                 result = method;
             }
-            core.property.set(terminal, "print", JSON.stringify(result, null, 4));
+            if (typeof result === "object") {
+                result = JSON.stringify(result, null, 4);
+            }
+            else {
+                result = String(result);
+            }
+            core.property.set(terminal, "print", result);
         }
         catch (err) {
             var string = err;
-            if (typeof string === "object") {
+            if (string && string.message) {
+                string = string.message + " stack: " + string.stack;
+            }
+            else if (typeof string === "object") {
                 string = JSON.stringify(string);
             }
             core.property.set(terminal, "print", "exec: " + args[1] + ", error:" + string);

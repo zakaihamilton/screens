@@ -5,19 +5,19 @@
 
 screens.storage.dropbox = function StorageDropBox(me, packages) {
     const { core } = packages;
-    me.init = function () {
+    me.init = async function () {
         require("es6-promise").polyfill();
         me.dropbox = require("dropbox").Dropbox;
         me.fs = require("fs");
         me.https = require("https");
+        me.keys = await core.private.keys("dropbox");
     };
     me.getService = async function () {
         if (me.handle) {
             return me.handle;
         }
         var fetch = require("isomorphic-fetch");
-        var keys = await core.private.keys("dropbox");
-        me.handle = new me.dropbox({ accessToken: keys["access-token"], fetch: fetch });
+        me.handle = new me.dropbox({ accessToken: me.keys["access-token"], fetch: fetch });
         return me.handle;
     };
     me.fixPath = function (path) {
