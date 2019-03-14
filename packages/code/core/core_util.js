@@ -186,8 +186,12 @@ screens.core.util = function CoreUtil(me, packages) {
         module.exports = handle;
     };
     me.reload = async function () {
+        me.ui.modal.launch("progress", {
+            "title": "Restarting",
+            "delay": "1000"
+        });
         await core.message.service_worker.unregister();
         await core.message.service_worker.register();
         location.reload(true);
-    }
+    };
 };
