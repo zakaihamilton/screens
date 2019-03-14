@@ -8,7 +8,7 @@
 	"start_url": "/",
 	"icons": [
 		{
-			"src": "/packages/res/manifest/splash.png",
+			"src": "/packages/res/manifest/big-icon.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		},
