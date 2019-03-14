@@ -313,7 +313,7 @@ screens.core.string = function CoreString(me, packages) {
         var hash2 = 52711;
         let char = null;
         while (i--) {
-            if (string instanceof Buffer) {
+            if (typeof Buffer === "function" && string instanceof Buffer) {
                 char = string[i];
             }
             else {
