@@ -8,6 +8,11 @@
 	"start_url": "/",
 	"icons": [
 		{
+			"src": "/packages/res/manifest/splash.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
 			"src": "/packages/res/manifest/launcher-icon-0-75x.png",
 			"sizes": "36x36",
 			"type": "image/png",
