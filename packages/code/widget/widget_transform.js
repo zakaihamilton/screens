@@ -162,7 +162,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             widget.termData = { terms, data, diagrams };
         }
         else {
-            widget.termData = null;
+            widget.termData = {};
         }
         core.property.set(widget.var.output, "ui.style.display", "none");
         core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
@@ -309,7 +309,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             diagrams = diagrams.map(name => {
                 return { title: core.string.title(name), name };
             });
-            if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
+            if (widget.termData.diagrams && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", name: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
             var items = diagrams.map(function (item) {
