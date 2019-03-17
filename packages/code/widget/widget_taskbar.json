@@ -17,29 +17,14 @@
             "ui.basic.tag": "div",
             "ui.class.class": "shortcuts",
             "ui.basic.var": "shortcuts",
-            "ui.group.data": {
-                "ui.data.keyList": [
-                    "ui.attribute.title",
-                    "ui.basic.src",
-                    "ui.basic.var",
-                    "ui.touch.click"
-                ],
-                "ui.data.default": {
-                    "ui.basic.tag": "img",
-                    "ui.class.class": "shortcut"
-                },
-                "ui.data.prefix": "widget.taskbar.shortcut(",
-                "ui.data.suffix": ")",
-                "ui.data.values": [
-                    "widget.taskbar.toggleShortcuts",
-                    "messages",
-                    "keyboard",
-                    "ui.theme.nightMode",
-                    "ui.resize.toggleLockRotation",
-                    "ui.theme.toggleFontSize",
-                    "core.util.reload"
-                ]
-            }
+            "widget.taskbar.shortcuts": [
+                "widget.taskbar.toggleShortcuts",
+                "keyboard",
+                "ui.theme.nightMode",
+                "ui.resize.toggleLockRotation",
+                "ui.theme.toggleFontSize",
+                "core.util.reload"
+            ]
         }
     ],
     "prepare": null

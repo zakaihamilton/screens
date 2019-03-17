@@ -48,10 +48,8 @@
     flex-wrap: nowrap;
     overflow: hidden;
     flex-direction: column-reverse;
-    height: 15.5em;
     bottom: 0em;
     flex: 0;
-    transition: height 0.5s linear;
     align-items: stretch;
     z-index: 1000;
     background: black;
@@ -61,30 +59,48 @@
 
 .widget-taskbar-shortcuts.collapse {
     border: 1px solid transparent;
-    height: 2.3em;
+    height: 2.4em;
+    width: 2.4em;
     border-top-left-radius: 0px;
 }
 
 .widget-taskbar-shortcut {
     flex: none;
-    width: 2.0em;
     height: 2.0em;
     border: 1px solid transparent;
     border-radius: 10px;
     padding: 0.2em;
     margin: 0.1em;
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+}
+
+.widget-taskbar-shortcut.on img {
+    box-shadow: inset 0 0 50px #fff, inset 20px 0 80px #f0f, inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff, 0 0 50px #fff, -10px 0 80px #f0f, 10px 0 80px #0ff;
+}
+
+.widget-taskbar-shortcut:hover:active div {
+    filter:invert(100%);
+}
+
+.widget-taskbar-shortcut div {
+    color:white;
+    background-color:black;
+    padding-right:0.4em;
+}
+
+.widget-taskbar-shortcut img {
+    width: 1.8em;
     user-select: none;
     -webkit-user-drag: none;
     cursor: default;
     filter: invert(100%);
 }
 
-.widget-taskbar-shortcut.on {
-    box-shadow: inset 0 0 50px #fff, inset 20px 0 80px #f0f, inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff, 0 0 50px #fff, -10px 0 80px #f0f, 10px 0 80px #0ff;
-}
-
-.widget-taskbar-shortcut:hover:active {
-    border: 1px solid black;
+.widget-taskbar-shortcut:hover:active img {
+    background-color:white;
+    filter: invert(0%);
 }
 
 .widget-taskbar-menu {

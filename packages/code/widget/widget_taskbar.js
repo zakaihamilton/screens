@@ -26,6 +26,14 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
         parent = me.ui.element.bar();
         return parent.var.tasks;
     };
+    me.shortcuts = function (object, list) {
+        let items = [];
+        for (let name of list) {
+            let item = me.shortcut(object, name);
+            items.push(item);
+        }
+        me.ui.element.create(items, object);
+    };
     me.shortcut = function (object, name) {
         var method = method = "core.app." + name;
         var label = name;
@@ -33,27 +41,44 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
             method = name;
             label = name.split(".").pop();
         }
-        return [[
-            core.string.title(label),
-            label,
-            label,
-            () => {
-                me.core.property.set(object, method);
-                if (method !== "widget.taskbar.toggleShortcuts") {
-                    me.expandShortcuts(object, false);
-                }
+        let title = core.string.title(label);
+        let image = label;
+        let onclick = function (object) {
+            me.core.property.set(object, method);
+            if (method !== "widget.taskbar.toggleShortcuts") {
+                me.expandShortcuts(object, false);
             }
-        ]];
+        };
+        return {
+            "ui.basic.tag": "div",
+            "ui.class.class": "widget.taskbar.shortcut",
+            "ui.touch.click": onclick,
+            "ui.basic.var": label,
+            "ui.attribute.title": title,
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag": "img",
+                    "ui.basic.src": image
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.text": title,
+                    "ui.basic.display": method !== "widget.taskbar.toggleShortcuts"
+                }
+            ]
+        };
     };
     me.prepare = function (object) {
         me.toggleShortcuts(object);
     };
     me.expandShortcuts = function (object, expand) {
         var taskbar = me.ui.node.container(object, me.id);
-        core.property.set(taskbar.var.shortcuts, "ui.class.collapse", !expand);
-        var isCollapsed = core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
+        var shortcuts = taskbar.var.shortcuts;
+        core.property.set(shortcuts, "ui.class.collapse", !expand);
+        var isCollapsed = core.property.get(shortcuts, "ui.class.collapse");
         var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
-        core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", name);
+        var image = me.ui.node.findByTag(shortcuts.var.toggleShortcuts, "img");
+        core.property.set(image, "ui.basic.src", name);
     };
     me.toggleShortcuts = function (object) {
         var taskbar = me.ui.node.container(object, me.id);
@@ -79,7 +104,7 @@ screens.widget.taskbar.task = function WidgetTaskbarTask(me, packages) {
                         "ui.basic.tag": "img",
                         "ui.touch.click": "widget.contextmenu.show(taskbar)",
                         "ui.class.class": "icon",
-                        "ui.basic.var": "icon"
+                        "ui.basic.var": "icon",
                     },
                     {
                         "ui.basic.tag": "div",
