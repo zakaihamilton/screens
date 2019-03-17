@@ -313,6 +313,10 @@
             "replace": "Talmud Eser Sefirot"
         },
         {
+            "find": "Histaklut Pnimit (Inner Reflection)",
+            "replace": "Histaklut Pnimit"
+        },
+        {
             "find": "/: (\\d*\\))",
             "replace": ":\n$1"
         },
