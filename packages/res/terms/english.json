@@ -309,29 +309,8 @@
             "replace": ""
         },
         {
-            "match": "/^Talmud .*?$",
-            "prefix": "<h4 style=\"order:-4;\">",
-            "suffix": "</h4>"
-        },
-        {
-            "match": "/^Part .*?$",
-            "prefix": "<h4 style=\"order:-3;\">",
-            "suffix": "</h4>"
-        },
-        {
-            "match": "/^Chapter .*?$",
-            "prefix": "<h4 style=\"order:-2;\">",
-            "suffix": "</h4>"
-        },
-        {
-            "match": "/Chapter [0-9,I]$",
-            "prefix": "<h4 style=\"order:-2;\">",
-            "suffix": "</h4>"
-        },
-        {
-            "match": "/^Yehuda Leib HaLevi Ashlag \\(Baal HaSulam\\)$",
-            "prefix": "<h4 style=\"order:-1;\">",
-            "suffix": "</h4>"
+            "find": "Talmud Eser Sefirot (The Study of the Ten Sefirot)",
+            "replace": "Talmud Eser Sefirot"
         },
         {
             "find": "/: (\\d*\\))",

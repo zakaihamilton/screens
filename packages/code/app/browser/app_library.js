@@ -465,9 +465,9 @@ screens.app.library = function AppLibrary(me, packages) {
     };
     me.deleteRecord = async function (object) {
         var records = me.parseRecordsFromText(object);
-        if (records.ids) {
-            await me.db.library.tags.remove(records.ids);
-            await me.db.library.content.remove(records.ids);
+        if (records.ids && records.ids.length) {
+            await me.db.library.tags.remove({ _id: records.ids[0] });
+            await me.db.library.content.remove({ _id: records.ids[0] });
         }
     };
     me.process = function (object) {
