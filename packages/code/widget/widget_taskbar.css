@@ -59,8 +59,8 @@
 
 .widget-taskbar-shortcuts.collapse {
     border: 1px solid transparent;
-    height: 2.4em;
-    width: 2.4em;
+    height: 2.3em;
+    width: 2.3em;
     border-top-left-radius: 0px;
 }
 
@@ -71,7 +71,7 @@
     border-radius: 10px;
     padding: 0.2em;
     margin: 0.1em;
-    display:flex;
+    display: flex;
     flex-direction: row-reverse;
     align-items: stretch;
 }
@@ -81,13 +81,13 @@
 }
 
 .widget-taskbar-shortcut:hover:active div {
-    filter:invert(100%);
+    filter: invert(100%);
 }
 
 .widget-taskbar-shortcut div {
-    color:white;
-    background-color:black;
-    padding-right:0.4em;
+    color: white;
+    background-color: black;
+    padding-right: 0.4em;
 }
 
 .widget-taskbar-shortcut img {
@@ -99,7 +99,7 @@
 }
 
 .widget-taskbar-shortcut:hover:active img {
-    background-color:white;
+    background-color: white;
     filter: invert(0%);
 }
 
