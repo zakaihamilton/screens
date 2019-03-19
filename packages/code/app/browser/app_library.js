@@ -128,13 +128,15 @@ screens.app.library = function AppLibrary(me, packages) {
                         values = keyValues[key] = new Set();
                     }
                     let value = item[key];
+                    value = value.replace(/^\d+/g, (x) => core.string.padNumber(x, 3));
                     values.add(value);
                 }
             }
             let isFirst = true;
+            keys = Array.from(keys).sort();
             for (let key of keys) {
                 let values = Array.from(keyValues[key]);
-                let subItems = values.map(value => {
+                let subItems = values.sort().map(value => {
                     return {
                         ref: value,
                         text: me.core.string.title(value),
@@ -152,6 +154,9 @@ screens.app.library = function AppLibrary(me, packages) {
                     select: subItems,
                     options: {
                         separator: isFirst
+                    },
+                    properties: {
+                        group: "tagList"
                     }
                 });
                 isFirst = false;
@@ -179,6 +184,7 @@ screens.app.library = function AppLibrary(me, packages) {
         core.property.set(window.var.transform, "text", "");
         core.property.set(window.var.transform, "transform");
         core.property.set(window.var.resultsContainer, "ui.style.display", "none");
+        core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         window.searchText = "";
     };
     me.reSearch = function (object) {
