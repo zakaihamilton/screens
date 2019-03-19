@@ -4,6 +4,7 @@
  */
 
 screens.widget.desktop = function WidgetDesktop(me, packages) {
+    const { core, ui } = packages;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -38,5 +39,15 @@ screens.widget.desktop = function WidgetDesktop(me, packages) {
                 }
             ]
         }
+    };
+    me.reload = function () {
+        ui.modal.launch("question", {
+            "title": "Reload",
+            "question": "Do you want to reload Screens?"
+        }).then(() => {
+            core.util.reload();
+        }).catch(() => {
+
+        });
     };
 };

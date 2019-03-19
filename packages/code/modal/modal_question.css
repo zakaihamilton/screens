@@ -1,0 +1,27 @@
+.modal-question-label {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  right: 30px;
+  color: var(--color);
+  text-align: center;
+}
+
+.modal-question-actions {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  left: 30px;
+  right: 30px;
+  bottom: 20px;
+}
+
+.modal-question-action {
+  width: 100%;
+  min-width: 5em;
+}
+
+.modal-question-action.default {
+  border: 1px solid var(--phase-four-border);
+  background-color: var(--phase-four-background);
+}

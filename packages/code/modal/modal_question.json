@@ -1,0 +1,39 @@
+{
+    "title": "@ui.param.title(Confirmation)",
+    "delay": "@ui.param.delay(0)",
+    "popup": true,
+    "fixed": true,
+    "nobar": true,
+    "ui.property.style": {
+        "left": "20%",
+        "top": "30%",
+        "width": "60%",
+        "height": "250px"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "modal.question.label",
+            "ui.basic.html": "@ui.param.question"
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "modal.question.actions",
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.button",
+                    "ui.class.classExtra": "modal.question.action",
+                    "ui.class.default": true,
+                    "ui.basic.html": "@ui.param.ok(Yes)",
+                    "ui.touch.click": "modal.question.action(resolve)"
+                },
+                {
+                    "ui.element.component": "widget.button",
+                    "ui.class.classExtra": "modal.question.action",
+                    "ui.basic.html": "@ui.param.cancel(No)",
+                    "ui.touch.click": "modal.question.action(reject)"
+                }
+            ]
+        }
+    ]
+}

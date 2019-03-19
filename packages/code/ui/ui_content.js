@@ -4,7 +4,7 @@
  */
 
 screens.ui.content = function UIContent(me, packages) {
-    const { core } = packages;
+    const { core, ui, manager } = packages;
     me.content = {
         init: async function () {
         },
@@ -90,21 +90,20 @@ screens.ui.content = function UIContent(me, packages) {
                 }
             ];
         },
-        update: async function () {
+        update: function () {
             var [package, component] = me.id.split(".");
-            var lists = me.ui.content.data.lists;
+            var lists = ui.content.data.lists;
             var filter = item => item.package === package && item.component === component;
             me.content.publicList = lists.publicList.filter(filter);
             me.content.privateList = lists.privateList.filter(filter);
         },
-        refresh: {
-            set: async function (object) {
-                var window = me.widget.window.get(object);
-                me.ui.content.lists = me.manager.content.lists();
-                await me.content.update();
-                var info = me.content.info(window);
-                me.content.associated.update(window, info._title);
-            }
+        refresh: async function (object) {
+            var window = me.widget.window.get(object);
+            let lists = await me.manager.content.lists();
+            ui.content.data.setLists(lists);
+            me.content.update();
+            var info = me.content.info(window);
+            me.content.associated.update(window, info._title);
         },
         get: async function (item, private) {
             var name = item;
@@ -211,7 +210,7 @@ screens.ui.content = function UIContent(me, packages) {
                     data.options = options;
                 }
                 await me.manager.content.save(me.id, title, data, private);
-                await me.content.refresh.set(object);
+                await me.content.refresh(object);
             }
         },
         delete: {
@@ -241,8 +240,17 @@ screens.ui.content = function UIContent(me, packages) {
                     var date = new Date();
                     title = date.toLocaleDateString();
                 }
-                await me.manager.content.delete(me.id, title, private);
-                await me.content.refresh.set(object);
+                ui.modal.launch("question", {
+                    "title": "Delete Content",
+                    "question": "Do you want to <b>delete</b> the following <b>" +
+                        (private ? "private" : "public") +
+                        "</b> content:<br/>" + title + "?"
+                }).then(async () => {
+                    await manager.content.delete(me.id, title, private);
+                    await me.content.refresh(object);
+                }).catch(() => {
+
+                });
             }
         },
         copyUrl: {

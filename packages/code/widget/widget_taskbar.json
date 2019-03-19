@@ -23,7 +23,7 @@
                 "ui.theme.nightMode",
                 "ui.resize.toggleLockRotation",
                 "ui.theme.toggleFontSize",
-                "core.util.reload"
+                "widget.desktop.reload"
             ]
         }
     ],
