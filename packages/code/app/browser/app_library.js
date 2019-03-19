@@ -5,6 +5,13 @@
 
 screens.app.library = function AppLibrary(me, packages) {
     const { core } = packages;
+    me.init = async function () {
+        core.property.link("widget.transform.clear", "app.library.clear", true);
+        me.searchCounter = 0;
+    };
+    me.ready = function (methods) {
+        methods["app.library.setTags"] = ["db.library.tagList"];
+    };
     me.launch = function (args) {
         var search = args[0];
         var params = { search };
@@ -16,17 +23,15 @@ screens.app.library = function AppLibrary(me, packages) {
             }
             return me.singleton;
         }
-        me.tagList = me.db.library.tagList();
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
-    };
-    me.init = async function () {
-        core.property.link("widget.transform.clear", "app.library.clear", true);
-        me.searchCounter = 0;
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         me.tagList = await me.db.library.tagList();
         window.names = null;
+    };
+    me.setTags = function (tags) {
+        me.tagList = tags;
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
@@ -68,97 +73,90 @@ screens.app.library = function AppLibrary(me, packages) {
         search = search.replace(/\s+/g, " ");
         return search;
     };
-    me.menuList = function (object, list, group) {
+    me.insertTag = function (object, nameKey, nameValue) {
         var window = me.widget.window.get(object);
-        var parseItems = (items) => {
-            if (window.names) {
-                return window.names;
+        var search = core.property.get(window.var.search, "ui.basic.text");
+        var insert = true;
+        if (search) {
+            nameKey = nameKey.trim().toLowerCase();
+            search = core.string.split(search).map((item) => {
+                if (item.includes(":")) {
+                    var [itemKey] = item.split(":");
+                    itemKey = itemKey.trim().toLowerCase();
+                    if (itemKey === nameKey) {
+                        insert = false;
+                        item = nameKey + ":" + nameValue;
+                    }
+                }
+                if (item.includes(" ")) {
+                    item = "\"" + item + "\"";
+                }
+                return item;
+            }).join(" ");
+            search = me.cleanSearchText(search);
+            if (search && insert) {
+                search += " ";
             }
-            var names = new Set();
-            if (!items) {
-                items = [];
+        }
+        if (insert) {
+            let name = nameKey + ":" + nameValue;
+            if (name.includes(" ")) {
+                search += "\"";
             }
-            for (var item of items) {
+            search += name;
+            if (name.includes(" ")) {
+                search += "\"";
+            }
+        }
+        core.property.set(window.var.search, "ui.basic.text", search);
+        me.changedSearch(window.var.search);
+    };
+    me.tagMenuList = {
+        get: function (object) {
+            let tagList = me.tagList;
+            let menuItems = [];
+            var keys = new Set();
+            var keyValues = {};
+            for (let item of tagList) {
                 for (var key in item) {
                     if (key === "_id" || key === "user") {
                         continue;
                     }
-                    var value = item[key];
-                    value = value.replace(/^\d+/g, (x) => core.string.padNumber(x, 3));
-                    names.add(key + ":" + value);
+                    keys.add(key);
+                    let values = keyValues[key];
+                    if (!values) {
+                        values = keyValues[key] = new Set();
+                    }
+                    let value = item[key];
+                    values.add(value);
                 }
             }
-            names = Array.from(names).sort().map((name) => {
-                var [nameKey, nameValue] = name.split(":");
-                var result = [
-                    nameValue,
-                    async function () {
-                        var search = core.property.get(window.var.search, "ui.basic.text");
-                        var insert = true;
-                        if (search) {
-                            nameKey = nameKey.trim().toLowerCase();
-                            search = core.string.split(search).map((item) => {
-                                if (item.includes(":")) {
-                                    var [itemKey] = item.split(":");
-                                    itemKey = itemKey.trim().toLowerCase();
-                                    if (itemKey === nameKey) {
-                                        insert = false;
-                                        item = nameKey + ":" + nameValue;
-                                    }
-                                }
-                                if (item.includes(" ")) {
-                                    item = "\"" + item + "\"";
-                                }
-                                return item;
-                            }).join(" ");
-                            search = me.cleanSearchText(search);
-                            if (search && insert) {
-                                search += " ";
-                            }
+            let isFirst = true;
+            for (let key of keys) {
+                let values = Array.from(keyValues[key]);
+                let subItems = values.map(value => {
+                    return {
+                        ref: value,
+                        text: me.core.string.title(value),
+                        select: () => {
+                            me.insertTag(object, key, value);
+                        },
+                        properties: {
+                            group: "tagList"
                         }
-                        if (insert) {
-                            if (name.includes(" ")) {
-                                search += "\"";
-                            }
-                            search += name;
-                            if (name.includes(" ")) {
-                                search += "\"";
-                            }
-                        }
-                        core.property.set(window.var.search, "ui.basic.text", search);
-                        me.changedSearch(window.var.search);
-                    },
-                    {
-                        "unique": false
-                    },
-                    {
-                        "group": group,
-                        "prefix": nameKey
+                    };
+                });
+                menuItems.push({
+                    key,
+                    text: me.core.string.title(key),
+                    select: subItems,
+                    options: {
+                        separator: isFirst
                     }
-                ];
-                return result;
-            });
-            window.names = names;
-            return names;
-        };
-        if (list.then) {
-            return [[
-                "",
-                null,
-                {
-                    "visible": false
-                },
-                {
-                    "group": group,
-                    "promise": { promise: list, callback: parseItems }
-                }
-            ]];
-        }
-        return parseItems(list);
-    };
-    me.tagMenuList = {
-        get: function (object) {
-            return me.menuList(object, me.tagList, "public");
+                });
+                isFirst = false;
+            }
+            return menuItems;
         }
     };
     me.changedSearch = function (object) {
