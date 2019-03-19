@@ -187,8 +187,7 @@ screens.core.util = function CoreUtil(me, packages) {
     };
     me.reload = async function () {
         me.ui.modal.launch("progress", {
-            "title": "Restarting",
-            "delay": "1000"
+            "title": "Restarting"
         });
         await core.message.service_worker.unregister();
         await core.message.service_worker.register();
