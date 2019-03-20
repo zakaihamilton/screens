@@ -209,8 +209,17 @@ screens.ui.content = function UIContent(me, packages) {
                 if (options) {
                     data.options = options;
                 }
-                await me.manager.content.save(me.id, title, data, private);
-                await me.content.refresh(object);
+                ui.modal.launch("question", {
+                    "title": "Save Content",
+                    "question": "Do you want to <b>save</b> the following <b>" +
+                        (private ? "private" : "public") +
+                        "</b> content:<br/>" + title + "?"
+                }).then(async () => {
+                    await me.manager.content.save(me.id, title, data, private);
+                    await me.content.refresh(object);
+                }).catch(() => {
+
+                });
             }
         },
         delete: {
