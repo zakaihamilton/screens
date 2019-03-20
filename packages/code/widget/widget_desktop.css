@@ -43,6 +43,9 @@
 
 body {
     overflow: hidden;
+    font-variant-numeric: tabular-nums;
+    font-size:1em;
+    background-color:#2e0150;
 }
 
 .label.night-mode {
