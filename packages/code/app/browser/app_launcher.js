@@ -51,11 +51,11 @@ screens.app.launcher = function AppLauncher(me, packages) {
             core.property.set(progress, "ui.class.progress", true);
             clearTimeout(window.searchTimer);
             window.searchTimer = setTimeout(() => {
+                core.property.set(window, "name", object.value.trim());
                 me.searchNow(object, text);
                 core.property.set(progress, "ui.class.progress", false);
             }, 500);
             core.property.set(window, "title", "Search");
-            core.property.set(window, "name", object.value.trim());
             core.property.set(window.var.results, "ui.style.display", "flex");
         }
         else {
