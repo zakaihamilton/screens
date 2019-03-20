@@ -296,7 +296,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
                 }
             }, 2000);
             core.property.set([widget.var.scrollToTop, widget.var.previousPage], "ui.class.disabled", !widget.var.layout.scrollTop);
-            core.property.set([widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
+            core.property.set([widget.var.scrollToBottom, widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
         }
     };
     me.diagramList = {
@@ -1240,7 +1240,13 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
     me.scrollToTop = {
         set: function (object) {
             var widget = me.upper.findWidget(object);
-            core.property.set(widget.var.layout, "ui.scroll.to", 0);
+            core.property.set(widget.var.layout, "ui.scroll.firstPage");
+        }
+    };
+    me.scrollToBottom = {
+        set: function (object) {
+            var widget = me.upper.findWidget(object);
+            core.property.set(widget.var.layout, "ui.scroll.lastPage");
         }
     };
     me.applyNumPages = function (target, numPages) {

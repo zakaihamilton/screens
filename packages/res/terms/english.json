@@ -342,9 +342,8 @@
             "replace": "\n<b>$1</b>"
         },
         {
-            "match": "/^Ohr Pnimi$",
-            "prefix": "<h4>",
-            "suffix": "</h4>"
+            "find": "/\\((\\d*)\\)",
+            "replace": "<b>($1)</b>"
         },
         {
             "find": "/([.,:;?!]) \n",
@@ -380,10 +379,6 @@
         {
             "find": "/<hr>",
             "replace": "<hr style=\"column-span:all\"></hr>"
-        },
-        {
-            "find": "/\\((\\d*)\\)",
-            "replace": "<b>($1)</b>"
         }
     ],
     "post": [
@@ -7718,11 +7713,33 @@
         },
         {
             "term": "Piusa",
-            "translation": "Appeasement"
+            "translation": "Appeasement",
+            "hebrew": "פיוסא"
         },
         {
             "term": "Hitgalut",
-            "translation": "Revealation"
+            "translation": "Revealation",
+            "hebrew": "התגלות"
+        },
+        {
+            "term": "Hassidim",
+            "translation": "Mercy",
+            "hebrew": "חסדים"
+        },
+        {
+            "term": "Man ’ ul",
+            "translation": "Lock",
+            "hebrew": "מנעול"
+        },
+        {
+            "term": "Naalayim",
+            "translation": "Shoes",
+            "hebrew": "נעלים"
+        },
+        {
+            "term": "Meraglim",
+            "translation": "Spies",
+            "hebrew": "מרגלים"
         }
     ],
     "style": {

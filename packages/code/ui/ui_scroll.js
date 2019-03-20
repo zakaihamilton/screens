@@ -34,6 +34,14 @@ screens.ui.scroll = function UIScroll(me, packages) {
         }
         return container;
     };
+    me.firstPage = function (object) {
+        me.to(object, 0);
+    };
+    me.lastPage = function (object) {
+        var container = me.container(object);
+        let offset = container.scrollHeight - (container.ui_scroll_pageSize - 1);
+        me.to(object, offset);
+    };
     me.previousPage = function (object) {
         var container = me.container(object);
         me.by(container, -container.ui_scroll_pageSize);
