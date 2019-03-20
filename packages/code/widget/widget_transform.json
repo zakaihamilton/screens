@@ -74,7 +74,7 @@
                     ],
                     [
                         "@ui.html.icon(fa fa-chevron-down)",
-                        "First Page",
+                        "Last Page",
                         "widget.transform.layout.scrollToBottom",
                         "iconbar.scrollToBottom",
                         "scrollToBottom"
