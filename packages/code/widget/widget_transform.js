@@ -1271,16 +1271,15 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         }
     };
     me.completePage = function (page) {
+        if (!page) {
+            return;
+        }
         var widget = me.upper.findWidget(page);
         let text = me.widget.transform.layout.pageText(page).join("\n").toLowerCase();
         let mark = widget.filterText && text.includes(widget.filterText.toLowerCase());
         var showPage = !widget.filterText || mark;
         let content = page.var.content;
         content.innerHTML = me.ui.html.mark(content.innerHTML, mark ? widget.filterText : "");
-
-        if (!page) {
-            return;
-        }
         var pageNumber = core.property.get(page, "ui.attribute.pageNumber");
         if (pageNumber === "1" || showPage) {
             page.style.display = "";

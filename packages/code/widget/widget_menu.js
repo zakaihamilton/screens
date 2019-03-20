@@ -667,6 +667,9 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                 me.handleValue(object, options, "label", (value) => {
                     core.property.set(object, "ui.class.label", value);
                 });
+                me.handleValue(object, options, "search", (value) => {
+                    core.property.set(object, "ui.attribute.type", value ? "search" : "text");
+                });
                 me.handleValue(object, options, "edit", (value) => {
                     if (options.edit) {
                         core.property.set(object, {

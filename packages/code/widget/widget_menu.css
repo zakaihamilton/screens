@@ -196,8 +196,12 @@
 }
 
 .widget-menu-vertical li.edit, .widget-menu-vertical tr.edit, .widget-menu-vertical span.edit, .widget-menu-vertical input.edit {
-    margin: 6px;
-    width: 96%;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    width: 92%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 .widget-menu-vertical li.has-menu:after, .widget-menu-vertical tr.has-menu td:first-child:after, .widget-menu-vertical span.has-menu:after {

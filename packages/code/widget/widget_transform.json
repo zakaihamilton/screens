@@ -462,6 +462,7 @@
                 {
                     "text": "",
                     "options": {
+                        "search": true,
                         "edit": "widget.transform.filter"
                     }
                 },
