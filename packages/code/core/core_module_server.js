@@ -46,7 +46,9 @@ screens.core.module = function CoreModule(me, packages) {
         if (!data && params.optional) {
             data = "";
         }
-        var result = await me.postcss([me.autoprefixer]).process(data);
+        var result = await me.postcss([me.autoprefixer]).process(data, {
+            from: undefined
+        });
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
         });

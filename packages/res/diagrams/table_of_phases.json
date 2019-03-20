@@ -2,15 +2,18 @@
     "title": "Table of Phases",
     "layers": [
         {
-            "ui.style.display": "grid",
-            "ui.style.position": "absolute",
-            "ui.style.margin": "2px",
-            "ui.style.left": "0px",
-            "ui.style.top": "0px",
-            "ui.style.right": "0px",
-            "ui.style.bottom": "0px",
-            "ui.style.gridAutoColumns": "auto",
-            "ui.style.gridAutoRows": "auto",
+            "ui.property.style": {
+                "display": "grid",
+                "position": "absolute",
+                "margin": "2px",
+                "left": "0px",
+                "top": "0px",
+                "right": "0px",
+                "bottom": "0px",
+                "gridAutoColumns": "auto",
+                "gridAutoRows": "auto",
+                "gridTemplateRows": "3em"
+            },
             "core.property.group": [
                 {
                     "ui.group.data": {
@@ -22,13 +25,15 @@
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.style.lineHeight": "2em",
-                            "ui.style.border": "1px solid black",
-                            "ui.style.margin": "3px",
-                            "ui.style.padding": "3px",
-                            "ui.style.gridColumn": "1",
-                            "ui.style.textAlign": "center",
-                            "ui.style.verticalAlign": "middle"
+                            "ui.property.style": {
+                                "lineHeight": "2em",
+                                "border": "1px solid black",
+                                "margin": "3px",
+                                "padding": "3px",
+                                "gridColumn": "1",
+                                "textAlign": "center",
+                                "verticalAlign": "middle"
+                            }
                         },
                         "ui.data.values": [
                             "ui.param.gridData"

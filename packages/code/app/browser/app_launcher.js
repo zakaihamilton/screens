@@ -45,15 +45,35 @@ screens.app.launcher = function AppLauncher(me, packages) {
     me.search = async function (object) {
         var window = me.widget.window.get(object);
         var text = object.value.toLowerCase().trim();
+        if (text) {
+            var progress = me.ui.node.findByName(window, "progress");
+            core.property.set(window, "temp", false);
+            core.property.set(progress, "ui.class.progress", true);
+            clearTimeout(window.searchTimer);
+            window.searchTimer = setTimeout(() => {
+                me.searchNow(object, text);
+                core.property.set(progress, "ui.class.progress", false);
+            }, 500);
+            core.property.set(window, "title", "Search");
+            core.property.set(window, "name", object.value.trim());
+            core.property.set(window.var.results, "ui.style.display", "flex");
+        }
+        else {
+            core.property.set(window, "name", "");
+            core.property.set(window, "title", "Launcher");
+            core.property.set(window, "temp", true);
+            core.property.set(window.var.results, "ui.style.display", "");
+            core.property.set(window.var.results, "ui.basic.html", "");
+        }
+    };
+    me.searchNow = async function (object, text) {
+        var window = me.widget.window.get(object);
         var results = [];
         var names = [];
         var lists = [];
         var message = "";
         var counter = ++me.searchCounter;
         if (text) {
-            var progress = me.ui.node.findByName(window, "progress");
-            core.property.set(window, "temp", false);
-            core.property.set(progress, "ui.class.progress", true);
             var components = screens.components.sort();
             for (let name of components) {
                 if (name === "ui.content") {
@@ -81,7 +101,6 @@ screens.app.launcher = function AppLauncher(me, packages) {
                 }
             }
             lists = await Promise.all(lists);
-            core.property.set(progress, "ui.class.progress", false);
             if (counter !== me.searchCounter) {
                 return;
             }
@@ -98,18 +117,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
             else {
                 message = "<br><b style='text-align:center;'>No Matching Results</b>";
             }
-        }
-        if (text) {
-            core.property.set(window, "title", "Search");
-            core.property.set(window, "name", object.value.trim());
-            core.property.set(window.var.results, "ui.style.display", "flex");
             core.property.set(window.var.results, "ui.basic.html", message);
-        }
-        else {
-            core.property.set(window, "name", "");
-            core.property.set(window, "title", "Launcher");
-            core.property.set(window, "temp", true);
-            core.property.set(window.var.results, "ui.style.display", "");
         }
     };
     me.tree = function (object, list, search, root) {

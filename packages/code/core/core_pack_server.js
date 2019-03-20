@@ -157,7 +157,9 @@ screens.core.pack = function CorePack(me, packages) {
         return me.minify(info.path, body);
     };
     me.css = async function (info, data) {
-        var result = await me.postcss([me.autoprefixer]).process(data);
+        var result = await me.postcss([me.autoprefixer]).process(data, {
+            from: undefined
+        });
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
         });
