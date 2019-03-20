@@ -810,7 +810,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
                     }
                 },
                 onchange: (widgetIndex, textIndex, text) => {
-                    me.log("onchange: " + index + " text:" + text);
+                    me.log("onchange: " + widgetIndex + "-" + textIndex + " text:" + text);
                     me.widget.transform.layout.markPage(currentPage, widgetIndex, textIndex);
                     var focusElement = me.widget.transform.layout.focusElement(currentPage);
                     me.focusParagraph(object, focusElement);
