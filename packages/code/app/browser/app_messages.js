@@ -8,7 +8,7 @@ screens.app.messages = function AppMessages(me, packages) {
     me.init = function () {
         me.messages = [];
     };
-    me.ready = async function (methods) {
+    me.disabledReady = async function (methods) {
         methods["app.messages.setList"] = ["db.shared.message.listing"];
         if (!me.intervalHandle) {
             me.intervalHandle = setInterval(me.updateList, 10000);
