@@ -16,17 +16,25 @@ screens.core.tunnel = function CoreTunnel(me, packages) {
         let query = info.query;
         let url = query.url;
         let method = query.method;
+        let body = info.body;
         if (!url) {
             return "No url parameter passed in query";
         }
         if (!method) {
             return "No method parameter passed in query";
         }
-        delete query.url;
-        delete query.method;
-        me.log("tunneling: " + url + " method: " + method + " headers: " + info.headers + " query: " + JSON.stringify(query));
+        let headers = Object.assign({}, info.headers);
+        let qs = Object.assign({}, query);
+        delete qs.url;
+        delete qs.method;
+        delete headers.origin;
+        delete headers.host;
+        delete headers.referer;
+        delete headers.cookie;
+        delete headers["user-agent"];
+        me.log("tunneling: " + url + " method: " + method + " headers: " + JSON.stringify(headers) + " query: " + JSON.stringify(qs));
         return new Promise((resolve, reject) => {
-            me.request({ url, method, headers: info.headers, body: info.body, qs: query }, function (err, response, body) {
+            me.request({ url, method, headers, body, qs }, function (err, response, body) {
                 if (err) {
                     reject(err);
                     return;
