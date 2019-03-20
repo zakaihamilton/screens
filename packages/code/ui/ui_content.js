@@ -228,9 +228,11 @@ screens.ui.content = function UIContent(me, packages) {
                 var info = me.content.info(window);
                 if (info) {
                     var locked = info._locked;
+                    var private = info._private;
                     var title = info._title;
                     var access = !info._owner || info._owner === core.util.info.userId || core.util.info.admin;
-                    return !locked && title && access;
+                    var exists = manager.content.exists(me.id, title, private);
+                    return !locked && title && access && exists;
                 }
                 return false;
             },
