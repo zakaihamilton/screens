@@ -597,6 +597,17 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             me.kab.highlight.remove(element);
         });
     };
+    me.filter = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            return widget.filterText;
+        },
+        set: function (object, text) {
+            var widget = me.findWidget(object);
+            widget.filterText = text;
+            me.reflow(widget);
+        }
+    };
 };
 
 screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
@@ -742,7 +753,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
             if (typeof value === "number") {
                 index = value;
             }
-            var text = me.widget.transform.layout.pageText(currentPage);
+            var paragraphs = me.widget.transform.layout.pageText(currentPage);
             var params = {
                 index: index,
                 onstate: () => {
@@ -812,7 +823,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
                     hebrew: widget.options.voiceHebrew,
                 }
             };
-            me.media.voice.play(text, params);
+            me.media.voice.play(paragraphs, params);
             if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
                 me.currentPlayingPage = null;
             }
@@ -1260,7 +1271,13 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         }
     };
     me.completePage = function (page) {
-        var showPage = true;
+        var widget = me.upper.findWidget(page);
+        let text = me.widget.transform.layout.pageText(page).join("\n").toLowerCase();
+        let mark = widget.filterText && text.includes(widget.filterText.toLowerCase());
+        var showPage = !widget.filterText || mark;
+        let content = page.var.content;
+        content.innerHTML = me.ui.html.mark(content.innerHTML, mark ? widget.filterText : "");
+
         if (!page) {
             return;
         }
@@ -1381,13 +1398,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                 }
                 childElement = element.children[textIndex];
             }
-            else {
-                element.innerHTML = me.ui.html.mark(element.innerHTML, "");
-            }
             element.style.opacity = "";
         }
         else {
-            element.innerHTML = me.ui.html.mark(element.innerHTML, "");
             element.style.opacity = "0.75";
         }
         Array.from(element.children).map(element => {

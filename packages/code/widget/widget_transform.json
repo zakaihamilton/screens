@@ -269,6 +269,91 @@
                             "options": {
                                 "state": "select"
                             }
+                        },
+                        {
+                            "text": "Commentary",
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                {
+                                    "text": "Edit Mode",
+                                    "select": "widget.transform.commentaryEdit",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Label",
+                                    "select": "widget.transform.commentaryLabel",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Separator",
+                                    "select": "widget.transform.commentarySeparator",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Users",
+                                    "select": "header"
+                                },
+                                {
+                                    "text": "None",
+                                    "select": "widget.transform.commentaryUser",
+                                    "options": {
+                                        "value": "",
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "All",
+                                    "select": "widget.transform.commentaryUser",
+                                    "options": {
+                                        "value": "all",
+                                        "state": "select"
+                                    }
+                                },
+                                "widget.transform.commentaryUsers"
+                            ]
+                        },
+                        {
+                            "text": "Highlight",
+                            "select": [
+                                {
+                                    "text": "Enable",
+                                    "select": "widget.transform.showHighlights",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Export Highlights",
+                                    "select": "widget.transform.copyHighlights",
+                                    "options": {
+                                        "enabled": "widget.transform.showHighlights",
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Export Source",
+                                    "select": "widget.transform.exportSource",
+                                    "options": {
+                                        "enabled": "widget.transform.showHighlights",
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Remove Highlights",
+                                    "select": "widget.transform.removeHighlights",
+                                    "options": {
+                                        "separator": true
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
@@ -323,88 +408,6 @@
                     ]
                 },
                 {
-                    "text": "Commentary",
-                    "select": [
-                        {
-                            "text": "Edit Mode",
-                            "select": "widget.transform.commentaryEdit",
-                            "options": {
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Label",
-                            "select": "widget.transform.commentaryLabel",
-                            "options": {
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Separator",
-                            "select": "widget.transform.commentarySeparator",
-                            "options": {
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Users",
-                            "select": "header"
-                        },
-                        {
-                            "text": "None",
-                            "select": "widget.transform.commentaryUser",
-                            "options": {
-                                "value": "",
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "All",
-                            "select": "widget.transform.commentaryUser",
-                            "options": {
-                                "value": "all",
-                                "state": "select"
-                            }
-                        },
-                        "widget.transform.commentaryUsers"
-                    ]
-                },
-                {
-                    "text": "Highlight",
-                    "select": [
-                        {
-                            "text": "Enable",
-                            "select": "widget.transform.showHighlights",
-                            "options": {
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Export Highlights",
-                            "select": "widget.transform.copyHighlights",
-                            "options": {
-                                "enabled": "widget.transform.showHighlights",
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Export Source",
-                            "select": "widget.transform.exportSource",
-                            "options": {
-                                "enabled": "widget.transform.showHighlights",
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "Remove Highlights",
-                            "select": "widget.transform.removeHighlights",
-                            "options": {
-                                "separator": true
-                            }
-                        }
-                    ]
-                },
-                {
                     "text": "Styles",
                     "select": "widget.transform.addStyles",
                     "options": {
@@ -448,6 +451,19 @@
                             }
                         }
                     ]
+                },
+                {
+                    "text": "Filter",
+                    "select": "label",
+                    "options": {
+                        "separator": true
+                    }
+                },
+                {
+                    "text": "",
+                    "options": {
+                        "edit": "widget.transform.filter"
+                    }
                 },
                 "widget.window.exportMenuList(widget.transform.exportText)"
             ]
