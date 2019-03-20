@@ -214,7 +214,7 @@ screens.core.string = function CoreString(me, packages) {
         string = string.split("_").map(token => {
             return token.charAt(0).toUpperCase() + token.slice(1);
         }).join(" ");
-        string = string.replace(/([A-Z])/g, " $1").trim();
+        string = string.replace(/([a-z])([A-Z])/g, "$1 $2").trim();
         string = string.replace(/\s\s/g, " ");
         return string;
     };
