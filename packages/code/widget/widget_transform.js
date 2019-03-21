@@ -613,7 +613,8 @@ screens.widget.transform = function WidgetTransform(me, packages) {
 screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
     const { core } = packages;
     me.init = function () {
-        me.counter = 0;
+        me.definitionCounter = 0;
+        me.associatedCounter = 0;
     };
     me.open = async function (object, termName) {
         var widget = me.upper.findWidget(object);
@@ -649,11 +650,15 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
             classes += "kab-term-phase-" + phase;
         }
         core.property.set(widgets.phase, "ui.class.class", classes);
-        me.update(widget, term);
-        core.property.set(widget.var.popup, "ui.class.add", "show");
+        me.updateDefinition(widget, term);
+        me.updateAssociated(widget, term);
+        setTimeout(() => {
+            core.property.set(widget.var.popup, "ui.class.add", "show");
+        }, 250);
+        core.property.set(widget.var.popup, "ui.class.remove", "show");
     };
-    me.update = async function (widget, term) {
-        var counter = ++me.counter;
+    me.updateDefinition = async function (widget, term) {
+        var counter = ++me.definitionCounter;
         let field = me.ui.node.findByName(widget.var.popup, "definition");
         core.property.set(field, "ui.basic.html", "");
         var definition = await me.lib.dictionary.definition(term.text);
@@ -671,10 +676,25 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
             }
         }
         term.definition = text;
-        if (counter !== me.counter) {
+        if (counter !== me.definitionCounter) {
             return;
         }
         core.property.set(field, "ui.basic.html", text);
+    };
+    me.updateAssociated = async function (widget, term) {
+        var counter = ++me.associatedCounter;
+        let field = me.ui.node.findByName(widget.var.popup, "associated");
+        core.property.set(field, "ui.basic.html", "");
+        let associated = Array.from(new Set(term.item.associated));
+        if (associated) {
+            var info = await me.kab.text.parse(widget.language, associated.join(" "), widget.options);
+            if (counter !== me.associatedCounter) {
+                return;
+            }
+            core.property.set(field, "ui.style.fontSize", widget.options.fontSize);
+            let text = "<b>Associated:</b>" + info.text;
+            core.property.set(field, "ui.basic.html", text);
+        }
     };
     me.close = function (object) {
         var modal = me.ui.node.classParent(object, "modal");

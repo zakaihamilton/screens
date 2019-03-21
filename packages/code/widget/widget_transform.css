@@ -341,7 +341,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-popup {
-    transition: visibility 0s, opacity 0.5s linear;
+    transition: opacity 0.5s linear;
     display: flex;
     visibility: hidden;
     opacity: 0.0;
@@ -376,4 +376,9 @@ h4.widget-transform-widget {
 
 .widget-transform-level-item p.click:hover {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+}
+
+.widget-transform-associated {
+    line-height: 2em;
+    color: var(--color);
 }

@@ -1,7 +1,6 @@
 {
     "title": "Keyboard",
     "temp": true,
-    "fullscreen": true,
     "nobar": true,
     "icon": "keyboard",
     "ui.property.style": {
@@ -11,7 +10,7 @@
         "right": "0em",
         "bottom": "0em",
         "width": "22em",
-        "height": "20em",
+        "height": "22em",
         "border": "1px solid black",
         "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },

@@ -443,7 +443,23 @@ screens.kab.text = function KabText(me, packages) {
         if (!terms) {
             return null;
         }
-        for (var item of terms) {
+        var { associated } = json;
+        if (associated) {
+            for (let entry of associated) {
+                if (Array.isArray(entry)) {
+                    for (let term of entry) {
+                        let item = terms.find(item => item.term === term);
+                        if (item) {
+                            if (!item.associated) {
+                                item.associated = [];
+                            }
+                            item.associated.push(...entry);
+                        }
+                    }
+                }
+            }
+        }
+        for (let item of terms) {
             let words = item.term.split(" ");
             let key = words[0].toUpperCase();
             let lookup = result[key];
@@ -457,7 +473,7 @@ screens.kab.text = function KabText(me, packages) {
             }
             lookup[item.term] = item;
         }
-        for (var term in result) {
+        for (let term in result) {
             let lookup = result[term];
             me.sortKeys(lookup);
         }
