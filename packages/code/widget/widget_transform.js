@@ -687,12 +687,15 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
         core.property.set(field, "ui.basic.html", "");
         let associated = Array.from(new Set(term.item.associated));
         if (associated) {
-            var info = await me.kab.text.parse(widget.language, associated.join(" "), widget.options);
+            let options = Object.assign({}, widget.options);
+            options.showHighlights = false;
+            options.commentaryEdit = false;
+            var info = await me.kab.text.parse(widget.language, associated.join(" "), options);
             if (counter !== me.associatedCounter) {
                 return;
             }
             core.property.set(field, "ui.style.fontSize", widget.options.fontSize);
-            let text = "<b>Associated:</b>" + info.text;
+            let text = "<b>Associated:</b></br>" + info.text;
             core.property.set(field, "ui.basic.html", text);
         }
     };
