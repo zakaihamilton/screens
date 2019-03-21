@@ -47,6 +47,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             highlightReading: true
         });
         widget.pageSize = { width: 0, height: 0 };
+        widget.filterText = "";
         me.ui.options.toggleSet(me, me.findWidget, {
             doTranslation: me.transform,
             doExplanation: me.transform,
@@ -604,8 +605,10 @@ screens.widget.transform = function WidgetTransform(me, packages) {
         },
         set: function (object, text) {
             var widget = me.findWidget(object);
-            widget.filterText = text;
-            me.reflow(widget);
+            if (widget.filterText !== text) {
+                widget.filterText = text;
+                me.reflow(widget);
+            }
         }
     };
 };
@@ -1140,7 +1143,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                             pageContent.removeChild(widget);
                         }
                         pageIndex++;
-                        me.completePage(target.page);
+                        let previousPage = target.page;
                         target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
                         pageContent = target.page.var.content;
                         if (previousWidget && previousWidget.tagName && previousWidget.tagName.toLowerCase().match(/h\d/)) {
@@ -1157,6 +1160,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                             target.page.style.lineHeight = "2em";
                         }
                         previousWidget = null;
+                        me.completePage(previousPage);
                         if (showInProgress) {
                             me.completeReflow(resolve, target, options);
                         }
