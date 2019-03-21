@@ -345,6 +345,7 @@ h4.widget-transform-widget {
     display: flex;
     visibility: hidden;
     opacity: 0.0;
+    z-index: 2000;
 }
 
 .widget-transform-popup.show {
