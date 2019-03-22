@@ -44,7 +44,8 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             showHighlights: true,
             copyHighlights: true,
             exportSource: false,
-            highlightReading: true
+            highlightReading: true,
+            showParagraphIndex: true
         });
         widget.pageSize = { width: 0, height: 0 };
         widget.filterText = "";
@@ -78,7 +79,8 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             showHighlights: me.transform,
             copyHighlights: null,
             exportSource: null,
-            highlightReading: null
+            highlightReading: null,
+            showParagraphIndex: me.reflow
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -270,7 +272,8 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             scrollWidget: visibleWidget,
             scrollPos: widget.options.scrollPos,
             playEnabled: widget.options.voiceEnglish !== "None" || widget.options.voiceHebrew !== "None",
-            language: widget.options.language
+            language: widget.options.language,
+            showParagraphIndex: widget.options.showParagraphIndex
         };
         me.media.voice.stop();
         await me.widget.transform.layout.reflow(widget.var.output, widget.var.layout, reflowOptions);
@@ -1076,6 +1079,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
             }
             var previousWidget = null, visibleWidget = null;
             var showInProgress = false;
+            target.index = 1;
             target.reflowInterval = setInterval(function () {
                 var window = me.widget.window.get(target);
                 for (; ;) {
@@ -1105,6 +1109,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                         showInProgress = true;
                     }
                     var location = pageContent ? pageContent : layoutContent;
+                    if (options.showParagraphIndex && widget.tagName && widget.tagName.toLowerCase() === "p") {
+                        widget.setAttribute("index", target.index++);
+                    }
                     if (widget.style && widget.style.order) {
                         location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
                     } else {

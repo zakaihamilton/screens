@@ -405,6 +405,14 @@
                                 "state": "select",
                                 "separator": true
                             }
+                        },
+                        {
+                            "text": "Paragraph Indexes",
+                            "select": "widget.transform.showParagraphIndex",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
                         }
                     ]
                 },

@@ -180,6 +180,14 @@ p.widget-transform-widget {
     margin-bottom: 0.5em;
 }
 
+p.widget-transform-widget:after {
+    color: var(--disabled-color);
+    position: absolute;
+    content: attr(index);
+    font-size: 75%;
+    margin: 0.5em;
+}
+
 h4.widget-transform-widget {
     text-align: center;
     width: 100%;
