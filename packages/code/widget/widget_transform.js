@@ -1082,6 +1082,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                     resolve();
                 }
             }
+            let afterBreak = true;
             target.page = null;
             me.prepare(source, layoutContent);
             var pageSize = me.pageSize(layoutContent);
@@ -1094,6 +1095,8 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
             var pageContent = null;
             if (options.usePages) {
                 target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                target.page.afterBreak = afterBreak;
+                afterBreak = false;
                 pageContent = target.page.var.content;
             }
             var previousWidget = null, visibleWidget = null;
@@ -1158,6 +1161,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                         previousWidget = null;
                         if (target.page) {
                             target.page.var.separator.style.display = "block";
+                            afterBreak = true;
                         }
                     } else if (!(widget.textContent || widget.firstElementChild)) {
                         pageContent.removeChild(widget);
@@ -1171,6 +1175,8 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                         pageIndex++;
                         let previousPage = target.page;
                         target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                        target.page.afterBreak = afterBreak;
+                        afterBreak = false;
                         pageContent = target.page.var.content;
                         if (previousWidget && previousWidget.tagName && previousWidget.tagName.toLowerCase().match(/h\d/)) {
                             pageContent.appendChild(previousWidget);
@@ -1333,8 +1339,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         var showPage = !widget.filterText || mark;
         let content = page.var.content;
         content.innerHTML = me.ui.html.mark(content.innerHTML, mark ? widget.filterText : "");
-        var pageNumber = core.property.get(page, "ui.attribute.pageNumber");
-        if (pageNumber === "1" || showPage) {
+        if (page.afterBreak || showPage) {
+            if (page.afterBreak) {
+                page.style.borderTop = "1px solid var(--color)";
+            }
             page.style.display = "";
             page.pageOffset = page.offsetTop;
             page.pageSize = page.clientHeight;
