@@ -31,7 +31,7 @@ screens.ui.html = function UIHtml(me, packages) {
             for (let name in info.attributes) {
                 let value = info.attributes[name];
                 if (value) {
-                    value = value.replace(/"/g, "'");
+                    value = value.replace(/"/g, "&quot;");
                     html += " " + name + "=\"" + value + "\"";
                 }
             }

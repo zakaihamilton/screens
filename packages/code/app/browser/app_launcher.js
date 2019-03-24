@@ -197,7 +197,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
     me.launchSearchItem = function (object) {
         var args = core.property.get(object, "ui.attribute.#args");
         if (args) {
-            args = args.replace(/'/g, "\"");
+            args = args.replace(/&quot;/g, "\"");
             args = JSON.parse(args);
             core.message.send.apply(null, args);
         }
