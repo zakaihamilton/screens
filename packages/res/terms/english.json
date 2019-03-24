@@ -313,11 +313,11 @@
             "replace": ""
         },
         {
-            "find": "Talmud Eser Sefirot (The Study of the Ten Sefirot)",
+            "find": "/Talmud Eser Sefirot \\(The Study of the Ten Sefirot\\)",
             "replace": "Talmud Eser Sefirot"
         },
         {
-            "find": "Histaklut Pnimit (Inner Reflection)",
+            "find": "/Histaklut Pnimit \\(Inner Reflection\\)",
             "replace": "Histaklut Pnimit"
         },
         {
