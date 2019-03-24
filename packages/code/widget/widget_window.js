@@ -1083,6 +1083,14 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 core.property.set(window, method, ui.clipboard);
             }
         });
+        if (navigator.share) {
+            items.push({
+                text: "Share",
+                select: () => {
+                    core.property.set(window, method, ui.share);
+                }
+            });
+        }
         if (!items.length) {
             return null;
         }

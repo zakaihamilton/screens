@@ -4,17 +4,12 @@
  */
 
 screens.ui.share = function UIClipboard(me, packages) {
-    me.permissionStatus = null;
-    me.init = async function () {
+    me.importData = async function (object, text, title) {
         if (navigator.share) {
-            me.importData = function (object, text, title) {
-                navigator.share({
-                    title,
-                    text,
-                })
-                    .then(() => me.log("Successful share"))
-                    .catch((error) => me.error("Error sharing:" + error));
-            };
+            await navigator.share({
+                title,
+                text,
+            });
         }
     };
     return "browser";
