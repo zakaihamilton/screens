@@ -533,34 +533,53 @@ screens.widget.transform = function WidgetTransform(me, packages) {
     me.transformedText = function (object, useFilter, useSource) {
         var widget = me.findWidget(object);
         var list = [];
+        var previousIndex = 0;
+        var sequence = false;
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
-            var filter = null;
-            if (useFilter) {
-                filter = (element) => {
-                    return core.property.get(element, "ui.class.kab-term-highlight");
-                };
-            }
             var modify = (element, text) => {
+                let use = true;
+                if (useFilter && !core.property.get(element, "ui.class.kab-term-highlight")) {
+                    use = false;
+                }
+                let index = parseInt(core.property.get(element, "ui.attribute.#index"));
                 if (useSource) {
                     text = core.property.get(element, "ui.attribute.#source");
                 }
+                const isHeader = element.tagName && element.tagName.toLowerCase() === "h4";
                 if (text) {
-                    if (element.tagName && element.tagName.toLowerCase() === "h4") {
+                    if (isHeader) {
                         text = "\n" + text;
                     }
-                    else {
+                    else if (previousIndex === index - 1 || text.match(/^\d+\)/)) {
                         text = "\n\n" + text;
+                        sequence = true;
                     }
+                    else {
+                        text = "\n\n... " + text;
+                    }
+                }
+                if (use && !isHeader) {
+                    previousIndex = index;
+                }
+                if (!use) {
+                    if (sequence) {
+                        sequence = false;
+                    }
+                    text = "";
                 }
                 return text;
             };
-            var paragraphs = me.widget.transform.layout.pageText(page, filter, modify);
+            var paragraphs = me.widget.transform.layout.pageText(page, modify);
             paragraphs = paragraphs.filter(Boolean);
             if (paragraphs && paragraphs.length) {
                 list.push(paragraphs.join(""));
             }
         });
-        return list.join("").trim();
+        let text = list.join("").trim();
+        if (!sequence) {
+            text += " ...";
+        }
+        return text;
     };
     me.exportText = function (object, target) {
         var widget = me.findWidget(object);
@@ -1392,13 +1411,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         }
         return null;
     };
-    me.pageText = function (page, filterCallback, modifyCallback) {
+    me.pageText = function (page, modifyCallback) {
         var content = page.var.content;
         var array = Array.from(content.children).map(el => {
             if (el.getAttribute("hidden")) {
-                return "";
-            }
-            if (filterCallback && !filterCallback(el)) {
                 return "";
             }
             var text = el.innerText;
