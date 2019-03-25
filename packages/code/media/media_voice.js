@@ -236,7 +236,7 @@ screens.media.voice = function MediaVoice(me, packages) {
                 text = text.replace(replacement, result[1] + "\n");
             }
         }
-        text = text.replace(/No\./g, "No");
+        text = text.replace(/Letter No/g, "Letter Number ");
         text = text.replace(/^(\d+\))/g, "\n$1\n");
         text = text.replace(/\s-\s/g, "\n");
         text = text.replace(/[.:;—]/g, "\n");
