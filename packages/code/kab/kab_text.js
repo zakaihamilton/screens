@@ -273,6 +273,7 @@ screens.kab.text = function KabText(me, packages) {
             line = line.replace(/\[SPAN\]/g, "</span><span>");
             return line;
         });
+        lines = lines.filter(Boolean);
         diagrams = Array.from(new Set(diagrams));
         var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data, diagrams };
         return info;
