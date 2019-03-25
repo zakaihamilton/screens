@@ -244,11 +244,13 @@ screens.kab.text = function KabText(me, packages) {
             if (line === "<br>") {
                 return line;
             }
-            if (options.showHighlights) {
-                line = await me.kab.highlight.line(session, items.highlight[index], line);
-            }
-            if (options.commentaryEdit || options.commentaryUser) {
-                line = await me.kab.commentary.line(session, items.commentary[index], line);
+            if (items) {
+                if (options.showHighlights) {
+                    line = await me.kab.highlight.line(session, items.highlight[index], line);
+                }
+                if (options.commentaryEdit || options.commentaryUser) {
+                    line = await me.kab.commentary.line(session, items.commentary[index], line);
+                }
             }
             if (session.diagrams) {
                 diagrams.push(...session.diagrams);
