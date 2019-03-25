@@ -1347,7 +1347,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         content.innerHTML = me.ui.html.mark(content.innerHTML, mark ? widget.filterText : "");
         if (page.afterBreak || showPage) {
             if (page.afterBreak) {
-                page.style.borderTop = "1px solid var(--color)";
+                page.style.borderTop = "2px solid var(--color)";
             }
             page.style.display = "";
             page.pageOffset = page.offsetTop;
