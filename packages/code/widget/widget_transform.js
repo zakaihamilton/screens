@@ -710,17 +710,23 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
         var counter = ++me.associatedCounter;
         let field = me.ui.node.findByName(widget.var.popup, "associated");
         core.property.set(field, "ui.basic.html", "");
-        let associated = Array.from(new Set(term.item.associated));
+        let associated = term.item.associated;
         if (associated) {
-            let options = Object.assign({}, widget.options);
-            options.showHighlights = false;
-            options.commentaryEdit = false;
-            var info = await me.kab.text.parse(widget.language, associated.join(" "), options);
-            if (counter !== me.associatedCounter) {
-                return;
+            let text = "";
+            for (let type in associated) {
+                let set = associated[type];
+                let options = Object.assign({}, widget.options);
+                options.showHighlights = false;
+                options.commentaryEdit = false;
+                var info = await me.kab.text.parse(widget.language, set.join(" "), options);
+                if (counter !== me.associatedCounter) {
+                    return;
+                }
+                core.property.set(field, "ui.style.fontSize", widget.options.fontSize);
+                if (info.text) {
+                    text += "<b>" + type + ":</b></br>" + info.text;
+                }
             }
-            core.property.set(field, "ui.style.fontSize", widget.options.fontSize);
-            let text = "<b>Associated:</b></br>" + info.text;
             core.property.set(field, "ui.basic.html", text);
         }
     };

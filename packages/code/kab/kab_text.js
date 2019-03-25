@@ -448,15 +448,20 @@ screens.kab.text = function KabText(me, packages) {
         }
         var { associated } = json;
         if (associated) {
-            for (let entry of associated) {
-                if (Array.isArray(entry)) {
-                    for (let term of entry) {
+            for (let type in associated) {
+                let set = associated[type];
+                if (Array.isArray(set)) {
+                    for (let term of set) {
                         let item = terms.find(item => item.term === term);
                         if (item) {
                             if (!item.associated) {
-                                item.associated = [];
+                                item.associated = {};
                             }
-                            item.associated.push(...entry);
+                            if (!item.associated[type]) {
+                                item.associated[type] = [];
+                            }
+                            item.associated[type].push(...set);
+                            me.kab.term.setTerm(options, json.style, item, null, null, null, false);
                         }
                     }
                 }

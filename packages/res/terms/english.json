@@ -7921,8 +7921,8 @@
             "diagram": "chest"
         }
     ],
-    "associated": [
-        [
+    "associated": {
+        "Worlds": [
             "Ein Sof",
             "Adam Kadmon",
             "Atzilut",
@@ -7931,18 +7931,33 @@
             "Assiya",
             "Olam ha Zeh"
         ],
-        [
+        "Faces": [
+            "Atik",
+            "Arich Anpin",
+            "Abba ve Ima",
+            "Yisrael Saba ve Tvuna",
+            "Zeir Anpin",
+            "Nukva"
+        ],
+        "Lights": [
+            "Nefesh",
+            "Ruach",
+            "Neshama",
+            "Haya",
+            "Yechida"
+        ],
+        "Vessels": [
             "Keter",
             "Hochma",
             "Bina",
             "Tifferet",
             "Malchut"
         ],
-        [
+        "TANTA": [
             "Taamim",
             "Nekudot",
             "Tagin",
             "Otiot"
         ]
-    ]
+    }
 }
