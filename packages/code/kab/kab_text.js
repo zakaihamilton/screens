@@ -244,11 +244,13 @@ screens.kab.text = function KabText(me, packages) {
             if (line === "<br>") {
                 return line;
             }
-            if (options.showHighlights) {
-                line = await me.kab.highlight.line(session, items.highlight[index], line);
-            }
-            if (options.commentaryEdit || options.commentaryUser) {
-                line = await me.kab.commentary.line(session, items.commentary[index], line);
+            if (items) {
+                if (options.showHighlights) {
+                    line = await me.kab.highlight.line(session, items.highlight[index], line);
+                }
+                if (options.commentaryEdit || options.commentaryUser) {
+                    line = await me.kab.commentary.line(session, items.commentary[index], line);
+                }
             }
             if (session.diagrams) {
                 diagrams.push(...session.diagrams);
@@ -446,15 +448,20 @@ screens.kab.text = function KabText(me, packages) {
         }
         var { associated } = json;
         if (associated) {
-            for (let entry of associated) {
-                if (Array.isArray(entry)) {
-                    for (let term of entry) {
+            for (let type in associated) {
+                let set = associated[type];
+                if (Array.isArray(set)) {
+                    for (let term of set) {
                         let item = terms.find(item => item.term === term);
                         if (item) {
                             if (!item.associated) {
-                                item.associated = [];
+                                item.associated = {};
                             }
-                            item.associated.push(...entry);
+                            if (!item.associated[type]) {
+                                item.associated[type] = [];
+                            }
+                            item.associated[type].push(...set);
+                            me.kab.term.setTerm(options, json.style, item, null, null, null, false);
                         }
                     }
                 }

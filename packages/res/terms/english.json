@@ -225,7 +225,8 @@
             "knew before the old": "new before the old",
             "where he it says": "where here it says",
             "Mochin of Hochma": "Mochin of Hochma2",
-            "Mochin (Lights) of Hochma (wisdom)": "Mochin (Lights) of Hochma2 (wisdom)"
+            "Mochin (Lights) of Hochma (wisdom)": "Mochin (Lights) of Hochma2 (wisdom)",
+            "brings them done": "brings them down"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -7920,8 +7921,8 @@
             "diagram": "chest"
         }
     ],
-    "associated": [
-        [
+    "associated": {
+        "Worlds": [
             "Ein Sof",
             "Adam Kadmon",
             "Atzilut",
@@ -7930,18 +7931,33 @@
             "Assiya",
             "Olam ha Zeh"
         ],
-        [
+        "Faces": [
+            "Atik",
+            "Arich Anpin",
+            "Abba ve Ima",
+            "Yisrael Saba ve Tvuna",
+            "Zeir Anpin",
+            "Nukva"
+        ],
+        "Lights": [
+            "Nefesh",
+            "Ruach",
+            "Neshama",
+            "Haya",
+            "Yechida"
+        ],
+        "Vessels": [
             "Keter",
             "Hochma",
             "Bina",
             "Tifferet",
             "Malchut"
         ],
-        [
+        "TANTA": [
             "Taamim",
             "Nekudot",
             "Tagin",
             "Otiot"
         ]
-    ]
+    }
 }
