@@ -545,6 +545,9 @@ screens.widget.transform = function WidgetTransform(me, packages) {
                 if (useSource) {
                     text = core.property.get(element, "ui.attribute.#source");
                 }
+                else {
+                    text = text.split("\n").join("");
+                }
                 const isHeader = element.tagName && element.tagName.toLowerCase() === "h4";
                 if (text) {
                     if (isHeader) {
@@ -554,7 +557,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
                         text = "\n\n" + text;
                         sequence = true;
                     }
-                    else {
+                    else if (useFilter) {
                         text = "\n\n... " + text;
                     }
                 }
@@ -576,7 +579,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
             }
         });
         let text = list.join("").trim();
-        if (!sequence) {
+        if (text && !sequence && useFilter) {
             text += " ...";
         }
         return text;
