@@ -807,7 +807,9 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
             if (typeof value === "number") {
                 index = value;
             }
-            var paragraphs = me.widget.transform.layout.pageText(currentPage);
+            var paragraphs = me.widget.transform.layout.pageText(currentPage, (el, text) => {
+                return text.split("\n").join(" ");
+            });
             var params = {
                 index: index,
                 onstate: () => {
