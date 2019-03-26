@@ -24,6 +24,9 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
             return;
         }
         parent = me.ui.element.bar();
+        if (!parent || !parent.var) {
+            return;
+        }
         return parent.var.tasks;
     };
     me.shortcuts = function (object, list) {
