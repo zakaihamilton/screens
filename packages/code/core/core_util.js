@@ -189,6 +189,8 @@ screens.core.util = function CoreUtil(me, packages) {
         me.ui.modal.launch("progress", {
             "title": "Restarting"
         });
+        let cacheNames = await caches.keys();
+        await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
         await core.message.service_worker.unregister();
         await core.message.service_worker.register();
         location.reload(true);
