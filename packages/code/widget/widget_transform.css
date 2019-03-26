@@ -29,7 +29,6 @@
     background: var(--background);
     overflow-y: auto;
     overflow-x: hidden;
-    transform: translateZ(0);
 }
 
 .widget-transform-output.hebrew {
@@ -52,6 +51,7 @@
     color: var(--color);
     overflow-y: auto;
     overflow-x: hidden;
+    transform: translateZ(0);
 }
 
 .widget-transform-layout.hebrew {
