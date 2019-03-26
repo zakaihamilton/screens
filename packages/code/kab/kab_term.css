@@ -45,8 +45,6 @@
     position: absolute;
     left: 0em;
     right: 0em;
-    break-after: avoid;
-    break-inside: avoid;
 }
 
 [kab-term-heading]:after {
@@ -77,8 +75,6 @@
     position: absolute;
     left: 0em;
     right: 0em;
-    break-after: avoid;
-    break-inside: avoid;
 }
 
 [kab-term-sub-heading]:after {
