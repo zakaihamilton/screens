@@ -43,10 +43,14 @@
 
 [kab-term-heading] {
     position: absolute;
+    left: 0em;
+    right: 0em;
+    break-after: avoid;
+    break-inside: avoid;
 }
 
 [kab-term-heading]:after {
-    position: relative;
+    position: absolute;
     padding-left: 2px;
     padding-right: 2px;
     left: 0em;
@@ -59,8 +63,6 @@
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-heading);
-    break-after: avoid;
-    break-inside: avoid;
 }
 
 [kab-term-heading].kab-term-english:after {
@@ -71,13 +73,21 @@
     right: 1em;
 }
 
+[kab-term-sub-heading] {
+    position: absolute;
+    left: 0em;
+    right: 0em;
+    break-after: avoid;
+    break-inside: avoid;
+}
+
 [kab-term-sub-heading]:after {
     position: absolute;
     padding-left: 2px;
     padding-right: 2px;
     left: 0em;
     right: 0em;
-    top: 2.2em;
+    top: 1.8em;
     height: 1em;
     text-align: center;
     font-size: 50%;
