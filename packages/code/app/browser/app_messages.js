@@ -79,7 +79,7 @@ screens.app.messages = function AppMessages(me, packages) {
             <article class="app-messages-item message is-${type}" unique="${message.unique}">
   <div class="message-header">
     ${message.title}
-    <button class="delete" onclick="screens.app.messages.delete(this)"></button>
+    <button class="delete is-large" onclick="screens.app.messages.delete(this)"></button>
   </div>
   <div class="message-body app-messages-body">
     ${message.body}
