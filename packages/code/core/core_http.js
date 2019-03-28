@@ -6,14 +6,20 @@
 screens.core.http = function CoreHttp(me, packages) {
     const { core, db } = packages;
     if (screens.platform === "server") {
-        me.port = process.env.PORT || 4040;
+        let port = core.args.value("-port");
+        if (port) {
+            me.port = parseInt(port);
+        }
+        else {
+            me.port = process.env.PORT || 4040;
+        }
     } else if (screens.platform === "service") {
         me.port = 4050;
     } else {
         me.port = 80;
     }
-    if (me.port === 4040) {
-        me.localhost = true;
+    if (screens.platform === "service" || screens.platform === "server") {
+        me.localhost = core.args.value("-localhost");
     }
     me.listeners = [];
     me.forwardUrl = null;
@@ -22,7 +28,7 @@ screens.core.http = function CoreHttp(me, packages) {
             me.http = require("http");
             me.https = require("https");
             me.fs = require("fs");
-            if (me.platform === "server" && me.port !== 4040) {
+            if (me.platform === "server" && !me.localhost) {
                 try {
                     let server = await me.createServer(true);
                     me.log("secure server is listening");

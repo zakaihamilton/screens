@@ -29,10 +29,10 @@ screens.core.private = function CorePrivate(me, packages) {
             data = await new Promise((resolve, reject) => {
                 request.get(url, (error, response, body) => {
                     if (response && response.statusCode !== 200) {
-                        reject("Failed with status code: " + response.statusCode);
+                        reject("Cannot retrieve private keys for: " + path + " status code: " + response.statusCode);
                     }
                     else if (error) {
-                        reject(error);
+                        reject("Cannot retrieve private keys for: " + path + " error: " + error);
                     }
                     else if (!body) {
                         reject(url + " is empty");

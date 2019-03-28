@@ -49,6 +49,9 @@ screens.db.events.msg = function DbEventsParticipants(me, packages) {
                 me.lastMsgId = item._id;
             }
         }
+        catch (err) {
+            me.log_error("Cannot handle messages : " + err);
+        }
         finally {
             me.busy = false;
         }

@@ -369,7 +369,10 @@ var screens = {
     },
     log_error: function (message, stack, componentId, userName) {
         screens.core.console.log_error.call(this, message, stack, componentId, userName);
-    }
+    },
+    log_warning: function (message, stack, componentId, userName) {
+        screens.core.console.log_warning.call(this, message, stack, componentId, userName);
+    },
 };
 
 if (screens.platform === "server" ||
