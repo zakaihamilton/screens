@@ -45,6 +45,6 @@ screens.core.tunnel = function CoreTunnel(me, packages) {
                 resolve();
             });
         });
-    }
+    };
     return "server";
 };
