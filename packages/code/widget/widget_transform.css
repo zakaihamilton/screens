@@ -181,10 +181,11 @@ p.widget-transform-widget {
 
 p.widget-transform-widget:after {
     color: var(--disabled-color);
-    position: absolute;
+    position: relative;
     content: attr(index);
     font-size: 75%;
-    margin: 0.5em;
+    right:-0.5em;
+    bottom:-0.5em;
 }
 
 h4.widget-transform-widget {
