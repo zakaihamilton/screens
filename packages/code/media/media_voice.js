@@ -122,7 +122,7 @@ screens.media.voice = function MediaVoice(me, packages) {
                         }
                         me.currentIndex = utterance.widgetIndex;
                         if (params.onchange && processedText) {
-                            params.onchange(utterance.widgetIndex, utterance.textIndex, collectionText);
+                            params.onchange(utterance.widgetIndex, utterance.textIndex, processedText);
                         }
                     };
                     utterance.onend = () => {
