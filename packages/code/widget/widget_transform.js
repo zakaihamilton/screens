@@ -1142,7 +1142,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
                         showInProgress = true;
                     }
                     var location = pageContent ? pageContent : layoutContent;
-                    if (options.showParagraphIndex && widget.tagName && widget.tagName.toLowerCase() === "p") {
+                    if (options.showParagraphIndex && widget.tagName && widget.innerText && widget.tagName.toLowerCase() === "p") {
                         widget.setAttribute("index", target.index++);
                     }
                     if (widget.style && widget.style.order) {

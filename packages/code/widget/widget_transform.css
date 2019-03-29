@@ -184,8 +184,15 @@ p.widget-transform-widget:after {
     position: relative;
     content: attr(index);
     font-size: 75%;
-    right:-0.5em;
-    bottom:-0.5em;
+    bottom: -0.5em;
+}
+
+p.widget-transform-widget.english:after {
+    right: -0.5em;
+}
+
+p.widget-transform-widget.hebrew:after {
+    left: -0.5em;
 }
 
 h4.widget-transform-widget {
