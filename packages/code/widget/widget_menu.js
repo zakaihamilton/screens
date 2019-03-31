@@ -414,7 +414,7 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
             var isFirst = core.property.get(list.var.members, "ui.basic.tag") === "table";
             for (var child of list.members) {
                 var prefix = core.property.get(child, "prefix");
-                var childText = core.property.get(child, "ui.basic.html");
+                var childText = core.property.get(child, "ui.basic.text");
                 if (!childText) {
                     continue;
                 }
