@@ -94,6 +94,7 @@ screens.media.file = function MediaFile(me, packages) {
                 me.log("Finished uploading file: " + file.local);
             }
             if (file.local.endsWith(".m4a")) {
+                await me.manager.file.download(file.remote, file.local);
                 var metadata = await me.info(file.local);
                 if (metadata) {
                     if (metadata.format) {
