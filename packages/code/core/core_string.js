@@ -5,9 +5,6 @@
 
 screens.core.string = function CoreString(me, packages) {
     const { core } = packages;
-    me.title = function (string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
     me.delimiters = function () {
         var delimiters = [
             "\n", ";", ":", ".", ",", "—", "–", "-", "(", ")", "[", "]", "{", "}", "+", "<", ">", "?", "/", "\\", "”", "“", "!", "\"", "…", "'", "‘", "’", "\x09"
