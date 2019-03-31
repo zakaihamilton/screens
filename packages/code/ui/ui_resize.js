@@ -119,6 +119,16 @@ screens.ui.resize = function UIResize(me, packages) {
         });
         core.property.set(object, "ui.class.on", !enable);
     };
+    me.toggleFullscreen = function (object) {
+        var enable = !document.fullscreen;
+        if (enable) {
+            document.body.requestFullscreen();
+        }
+        else {
+            document.exitFullscreen();
+        }
+        core.property.set(object, "ui.class.on", enable);
+    };
     me.event = {
         set: function (object, value) {
             core.event.register(null, object, "resize", value, "resize", window);

@@ -22,6 +22,7 @@
                 "keyboard",
                 "ui.theme.nightMode",
                 "ui.resize.toggleLockRotation",
+                "ui.resize.toggleFullscreen",
                 "ui.theme.toggleFontSize",
                 "widget.desktop.reload"
             ]
