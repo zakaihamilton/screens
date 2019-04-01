@@ -898,6 +898,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
             me.widget.transform.layout.clearPage(currentPage);
             me.focusParagraph(object, null);
             me.currentPlayingPage = null;
+            me.setPlayState(widget);
         }
     };
     me.rewind = function (object) {

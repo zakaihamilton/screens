@@ -41,10 +41,10 @@ screens.media.voice = function MediaVoice(me, packages) {
     };
     me.jumpTimes = [2, 5, 10, 15, 20, 25, 30];
     me.isPlaying = function () {
-        return me.synth.speaking || me.synth.pending;
+        return (me.synth.speaking || me.synth.pending) && me._isPlaying;
     };
     me.isPaused = function () {
-        return me._isPaused;
+        return me._isPaused && me._isPlaying;
     };
     me.play = function (text, params) {
         var volume = 1;
@@ -80,6 +80,7 @@ screens.media.voice = function MediaVoice(me, packages) {
         me.utterances = [];
         me.params = params;
         me.currentIndex = params.index || 0;
+        me._isPlaying = false;
         me.synth.cancel();
         if (params.onstart) {
             params.onstart();
@@ -88,11 +89,9 @@ screens.media.voice = function MediaVoice(me, packages) {
         if (!Array.isArray(collection)) {
             collection = [text];
         }
-        var totalPartCount = 0;
         collection.map((collectionText, collectionIndex) => {
             var groups = me.textSplit(collectionText);
             var processedTexts = groups.map((text) => me.process(text));
-            totalPartCount += processedTexts.length;
             processedTexts.map((text, processedIndex) => {
                 let language = core.string.language(text);
                 let voiceName = params.voices[language];
@@ -103,7 +102,6 @@ screens.media.voice = function MediaVoice(me, packages) {
                 }
                 var parts = text.split("\n");
                 if (!parts.length || !voice) {
-                    totalPartCount--;
                     return;
                 }
                 parts.map(processedText => {
@@ -129,6 +127,12 @@ screens.media.voice = function MediaVoice(me, packages) {
                         if (params.onstate) {
                             params.onstate();
                         }
+                        if (!me._isPlaying) {
+                            if (params.oncancel) {
+                                params.oncancel();
+                            }
+                            return;
+                        }
                         me.queueIndex++;
                         processedIndex = me.utterances.indexOf(utterance);
                         if (processedIndex == me.utterances.length - 1 && params.onend) {
@@ -140,8 +144,8 @@ screens.media.voice = function MediaVoice(me, packages) {
                 });
             });
         });
-        me.totalParts = totalPartCount;
-        if (!totalPartCount) {
+        me.totalParts = me.utterances.length;
+        if (!me.totalParts) {
             if (params.onend) {
                 params.onend();
             }
@@ -159,9 +163,13 @@ screens.media.voice = function MediaVoice(me, packages) {
         }
         me.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
         var utterances = me.utterances.filter(utterances => utterances.widgetIndex >= me.currentIndex);
+        me._isPlaying = false;
         me.synth.cancel();
         me.playTime = new Date().getTime();
-        utterances.map(utterance => me.synth.speak(utterance));
+        setTimeout(() => {
+            me._isPlaying = true;
+            utterances.map(utterance => me.synth.speak(utterance));
+        }, 100);
     };
     me.rewind = function () {
         var stop = false;
@@ -172,6 +180,7 @@ screens.media.voice = function MediaVoice(me, packages) {
         do {
             me.currentIndex--;
             if (me.currentIndex < 0) {
+                me._isPlaying = false;
                 me.synth.cancel();
                 me.currentIndex = 0;
                 if (me.params) {
@@ -189,6 +198,7 @@ screens.media.voice = function MediaVoice(me, packages) {
             me.currentIndex++;
             if (me.currentIndex >= me.totalParts) {
                 me.currentIndex = me.totalParts - 1;
+                me._isPlaying = false;
                 me.synth.cancel();
                 if (me.params) {
                     me.params.onnext();
@@ -200,6 +210,7 @@ screens.media.voice = function MediaVoice(me, packages) {
         } while (!stop);
     };
     me.stop = function () {
+        me._isPlaying = false;
         me.synth.cancel();
         me.queueIndex = 0;
     };

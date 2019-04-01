@@ -150,6 +150,9 @@
     margin: 0;
     transition: background-color 1s, color 1s;
     border-radius: 10px;
+    background-color: transparent;
+    box-sizing: border-box;
+    text-shadow: 0 0 15px transparent;
 }
 
 .widget-transform-widget span.highlight {
@@ -212,7 +215,7 @@ h4.widget-transform-widget {
     margin-left: 1.0em;
 }
 
-.widget-transform-widget.mark span.highlight:before {
+.widget-transform-widget.mark:before {
     opacity: 1;
 }
 
