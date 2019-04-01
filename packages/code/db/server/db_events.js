@@ -25,6 +25,9 @@ screens.db.events.msg = function DbEventsParticipants(me, packages) {
     };
     me.options = { capped: true, size: 32000, max: 100 };
     me.handleNextMsg = async function () {
+        if (!me.storage.db.supported()) {
+            return;
+        }
         if (me.busy) {
             return;
         }

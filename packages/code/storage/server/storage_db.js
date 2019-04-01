@@ -11,6 +11,9 @@ screens.storage.db = function StorageDB(me, packages) {
         core.mutex.enable(me.id, true);
         me.keys = await core.private.keys("mongodb");
     };
+    me.supported = function () {
+        return !(!me.keys);
+    };
     me.cluster = async function () {
         if (!me.keys) {
             throw "No private keys for database";
