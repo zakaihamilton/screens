@@ -32,16 +32,18 @@ screens.core.tunnel = function CoreTunnel(me, packages) {
         delete headers.referer;
         delete headers.cookie;
         delete headers["user-agent"];
-        me.log("tunneling: " + url + " method: " + method + " headers: " + JSON.stringify(headers) + " query: " + JSON.stringify(qs));
+        me.log("tunneling request url: " + url + " method: " + method + " headers: " + JSON.stringify(headers) + " query: " + JSON.stringify(qs));
         return new Promise((resolve, reject) => {
             me.request({ url, method, headers, body, qs }, function (err, response, body) {
                 if (err) {
+                    me.log_error("error for url: " + url + " err: " + err);
                     reject(err);
                     return;
                 }
                 info.body = body;
                 info.code = response.statusCode;
                 info["content-type"] = response.caseless.get("Content-Type");
+                me.log("tunneling response url: " + url + " code: " + info.code + " body: " + info.body + " content-type: " + info["content-type"]);
                 resolve();
             });
         });
