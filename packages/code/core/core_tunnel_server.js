@@ -17,6 +17,10 @@ screens.core.tunnel = function CoreTunnel(me, packages) {
         let url = query.url;
         let method = query.method;
         let body = info.body;
+        if (info.method.toLowerCase() === "options") {
+            me.log("ignoring options method for url:" + url);
+            return;
+        }
         if (!url) {
             return "No url parameter passed in query";
         }
