@@ -21,6 +21,7 @@ RUN echo 'npm install --production' >> /usr/bin/start.sh
 RUN echo 'npm install -g pm2' >> /usr/bin/start.sh
 
 # Setup NGINX
+RUN apt update
 RUN apt-get install -y nginx nano
 RUN rm -v /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/
