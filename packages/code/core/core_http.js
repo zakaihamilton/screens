@@ -303,6 +303,7 @@ screens.core.http = function CoreHttp(me, packages) {
         set: function (info) {
             if (info.custom === false) {
                 info.responseHeaders["Content-Type"] = info["content-type"];
+                info.responseHeaders["Access-Control-Allow-Methods"] = "*";
                 info.responseHeaders["Access-Control-Allow-Origin"] = "*";
                 info.responseHeaders["Access-Control-Allow-Headers"] = "*";
                 info.response.writeHead(info.code, info.responseHeaders);
