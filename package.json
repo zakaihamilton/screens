@@ -41,7 +41,6 @@
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.8.0",
     "npm": "^6.4.1",
-    "openode": "^1.7.7",
     "openssl": "^1.1.0",
     "parquetjs": "^0.10.1",
     "postcss": "^7.0.5",
