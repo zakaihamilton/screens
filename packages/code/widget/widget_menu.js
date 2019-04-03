@@ -277,7 +277,6 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
                 return me.subMenu(object, value);
             }
             core.property.set(object, "back", item);
-            var prefix = core.property.get(item, "prefix");
             var text = undefined;
             if (item.menu_options) {
                 text = item.menu_options.value;
@@ -292,9 +291,6 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
                 else {
                     text = core.property.get(item, "ui.basic.html");
                 }
-            }
-            if (prefix) {
-                text = prefix + text;
             }
             core.property.set(object.window, method, text);
         }
@@ -360,44 +356,15 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
                 "ui.basic.tag": membersTag
             }, list, list);
         }
-        if (list.var.filter) {
-            member.parentList = list;
-            list.members.push(member);
-            return "none";
-        }
-        else if (list.var.members.childNodes.length >= me.filterMinCount) {
-            list.members = [];
+        if (!list.var.filter && list.var.members.childNodes.length >= me.filterMinCount) {
             me.ui.element.create({
                 "ui.element.component": "widget.filter",
                 "filter": "widget.menu.list.filter",
-                "prefixes": "widget.menu.list.prefixes",
                 "ui.basic.var": "filter"
             }, list.var.headers, list);
-            var members = list.var.members;
-            while (members.firstElementChild) {
-                list.members.push(members.firstElementChild);
-                members.firstElementChild.parentList = list;
-                members.removeChild(members.firstElementChild);
-            }
             member.parentList = list;
-            list.members.push(member);
-            return "none";
         }
         return list.var.members;
-    };
-    me.prefixes = function (object) {
-        var prefixes = [];
-        var list = me.ui.node.container(object, "widget.menu.list");
-        for (var child of list.members) {
-            var prefix = core.property.get(child, "prefix");
-            if (!prefix) {
-                continue;
-            }
-            if (!prefixes.includes(prefix)) {
-                prefixes.push(prefix);
-            }
-        }
-        return prefixes;
     };
     me.filter = function (object, info) {
         var list = me.ui.node.container(object, "widget.menu.list");
@@ -407,37 +374,34 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
         }
         var updateFunc = () => {
             let found = false;
-            var members = list.var.members;
-            while (members.firstElementChild) {
-                members.removeChild(members.firstElementChild);
-            }
+            var members = Array.from(list.var.members.childNodes);
             var isFirst = core.property.get(list.var.members, "ui.basic.tag") === "table";
-            for (var child of list.members) {
-                var prefix = core.property.get(child, "prefix");
+            for (var child of members) {
                 var childText = core.property.get(child, "ui.basic.text");
                 if (!childText) {
                     continue;
                 }
                 if (isFirst) {
-                    members.appendChild(child);
                     isFirst = false;
                     continue;
                 }
-                var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
-                mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
+                var mark = !info.text || childText.toUpperCase().includes(info.text.toUpperCase());
+                child.innerHTML = me.ui.html.mark(child.innerHTML, mark ? info.text : "");
                 if (mark) {
-                    child.innerHTML = me.ui.html.mark(child.innerHTML, info.text);
-                    members.appendChild(child);
                     found = true;
                 }
+                me.core.property.set(child, "ui.basic.display", mark);
             }
             if (!found) {
-                members.appendChild(me.ui.element.create({
-                    "ui.basic.tag": "div",
-                    "ui.basic.html": "No Match Found",
-                    "ui.class.add": "no-match"
-                }));
+                if (!list.var.noMatch) {
+                    list.var.noMatch = list.var.members.appendChild(me.ui.element.create({
+                        "ui.basic.tag": "div",
+                        "ui.basic.html": "No Match Found",
+                        "ui.class.add": "no-match"
+                    }));
+                }
             }
+            me.core.property.set(list.var.noMatch, "ui.basic.display", !found);
         };
         if (info.text) {
             list.filterTimer = setTimeout(updateFunc, 250);
@@ -692,14 +656,6 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                     }
                 });
             }
-        }
-    };
-    me.prefix = {
-        get: function (object) {
-            return object.menu_prefix;
-        },
-        set: function (object, value) {
-            object.menu_prefix = value;
         }
     };
     me.select = {
