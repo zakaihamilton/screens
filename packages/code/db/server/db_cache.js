@@ -76,7 +76,13 @@ screens.db.cache.file = function DbCacheFile(me, packages) {
                     var exists = files && files.find(item => item.name === file.name);
                     if (!exists) {
                         if (callback) {
-                            await callback(file);
+                            try {
+                                await callback(file);
+                            }
+                            catch (err) {
+                                me.log_error("error managing file: " + file.name + " err: " + err);
+                                continue;
+                            }
                         }
                         await db.cache.file.use({ folder, name: file.name }, file);
                         files.push(file);
