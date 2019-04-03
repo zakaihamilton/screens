@@ -196,11 +196,17 @@ screens.widget.menu = function WidgetMenu(me, packages) {
                 core.property.set(object, info, item);
             } else if (Array.isArray(info)) {
                 var window = core.property.get(object, "widget.window.active");
-                object.var.menu = me.create_menu(window, object, me.ui.rect.absoluteRegion(item), info);
+                let trail = me.core.property.get(object, "trail");
+                let label = core.property.get(item, "ui.basic.html");
+                if (!trail) {
+                    trail = [];
+                }
+                trail.push(label);
+                object.var.menu = me.create_menu(window, object, me.ui.rect.absoluteRegion(item), info, trail);
             }
         }
     };
-    me.create_menu = function (window, object, region, values, bottomUp = false) {
+    me.create_menu = function (window, object, region, values, trail, bottomUp = false) {
         var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
@@ -208,7 +214,8 @@ screens.widget.menu = function WidgetMenu(me, packages) {
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
             "ui.basic.target": object,
-            "values": values
+            "trail": trail,
+            "values": values,
         });
         if (bottomUp) {
             core.property.set(menu, "ui.class.add", "bottom-up");
@@ -225,6 +232,19 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
             "ui.basic.elements": {
                 "ui.basic.var": "modal",
                 "ui.element.component": "widget.modal"
+            }
+        }
+    };
+    me.trail = {
+        get: function (object) {
+            return object.trail;
+        },
+        set: function (object, trail) {
+            if (trail) {
+                object.trail = [...trail];
+            }
+            else {
+                object.trail = [];
             }
         }
     };
@@ -258,7 +278,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
         core.property.set(object, "ui.property.broadcast", {
             "ui.class.remove": "selected"
         });
-        var label = core.property.get(item, "ui.basic.html");
+        var label = core.property.get(item, "ui.basic.text");
+        let trail = core.property.get(object, "trail");
+        if (!trail) {
+            trail = [];
+        }
+        trail.push(label);
         values = [{ text: label, select: "header" }, ...values];
         core.property.set(item, "ui.class.add", "selected");
         core.property.set(object.var.modal, "ui.style.display", "block");
@@ -266,7 +291,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
         var region = me.ui.rect.absoluteRegion(object);
         region.bottom = region.top;
         core.property.set(object, "ui.style.display", "none");
-        object.var.menu = me.upper.create_menu(window, object, region, values);
+        object.var.menu = me.upper.create_menu(window, object, region, values, trail);
         core.property.set(object.var.menu, "ui.class.has-menu", true);
     };
     me.select = {
@@ -292,6 +317,19 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
                     text = core.property.get(item, "ui.basic.html");
                 }
             }
+            let trail = me.core.property.get(object, "trail");
+            let label = "";
+            if (core.property.get(item, "ui.basic.tag") === "tr") {
+                label = core.property.get(item.firstElementChild, "ui.basic.html");
+            }
+            else {
+                label = core.property.get(item, "ui.basic.html");
+            }
+            if (!trail) {
+                trail = [];
+            }
+            trail.push(label);
+            me.widget.toast.show(me.id, trail.join(" &#x2799; "));
             core.property.set(object.window, method, text);
         }
     };
