@@ -203,6 +203,7 @@ screens.ui.transform = function UITransform(me, packages) {
                 array = [text];
             }
             var options = Object.assign({}, window.options);
+            options.ignorePrefix = true;
             var result = await core.util.map(array, async (text) => {
                 var info = await me.kab.text.parse(language, text, options);
                 if (!window.termData) {

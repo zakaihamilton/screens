@@ -402,7 +402,7 @@ screens.kab.text = function KabText(me, packages) {
             replacement = explanation;
         }
         instance.words.splice(instance.wordIndex, instance.span);
-        if (instance.item.includePrefix && !keepSource) {
+        if (instance.item.includePrefix && !keepSource && !session.options.ignorePrefix) {
             replacement = instance.item.prefix + " " + replacement;
         }
         if (instance.item.quote) {
@@ -436,7 +436,7 @@ screens.kab.text = function KabText(me, packages) {
             insert = "<span style=\"white-space: nowrap\">" + replacementWithStyles + instance.suffixLetters + "</span>";
         }
         instance.words.splice(instance.wordIndex, 0, insert);
-        if (!instance.item.includePrefix) {
+        if (!instance.item.includePrefix && !session.options.ignorePrefix) {
             me.kab.format.insert(instance.words, instance.wordIndex, session.json.prefix, instance.item.prefix, instance.prefixWord, text);
         }
         me.kab.format.insert(instance.words, instance.wordIndex + 1, session.json.suffix, instance.item.suffix, instance.suffixWord, text);
