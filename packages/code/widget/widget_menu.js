@@ -424,7 +424,7 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
                     continue;
                 }
                 var mark = !info.text || childText.toUpperCase().includes(info.text.toUpperCase());
-                child.innerHTML = me.ui.html.mark(child.innerHTML, mark ? info.text : "");
+                me.ui.html.mark(child, mark ? info.text : "");
                 if (mark) {
                     found = true;
                 }
@@ -754,7 +754,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
         set: function (object, value) {
             var parentMenu = me.parentMenu(object);
             if (parentMenu.selected_item !== object && object.menu_select) {
-                object.innerHTML = me.ui.html.mark(object.innerHTML, null);
+                me.ui.html.mark(object, null);
                 core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
         }
@@ -762,7 +762,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
     me.click = {
         set: function (object) {
             var parentMenu = me.parentMenu(object);
-            object.innerHTML = me.ui.html.mark(object.innerHTML, null);
+            me.ui.html.mark(object, null);
             if (object.menu_select) {
                 core.property.set(parentMenu, "select", [object, object.menu_select]);
             }

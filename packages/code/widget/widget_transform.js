@@ -1350,7 +1350,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
         let mark = widget.filterText && text.includes(widget.filterText.toLowerCase());
         var showPage = !widget.filterText || mark;
         let content = page.var.content;
-        content.innerHTML = me.ui.html.mark(content.innerHTML, mark ? widget.filterText : "");
+        me.ui.html.mark(content, mark ? widget.filterText : "");
         if (page.afterBreak || showPage) {
             if (page.afterBreak) {
                 page.style.borderTop = "2px solid var(--color)";
