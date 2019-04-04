@@ -173,7 +173,7 @@
     background-color: #36383a;
 }
 
-.widget-transform-widget.kab-term-highlight:hover {
+.widget-transform-widget.kab-term-highlight {
     text-shadow: 0 0 5px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
 }
 
