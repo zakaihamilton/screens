@@ -136,18 +136,57 @@ screens.app.library = function AppLibrary(me, packages) {
             keys = Array.from(keys).sort();
             for (let key of keys) {
                 let values = Array.from(keyValues[key]);
-                let subItems = values.sort().map(value => {
-                    return {
-                        ref: value,
-                        text: me.core.string.title(value),
-                        select: () => {
-                            me.insertTag(object, key, value);
-                        },
-                        properties: {
-                            group: "tagList"
+                var subItems = null;
+                if (values.length > 100) {
+                    let letters = {};
+                    values = values.sort();
+                    for (let value of values) {
+                        let letter = value.trim().replace(/\W/g, "")[0].toUpperCase();
+                        if (letter >= "0" && letter <= "9") {
+                            letter = "#";
                         }
-                    };
-                });
+                        if (!letters[letter]) {
+                            letters[letter] = [];
+                        }
+                        letters[letter].push(value);
+                    }
+                    subItems = [];
+                    for (let letter in letters) {
+                        subItems.push({
+                            ref: letter,
+                            text: letter,
+                            select: letters[letter].map(value => {
+                                return {
+                                    ref: value,
+                                    text: me.core.string.title(value),
+                                    select: () => {
+                                        me.insertTag(object, key, value);
+                                    },
+                                    properties: {
+                                        group: "tagList"
+                                    }
+                                };
+                            }),
+                            properties: {
+                                group: "tagList"
+                            }
+                        });
+                    }
+                }
+                else {
+                    subItems = values.sort().map(value => {
+                        return {
+                            ref: value,
+                            text: me.core.string.title(value),
+                            select: () => {
+                                me.insertTag(object, key, value);
+                            },
+                            properties: {
+                                group: "tagList"
+                            }
+                        };
+                    });
+                }
                 menuItems.push({
                     key,
                     text: me.core.string.title(key),

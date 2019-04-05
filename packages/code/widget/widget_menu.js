@@ -253,7 +253,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
             core.property.set(object, "ui.group.data", {
                 "ui.data.keyList": ["ui.basic.html", "select", "options", "properties"],
                 "ui.data.mapping": { "text": "ui.basic.html" },
-                "ui.data.values": values
+                "ui.data.values": values,
             });
             core.property.set(object, "ui.property.broadcast", {
                 "update": null
@@ -337,7 +337,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
 
 screens.widget.menu.list = function WidgetMenuList(me, packages) {
     const { core } = packages;
-    me.filterMinCount = 15;
+    me.filterMinCount = 30;
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -620,6 +620,9 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
     };
     me.options = {
         set: function (object, options) {
+            if (!options) {
+                return;
+            }
             object.menu_options = Object.assign({}, object.menu_options, options);
             if (options) {
                 if (options.var) {
