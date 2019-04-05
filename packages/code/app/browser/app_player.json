@@ -45,7 +45,7 @@
                 {
                     "text": "Favourites",
                     "select": [
-                        "app.player.metadataMenuList(isFavourite)"
+                        "app.player.sessionMenuList(isFavourite)"
                     ],
                     "options": {
                         "visible": "app.player.hasMetadata(isFavourite)",
@@ -55,7 +55,7 @@
                 {
                     "text": "Watch Later",
                     "select": [
-                        "app.player.metadataMenuList(watchLater)"
+                        "app.player.sessionMenuList(watchLater)"
                     ],
                     "options": {
                         "visible": "app.player.hasMetadata(watchLater)"

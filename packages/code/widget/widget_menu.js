@@ -787,8 +787,8 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
             }
         }
     };
-    me.metadata = function (object, value) {
-        if (!value) {
+    me.metadata = function (object, values) {
+        if (!values) {
             return;
         }
         var elements = [];
@@ -796,10 +796,14 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
         if (object.menu_options && object.menu_options.header) {
             tag = "th";
         }
-        for (var key in value) {
+        for (var key in values) {
+            let value = values[key];
+            if (typeof value !== "string" && typeof value !== "number") {
+                value = "";
+            }
             elements.push({
                 "ui.basic.tag": tag,
-                "ui.basic.html": tag === "th" ? key : value[key],
+                "ui.basic.html": tag === "th" ? key : value,
                 "ui.touch.down": tag === "th" ? "widget.menu.list.sort" : undefined
             });
         }

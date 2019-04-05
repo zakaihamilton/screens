@@ -126,11 +126,20 @@ screens.app.player = function AppPlayer(me, packages) {
         }
     };
     me.sessionMenuList = {
-        get: function (object) {
+        get: function (object, property) {
             var window = me.widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
+            let count = list.length.toString().length;
+            list = list.map((session, index) => {
+                session.number = core.string.padNumber(list.length - index, count);
+                return session;
+            });
+            if (property && typeof property === "string") {
+                list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
+                    metadata.group === groupName && metadata[property]));
+            }
             var info = {
                 list,
                 property: "label",
@@ -139,31 +148,8 @@ screens.app.player = function AppPlayer(me, packages) {
                 itemMethod: "app.player.session",
                 metadata: {
                     "Name": "label",
-                    "Duration": "durationText"
-                }
-            };
-            return me.widget.menu.collect(object, info);
-        }
-    };
-    me.metadataMenuList = {
-        get: function (object, property) {
-            var window = me.widget.window.get(object);
-            var groupName = window.options.groupName.toLowerCase();
-            var list = me.groups.find(group => groupName === group.name).sessions;
-            list = list.filter(session => session.extension === "m4a");
-            list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
-                metadata.group === groupName && metadata[property]));
-            var info = {
-                list,
-                property: "label",
-                options: {
-                    "state": "select"
-                },
-                group: "session",
-                itemMethod: "app.player.session",
-                metadata: {
-                    "Name": "label",
-                    "Duration": "durationText"
+                    "Duration": "durationText",
+                    "Number": "number"
                 }
             };
             return me.widget.menu.collect(object, info);
