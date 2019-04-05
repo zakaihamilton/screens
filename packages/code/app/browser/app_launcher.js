@@ -137,7 +137,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
                 let title = item.title;
                 var onclick = null;
                 if (!root) {
-                    title = me.ui.html.mark(title, search);
+                    title = me.ui.html.markHtml(title, search);
                 }
                 let classes = [];
                 if (root) {
@@ -180,7 +180,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
                     }
                     let styles = { direction: core.string.direction(child.title) };
                     html += me.ui.html.item({
-                        value: me.ui.html.mark(child.title, search),
+                        value: me.ui.html.markHtml(child.title, search),
                         classes,
                         styles,
                         attributes: {

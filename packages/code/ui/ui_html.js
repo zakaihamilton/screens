@@ -83,27 +83,26 @@ screens.ui.html = function UIHtml(me, packages) {
             return html;
         }
     };
-    me.mark = function (html, text) {
-        if (typeof html !== "string") {
-            if (text) {
-                let elements = [];
-                let iter = document.createNodeIterator(html, NodeFilter.SHOW_TEXT), textnode;
+    me.markElement = function (element, text) {
+        if (text) {
+            let elements = [];
+            let iter = document.createNodeIterator(element, NodeFilter.SHOW_TEXT), textnode;
 
-                while ((textnode = iter.nextNode())) {
-                    if (textnode.nodeValue.search(text)) {
-                        elements.push(textnode.parentElement);
-                    }
+            while ((textnode = iter.nextNode())) {
+                if (textnode.nodeValue.search(text)) {
+                    elements.push(textnode.parentElement);
                 }
-                for (let element of elements) {
-                    element.innerHTML = me.mark(element.innerHTML, text);
-                }
-                return;
             }
-            else {
-                html.innerHTML = me.mark(html.innerHTML, text);
+            for (let element of elements) {
+                element.innerHTML = me.markHtml(element.innerHTML, text);
             }
             return;
         }
+        else {
+            element.innerHTML = me.markHtml(element.innerHTML, text);
+        }
+    };
+    me.markHtml = function (html, text) {
         if (html.includes("mark")) {
             html = html.replace(/<\/mark>/gi, "");
             html = html.replace(/<mark>/gi, "");
