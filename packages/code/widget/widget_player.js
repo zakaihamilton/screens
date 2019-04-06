@@ -5,7 +5,7 @@
 
 screens.widget.player = function WidgetPlayer(me, packages) {
     const { core } = packages;
-    me.log_errorEvent = function (e) {
+    me.showError = function (e) {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
                 alert("You aborted the playback.");
@@ -369,7 +369,12 @@ screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
     me.play = function (object) {
         var widget = me.upper.mainWidget(object);
         if (widget.var.player.paused || widget.var.player.ended) {
-            widget.var.player.play();
+            try {
+                widget.var.player.play();
+            }
+            catch (err) {
+                alert(err);
+            }
         }
         else {
             widget.var.player.pause();
