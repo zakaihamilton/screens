@@ -168,33 +168,43 @@ screens.media.file = function MediaFile(me, packages) {
         let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
         return me.storage.aws.url(path);
     };
-    me.convertListing = async function (resolution) {
+    me.convertListing = async function (resolution, skipIndex) {
         var groups = await me.groups();
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
-                var remote = me.awsBucket + "/" + group.name + "/" + item.session + ".mp4";
-                var local = me.cachePath + "/" + item.session + ".mp4";
-                var local_convert = me.cachePath + "/" + item.session + "_" + resolution + ".mp4";
-                var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
-                if (await storage.aws.exists(remote_convert)) {
-                    continue;
-                }
-                if (!await core.file.exists(local_convert)) {
-                    if (!await core.file.exists(local)) {
-                        me.log("downloading: " + remote + " to: " + local);
-                        await storage.aws.downloadFile(remote, local);
+                try {
+                    var remote = me.awsBucket + "/" + group.name + "/" + item.session + ".mp4";
+                    var local = me.cachePath + "/" + item.session + ".mp4";
+                    var local_convert = me.cachePath + "/" + item.session + "_" + resolution + ".mp4";
+                    var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    if (await storage.aws.exists(remote_convert)) {
+                        continue;
                     }
-                    me.log("converting: " + local + " to: " + local_convert);
-                    await media.ffmpeg.convert(local, local_convert, {
-                        size: resolution
-                    });
+                    if (!await core.file.exists(local_convert)) {
+                        if (skipIndex) {
+                            me.log("skipping: " + local);
+                            skipIndex--;
+                            continue;
+                        }
+                        if (!await core.file.exists(local)) {
+                            me.log("downloading: " + remote + " to: " + local);
+                            await storage.aws.downloadFile(remote, local);
+                        }
+                        me.log("converting: " + local + " to: " + local_convert);
+                        await media.ffmpeg.convert(local, local_convert, {
+                            size: resolution
+                        });
+                    }
+                    me.log("uploading: " + local_convert + " to: " + remote_convert);
+                    await storage.aws.uploadFile(local_convert, remote_convert);
+                    me.log("deleting: " + local_convert);
+                    await core.file.delete(local_convert);
+                    me.log("finished: " + item.name);
                 }
-                me.log("uploading: " + local_convert + " to: " + remote_convert);
-                await storage.aws.uploadFile(local_convert, remote_convert);
-                me.log("deleting: " + local_convert);
-                await core.file.delete(local_convert);
-                me.log("finished: " + item.name);
+                catch (err) {
+                    me.log_error("Failed on item: " + item.name + " error: " + err);
+                }
             }
         }
     };
