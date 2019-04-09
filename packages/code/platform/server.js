@@ -27,6 +27,7 @@ screens.api = [
     "core.socket",
     "core.object",
     "core.console",
+    "core.client",
     "storage.data",
     "storage.dropbox",
     "manager",
