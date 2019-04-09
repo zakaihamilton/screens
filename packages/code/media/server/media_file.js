@@ -4,9 +4,10 @@
  */
 
 screens.media.file = function MediaFile(me, packages) {
-    const { core } = packages;
+    const { core, storage, media } = packages;
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
+    me.awsBucket = "screens";
     me.init = function () {
         const ffprobePath = require("@ffprobe-installer/ffprobe").path;
         me.ffmpeg = require("fluent-ffmpeg");
@@ -81,7 +82,7 @@ screens.media.file = function MediaFile(me, packages) {
             file.label = core.string.title(core.path.fileName(file.name));
             file.remote = parent.path + "/" + file.name;
             file.local = me.cachePath + "/" + file.name;
-            let awsPath = "screens/" + parent.name + "/" + file.name;
+            let awsPath = me.awsBucket + "/" + parent.name + "/" + file.name;
             if (!await me.storage.aws.exists(awsPath)) {
                 me.log("Downloading file: " + file.local + ", size: " + file.size);
                 await me.manager.file.download(file.remote, file.local);
@@ -163,8 +164,39 @@ screens.media.file = function MediaFile(me, packages) {
         }
         me.log("finished update");
     };
-    me.streamingPath = function (group, name, extension) {
-        return me.storage.aws.url("screens/" + group + "/" + name + "." + extension);
+    me.streamingPath = function (group, name, extension, resolution) {
+        let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
+        return me.storage.aws.url(path);
+    };
+    me.convertListing = async function (resolution) {
+        var groups = await me.groups();
+        for (let group of groups) {
+            var list = group.sessions.filter(session => session.extension === "mp4");
+            for (let item of list) {
+                var remote = me.awsBucket + "/" + group.name + "/" + item.session + ".mp4";
+                var local = me.cachePath + "/" + item.session + ".mp4";
+                var local_convert = me.cachePath + "/" + item.session + "_" + resolution + ".mp4";
+                var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                if (await storage.aws.exists(remote_convert)) {
+                    continue;
+                }
+                if (!await core.file.exists(local_convert)) {
+                    if (!await core.file.exists(local)) {
+                        me.log("downloading: " + remote + " to: " + local);
+                        await storage.aws.downloadFile(remote, local);
+                    }
+                    me.log("converting: " + local + " to: " + local_convert);
+                    await media.ffmpeg.convert(local, local_convert, {
+                        size: resolution
+                    });
+                }
+                me.log("uploading: " + local_convert + " to: " + remote_convert);
+                await storage.aws.uploadFile(local_convert, remote_convert);
+                me.log("deleting: " + local_convert);
+                await core.file.delete(local_convert);
+                me.log("finished: " + item.name);
+            }
+        }
     };
     return "server";
 };
