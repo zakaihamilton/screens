@@ -22,16 +22,19 @@ screens.cmd.files = function CmdFiles(me, packages) {
                     var local = "cache/" + item.session + ".mp4";
                     var local_convert = "cache/" + item.session + "_" + resolution + ".mp4";
                     var remote_convert = "screens/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
-                    var exists = await storage.aws.exists(remote_convert);
-                    if (exists) {
+                    if (await storage.aws.exists(remote_convert)) {
                         continue;
                     }
-                    core.property.set(terminal, "print", "downloading: " + remote + " to: " + local);
-                    await storage.aws.downloadFile(remote, local);
-                    core.property.set(terminal, "print", "converting: " + local + " to: " + local_convert);
-                    await media.ffmpeg.convert(local, local_convert, {
-                        size: resolution
-                    });
+                    if (!await core.file.exists(local_convert)) {
+                        if (!await core.file.exists(local)) {
+                            core.property.set(terminal, "print", "downloading: " + remote + " to: " + local);
+                            await storage.aws.downloadFile(remote, local);
+                        }
+                        core.property.set(terminal, "print", "converting: " + local + " to: " + local_convert);
+                        await media.ffmpeg.convert(local, local_convert, {
+                            size: resolution
+                        });
+                    }
                     core.property.set(terminal, "print", "uploading: " + local_convert + " to: " + remote_convert);
                     await storage.aws.uploadFile(local_convert, remote_convert);
                     core.property.set(terminal, "print", "deleting: " + local_convert);
