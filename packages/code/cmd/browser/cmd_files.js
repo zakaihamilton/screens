@@ -4,54 +4,42 @@
 */
 
 screens.cmd.files = function CmdFiles(me, packages) {
-    const { core } = packages;
+    const { core, media, storage } = packages;
     me.cmd = async function (terminal, args) {
-        if (args.length === 1) {
-            args.push(...["/Kab/concepts/private/american", "cache"]);
-        }
-        if (args.length <= 2) {
-            core.property.set(terminal, "print", "files source target");
+        if (args.length <= 1) {
+            core.property.set(terminal, "print", "files resolution");
             core.cmd.exit(terminal);
             return;
         }
-        var source = args[1];
-        var target = args[2];
-        core.property.set(terminal, "print", "converting files in " + source);
+        var resolution = args[1];
+        core.property.set(terminal, "print", "converting video files to resolution:" + resolution);
         try {
-            var children = await me.storage.dropbox.getChildren(source);
-            var audioList = children.filter(child => core.path.extension(child.name) === "m4a");
-            var videoList = children.filter(child => core.path.extension(child.name) === "mp4");
-            for (let videoChild of videoList) {
-                try {
-                    var name = core.path.fileName(videoChild.name);
-                    var matching = audioList.find(child => core.path.fileName(child.name) === name);
-                    if (matching) {
+            var groups = await media.file.groups();
+            for (let group of groups) {
+                var list = group.sessions.filter(session => session.extension === "mp4");
+                for (let item of list) {
+                    var remote = "screens/" + group.name + "/" + item.session + ".mp4";
+                    var local = "cache/" + item.session + ".mp4";
+                    var local_convert = "cache/" + item.session + "_" + resolution + ".mp4";
+                    var remote_convert = "screens/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    var exists = await storage.aws.exists(remote_convert);
+                    if (exists) {
                         continue;
                     }
-                    var targetVideoPath = target + "/" + videoChild.name;
-                    var targetAudioPath = core.path.replaceExtension(target + "/" + videoChild.name, "m4a");
-                    core.property.set(terminal, "print", videoChild.path_display);
-                    core.property.set(terminal, "print", "Downloading...");
-                    await me.manager.file.download(videoChild.path_lower, targetVideoPath);
-                    if (!await core.file.exists(targetAudioPath)) {
-                        core.property.set(terminal, "print", "Converting...");
-                        await me.media.ffmpeg.convert(targetVideoPath, targetAudioPath, {
-                            noVideo: null,
-                            audioCodec: "copy"
-                        });
-                        var fileSize = await core.file.size(targetAudioPath);
-                        core.property.set(terminal, "print", "converted from: " + core.string.formatBytes(videoChild.size) + " to: " + core.string.formatBytes(fileSize));
-                    }
-                    var uploadAudioPath = core.path.replaceExtension(videoChild.path_display, "m4a");
-                    core.property.set(terminal, "print", "Uploading...");
-                    await me.manager.file.upload(targetAudioPath, uploadAudioPath);
-                    await core.file.delete(targetVideoPath);
-                }
-                catch (err) {
-                    core.property.set(terminal, "print", "failed to convert file: " + err);
+                    core.property.set(terminal, "print", "downloading: " + remote + " to: " + local);
+                    await storage.aws.downloadFile(remote, local);
+                    core.property.set(terminal, "print", "converting: " + local + " to: " + local_convert);
+                    await media.ffmpeg.convert(local, local_convert, {
+                        size: resolution
+                    });
+                    core.property.set(terminal, "print", "uploading: " + local_convert + " to: " + remote_convert);
+                    await storage.aws.uploadFile(local_convert, remote_convert);
+                    core.property.set(terminal, "print", "deleting: " + local_convert);
+                    await core.file.delete(local_convert);
+                    core.property.set(terminal, "print", "finished: " + item.name);
                 }
             }
-            core.property.set(terminal, "print", "successfully converted files");
+            core.property.set(terminal, "print", "successfully converted and uploaded files");
         }
         catch (err) {
             core.property.set(terminal, "print", "failed to convert files: " + err);
