@@ -88,11 +88,13 @@ screens.core.util = function CoreUtil(me, packages) {
             return end - start;
         }
     };
-    me.performance = async function (name, callback) {
+    me.performance = async function (name, callback, min) {
         var start = me.start();
         var result = await callback();
         var duration = me.duration(start);
-        me.log("performance: " + core.string.padNumber(parseInt(duration), 6) + " - " + this.id + " - " + name);
+        if (duration > min) {
+            me.log("performance: " + core.string.padNumber(parseInt(duration), 6) + " - " + this.id + " - " + name);
+        }
         return result;
     };
     me.condense = function (callback) {

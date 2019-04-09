@@ -184,7 +184,7 @@ screens.storage.db = function StorageDB(me, packages) {
                 }
             }
             return await cursor.toArray();
-        });
+        }, 500);
         me.setCache(location, hash, array);
         return array;
     };
