@@ -5,6 +5,7 @@
 
 screens.storage.aws = function StorageAWS(me, packages) {
     const { core } = packages;
+    me.bufferSize = 10 * 1024 * 1024;
     me.init = async function () {
         let AWS = require("aws-sdk");
         let keys = await core.private.keys("aws");
@@ -29,7 +30,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
             ACL: "public-read"
         };
         var options = {
-            partSize: 10 * 1024 * 1024,
+            partSize: me.bufferSize,
             queueSize: 10
         };
         return new Promise((resolve, reject) => {
@@ -43,7 +44,7 @@ screens.storage.aws = function StorageAWS(me, packages) {
             });
         });
     };
-    me.downloadFile = async function (from, to) {
+    me.downloadFile = function (from, to) {
         let tokens = from.split("/");
         let bucketName = tokens.shift();
         let path = tokens.join("/");
@@ -51,13 +52,12 @@ screens.storage.aws = function StorageAWS(me, packages) {
             Bucket: bucketName,
             Key: path
         };
-        const file = me.fs.createWriteStream(to);
-        var data = await me.s3.getObject(params).promise();
-        return new Promise(resolve => {
-            file.write(data.Body, () => {
-                file.end();
-                resolve();
-            });
+        const writeStream = me.fs.createWriteStream(to);
+        return new Promise((resolve, reject) => {
+            let readStream = me.s3.getObject(params).createReadStream({ bufferSize: me.bufferSize });
+            readStream.on("error", reject);
+            readStream.on("end", resolve);
+            readStream.pipe(writeStream);
         });
     };
     me.exists = function (path) {
