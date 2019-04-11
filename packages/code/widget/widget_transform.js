@@ -630,7 +630,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
         },
         set: function (object, text) {
             var widget = me.findWidget(object);
-            if (widget.filterText !== text) {
+            if (widget && widget.filterText !== text) {
                 widget.filterText = text;
                 me.reflow(widget);
             }
@@ -1346,6 +1346,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
             return;
         }
         var widget = me.upper.findWidget(page);
+        if (!widget) {
+            return;
+        }
         let text = me.widget.transform.layout.pageText(page).join("\n").toLowerCase();
         let mark = widget.filterText && text.includes(widget.filterText.toLowerCase());
         var showPage = !widget.filterText || mark;
