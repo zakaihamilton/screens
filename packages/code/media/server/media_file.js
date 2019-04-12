@@ -200,6 +200,8 @@ screens.media.file = function MediaFile(me, packages) {
                     await storage.aws.uploadFile(local_convert, remote_convert);
                     me.log("deleting: " + local_convert);
                     await core.file.delete(local_convert);
+                    me.log("deleting: " + local);
+                    await core.file.delete(local);
                     me.log("finished: " + item.name);
                 }
                 catch (err) {
