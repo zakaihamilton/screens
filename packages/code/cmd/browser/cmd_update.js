@@ -10,6 +10,12 @@ screens.cmd.update = function CmdSize(me, packages) {
         await db.events.msg.send("core.server.run", "git pull");
         await db.events.msg.send("core.server.run", "npm install");
         await db.events.msg.send("core.server.run", "npm rebuild");
+        if (args[1] && args[1] === "reload") {
+            await db.events.msg.send("core.server.run", "pm2 reload all");
+        }
+        else {
+            core.property.set(terminal, "print", "add reload parameter to reload all servers");
+        }
         core.property.set(terminal, "print", "sent update");
         core.cmd.exit(terminal);
     };
