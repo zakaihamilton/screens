@@ -202,13 +202,15 @@ screens.media.file = function MediaFile(me, packages) {
     me.convertListing = async function (resolution) {
         var groups = await me.groups();
         var servers = await me.db.events.servers.list({});
-        var ipList = servers.map(server => server.ip);
+        var ipList = servers.map(server => server.ip).filter(Boolean);
         var results = [];
         var ip = null;
+        me.log("found servers: " + ipList.join(", "));
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
-                ip = (ipList.indexOf(ip) < ipList.length - 1) ? ipList[ipList.indexOf(ip) + 1] : ipList[0];
+                let ipIndex = ipList.indexOf(ip);
+                ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
                 await db.events.msg.sendTo(ip, "media.file.convertItem", resolution, group.name, item.session);
                 results.push({ ip, group: group.name, session: item.session });
             }
