@@ -15,7 +15,15 @@ screens.db.events.participants = function DbEventsParticipants(me, packages) {
     return "server";
 };
 
-screens.db.events.msg = function DbEventsParticipants(me, packages) {
+screens.db.events.logs = function DbEventsLogs(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
+    me.cache = {};
+    me.options = { capped: true, size: 242880, max: 500 };
+    return "server";
+};
+
+screens.db.events.msg = function DbEventsMsg(me, packages) {
     const { core, storage } = packages;
     me.lastMsgId = 0;
     me.busy = false;

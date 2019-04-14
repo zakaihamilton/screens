@@ -17,12 +17,10 @@ screens.app.logger = function AppLogger(me, packages) {
     me.init = function () {
         me.ui.options.load(me, null, {
             "source": "Browser",
-            "type": "core.console.retrieveMessages",
             "filter": ""
         });
         me.ui.options.choiceSet(me, null, {
-            "source": "app.logger.refresh",
-            "type": "app.logger.refresh"
+            "source": "app.logger.refresh"
         });
         me.ui.options.listSet(me, null, {
             "filter": "app.logger.refresh"
@@ -47,7 +45,7 @@ screens.app.logger = function AppLogger(me, packages) {
         var bindings = me.bindings(object);
         var logger = bindings.logger;
         core.property.set(logger, "ui.basic.text", "");
-        var messages = await me.send(me.options.type);
+        var messages = await me.send("core.console.retrieveMessages");
         if (!messages) {
             messages = [];
         }

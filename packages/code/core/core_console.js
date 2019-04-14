@@ -4,21 +4,25 @@
  */
 
 screens.core.console = function CoreConsole(me, packages) {
-    const { core } = packages;
+    const { core, db, storage } = packages;
     me.messages = [];
-    me.errors = [];
     me.enabled = true;
     me.fixedSize = 5000;
     me.clear = function () {
         me.messages = [];
-        me.errors = [];
+        if (me.platform === "server") {
+            db.events.logs.remove({}, false);
+        }
     };
-    me.init = function () {
+    me.init = async function () {
         if (me.platform === "browser" || me.platform === "service_worker") {
             me.enabled = !core.util.isSecure();
         }
         else {
             me.enabled = true;
+        }
+        if (me.platform === "server") {
+            me.ip = await core.server.ip();
         }
     };
     me.formatMessage = function (componentId, userName, message) {
@@ -38,6 +42,9 @@ screens.core.console = function CoreConsole(me, packages) {
             me.messages.shift();
         }
         me.messages.push(message);
+        if (me.platform === "server" && storage.db.clusterHandle) {
+            db.events.logs.push({ ip: me.ip, message });
+        }
     };
     me.log = function (message, componentId, userName) {
         if (me.enabled) {
@@ -81,7 +88,6 @@ screens.core.console = function CoreConsole(me, packages) {
                     userName,
                     message + " stack: " + stack);
                 me.push(fullMessage);
-                me.errors.push(fullMessage);
                 console.error(fullMessage);
             }
         }
@@ -92,11 +98,15 @@ screens.core.console = function CoreConsole(me, packages) {
     me.enable = function (flag) {
         me.enabled = flag;
     };
-    me.retrieveMessages = function () {
-        return me.messages;
-    };
-    me.retrieveErrors = function () {
-        return me.errors;
+    me.retrieveMessages = async function () {
+        if (me.platform === "server") {
+            let list = await db.events.logs.list();
+            list = list.map(obj => obj.ip + " - " + obj.message);
+            return list;
+        }
+        else {
+            return me.messages;
+        }
     };
     me.clearMessages = function () {
         me.clear();

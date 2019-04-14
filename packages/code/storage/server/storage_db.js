@@ -16,7 +16,10 @@ screens.storage.db = function StorageDB(me, packages) {
     };
     me.cluster = async function () {
         if (!me.keys) {
-            throw "No private keys for database";
+            me.keys = await core.private.keys("mongodb");
+            if (!me.keys) {
+                throw "No private keys for database";
+            }
         }
         var clusterHandle = null;
         var unlock = await core.mutex.lock(me.id);

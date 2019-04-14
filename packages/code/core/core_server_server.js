@@ -4,6 +4,7 @@
 */
 
 screens.core.server = function CoreServer(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.cmd = require("node-cmd");
         me.child_process = require("child_process");
@@ -46,6 +47,14 @@ screens.core.server = function CoreServer(me, packages) {
         await me.run("git checkout package.json");
         await me.run("git pull");
         await me.run("npm install");
+    };
+    me.ip = function () {
+        const net = require("net");
+        return new Promise(resolve => {
+            const client = net.connect({ port: 80, host: "google.com" }, () => {
+                resolve(client.localAddress);
+            });
+        });
     };
     return "server";
 };

@@ -28,62 +28,53 @@
                     }
                 },
                 {
-                    "text": "Server",
-                    "select": "app.logger.source",
+                    "text": "Source",
                     "options": {
-                        "state": "select",
                         "separator": true
-                    }
-                },
-                {
-                    "text": "Client",
-                    "select": "app.logger.source",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Browser",
-                    "select": "app.logger.source",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Service",
-                    "select": "app.logger.source",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Service Worker",
-                    "select": "app.logger.source",
-                    "options": {
-                        "state": "select"
-                    }
+                    },
+                    "select": [
+                        {
+                            "text": "Server",
+                            "select": "app.logger.source",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Client",
+                            "select": "app.logger.source",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Browser",
+                            "select": "app.logger.source",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Service",
+                            "select": "app.logger.source",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Service Worker",
+                            "select": "app.logger.source",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 }
             ]
         },
         {
             "text": "View",
             "select": [
-                {
-                    "text": "All",
-                    "select": "app.logger.type",
-                    "options": {
-                        "value": "core.console.retrieveMessages",
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Errors",
-                    "select": "app.logger.type",
-                    "options": {
-                        "value": "core.console.retrieveErrors",
-                        "state": "select"
-                    }
-                },
                 {
                     "text": "Filter",
                     "select": "label"
