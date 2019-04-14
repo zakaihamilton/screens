@@ -168,10 +168,18 @@ screens.storage.db = function StorageDB(me, packages) {
             result = await collection.deleteOne(query);
         }
         else {
-            result = await collection.deleteMany(query);
+            if (location.options.capped) {
+                result = await collection.drop();
+            }
+            else {
+                result = await collection.deleteMany(query);
+            }
         }
         me.notifyCache(location);
-        return result.deletedCount;
+        if (result) {
+            delete result.connection;
+        }
+        return result;
     };
     me.list = async function (location, query = {}, params) {
         var [array, hash, queryString] = me.getCache(location, query, params);
@@ -200,7 +208,9 @@ screens.storage.db = function StorageDB(me, packages) {
         var collection = await me.collection(location);
         var result = await collection.replaceOne(query, data, { upsert: true });
         me.notifyCache(location);
-        delete result.connection;
+        if (result) {
+            delete result.connection;
+        }
         return result;
     };
     me.createIndex = async function (location, index) {
