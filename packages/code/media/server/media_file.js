@@ -201,7 +201,8 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.convertListing = async function (resolution) {
         var groups = await me.groups();
-        var ipList = await me.db.events.servers.list({}).map(server => server.ip);
+        var servers = await me.db.events.servers.list({});
+        var ipList = servers.map(server => server.ip);
         var results = [];
         var ip = null;
         for (let group of groups) {
