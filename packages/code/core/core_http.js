@@ -51,17 +51,7 @@ screens.core.http = function CoreHttp(me, packages) {
                         console.error(err);
                         process.exit(1);
                     }
-                    for (var name of screens.components) {
-                        try {
-                            var component = me.browse(name);
-                            if ("shutdown" in component) {
-                                component.shutdown();
-                            }
-                        }
-                        catch (err) {
-                            console.error("Failed to shutdown component: " + name + " err: " + err);
-                        }
-                    }
+                    await core.broadcast.send("shutdown");
                     console.log("Components shutdown");
                     process.exit(0);
                 });

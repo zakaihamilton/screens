@@ -22,6 +22,26 @@ screens.db.events.logs = function DbEventsLogs(me, packages) {
     return "server";
 };
 
+screens.db.events.servers = function DbEventsServers(me, packages) {
+    const { core, storage } = packages;
+    me.init = async () => {
+        storage.db.extension(me);
+        core.broadcast.register(me, {
+            startup: "db.events.servers.register",
+            shutdown: "db.events.servers.unregister"
+        });
+    };
+    me.register = async function () {
+        let ip = await core.server.ip();
+        me.use({ ip }, { date: new Date().toString() });
+    };
+    me.unregister = async function () {
+        let ip = await core.server.ip();
+        me.remove({ ip });
+    };
+    return "server";
+};
+
 screens.db.events.msg = function DbEventsMsg(me, packages) {
     const { core, storage } = packages;
     me.lastMsgId = 0;
