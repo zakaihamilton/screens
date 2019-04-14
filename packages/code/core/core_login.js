@@ -48,8 +48,14 @@ screens.core.login = function CoreLogin(me, packages) {
                 }
                 catch (error) {
                     var err = "Cannot initialize google authenticiation: " + JSON.stringify(error);
-                    me.setStatus(err);
-                    reject(err);
+                    me.log_error(err);
+                    if (me.info.login) {
+                        resolve();
+                    }
+                    else {
+                        me.setStatus(err);
+                        reject(err);
+                    }
                 }
             });
         });
@@ -168,7 +174,6 @@ screens.core.login = function CoreLogin(me, packages) {
                 info.headers["user_name"] = encodeURIComponent(me.info.name);
                 info.headers["token"] = token;
                 info.headers["user_email"] = encodeURIComponent(me.info.email);
-                hasToken = true;
             }
         }
     };
