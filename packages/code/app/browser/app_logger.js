@@ -17,7 +17,11 @@ screens.app.logger = function AppLogger(me, packages) {
     me.init = function () {
         me.ui.options.load(me, null, {
             "source": "Browser",
-            "filter": ""
+            "filter": "",
+            "autoRefresh": false
+        });
+        me.ui.options.toggleSet(me, null, {
+            "autoRefresh": "app.logger.refresh"
         });
         me.ui.options.choiceSet(me, null, {
             "source": "app.logger.refresh"
@@ -53,8 +57,15 @@ screens.app.logger = function AppLogger(me, packages) {
             messages = messages.filter(message => message.includes(me.options.filter));
         }
         core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
+        logger.scrollTop = logger.scrollHeight;
         var isEnabled = await me.send("core.console.isEnabled");
         me.singleton.isEnabled = isEnabled;
+        clearTimeout(me.timerHandle);
+        if (me.options.autoRefresh) {
+            me.timerHandle = setInterval(() => {
+                me.refresh(object);
+            }, 5000);
+        }
     };
     me.enable = {
         get: function () {

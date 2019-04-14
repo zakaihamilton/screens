@@ -28,6 +28,13 @@
                     }
                 },
                 {
+                    "text": "Auto Refresh",
+                    "select": "app.logger.autoRefresh",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
                     "text": "Source",
                     "options": {
                         "separator": true
