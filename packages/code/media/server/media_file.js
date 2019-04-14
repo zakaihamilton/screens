@@ -208,7 +208,7 @@ screens.media.file = function MediaFile(me, packages) {
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
-                ip = (ipList.indexOf(ip) < list.length - 1) ? ipList[ipList.indexOf(ip) + 1] : ipList[0];
+                ip = (ipList.indexOf(ip) < ipList.length - 1) ? ipList[ipList.indexOf(ip) + 1] : ipList[0];
                 await db.events.msg.sendTo(ip, "media.file.convertItem", resolution, group.name, item.session);
                 results.push({ ip, group: group.name, session: item.session });
             }
