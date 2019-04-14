@@ -169,30 +169,35 @@ screens.media.file = function MediaFile(me, packages) {
         return me.storage.aws.url(path);
     };
     me.convertItem = async function (resolution, group, session) {
-        var remote = me.awsBucket + "/" + group + "/" + session + ".mp4";
-        var local = me.cachePath + "/" + session + ".mp4";
-        var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
-        var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
-        if (await storage.aws.exists(remote_convert)) {
-            return;
-        }
-        if (!await core.file.exists(local_convert)) {
-            if (!await core.file.exists(local)) {
-                me.log("downloading: " + remote + " to: " + local);
-                await storage.aws.downloadFile(remote, local);
+        try {
+            var remote = me.awsBucket + "/" + group + "/" + session + ".mp4";
+            var local = me.cachePath + "/" + session + ".mp4";
+            var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
+            var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
+            if (await storage.aws.exists(remote_convert)) {
+                return;
             }
-            me.log("converting: " + local + " to: " + local_convert);
-            await media.ffmpeg.convert(local, local_convert, {
-                size: resolution
-            });
+            if (!await core.file.exists(local_convert)) {
+                if (!await core.file.exists(local)) {
+                    me.log("downloading: " + remote + " to: " + local);
+                    await storage.aws.downloadFile(remote, local);
+                }
+                me.log("converting: " + local + " to: " + local_convert);
+                await media.ffmpeg.convert(local, local_convert, {
+                    size: resolution
+                });
+            }
+            me.log("uploading: " + local_convert + " to: " + remote_convert);
+            await storage.aws.uploadFile(local_convert, remote_convert);
+            me.log("deleting: " + local_convert);
+            await core.file.delete(local_convert);
+            me.log("deleting: " + local);
+            await core.file.delete(local);
+            me.log("finished: " + session);
         }
-        me.log("uploading: " + local_convert + " to: " + remote_convert);
-        await storage.aws.uploadFile(local_convert, remote_convert);
-        me.log("deleting: " + local_convert);
-        await core.file.delete(local_convert);
-        me.log("deleting: " + local);
-        await core.file.delete(local);
-        me.log("finished: " + session);
+        catch (err) {
+            me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
+        }
     };
     me.convertListing = async function (resolution) {
         var groups = await me.groups();
