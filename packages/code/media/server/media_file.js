@@ -174,9 +174,6 @@ screens.media.file = function MediaFile(me, packages) {
             var local = me.cachePath + "/" + session + ".mp4";
             var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
             var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
-            if (await storage.aws.exists(remote_convert)) {
-                return;
-            }
             if (!await core.file.exists(local_convert)) {
                 if (!await core.file.exists(local)) {
                     me.log("downloading: " + remote + " to: " + local);
@@ -209,6 +206,10 @@ screens.media.file = function MediaFile(me, packages) {
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
+                var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                if (await storage.aws.exists(remote_convert)) {
+                    continue;
+                }
                 let ipIndex = ipList.indexOf(ip);
                 ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
                 await db.events.msg.sendTo(ip, "media.file.convertItem", resolution, group.name, item.session);
