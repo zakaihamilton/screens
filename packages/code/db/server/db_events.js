@@ -50,7 +50,7 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
         storage.db.extension(me);
         setInterval(me.handleNextMsg, 10000);
     };
-    me.options = { capped: true, size: 32000, max: 100 };
+    me.options = { capped: true, size: 64000, max: 1000 };
     me.handleNextMsg = async function () {
         let ip = await core.server.ip();
         if (!me.storage.db.supported()) {

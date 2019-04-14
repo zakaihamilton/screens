@@ -4,7 +4,7 @@
  */
 
 screens.media.file = function MediaFile(me, packages) {
-    const { core, storage, media } = packages;
+    const { core, storage, media, db } = packages;
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.awsBucket = "screens";
@@ -168,47 +168,46 @@ screens.media.file = function MediaFile(me, packages) {
         let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
         return me.storage.aws.url(path);
     };
-    me.convertListing = async function (resolution, skipIndex) {
+    me.convertItem = async function (resolution, group, session) {
+        var remote = me.awsBucket + "/" + group + "/" + session + ".mp4";
+        var local = me.cachePath + "/" + session + ".mp4";
+        var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
+        var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
+        if (await storage.aws.exists(remote_convert)) {
+            return;
+        }
+        if (!await core.file.exists(local_convert)) {
+            if (!await core.file.exists(local)) {
+                me.log("downloading: " + remote + " to: " + local);
+                await storage.aws.downloadFile(remote, local);
+            }
+            me.log("converting: " + local + " to: " + local_convert);
+            await media.ffmpeg.convert(local, local_convert, {
+                size: resolution
+            });
+        }
+        me.log("uploading: " + local_convert + " to: " + remote_convert);
+        await storage.aws.uploadFile(local_convert, remote_convert);
+        me.log("deleting: " + local_convert);
+        await core.file.delete(local_convert);
+        me.log("deleting: " + local);
+        await core.file.delete(local);
+        me.log("finished: " + session);
+    };
+    me.convertListing = async function (resolution) {
         var groups = await me.groups();
+        var ipList = await me.db.events.servers.list({}).map(server => server.ip);
+        var results = [];
+        var ip = null;
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
-                try {
-                    var remote = me.awsBucket + "/" + group.name + "/" + item.session + ".mp4";
-                    var local = me.cachePath + "/" + item.session + ".mp4";
-                    var local_convert = me.cachePath + "/" + item.session + "_" + resolution + ".mp4";
-                    var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
-                    if (await storage.aws.exists(remote_convert)) {
-                        continue;
-                    }
-                    if (!await core.file.exists(local_convert)) {
-                        if (skipIndex) {
-                            me.log("skipping: " + local);
-                            skipIndex--;
-                            continue;
-                        }
-                        if (!await core.file.exists(local)) {
-                            me.log("downloading: " + remote + " to: " + local);
-                            await storage.aws.downloadFile(remote, local);
-                        }
-                        me.log("converting: " + local + " to: " + local_convert);
-                        await media.ffmpeg.convert(local, local_convert, {
-                            size: resolution
-                        });
-                    }
-                    me.log("uploading: " + local_convert + " to: " + remote_convert);
-                    await storage.aws.uploadFile(local_convert, remote_convert);
-                    me.log("deleting: " + local_convert);
-                    await core.file.delete(local_convert);
-                    me.log("deleting: " + local);
-                    await core.file.delete(local);
-                    me.log("finished: " + item.name);
-                }
-                catch (err) {
-                    me.log_error("Failed on item: " + item.name + " error: " + err);
-                }
+                ip = (ipList.indexOf(ip) < list.length - 1) ? ipList[ipList.indexOf(ip) + 1] : ipList[0];
+                await db.events.msg.sendTo(ip, "media.file.convertItem", resolution, group.name, item.session);
+                results.push({ ip, group: group.name, session: item.session });
             }
         }
+        return results;
     };
     return "server";
 };
