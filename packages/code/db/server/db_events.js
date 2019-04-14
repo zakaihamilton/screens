@@ -32,6 +32,7 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
     };
     me.options = { capped: true, size: 32000, max: 100 };
     me.handleNextMsg = async function () {
+        let ip = await core.server.ip();
         if (!me.storage.db.supported()) {
             return;
         }
@@ -54,12 +55,14 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
             }
             for (index++; index < list.length; index++) {
                 var item = list[index];
-                me.log("running message: " + index + " - " + item.date + " - " + JSON.stringify(item.args));
-                try {
-                    await core.message.send.apply(null, item.args);
-                }
-                catch (err) {
-                    me.log_error("Cannot handle message" + JSON.stringify(item.args) + " err:" + err);
+                if (!item.ip || item.ip === ip) {
+                    me.log("running message: " + index + " - " + item.date + " - " + JSON.stringify(item.args));
+                    try {
+                        await core.message.send.apply(null, item.args);
+                    }
+                    catch (err) {
+                        me.log_error("Cannot handle message" + JSON.stringify(item.args) + " err:" + err);
+                    }
                 }
                 me.lastMsgId = item._id;
             }
@@ -74,6 +77,10 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
     me.send = function (method) {
         var args = Array.prototype.slice.call(arguments, 0);
         me.push({ date: new Date().toString(), args });
+    };
+    me.sendTo = function (ip, method) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        me.push({ date: new Date().toString(), args, ip });
     };
     return "server";
 };
