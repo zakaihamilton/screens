@@ -84,9 +84,6 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
                         me.log_error("Cannot handle message" + JSON.stringify(item.args) + " err:" + err);
                     }
                 }
-                else {
-                    me.log("ignoring message: " + index + " - " + item.date + " - " + JSON.stringify(item.args) + " ip: " + item.ip);
-                }
                 me.lastMsgId = item._id;
             }
         }
