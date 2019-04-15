@@ -4,7 +4,7 @@
  */
 
 screens.app.logger = function AppLogger(me, packages) {
-    const { core } = packages;
+    const { core, ui } = packages;
     me.launch = function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
@@ -54,6 +54,7 @@ screens.app.logger = function AppLogger(me, packages) {
     };
     me.parseHeader = function (message) {
         let [, ip, date, platform, component, text] = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
+        ip = ip.split(".").map(str => core.string.padNumber(str, 3)).join(".");
         let html = "<article class=\"message\">";
         html += "<div class=\"message-header\">";
         html += `<p>${ip}</p><p>${date}</p><p>${platform.trim()}</p><p>${component}</p>`;
@@ -73,15 +74,15 @@ screens.app.logger = function AppLogger(me, packages) {
             try {
                 let object = JSON.parse(json);
                 if (Object.keys(object).length) {
-                    html += "<nav class=\"level is-mobile app-logger-level\">";
+                    html += "<nav class=\"level app-logger-level\">";
                     for (let key in object) {
                         let value = object[key];
                         html += `
-                        <div class="level-item has-text-centered">
+                        <div class="app-logger-level-item level-item has-text-centered">
                             <div>
                                 <p class="heading">${core.string.title(key)}</p>
                             <p class="title">${value}</p>
-                            </div>
+                        </div>
                         </div>`;
                     }
                     html += "</nav>";
@@ -107,6 +108,7 @@ screens.app.logger = function AppLogger(me, packages) {
         }
         if (me.options.filter) {
             messages = messages.filter(message => message.includes(me.options.filter));
+            messages = messages.map(message => ui.html.markHtml(message, me.options.filter));
         }
         messages = messages.filter(Boolean);
         if (me.options.format) {
