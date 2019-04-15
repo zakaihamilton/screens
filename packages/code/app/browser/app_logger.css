@@ -10,4 +10,15 @@
     user-select: text;
     color: var(--color);
     background-color: var(--background);
+    font-size: inherit !important;
+}
+
+.app-logger-logger article {
+    border: 1px solid var(--border-color);
+}
+
+.app-logger-level {
+    overflow-x: scroll;
+    margin-top: 1em;
+    padding-bottom: 2em;
 }

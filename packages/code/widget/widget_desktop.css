@@ -123,6 +123,14 @@ strong {
     font-size: inherit !important;
 }
 
+.message {
+    font-size: inherit !important;
+}
+
+.title {
+    font-size: inherit !important;
+}
+
 .message-body {
     background: var(--background) !important;
     color: var(--color) !important;

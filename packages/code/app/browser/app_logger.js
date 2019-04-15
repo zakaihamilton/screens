@@ -54,7 +54,7 @@ screens.app.logger = function AppLogger(me, packages) {
     };
     me.parseHeader = function (message) {
         let [, ip, date, platform, component, text] = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
-        let html = "<article class=\"message\" style=\"border:1px solid var(--border-color)\">";
+        let html = "<article class=\"message\">";
         html += "<div class=\"message-header\">";
         html += `<p>${ip}</p><p>${date}</p><p>${platform.trim()}</p><p>${component}</p>`;
         html += "</div>";
@@ -73,7 +73,7 @@ screens.app.logger = function AppLogger(me, packages) {
             try {
                 let object = JSON.parse(json);
                 if (Object.keys(object).length) {
-                    html += "<nav class=\"level is-mobile\" style=\"margin-top:1em\">";
+                    html += "<nav class=\"level is-mobile app-logger-level\">";
                     for (let key in object) {
                         let value = object[key];
                         html += `
