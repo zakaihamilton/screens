@@ -54,7 +54,7 @@ screens.app.logger = function AppLogger(me, packages) {
     };
     me.parseHeader = function (message) {
         let [, ip, date, platform, component, text] = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
-        let html = "<article class=\"message\">";
+        let html = "<article class=\"message\" style=\"border:1px solid var(--border-color)\">";
         html += "<div class=\"message-header\">";
         html += `<p>${ip}</p><p>${date}</p><p>${platform.trim()}</p><p>${component}</p>`;
         html += "</div>";
@@ -72,18 +72,23 @@ screens.app.logger = function AppLogger(me, packages) {
         if (json) {
             try {
                 let object = JSON.parse(json);
-                html += "<nav class=\"level is - mobile\">";
-                for (let key in object) {
-                    let value = object[key];
-                    html += `
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">${core.string.title(key)}</p>
-                        <p class="title">${value}</p>
-                        </div>
-                    </div>`;
+                if (Object.keys(object).length) {
+                    html += "<nav class=\"level is-mobile\" style=\"margin-top:1em\">";
+                    for (let key in object) {
+                        let value = object[key];
+                        html += `
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">${core.string.title(key)}</p>
+                            <p class="title">${value}</p>
+                            </div>
+                        </div>`;
+                    }
+                    html += "</nav>";
                 }
-                html += "</nav>";
+                else {
+                    html += "{}";
+                }
             }
             catch (err) {
 
