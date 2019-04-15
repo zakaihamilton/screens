@@ -324,4 +324,20 @@ screens.core.string = function CoreString(me, packages) {
         hash = String(hash);
         return hash;
     };
+    me.token = function (string, start, end) {
+        let startIndex = string.indexOf(start);
+        let endIndex = string.lastIndexOf(end);
+        let prefix = "", token = "", suffix = "";
+        if (startIndex === -1 || endIndex === -1) {
+            prefix = string;
+            token = "";
+            suffix = "";
+        }
+        else {
+            prefix = string.substring(0, startIndex);
+            token = string.substring(startIndex, endIndex + 1);
+            suffix = string.substring(endIndex + 1);
+        }
+        return [prefix, token, suffix];
+    };
 };

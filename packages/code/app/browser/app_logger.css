@@ -7,4 +7,7 @@
     resize: none;
     overflow: auto;
     font-family: "Courier New", Courier, monospace;
+    user-select: text;
+    color: var(--color);
+    background-color: var(--background);
 }

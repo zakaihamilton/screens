@@ -83,6 +83,13 @@
             "text": "View",
             "select": [
                 {
+                    "text": "Format",
+                    "select": "app.logger.format",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
                     "text": "Filter",
                     "select": "label"
                 },

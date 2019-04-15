@@ -122,3 +122,8 @@ strong {
 .inherit-font {
     font-size: inherit !important;
 }
+
+.message-body {
+    background: var(--background) !important;
+    color: var(--color) !important;
+}
