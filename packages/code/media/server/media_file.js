@@ -88,21 +88,18 @@ screens.media.file = function MediaFile(me, packages) {
                 await me.manager.file.download(file.remote, file.local);
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
                 await me.storage.aws.uploadFile(file.local, awsPath);
-                if (file.extension === "mp4") {
-                    await core.file.delete(file.local);
-                    me.log("Deleted file: " + file.local);
-                }
-                me.log("Finished uploading file: " + file.local);
-            }
-            if (file.local.endsWith(".m4a")) {
-                await me.manager.file.download(file.remote, file.local);
-                var metadata = await me.info(file.local);
-                if (metadata) {
-                    if (metadata.format) {
-                        file.duration = metadata.format.duration;
-                        file.durationText = core.string.formatDuration(file.duration);
+                if (file.local.endsWith(".m4a")) {
+                    var metadata = await me.info(file.local);
+                    if (metadata) {
+                        if (metadata.format) {
+                            file.duration = metadata.format.duration;
+                            file.durationText = core.string.formatDuration(file.duration);
+                        }
                     }
                 }
+                await core.file.delete(file.local);
+                me.log("Deleted file: " + file.local);
+                me.log("Finished uploading file: " + file.local);
             }
         });
         files.reverse();

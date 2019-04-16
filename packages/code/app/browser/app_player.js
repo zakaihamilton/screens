@@ -164,11 +164,13 @@ screens.app.player = function AppPlayer(me, packages) {
             metadata.group === groupName && metadata[property]));
         return list.length;
     };
-    me.refresh = async function (object) {
+    me.refresh = async function (object, type) {
         var window = me.widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window, "app.player.format", "Audio");
-        me.groups = await me.media.file.groups(true);
+        let update = {};
+        update[type] = true;
+        me.groups = await me.media.file.groups(update);
         me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
@@ -322,7 +324,7 @@ screens.app.player = function AppPlayer(me, packages) {
                         core.property.set(progress, "modal.progress.specific", data);
                     });
                 }
-                await me.refresh(window);
+                await me.refresh(window, "new");
             }
             finally {
                 core.property.set(progress, "close");

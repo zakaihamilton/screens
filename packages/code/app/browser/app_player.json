@@ -14,7 +14,16 @@
             "select": [
                 {
                     "text": "Refresh",
-                    "select": "app.player.refresh"
+                    "select": [
+                        {
+                            "text": "New",
+                            "select": "app.player.refresh(new)"
+                        },
+                        {
+                            "text": "Existing",
+                            "select": "app.player.refresh(existing)"
+                        }
+                    ]
                 },
                 {
                     "text": "Group",

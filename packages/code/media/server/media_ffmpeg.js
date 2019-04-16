@@ -11,6 +11,7 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
     };
     me.convert = function (source, target, options) {
         return new Promise((resolve, reject) => {
+            let targetSize = 0;
             var instance = me.ffmpeg(source);
             for (var key in options) {
                 instance[key](options[key]);
@@ -20,7 +21,10 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
                 reject(err);
             });
             instance.on("progress", function (progress) {
-                me.log("Processing: " + source + " to " + target + " " + progress.targetSize + " KB converted = " + JSON.stringify(progress));
+                if (targetSize !== progress.targetSize) {
+                    me.log("Processing: " + source + " to " + target + " " + JSON.stringify(progress));
+                    targetSize = progress.targetSize;
+                }
             });
             instance.on("end", function () {
                 me.log("Processing finished for " + source + " to " + target);
