@@ -111,7 +111,7 @@ screens.media.file = function MediaFile(me, packages) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
                     if (await me.storage.aws.exists(path)) {
                         file.resolutions.push(resolution);
-                        me.log("Found resolution " + resolution + " for file: " + file.local);
+                        me.log("Found resolution " + resolution + " for file: " + path);
                     }
                 }
             }
