@@ -77,6 +77,7 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.listing = async function (parent, update = false) {
         var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
+            let result = false;
             file.group = parent.name;
             file.session = core.path.fileName(file.name);
             file.extension = core.path.extension(file.name);
@@ -96,6 +97,7 @@ screens.media.file = function MediaFile(me, packages) {
                         if (metadata.format) {
                             file.duration = metadata.format.duration;
                             file.durationText = core.string.formatDuration(file.duration);
+                            result = true;
                             me.log("Found metadata for file: " + file.local);
                         }
                     }
@@ -104,6 +106,7 @@ screens.media.file = function MediaFile(me, packages) {
                 me.log("Deleted file: " + file.local);
                 me.log("Finished uploading file: " + file.local);
             }
+            let resolutions = Array.from(file.resolutions);
             delete file.resolutions;
             if (file.local.endsWith(".mp4")) {
                 file.resolutions = [];
@@ -120,7 +123,11 @@ screens.media.file = function MediaFile(me, packages) {
                         }
                     }
                 }
+                if (file.resolutions.length === resolutions.length) {
+                    result = true;
+                }
             }
+            return result;
         });
         files.reverse();
         return files;
