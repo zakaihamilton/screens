@@ -113,6 +113,12 @@ screens.media.file = function MediaFile(me, packages) {
                         file.resolutions.push(resolution);
                         me.log("Found resolution " + resolution + " for file: " + path);
                     }
+                    else {
+                        let result = await me.convertItem(resolution, file.group, file.session);
+                        if (result) {
+                            file.resolutions.push(resolution);
+                        }
+                    }
                 }
             }
         });
@@ -180,6 +186,7 @@ screens.media.file = function MediaFile(me, packages) {
         return me.storage.aws.url(path);
     };
     me.convertItem = async function (resolution, group, session) {
+        let result = false;
         try {
             var remote = me.awsBucket + "/" + group + "/" + session + ".mp4";
             var local = me.cachePath + "/" + session + ".mp4";
@@ -202,10 +209,12 @@ screens.media.file = function MediaFile(me, packages) {
             me.log("deleting: " + local);
             await core.file.delete(local);
             me.log("finished: " + session);
+            result = true;
         }
         catch (err) {
             me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
         }
+        return result;
     };
     me.convertListing = async function (resolution) {
         var groups = await me.groups();
