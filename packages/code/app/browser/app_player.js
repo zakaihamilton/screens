@@ -50,7 +50,8 @@ screens.app.player = function AppPlayer(me, packages) {
             jumpTime: 10,
             iconSize: "Normal",
             time: 0,
-            waveForm: true
+            waveForm: true,
+            resolution: "Auto"
         });
         me.ui.options.toggleSet(me, null, {
             autoPlay: null,
@@ -62,7 +63,8 @@ screens.app.player = function AppPlayer(me, packages) {
             groupName: me.updateSessions,
             jumpTime: me.updatePlayback,
             iconSize: me.updateSize,
-            time: null
+            time: null,
+            resolution: me.updatePlayer
         });
         core.property.set(window, "app", me);
         me.updateSize(window);
@@ -195,6 +197,7 @@ screens.app.player = function AppPlayer(me, packages) {
         me.hasAudio = audioFound !== null && audioFound.length;
         me.audioItem = audioFound && audioFound[0];
         me.hasVideo = videoFound !== null && videoFound.length;
+        me.videoItem = videoFound && videoFound[0];
         me.metadata = me.metadataList.find(metadata => metadata.title === name && metadata.group === groupName);
         if (!me.metadata) {
             me.metadata = {};
@@ -262,7 +265,14 @@ screens.app.player = function AppPlayer(me, packages) {
             source = core.property.get(player, "source");
         }
         var time = window.options.time;
-        var target = await me.media.file.streamingPath(groupName, sessionName, extension);
+        let resolution = window.options.resolution;
+        if (resolution === "Auto" || resolution === "Original") {
+            resolution = "";
+        }
+        else if (!me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
+            resolution = "";
+        }
+        var target = await me.media.file.streamingPath(groupName, sessionName, extension, resolution);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
         core.property.set(player, "source", target);
@@ -330,6 +340,20 @@ screens.app.player = function AppPlayer(me, packages) {
                 core.property.set(progress, "close");
             }
         }
+    };
+    me.resolutions = function (object) {
+        let session = me.videoItem;
+        let list = ["Auto", "Original"];
+        if (session.resolutions) {
+            list.push(...session.resolutions);
+        }
+        var info = {
+            list,
+            options: { "state": "select" },
+            group: "resolutions",
+            itemMethod: "app.player.resolution"
+        };
+        return me.widget.menu.collect(object, info);
     };
     me.speeds = function (object) {
         var list = [];

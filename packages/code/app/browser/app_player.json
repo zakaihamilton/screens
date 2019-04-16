@@ -152,6 +152,15 @@
                     }
                 },
                 {
+                    "text": "Resolution",
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "app.player.resolutions"
+                    ]
+                },
+                {
                     "text": "Speed",
                     "options": {
                         "separator": true

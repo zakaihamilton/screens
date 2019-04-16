@@ -5,6 +5,7 @@
 
 screens.media.file = function MediaFile(me, packages) {
     const { core, storage, media, db } = packages;
+    me.resolutions = ["800x600", "1024x768"];
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.awsBucket = "screens";
@@ -89,17 +90,30 @@ screens.media.file = function MediaFile(me, packages) {
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
                 await me.storage.aws.uploadFile(file.local, awsPath);
                 if (file.local.endsWith(".m4a")) {
+                    me.log("Retrieving metadata for file: " + file.local);
                     var metadata = await me.info(file.local);
                     if (metadata) {
                         if (metadata.format) {
                             file.duration = metadata.format.duration;
                             file.durationText = core.string.formatDuration(file.duration);
+                            me.log("Found metadata for file: " + file.local);
                         }
                     }
                 }
                 await core.file.delete(file.local);
                 me.log("Deleted file: " + file.local);
                 me.log("Finished uploading file: " + file.local);
+            }
+            delete file.resolutions;
+            if (file.local.endsWith(".mp4")) {
+                file.resolutions = [];
+                for (let resolution of me.resolutions) {
+                    let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
+                    if (await me.storage.aws.exists(path)) {
+                        file.resolutions.push(resolution);
+                        me.log("Found resolution " + resolution + " for file: " + file.local);
+                    }
+                }
             }
         });
         files.reverse();
