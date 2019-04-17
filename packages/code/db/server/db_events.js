@@ -18,7 +18,7 @@ screens.db.events.participants = function DbEventsParticipants(me, packages) {
 screens.db.events.logs = function DbEventsLogs(me, packages) {
     const { storage } = packages;
     me.init = () => storage.db.extension(me);
-    me.options = { capped: true, size: 242880, max: 500 };
+    me.options = { capped: true, size: 242880, max: 250 };
     return "server";
 };
 
