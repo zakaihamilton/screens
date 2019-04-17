@@ -32,12 +32,16 @@ screens.db.events.servers = function DbEventsServers(me, packages) {
         });
     };
     me.register = async function () {
-        let ip = await core.server.ip();
-        me.use({ ip }, { date: new Date().toString() });
+        if (!core.http.localhost) {
+            let ip = await core.server.ip();
+            me.use({ ip }, { date: new Date().toString() });
+        }
     };
     me.unregister = async function () {
-        let ip = await core.server.ip();
-        me.remove({ ip });
+        if (!core.http.localhost) {
+            let ip = await core.server.ip();
+            me.remove({ ip });
+        }
     };
     return "server";
 };
