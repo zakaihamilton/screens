@@ -239,9 +239,6 @@ screens.storage.db = function StorageDB(me, packages) {
         var hash = core.string.hash(string);
         if (location.cache) {
             result = location.cache[hash];
-            if (result) {
-                me.log("using db cache for: " + location.componentId + " = " + JSON.stringify(args));
-            }
         }
         return [result, hash, string];
     };
