@@ -56,16 +56,22 @@ screens.storage.db = function StorageDB(me, packages) {
         if (!db) {
             throw "Cannot find database for location: " + location.toString();
         }
-        if (location.options) {
-            let names = await db.listCollections().toArray();
-            if (!names) {
-                throw "Cannot find collection names for location: " + location.toString();
-            }
-            if (!names.map(item => item.name).includes(location.collection)) {
-                await db.createCollection(location.collection, location.options);
-            }
-        }
-        var collection = db.collection(location.collection);
+        var collection = await new Promise((resolve, reject) => {
+            db.collection(location.collection, { strict: location.options ? true : false }, async (error, handle) => {
+                if (error) {
+                    try {
+                        handle = await db.createCollection(location.collection, location.options);
+                        resolve(handle);
+                    }
+                    catch (err) {
+                        reject(err);
+                    }
+                }
+                else {
+                    resolve(handle);
+                }
+            });
+        });
         if (!collection) {
             throw "Cannot find collection for location: " + location.toString();
         }

@@ -63,7 +63,6 @@ screens.core.http = function CoreHttp(me, packages) {
         var port = me.port;
         var requestHandler = function (request, response) {
             if (!secure && me.forwardUrl) {
-                me.log("forwardUrl: " + me.forwardUrl + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
                 response.writeHead(301, {
                     Location: me.forwardUrl + request.url
                 });

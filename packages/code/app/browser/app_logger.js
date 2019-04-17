@@ -40,11 +40,9 @@ screens.app.logger = function AppLogger(me, packages) {
         return await send.apply(null, args);
     };
     me.clear = {
-        set: function (object) {
-            var bindings = me.bindings(object);
-            var logger = bindings.logger;
-            core.property.set(logger, "ui.basic.text", "");
-            me.send("core.console.clearMessages");
+        set: async function (object) {
+            await me.send("core.console.clearMessages");
+            await me.refresh(object);
         }
     };
     me.parseMessage = function (message) {
