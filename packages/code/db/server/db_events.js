@@ -46,6 +46,19 @@ screens.db.events.servers = function DbEventsServers(me, packages) {
     return "server";
 };
 
+screens.db.events.state = function DbEventsState(me, packages) {
+    const { core, storage } = packages;
+    me.init = async () => {
+        storage.db.extension(me);
+    };
+    me.set = async function (component, path, step, properties) {
+        let ip = await core.server.ip();
+        let date = new Date().toString();
+        me.use({ date, ip, component, path, step }, properties);
+    };
+    return "server";
+};
+
 screens.db.events.msg = function DbEventsMsg(me, packages) {
     const { core, storage, db } = packages;
     me.lastMsgId = 0;
