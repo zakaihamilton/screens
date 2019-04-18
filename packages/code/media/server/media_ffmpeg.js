@@ -11,7 +11,7 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
     };
     me.convert = function (source, target, options) {
         return new Promise((resolve, reject) => {
-            let targetSize = 0;
+            let percent = 0;
             var instance = me.ffmpeg(source);
             for (var key in options) {
                 instance[key](options[key]);
@@ -21,9 +21,9 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
                 reject(err);
             });
             instance.on("progress", function (progress) {
-                if (targetSize !== progress.targetSize) {
+                if (percent !== parseInt(progress.percent)) {
                     me.log("Processing: " + source + " to " + target + " " + JSON.stringify(progress));
-                    targetSize = progress.targetSize;
+                    percent = parseInt(progress.percent);
                 }
             });
             instance.on("end", function () {
