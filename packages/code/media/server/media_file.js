@@ -199,6 +199,9 @@ screens.media.file = function MediaFile(me, packages) {
             var local = me.cachePath + "/" + session + ".mp4";
             var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
             var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
+            if (await storage.aws.exists(remote_convert)) {
+                return false;
+            }
             if (!await core.file.exists(local_convert)) {
                 if (!await core.file.exists(local)) {
                     me.log("downloading: " + remote + " to: " + local);
