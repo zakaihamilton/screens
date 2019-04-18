@@ -63,8 +63,13 @@ screens.storage.db = function StorageDB(me, packages) {
                         handle = await db.createCollection(location.collection, location.options);
                         resolve(handle);
                     }
-                    catch (err) {
-                        reject(err);
+                    catch (createError) {
+                        try {
+                            handle = await db.collection(location.collection);
+                        }
+                        catch (getError) {
+                            reject(createError);
+                        }
                     }
                 }
                 else {
