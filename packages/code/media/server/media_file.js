@@ -225,11 +225,7 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.convertListing = async function (resolution) {
         var groups = await me.groups();
-        var servers = await me.db.events.servers.list({});
-        var ipList = servers.map(server => server.ip).filter(Boolean);
-        var results = [];
-        var ip = null;
-        me.log("found servers: " + ipList.join(", "));
+        var argList = [];
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             for (let item of list) {
@@ -237,13 +233,10 @@ screens.media.file = function MediaFile(me, packages) {
                 if (await storage.aws.exists(remote_convert)) {
                     continue;
                 }
-                let ipIndex = ipList.indexOf(ip);
-                ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
-                await db.events.msg.sendTo(ip, "media.file.convertItem", resolution, group.name, item.session);
-                results.push({ ip, group: group.name, session: item.session });
+                argList.push({ group: group.name, session: item.session });
             }
         }
-        return results;
+        await db.events.msg.sendParallel(argList);
     };
     return "server";
 };

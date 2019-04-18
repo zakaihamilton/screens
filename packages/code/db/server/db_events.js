@@ -47,7 +47,7 @@ screens.db.events.servers = function DbEventsServers(me, packages) {
 };
 
 screens.db.events.msg = function DbEventsMsg(me, packages) {
-    const { core, storage } = packages;
+    const { core, storage, db } = packages;
     me.lastMsgId = 0;
     me.busy = false;
     me.init = async () => {
@@ -105,6 +105,16 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
     me.sendTo = function (ip, method) {
         var args = Array.prototype.slice.call(arguments, 1);
         me.push({ date: new Date().toString(), args, ip });
+    };
+    me.sendParallel = async function (array) {
+        var servers = await db.events.servers.list({});
+        var ipList = servers.map(server => server.ip).filter(Boolean);
+        var ip = null;
+        for (let args of array) {
+            let ipIndex = ipList.indexOf(ip);
+            ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
+            me.push({ date: new Date().toString(), args, ip });
+        }
     };
     return "server";
 };
