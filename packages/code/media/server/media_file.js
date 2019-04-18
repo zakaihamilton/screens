@@ -195,11 +195,13 @@ screens.media.file = function MediaFile(me, packages) {
     me.convertItem = async function (resolution, group, session) {
         let result = false;
         try {
-            var remote = me.awsBucket + "/" + group + "/" + session + ".mp4";
-            var local = me.cachePath + "/" + session + ".mp4";
-            var local_convert = me.cachePath + "/" + session + "_" + resolution + ".mp4";
-            var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + ".mp4";
+            var extension = ".mp4";
+            var remote = me.awsBucket + "/" + group + "/" + session + extension;
+            var local = me.cachePath + "/" + session + extension;
+            var local_convert = me.cachePath + "/" + session + "_" + resolution + extension;
+            var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + extension;
             if (await storage.aws.exists(remote_convert)) {
+                me.log("already converted: " + remote_convert);
                 return false;
             }
             if (!await core.file.exists(local_convert)) {
