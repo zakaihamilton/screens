@@ -233,13 +233,14 @@ screens.media.file = function MediaFile(me, packages) {
         var argList = [];
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
-            for (let item of list) {
+            me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
+            await Promise.all(list.map(async item => {
                 var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
                 if (await storage.aws.exists(remote_convert)) {
-                    continue;
+                    return;
                 }
                 argList.push({ group: group.name, session: item.session });
-            }
+            }));
         }
         await db.events.msg.sendParallel(argList);
     };
