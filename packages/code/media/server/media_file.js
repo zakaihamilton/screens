@@ -239,7 +239,7 @@ screens.media.file = function MediaFile(me, packages) {
                 if (await storage.aws.exists(remote_convert)) {
                     return;
                 }
-                argList.push({ group: group.name, session: item.session });
+                argList.push(["media.file.convertItem", resolution, group.name, item.session]);
             }));
         }
         await db.events.msg.sendParallel(argList);

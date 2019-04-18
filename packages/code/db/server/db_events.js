@@ -122,13 +122,22 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
     me.sendParallel = async function (array) {
         var servers = await db.events.servers.list({});
         var ipList = servers.map(server => server.ip).filter(Boolean);
+        var ipCounter = {};
         var ip = null;
+        let results = [];
         for (let args of array) {
             let ipIndex = ipList.indexOf(ip);
             ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
-            me.push({ date: new Date().toString(), args, ip });
+            results.push({ date: new Date().toString(), args, ip });
+            if (!ipCounter[ip]) {
+                ipCounter[ip] = 0;
+            }
+            ipCounter[ip]++;
         }
-        me.log("Sent to " + ipList.length + " servers with " + array.length + " messages");
+        me.log("Sent to " + ipList.length + " servers with " + array.length + " messages" + " distribution: " + JSON.stringify(ipCounter));
+        for (let result of results) {
+            await me.push(result);
+        }
     };
     return "server";
 };
