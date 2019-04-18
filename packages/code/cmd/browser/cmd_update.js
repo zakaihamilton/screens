@@ -10,6 +10,7 @@ screens.cmd.update = function CmdUpdate(me, packages) {
         await db.events.msg.send("core.server.run", "git pull");
         await db.events.msg.send("core.server.run", "npm install");
         await db.events.msg.send("core.server.run", "npm rebuild");
+        await db.events.msg.send("core.server.run", "rm ~/screens/cache/*");
         if (args[1] && args[1] === "reload") {
             await db.events.msg.send("core.server.run", "pm2 reload all");
         }
