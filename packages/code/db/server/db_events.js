@@ -128,6 +128,7 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
             ip = (ipIndex < ipList.length - 1) ? ipList[ipIndex + 1] : ipList[0];
             me.push({ date: new Date().toString(), args, ip });
         }
+        me.log("Sent to " + ipList.length + " servers with " + array.length + " messages");
     };
     return "server";
 };
