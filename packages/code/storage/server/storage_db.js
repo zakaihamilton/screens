@@ -179,7 +179,7 @@ screens.storage.db = function StorageDB(me, packages) {
             result = await collection.deleteOne(query);
         }
         else {
-            if (location.options.capped) {
+            if (location.options && location.options.capped) {
                 result = await collection.drop();
             }
             else {
