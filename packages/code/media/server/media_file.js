@@ -206,7 +206,7 @@ screens.media.file = function MediaFile(me, packages) {
             }
             if (!await core.file.exists(local_convert)) {
                 if (!await core.file.exists(local)) {
-                    db.events.state.set(me.id, session, "download", {
+                    await db.events.state.set(me.id, session, "download", {
                         from: remote,
                         to: local
                     });
@@ -214,7 +214,7 @@ screens.media.file = function MediaFile(me, packages) {
                     await storage.aws.downloadFile(remote, local);
                 }
                 me.log("converting: " + local + " to: " + local_convert);
-                db.events.state.set(me.id, session, "convert", {
+                await db.events.state.set(me.id, session, "convert", {
                     from: remote,
                     to: local_convert,
                     resolution
@@ -224,7 +224,7 @@ screens.media.file = function MediaFile(me, packages) {
                 });
             }
             me.log("uploading: " + local_convert + " to: " + remote_convert);
-            db.events.state.set(me.id, session, "upload", {
+            await db.events.state.set(me.id, session, "upload", {
                 from: local_convert,
                 to: remote_convert
             });
@@ -234,12 +234,12 @@ screens.media.file = function MediaFile(me, packages) {
             me.log("deleting: " + local);
             await core.file.delete(local);
             me.log("finished: " + session);
-            db.events.state.set(me.id, session);
+            await db.events.state.set(me.id, session);
             result = true;
         }
         catch (err) {
             me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
-            db.events.state.set(me.id, session, "error", {
+            await db.events.state.set(me.id, session, "error", {
                 error: err
             });
         }
