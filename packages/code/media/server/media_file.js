@@ -206,25 +206,42 @@ screens.media.file = function MediaFile(me, packages) {
             }
             if (!await core.file.exists(local_convert)) {
                 if (!await core.file.exists(local)) {
+                    db.events.state.set(me.id, session, "download", {
+                        from: remote,
+                        to: local
+                    });
                     me.log("downloading: " + remote + " to: " + local);
                     await storage.aws.downloadFile(remote, local);
                 }
                 me.log("converting: " + local + " to: " + local_convert);
+                db.events.state.set(me.id, session, "convert", {
+                    from: remote,
+                    to: local_convert,
+                    resolution
+                });
                 await media.ffmpeg.convert(local, local_convert, {
                     size: resolution
                 });
             }
             me.log("uploading: " + local_convert + " to: " + remote_convert);
+            db.events.state.set(me.id, session, "upload", {
+                from: local_convert,
+                to: remote_convert
+            });
             await storage.aws.uploadFile(local_convert, remote_convert);
             me.log("deleting: " + local_convert);
             await core.file.delete(local_convert);
             me.log("deleting: " + local);
             await core.file.delete(local);
             me.log("finished: " + session);
+            db.events.state.set(me.id, session, "complete");
             result = true;
         }
         catch (err) {
             me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
+            db.events.state.set(me.id, session, "error", {
+                error: err
+            });
         }
         return result;
     };

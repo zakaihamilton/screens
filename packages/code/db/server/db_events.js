@@ -54,7 +54,13 @@ screens.db.events.state = function DbEventsState(me, packages) {
     me.set = async function (component, path, step, properties) {
         let ip = await core.server.ip();
         let date = new Date().toString();
-        me.use({ date, ip, component, path, step }, properties);
+        if (!properties) {
+            properties = {};
+        }
+        properties = Object.assign({}, properties, {
+            date
+        });
+        me.use({ ip, component, path, step }, properties);
     };
     return "server";
 };
