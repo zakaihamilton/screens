@@ -13,6 +13,7 @@ screens.cmd.state = function CmdState(me, packages) {
                 core.property.set(terminal, "print", JSON.stringify(item));
             }
         }
+        core.property.set(terminal, "print", items.length + " States");
         core.cmd.exit(terminal);
     };
 };
