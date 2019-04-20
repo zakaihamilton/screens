@@ -57,10 +57,16 @@ screens.db.events.state = function DbEventsState(me, packages) {
         if (!properties) {
             properties = {};
         }
-        properties = Object.assign({}, properties, {
-            date
-        });
-        me.use({ ip, component, path, step }, properties);
+        if (step) {
+            properties = Object.assign({}, properties, {
+                date,
+                step
+            });
+            me.use({ ip, component, path }, properties);
+        }
+        else {
+            me.remove({ ip, component, path });
+        }
     };
     return "server";
 };

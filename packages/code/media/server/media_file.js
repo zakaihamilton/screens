@@ -234,7 +234,7 @@ screens.media.file = function MediaFile(me, packages) {
             me.log("deleting: " + local);
             await core.file.delete(local);
             me.log("finished: " + session);
-            db.events.state.set(me.id, session, "complete");
+            db.events.state.set(me.id, session);
             result = true;
         }
         catch (err) {
