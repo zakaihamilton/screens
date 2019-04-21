@@ -220,7 +220,13 @@ screens.media.file = function MediaFile(me, packages) {
                     resolution
                 });
                 await media.ffmpeg.convert(local, local_convert, {
-                    size: resolution
+                    size: resolution,
+                }, async (percent) => {
+                    await db.events.state.set(me.id, session, "convert", {
+                        from: local,
+                        to: local_convert,
+                        percent
+                    });
                 });
             }
             me.log("uploading: " + local_convert + " to: " + remote_convert);

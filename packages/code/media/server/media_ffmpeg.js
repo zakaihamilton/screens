@@ -9,7 +9,7 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfmpegPath(ffmpegPath);
     };
-    me.convert = function (source, target, options) {
+    me.convert = function (source, target, options, progressCb) {
         return new Promise((resolve, reject) => {
             let percent = 0;
             var instance = me.ffmpeg(source);
@@ -24,6 +24,9 @@ screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
                 if (percent !== parseInt(progress.percent)) {
                     me.log("Processing: " + source + " to " + target + " " + JSON.stringify(progress));
                     percent = parseInt(progress.percent);
+                    if (progressCb) {
+                        progressCb(percent);
+                    }
                 }
             });
             instance.on("end", function () {
