@@ -68,6 +68,25 @@ screens.app.logger = function AppLogger(me, packages) {
         }
         return Object.assign({}, message, { prefix, json, suffix });
     };
+    me.mergeMessages = function (messages) {
+        let filtered = [];
+        for (let index = messages.length - 1; index >= 0; index--) {
+            let message = messages[index];
+            let filter = msg => msg.prefix === message.prefix &&
+                msg.suffix === message.suffix &&
+                msg.ip === message.ip &&
+                msg.platform === msg.platform &&
+                msg.component === msg.component;
+            let some = filtered.some(filter);
+            let count = messages.filter(filter).length;
+            if (!some) {
+                filtered.push(Object.assign({}, message, {
+                    count
+                }));
+            }
+        }
+        return filtered;
+    };
     me.parseHtml = function (message) {
         let html = "<article class=\"message\">";
         html += "<div class=\"message-header\">";
@@ -119,6 +138,7 @@ screens.app.logger = function AppLogger(me, packages) {
         messages = messages.filter(Boolean);
         if (me.options.format) {
             messages = messages.map(me.parseTextToMessage);
+            messages = me.mergeMessages(messages);
             messages = messages.map(me.parseHtml);
         }
         core.property.set(logger, "ui.basic.html", messages.join("<br>"));
