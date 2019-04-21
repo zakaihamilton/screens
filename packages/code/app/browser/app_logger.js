@@ -45,32 +45,39 @@ screens.app.logger = function AppLogger(me, packages) {
             await me.refresh(object);
         }
     };
-    me.parseMessage = function (message) {
-        message = me.parseHeader(message);
-        message = me.parseJson(message);
+    me.parseTextToMessage = function (text) {
+        let message = me.parseTextToHeader(text);
+        message = me.parseObjectText(message);
         return message;
     };
-    me.parseHeader = function (message) {
+    me.parseTextToHeader = function (message) {
         let [, ip, date, platform, component, text] = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
         ip = ip.split(".").map(str => core.string.padNumber(str, 3)).join(".");
+        return {
+            ip,
+            date,
+            platform,
+            component,
+            text
+        };
+    };
+    me.parseObjectText = function (message) {
+        let [prefix, json, suffix] = core.string.token(message.text, "[{", "}]");
+        if (!json) {
+            [prefix, json, suffix] = core.string.token(message.text, "{", "}");
+        }
+        return Object.assign({}, message, { prefix, json, suffix });
+    };
+    me.parseHtml = function (message) {
         let html = "<article class=\"message\">";
         html += "<div class=\"message-header\">";
-        html += `<p>${ip}</p><p>${date}</p><p>${platform.trim()}</p><p>${component}</p>`;
+        html += `<p>${message.ip}</p><p>${message.date}</p><p>${message.platform.trim()}</p><p>${message.component}</p>`;
         html += "</div>";
         html += "<div class=\"message-body\">";
-        html += text;
-        html += "</div></article>";
-        return html;
-    };
-    me.parseJson = function (message) {
-        let [prefix, json, suffix] = core.string.token(message, "[{", "}]");
-        if (!json) {
-            [prefix, json, suffix] = core.string.token(message, "{", "}");
-        }
-        let html = prefix;
-        if (json) {
+        html += message.prefix;
+        if (message.json) {
             try {
-                let object = JSON.parse(json);
+                let object = JSON.parse(message.json);
                 if (Object.keys(object).length) {
                     html += "<nav class=\"level app-logger-level\">";
                     for (let key in object) {
@@ -93,7 +100,8 @@ screens.app.logger = function AppLogger(me, packages) {
 
             }
         }
-        html += suffix;
+        html += message.suffix;
+        html += "</div></article>";
         return html;
     };
     me.refresh = async function (object) {
@@ -110,7 +118,8 @@ screens.app.logger = function AppLogger(me, packages) {
         }
         messages = messages.filter(Boolean);
         if (me.options.format) {
-            messages = messages.map(me.parseMessage);
+            messages = messages.map(me.parseTextToMessage);
+            messages = messages.map(me.parseHtml);
         }
         core.property.set(logger, "ui.basic.html", messages.join("<br>"));
         logger.scrollTop = logger.scrollHeight;
