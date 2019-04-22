@@ -181,6 +181,8 @@ screens.storage.db = function StorageDB(me, packages) {
         else {
             if (location.options && location.options.capped) {
                 result = await collection.drop();
+                let db = await me.database(location.db);
+                await db.createCollection(location.collection, location.options);
             }
             else {
                 result = await collection.deleteMany(query);

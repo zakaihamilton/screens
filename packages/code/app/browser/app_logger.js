@@ -80,7 +80,7 @@ screens.app.logger = function AppLogger(me, packages) {
             let some = filtered.some(filter);
             let count = messages.filter(filter).length;
             if (!some) {
-                filtered.push(Object.assign({}, message, {
+                filtered.unshift(Object.assign({}, message, {
                     count
                 }));
             }
@@ -115,6 +115,7 @@ screens.app.logger = function AppLogger(me, packages) {
                     html += "{}";
                 }
             }
+            // eslint-disable-next-line no-empty
             catch (err) {
 
             }

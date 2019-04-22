@@ -22,6 +22,10 @@
                         {
                             "text": "Existing",
                             "select": "app.player.refresh(existing)"
+                        },
+                        {
+                            "text": "Resolutions",
+                            "select": "app.player.updateResolutions"
                         }
                     ]
                 },

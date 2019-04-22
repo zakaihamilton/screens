@@ -248,10 +248,24 @@ screens.media.file = function MediaFile(me, packages) {
             await db.events.state.set(me.id, session, "error", {
                 error: err
             });
+            try {
+                await core.file.delete(local);
+                await core.file.delete(local_convert);
+            }
+            // eslint-disable-next-line no-empty
+            catch (err) {
+
+            }
         }
         return result;
     };
     me.convertListing = async function (resolution) {
+        if (!resolution) {
+            for (resolution of me.resolutions) {
+                await me.convertListing(resolution);
+            }
+            return;
+        }
         var groups = await me.groups();
         var argList = [];
         for (let group of groups) {

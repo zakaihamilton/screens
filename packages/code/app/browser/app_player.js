@@ -4,9 +4,9 @@
  */
 
 screens.app.player = function AppPlayer(me, packages) {
-    const { core } = packages;
+    const { core, media, ui } = packages;
     me.init = async function () {
-        await me.ui.content.attach(me);
+        await ui.content.attach(me);
         me.content.search = me.search;
     };
     me.ready = function (methods) {
@@ -33,7 +33,7 @@ screens.app.player = function AppPlayer(me, packages) {
             params.showInBackground = true;
         }
         await me.content.update();
-        me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
+        me.singleton = ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
             me.singleton.resolve = resolve;
         });
@@ -41,7 +41,7 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
-        me.ui.options.load(me, window, {
+        ui.options.load(me, window, {
             groupName: "American",
             sessionName: "",
             speed: "Normal",
@@ -53,11 +53,11 @@ screens.app.player = function AppPlayer(me, packages) {
             waveForm: true,
             resolution: "Auto"
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             autoPlay: null,
             waveForm: me.updatePlayback
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
             format: me.updatePlayer,
             groupName: me.updateSessions,
@@ -172,10 +172,13 @@ screens.app.player = function AppPlayer(me, packages) {
         core.property.set(window, "app.player.format", "Audio");
         let update = {};
         update[type] = true;
-        me.groups = await me.media.file.groups(update);
+        me.groups = await media.file.groups(update);
         me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
+    };
+    me.updateResolutions = async function (object) {
+        await media.file.convertListing();
     };
     me.updateSession = async function (object, name) {
         var window = me.widget.window.get(object);
@@ -210,7 +213,7 @@ screens.app.player = function AppPlayer(me, packages) {
             window.options.format = "Video";
         }
         core.property.set(window, "name", name);
-        me.ui.options.save(me, window, { sessionName: name });
+        ui.options.save(me, window, { sessionName: name });
         await me.content.associated.update(window, name);
         if (!name) {
             me.contentList = [];
@@ -272,7 +275,7 @@ screens.app.player = function AppPlayer(me, packages) {
         else if (!me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
             resolution = "";
         }
-        var target = await me.media.file.streamingPath(groupName, sessionName, extension, resolution);
+        var target = await media.file.streamingPath(groupName, sessionName, extension, resolution);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
         core.property.set(player, "source", target);
@@ -317,13 +320,13 @@ screens.app.player = function AppPlayer(me, packages) {
             if (!object.files.length) {
                 return;
             }
-            var progress = me.ui.modal.launch("progress", {
+            var progress = ui.modal.launch("progress", {
                 "title": "Uploading",
                 "delay": "250"
             });
             try {
                 for (var file of object.files) {
-                    var paths = await me.media.file.paths(window.options.groupName, file.name);
+                    var paths = await media.file.paths(window.options.groupName, file.name);
                     await me.storage.upload.file(file, paths.local, (index, count) => {
                         var data = { label: paths.local, max: count, value: index };
                         core.property.set(progress, "modal.progress.specific", data);
@@ -357,8 +360,8 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.speeds = function (object) {
         var list = [];
-        for (var name in me.media.voice.speeds) {
-            var speed = me.media.voice.speeds[name];
+        for (var name in media.voice.speeds) {
+            var speed = media.voice.speeds[name];
             list.push({ name, speed: "x" + speed });
         }
         var info = {
@@ -375,7 +378,7 @@ screens.app.player = function AppPlayer(me, packages) {
         return me.widget.menu.collect(object, info);
     };
     me.jumpTimes = function () {
-        var stepList = me.media.voice.jumpTimes;
+        var stepList = media.voice.jumpTimes;
         stepList = stepList.map(step => {
             var item = [
                 step + " Seconds",
@@ -394,7 +397,7 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.updatePlayback = function () {
         var window = me.singleton;
-        var speed = me.media.voice.speeds[window.options.speed];
+        var speed = media.voice.speeds[window.options.speed];
         var jumpTime = window.options.jumpTime;
         var waveForm = window.options.waveForm;
         [window.var.audioPlayer, window.var.videoPlayer].map(player => {
@@ -456,7 +459,7 @@ screens.app.player = function AppPlayer(me, packages) {
     };
     me.copyName = function () {
         var window = me.singleton;
-        me.ui.clipboard.copy(window.options.sessionName);
+        ui.clipboard.copy(window.options.sessionName);
     };
     var metadataProperties = ["isFavourite", "watchLater"];
     for (let property of metadataProperties) {
@@ -478,7 +481,7 @@ screens.app.player = function AppPlayer(me, packages) {
     me.search = async function (text) {
         var results = [];
         if (!me.groups) {
-            me.groups = await me.media.file.groups();
+            me.groups = await media.file.groups();
         }
         me.groups.map(group => {
             var list = group.sessions.filter(session => session.extension === "m4a");
