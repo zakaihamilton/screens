@@ -283,6 +283,9 @@ screens.app.player = function AppPlayer(me, packages) {
         else if (!me.videoItem || !me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
             resolution = "";
         }
+        if (extension !== "mp4") {
+            resolution = "";
+        }
         var target = await media.file.streamingPath(groupName, sessionName, extension, resolution);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
