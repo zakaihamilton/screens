@@ -269,7 +269,15 @@ screens.app.player = function AppPlayer(me, packages) {
         }
         var time = window.options.time;
         let resolution = window.options.resolution;
-        if (resolution === "Auto" || resolution === "Original") {
+        if (resolution === "Auto") {
+            if (core.device.isMobile()) {
+                resolution = "800x600";
+            }
+            else {
+                resolution = "1024x768";
+            }
+        }
+        if (resolution === "Original") {
             resolution = "";
         }
         else if (!me.videoItem || !me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
