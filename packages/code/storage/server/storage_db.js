@@ -257,13 +257,12 @@ screens.storage.db = function StorageDB(me, packages) {
     me.notifyCache = function (location) {
         if (location.cache && location.componentId) {
             me.emptyCache(location);
-            if (location.timer) {
-                clearTimeout(location.timer);
+            if (!location.timer) {
+                location.timer = setTimeout(async () => {
+                    location.timer = null;
+                    await me.db.events.msg.send(location.componentId + ".emptyCache");
+                }, 5000);
             }
-            location.timer = setTimeout(async () => {
-                location.timer = null;
-                await me.db.events.msg.send(location.componentId + ".emptyCache");
-            }, 2500);
         }
     };
     me.emptyCache = function (location) {

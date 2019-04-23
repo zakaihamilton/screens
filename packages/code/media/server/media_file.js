@@ -106,23 +106,22 @@ screens.media.file = function MediaFile(me, packages) {
                 me.log("Deleted file: " + file.local);
                 me.log("Finished uploading file: " + file.local);
             }
-            let resolutions = Array.from(file.resolutions);
-            delete file.resolutions;
             if (file.local.endsWith(".mp4")) {
-                file.resolutions = [];
+                let resolutions = [];
                 for (let resolution of me.resolutions) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
                     if (await me.storage.aws.exists(path)) {
-                        file.resolutions.push(resolution);
+                        resolutions.push(resolution);
                     }
                     else {
                         let result = await me.convertItem(resolution, file.group, file.session);
                         if (result) {
-                            file.resolutions.push(resolution);
+                            resolutions.push(resolution);
                         }
                     }
                 }
-                if (file.resolutions.length !== resolutions.length) {
+                if ((!file.resolutions && resolutions.length) || file.resolutions.length !== resolutions.length) {
+                    file.resolutions = resolutions;
                     result = true;
                 }
             }
