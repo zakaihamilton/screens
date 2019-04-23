@@ -299,7 +299,7 @@ screens.app.player = function AppPlayer(me, packages) {
         if (window.options.autoPlay) {
             core.property.set(player, "widget.player.controls.play");
         }
-        me.widget.toast.show(me.id, sessionName);
+        me.widget.toast.show(me.id, sessionName + (resolution ? " - " + resolution : ""));
     };
     me.work = {
         set: function (object, value) {
