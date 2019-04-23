@@ -114,7 +114,6 @@ screens.media.file = function MediaFile(me, packages) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
                     if (await me.storage.aws.exists(path)) {
                         file.resolutions.push(resolution);
-                        me.log("Found resolution " + resolution + " for file: " + path);
                     }
                     else {
                         let result = await me.convertItem(resolution, file.group, file.session);
@@ -123,7 +122,7 @@ screens.media.file = function MediaFile(me, packages) {
                         }
                     }
                 }
-                if (file.resolutions.length === resolutions.length) {
+                if (file.resolutions.length !== resolutions.length) {
                     result = true;
                 }
             }
