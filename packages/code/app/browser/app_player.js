@@ -272,7 +272,7 @@ screens.app.player = function AppPlayer(me, packages) {
         if (resolution === "Auto" || resolution === "Original") {
             resolution = "";
         }
-        else if (!me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
+        else if (!me.videoItem || !me.videoItem.resolutions || !me.videoItem.resolutions.includes(resolution)) {
             resolution = "";
         }
         var target = await media.file.streamingPath(groupName, sessionName, extension, resolution);
