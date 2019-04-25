@@ -137,6 +137,20 @@ screens.db.shared.user = function DbSharedUser(me, packages) {
     return "server";
 };
 
+screens.db.shared.stream = function DbSharedStream(me, packages) {
+    const { storage } = packages;
+    me.init = () => storage.db.extension(me);
+    me.cache = {};
+    me.indexes = [
+        {
+            "user": 1,
+            "group": 1,
+            "session": 1
+        }
+    ];
+    return "server";
+};
+
 screens.db.shared.settings = function DbSharedSettings(me, packages) {
     const { storage } = packages;
     me.init = () => storage.db.extension(me);
