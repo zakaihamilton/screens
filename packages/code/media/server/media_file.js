@@ -45,23 +45,16 @@ screens.media.file = function MediaFile(me, packages) {
         return target;
     };
     me.groups = async function (update = false) {
-        var files = [];
-        try {
-            var unlock = await core.mutex.lock(me.id);
-            files = await me.db.cache.file.listing(me.rootPath, update);
-            for (let file of files) {
-                file.path = me.rootPath + "/" + file.name;
-                var sessions = await me.listing(file, update);
-                sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
-                sessions.reverse();
-                file.sessions = sessions;
-            }
-            files = files.sort((a, b) => a.name.localeCompare(b.name));
-            files.sort();
+        var files = await me.db.cache.file.listing(me.rootPath, update);
+        for (let file of files) {
+            file.path = me.rootPath + "/" + file.name;
+            var sessions = await me.listing(file, update);
+            sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
+            sessions.reverse();
+            file.sessions = sessions;
         }
-        finally {
-            unlock();
-        }
+        files = files.sort((a, b) => a.name.localeCompare(b.name));
+        files.sort();
         return files;
     };
     me.exists = async function (name) {
