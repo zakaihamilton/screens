@@ -199,7 +199,7 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.streamingPath = async function (group, name, extension, resolution) {
         let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
-        await db.shared.stream.use({ user: this.userName, group, session: name });
+        await db.shared.stream.use({ user: this.userName, group, session: name }, { date: new Date().toString() });
         return storage.aws.url(path);
     };
     me.convertItem = async function (resolution, group, session) {
