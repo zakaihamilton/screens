@@ -85,12 +85,21 @@ screens.media.file = function MediaFile(me, packages) {
             file.remote = parent.path + "/" + file.name;
             file.local = me.cachePath + "/" + file.name;
             let awsPath = me.awsBucket + "/" + parent.name + "/" + file.name;
-            if (!await me.storage.aws.exists(awsPath)) {
+            let deleteFile = false;
+
+            if (!await storage.aws.exists(awsPath)) {
                 me.log("Downloading file: " + file.local + ", size: " + file.size);
                 await me.manager.file.download(file.remote, file.local);
+                deleteFile = true;
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await me.storage.aws.uploadFile(file.local, awsPath);
-                if (file.local.endsWith(".m4a")) {
+                await storage.aws.uploadFile(file.local, awsPath);
+                me.log("Finished uploading file: " + file.local);
+            }
+            if (file.local.endsWith(".m4a")) {
+                if (!file.duration || !file.durationText) {
+                    me.log("Downloading file: " + file.local + ", size: " + file.size);
+                    await storage.aws.downloadFile(awsPath, file.local);
+                    deleteFile = true;
                     me.log("Retrieving metadata for file: " + file.local);
                     var metadata = await me.info(file.local);
                     if (metadata) {
@@ -98,19 +107,21 @@ screens.media.file = function MediaFile(me, packages) {
                             file.duration = metadata.format.duration;
                             file.durationText = core.string.formatDuration(file.duration);
                             result = true;
-                            me.log("Found metadata for file: " + file.local);
+                            me.log("Found metadata for file: " + file.local + " duration: " + file.durationText);
                         }
                     }
                 }
+            }
+            if (deleteFile) {
+                me.log("Deleting file: " + file.local);
                 await core.file.delete(file.local);
                 me.log("Deleted file: " + file.local);
-                me.log("Finished uploading file: " + file.local);
             }
             if (file.local.endsWith(".mp4")) {
                 let resolutions = [];
                 for (let resolution of me.resolutions) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
-                    if (await me.storage.aws.exists(path)) {
+                    if (await storage.aws.exists(path)) {
                         resolutions.push(resolution);
                     }
                     else {
@@ -188,7 +199,7 @@ screens.media.file = function MediaFile(me, packages) {
     };
     me.streamingPath = function (group, name, extension, resolution) {
         let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
-        return me.storage.aws.url(path);
+        return storage.aws.url(path);
     };
     me.convertItem = async function (resolution, group, session) {
         let result = false;
