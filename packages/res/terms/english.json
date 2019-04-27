@@ -1364,7 +1364,8 @@
                 "Yesod",
                 "Malchut"
             ],
-            "term": "TNHYM"
+            "term": "TNHYM",
+            "abridged": "Kli Kabbalah"
         },
         {
             "expansion": [
@@ -1989,6 +1990,7 @@
                 "short": "Second Face in the World of Primordial Man"
             },
             "term": "AB",
+            "explanation": "Expression",
             "hebrew": "ע״ב"
         },
         {
@@ -3880,7 +3882,8 @@
                 "Bina",
                 "Daat"
             ],
-            "term": "HBD"
+            "term": "HBD",
+            "abridged": "Machshava"
         },
         {
             "translation": "Ear",
@@ -7766,6 +7769,19 @@
             "term": "Pri Chacham",
             "translation": "Fruit of the Wise",
             "hebrew": "פרי חכם"
+        },
+        {
+            "term": "Behemah",
+            "translation": "Animal",
+            "hebrew": "בהמה"
+        },
+        {
+            "term": "cherubim",
+            "hebrew": "חרובים",
+            "style": {
+                "phase": "two",
+                "category": "Angels"
+            }
         }
     ],
     "style": {
