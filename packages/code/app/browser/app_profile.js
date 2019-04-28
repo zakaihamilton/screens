@@ -45,7 +45,8 @@ screens.app.profile = function AppProfile(me, packages) {
             "individual",
             "method",
             "externalGender",
-            "internalGender"
+            "internalGender",
+            "postulates"
         ];
         var bindings = {};
         for (var id of ids) {

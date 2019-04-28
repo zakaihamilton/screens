@@ -28,9 +28,13 @@
                 },
                 {
                     "text": "Users",
-                    "select": "header"
-                },
-                "app.profile.userMenuList"
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "app.profile.userMenuList"
+                    ]
+                }
             ],
             "options": {
                 "visible": "app.profile.userListAvailable"
