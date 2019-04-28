@@ -226,7 +226,9 @@
             "where he it says": "where here it says",
             "Mochin of Hochma": "Mochin of Hochma2",
             "Mochin (Lights) of Hochma (wisdom)": "Mochin (Lights) of Hochma2 (wisdom)",
-            "brings them done": "brings them down"
+            "brings them done": "brings them down",
+            "the Ophanim, the animals, and the cherubim": "the Ophanim, the animals2, and the cherubim",
+            "animals are the angels": "animals2 are the angels"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -7777,9 +7779,20 @@
         },
         {
             "term": "cherubim",
-            "hebrew": "חרובים",
+            "source": "Cherubim",
+            "hebrew": "כרובים",
             "style": {
                 "phase": "two",
+                "category": "Angels"
+            }
+        },
+        {
+            "term": "animals2",
+            "source": "Chayot",
+            "hebrew": "חיות",
+            "translation": "Animals",
+            "style": {
+                "phase": "three",
                 "category": "Angels"
             }
         }
