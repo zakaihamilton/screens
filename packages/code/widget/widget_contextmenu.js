@@ -70,7 +70,7 @@ screens.widget.contextmenu = function WidgetContextMenu(me, packages) {
             var visible = !core.property.get(window, "ui.class.contains", "minimize");
             var region = me.ui.rect.absoluteRegion(object);
             var bottomUp = !visible || value === "taskbar";
-            var menu = me.widget.menu.create_menu(window, object, region, me.json, [title, "Context Menu"], bottomUp);
+            var menu = me.widget.menu.create_menu(window, object, region, me.json, [title], bottomUp);
             if (bottomUp) {
                 var parent = me.widget.window.parent(window);
                 if (!parent) {
