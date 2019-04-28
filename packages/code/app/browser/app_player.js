@@ -358,7 +358,7 @@ screens.app.player = function AppPlayer(me, packages) {
     me.resolutions = function (object) {
         let session = me.videoItem;
         let list = ["Auto", "Original"];
-        if (session.resolutions) {
+        if (session && session.resolutions) {
             list.push(...session.resolutions);
         }
         var info = {
