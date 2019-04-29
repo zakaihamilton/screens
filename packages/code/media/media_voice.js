@@ -307,6 +307,7 @@ screens.media.voice = function MediaVoice(me, packages) {
             return item;
         }).join("\n");
         text = text.split("\n").map(item => {
+            item = item.replace(/^,/, "");
             if (item.split(" ").length >= 20) {
                 me.log("long text: " + item);
             }

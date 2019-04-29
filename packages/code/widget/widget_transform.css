@@ -215,8 +215,15 @@ h4.widget-transform-widget {
     margin-left: 1.0em;
 }
 
+@keyframes widget-transform-active-animation {
+    to {
+        text-shadow: 0 0 20px var(--color);
+    }
+}
+
 .widget-transform-widget.mark:before {
     opacity: 1;
+    animation: widget-transform-active-animation 3s infinite alternate;
 }
 
 .widget-transform-level {
