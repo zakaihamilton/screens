@@ -27,6 +27,7 @@ screens.core.http = function CoreHttp(me, packages) {
         if (me.platform === "server" || me.platform === "service") {
             me.http = require("http");
             me.https = require("https");
+            me.request = require("request");
             me.fs = require("fs");
             if (me.platform === "server" && !me.localhost) {
                 try {
@@ -242,6 +243,9 @@ screens.core.http = function CoreHttp(me, packages) {
                 }
             });
         } else {
+            if (info.remote) {
+                return await core.message.send_server("core.http.send", info);
+            }
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
@@ -307,5 +311,23 @@ screens.core.http = function CoreHttp(me, packages) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
         return str.join("&");
+    };
+    me.get = async function (url) {
+        if (me.platform === "server") {
+            return new Promise((resolve, reject) => {
+                me.log("requesting: " + url);
+                me.request.get(url, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    else {
+                        resolve(body);
+                    }
+                });
+            });
+        }
+        else {
+            return core.message.send_server("core.http.get", url);
+        }
     };
 };
