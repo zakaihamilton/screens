@@ -8,9 +8,26 @@
     align-items: center;
     align-content: flex-start;
     flex-wrap: wrap;
+    -webkit-user-drag: none;
 }
 
 .app-dashboard-widget {
     border: 1px solid var(--border-color);
     margin: 1em;
+    position: relative;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.app-dashboard-widget:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 0 5px rgba(81, 203, 238, 1);
+    -webkit-user-drag: element;
+}
+
+.app-dashboard-widget.over {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 0 50px rgba(81, 203, 238, 1);
+}
+
+.app-dashboard-widget.drag {
+    opacity: 0.1;
 }

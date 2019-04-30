@@ -1,5 +1,6 @@
 {
     "title": "Dashboard",
+    "icon": "dashboard",
     "ui.property.style": {
         "left": "150px",
         "top": "150px",

@@ -13,7 +13,7 @@ screens.app.dashboard = function AppDashboard(me, packages) {
     };
     me.refresh = async function (object) {
         const window = widget.window.get(object);
-        me.data = await core.broadcast.send("dashboard").flat();
+        me.data = (await core.broadcast.send("dashboard")).flat();
         if (!me.data || !me.data.length) {
             me.data = [
                 {
@@ -130,6 +130,7 @@ screens.app.dashboard = function AppDashboard(me, packages) {
         }
         var widgetElement = ui.element.create({
             "tag": "div",
+            "ui.drag.icon.extend": null
         }, window.var.dashboard);
         if (data.engine === "google") {
             var chart = new google.visualization[data.type](widgetElement);

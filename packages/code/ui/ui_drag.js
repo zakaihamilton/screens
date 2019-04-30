@@ -89,9 +89,9 @@ screens.ui.drag.icon = function UIDragIcon(me, packages) {
             me.source = target;
             var source_rect = me.ui.rect.absoluteRegion(target);
             me.drag_offset = { x: event.clientX - source_rect.left, y: event.clientY - source_rect.top };
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.dropEffect = 'move';
-            event.dataTransfer.setData('text/html', target.innerHTML);
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.dropEffect = "move";
+            core.property.set(target, "ui.class.add", "drag");
         }
     };
     me.enter = {
@@ -148,6 +148,7 @@ screens.ui.drag.icon = function UIDragIcon(me, packages) {
                     core.property.set(target, "ui.class.remove", "over");
                 }
                 me.source = me.target = null;
+                core.property.set(target, "ui.class.remove", "drag");
             }
         }
     };
