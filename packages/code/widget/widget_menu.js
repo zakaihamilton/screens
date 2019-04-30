@@ -782,7 +782,10 @@ screens.widget.menu.item = function WidgetMenuItem(me, packages) {
                     "ui.basic.var": "upload",
                     "ui.style.userSelect": "none",
                     "ui.attribute.multiple": "multiple",
-                    "core.event.change": value
+                    "core.event.change": (files) => {
+                        core.property.set(me.ui.node.container(object, "widget.menu.popup"), "back");
+                        core.property.set(object, value, files);
+                    }
                 }, object, object);
             }
         }

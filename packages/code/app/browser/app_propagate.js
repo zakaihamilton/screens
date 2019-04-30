@@ -40,10 +40,9 @@ screens.app.propagate = function AppPropagate(me, packages) {
         window.files = [];
         me.fileName.set(object, null);
     };
-    me.selectFiles = function (object) {
+    me.selectFiles = function (object, event) {
         var window = me.widget.window.get(object);
-        window.files = Array.from(object.files);
-        core.property.set(me.ui.node.container(object, "widget.menu.popup"), "back");
+        window.files = Array.from(event.files);
         if (window.files && window.files.length) {
             me.fileName.set(object, window.files[0].name);
         }

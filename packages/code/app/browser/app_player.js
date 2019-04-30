@@ -326,9 +326,9 @@ screens.app.player = function AppPlayer(me, packages) {
         get: function () {
             return true;
         },
-        set: async function (object) {
+        set: async function (object, event) {
             var window = me.singleton;
-            if (!object.files.length) {
+            if (!event.files.length) {
                 return;
             }
             var progress = ui.modal.launch("progress", {
@@ -336,7 +336,7 @@ screens.app.player = function AppPlayer(me, packages) {
                 "delay": "250"
             });
             try {
-                for (var file of object.files) {
+                for (var file of event.files) {
                     var paths = await media.file.paths(window.options.groupName, file.name);
                     await me.storage.upload.file(file, paths.local, (index, count) => {
                         var data = { label: paths.local, max: count, value: index };
