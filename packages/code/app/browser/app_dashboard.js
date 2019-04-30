@@ -13,7 +13,7 @@ screens.app.dashboard = function AppDashboard(me, packages) {
     };
     me.refresh = async function (object) {
         const window = widget.window.get(object);
-        me.data = await core.broadcast.send("dashboard");
+        me.data = await core.broadcast.send("dashboard").flat();
         if (!me.data || !me.data.length) {
             me.data = [
                 {
