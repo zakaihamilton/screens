@@ -1,0 +1,29 @@
+{
+    "title": "Dashboard",
+    "ui.property.style": {
+        "left": "150px",
+        "top": "150px",
+        "width": "640px",
+        "height": "480px"
+    },
+    "widget.menu.items": [
+        {
+            "text": "Dashboard",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.dashboard.refresh"
+                }
+            ]
+        }
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.dashboard.dashboard",
+            "ui.basic.var": "dashboard"
+        }
+    ],
+    "app.dashboard.initOptions": null,
+    "app.dashboard.refresh": null
+}

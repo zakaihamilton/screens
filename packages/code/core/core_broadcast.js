@@ -12,11 +12,14 @@ screens.core.broadcast = function CoreBroadcast(me, packages) {
     me.send = async function (method) {
         var args = Array.prototype.slice.call(arguments, 0);
         var components = me.registered;
+        var results = [];
         for (let component of components) {
             args[0] = component.mapping[method];
             if (args[0]) {
-                await core.message.send.apply(null, args);
+                results.push(core.message.send.apply(null, args));
             }
         }
+        results = await Promise.all(results);
+        return results;
     };
 };
