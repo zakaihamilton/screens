@@ -14,6 +14,14 @@
                 {
                     "text": "Refresh",
                     "select": "app.dashboard.refresh"
+                },
+                {
+                    "text": "Auto Refresh",
+                    "select": "app.dashboard.autoRefresh",
+                    "options": {
+                        "separator": true,
+                        "state": "select"
+                    }
                 }
             ]
         }
