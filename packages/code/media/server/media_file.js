@@ -69,6 +69,7 @@ screens.media.file = function MediaFile(me, packages) {
         return null;
     };
     me.listing = async function (parent, update = false) {
+        let argList = [];
         var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
             let result = false;
             file.group = parent.name;
@@ -112,7 +113,6 @@ screens.media.file = function MediaFile(me, packages) {
             }
             if (file.local.endsWith(".mp4")) {
                 let resolutions = [];
-                let argList = [];
                 for (let resolution of me.resolutions) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
                     if (await storage.aws.exists(path)) {
@@ -123,9 +123,6 @@ screens.media.file = function MediaFile(me, packages) {
                         resolutions.push(resolution);
                     }
                 }
-                if (argList.length) {
-                    await db.events.msg.sendParallel(argList);
-                }
                 if ((!file.resolutions && resolutions.length) || file.resolutions.length !== resolutions.length) {
                     file.resolutions = resolutions;
                     result = true;
@@ -133,6 +130,9 @@ screens.media.file = function MediaFile(me, packages) {
             }
             return result;
         });
+        if (argList.length) {
+            await db.events.msg.sendParallel(argList);
+        }
         files.reverse();
         return files;
     };
