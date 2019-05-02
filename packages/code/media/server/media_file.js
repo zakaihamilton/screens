@@ -112,17 +112,19 @@ screens.media.file = function MediaFile(me, packages) {
             }
             if (file.local.endsWith(".mp4")) {
                 let resolutions = [];
+                let argList = [];
                 for (let resolution of me.resolutions) {
                     let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
                     if (await storage.aws.exists(path)) {
                         resolutions.push(resolution);
                     }
                     else {
-                        let result = await me.convertItem(resolution, file.group, file.session);
-                        if (result) {
-                            resolutions.push(resolution);
-                        }
+                        argList.push(["media.file.convertItem", resolution, file.group, file.session]);
+                        resolutions.push(resolution);
                     }
+                }
+                if (argList.length) {
+                    await db.events.msg.sendParallel(argList);
                 }
                 if ((!file.resolutions && resolutions.length) || file.resolutions.length !== resolutions.length) {
                     file.resolutions = resolutions;
