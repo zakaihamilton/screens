@@ -5714,6 +5714,16 @@
             "hebrew": "נ"
         },
         {
+            "source": "stretched Nun [ן]",
+            "term": "stretched Nun",
+            "hebrew": "ן"
+        },
+        {
+            "source": "stretched letter Nun [ן]",
+            "term": "stretched letter Nun",
+            "hebrew": "ן"
+        },
+        {
             "source": "Samech [ס]",
             "term": "Samech",
             "hebrew": "ס"
@@ -7795,6 +7805,50 @@
             "style": {
                 "phase": "three",
                 "category": "Angels"
+            }
+        },
+        {
+            "term": "Shina",
+            "expansion": [
+                "Shor",
+                "Nesher",
+                "Aryeh"
+            ]
+        },
+        {
+            "term": "Shinan",
+            "expansion": [
+                "Shor",
+                "Nesher",
+                "Aryeh",
+                "Adam"
+            ]
+        },
+        {
+            "term": "Shor",
+            "hebrew": "שור",
+            "translation": "Ox",
+            "style": {
+                "phase": "one",
+                "category": "Chariot"
+            }
+        },
+        {
+            "term": "Nesher",
+            "hebrew": "נשר",
+            "translation": "Eagle",
+            "style": {
+                "phase": "two",
+                "category": "Chariot"
+            }
+        },
+        {
+            "term": "Aryeh",
+            "hebrew": "אריה",
+            "translation": "Lion",
+            "style": {
+                "phase": "root",
+                "category": "Chariot"
             }
         }
     ],
