@@ -22,39 +22,62 @@ screens.core.login = function CoreLogin(me, packages) {
         }
         var login = core.util.config("settings.core.login");
         return new Promise((resolve, reject) => {
-            gapi.load("auth2", async function () {
-                login = await login;
-                try {
-                    me.auth2 = await gapi.auth2.init({
-                        client_id: login.client_id,
-                        ux_mode: "redirect"
-                    });
-                    me.auth2.isSignedIn.listen(me.signInChanged);
-                    me.auth2.currentUser.listen(me.userChanged);
-                    var state = me.auth2.isSignedIn.get();
-                    if (state) {
-                        me.setStatus("Signed in");
-                        me.updateInfo();
-                        await core.listener.signal(me.id);
+            gapi.load("auth2", {
+                callback: async function () {
+                    login = await login;
+                    try {
+                        me.auth2 = await gapi.auth2.init({
+                            client_id: login.client_id,
+                            ux_mode: "redirect"
+                        });
+                        me.auth2.isSignedIn.listen(me.signInChanged);
+                        me.auth2.currentUser.listen(me.userChanged);
+                        var state = me.auth2.isSignedIn.get();
+                        if (state) {
+                            me.setStatus("Signed in");
+                            me.updateInfo();
+                            await core.listener.signal(me.id);
+                        }
+                        else {
+                            me.log("sign in state: " + state);
+                            me.setStatus("Signing in...");
+                            await me.auth2.signIn();
+                            await core.listener.wait(me.id);
+                            me.setStatus("Sign in occured");
+                        }
+                        resolve();
                     }
-                    else {
-                        me.log("sign in state: " + state);
-                        me.setStatus("Signing in...");
-                        await me.auth2.signIn();
-                        await core.listener.wait(me.id);
-                        me.setStatus("Sign in occured");
+                    catch (error) {
+                        var err = "Cannot initialize google authenticiation: " + JSON.stringify(error);
+                        me.log_error(err);
+                        if (me.info.login) {
+                            resolve();
+                        }
+                        else {
+                            me.setStatus(err);
+                            reject(err);
+                        }
                     }
-                    resolve();
-                }
-                catch (error) {
-                    var err = "Cannot initialize google authenticiation: " + JSON.stringify(error);
-                    me.log_error(err);
+                },
+                onerror: async () => {
+                    me.log_error("Cannot load google authenticiation");
                     if (me.info.login) {
+                        await core.listener.signal(me.id);
                         resolve();
                     }
                     else {
-                        me.setStatus(err);
-                        reject(err);
+                        reject("Cannot load google authenticiation");
+                    }
+                },
+                timeout: 2500,
+                ontimeout: async () => {
+                    me.log_error("Cannot load google authenticiation on time");
+                    if (me.info.login) {
+                        await core.listener.signal(me.id);
+                        resolve();
+                    }
+                    else {
+                        reject("Cannot load google authenticiation on time");
                     }
                 }
             });
