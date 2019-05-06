@@ -6735,6 +6735,14 @@
             "defaultTerm": true
         },
         {
+            "term": "David",
+            "style": {
+                "category": "King",
+                "phase": "four"
+            },
+            "hebrew": "דוד"
+        },
+        {
             "term": "judgement",
             "style": {
                 "category": "Aspect",
@@ -7851,6 +7859,11 @@
                 "phase": "root",
                 "category": "Chariot"
             }
+        },
+        {
+            "term": "Matzpatz",
+            "hebrew": "מצפץ",
+            "explanation": "Inverted Tetragrammaton"
         }
     ],
     "style": {
