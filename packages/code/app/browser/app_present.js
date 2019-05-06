@@ -6,8 +6,8 @@
 screens.app.present = function AppPresent(me, packages) {
     const { core } = packages;
     me.init = async function () {
-        await me.ui.content.attach(me);
-        await me.ui.shared.attach(me);
+        await me.ui.content.implement(me);
+        await me.ui.shared.implement(me);
     };
     me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {

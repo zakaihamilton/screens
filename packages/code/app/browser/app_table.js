@@ -6,8 +6,8 @@
 screens.app.table = function AppTable(me, packages) {
     const { core } = packages;
     me.init = async function () {
-        await me.ui.transform.attach(me);
-        await me.ui.content.attach(me);
+        await me.ui.transform.implement(me);
+        await me.ui.content.implement(me);
     };
     me.launch = async function (args) {
         if (!args) {

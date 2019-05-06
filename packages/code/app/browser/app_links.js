@@ -7,7 +7,7 @@ screens.app.links = function AppLinks(me, packages) {
     const { core } = packages;
     me.maxLinkCount = 20;
     me.init = async function () {
-        await me.ui.content.attach(me);
+        await me.ui.content.implement(me);
     };
     me.launch = async function (args) {
         if (!args) {

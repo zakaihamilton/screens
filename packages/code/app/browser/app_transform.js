@@ -15,7 +15,7 @@ screens.app.transform = function AppTransform(me, packages) {
     };
     me.init = async function () {
         core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
-        await me.ui.content.attach(me);
+        await me.ui.content.implement(me);
     };
     me.initOptions = {
         set: function (object) {

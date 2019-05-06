@@ -38,11 +38,20 @@ function screens_setup(package_name, component_name, child_name, node) {
         screens[package_name][component_name] = component_obj;
     }
     var constructor = node;
-    var platform = constructor(component_obj, screens);
+    var platform = null;
+    var init = null;
+    if (constructor._config) {
+        let config = constructor._config();
+        platform = config.platform;
+        init = { callback: constructor.init, this: constructor, args: [constructor], package_name, component_name, child_name };
+        component_obj.class = constructor;
+    }
+    else {
+        platform = constructor(component_obj, screens);
+    }
     if (typeof platform !== "string") {
         platform = null;
     }
-    var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
         let handler = {
@@ -73,7 +82,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
     }
     else {
-        component_obj.attach = async (me) => {
+        component_obj.implement = async (me) => {
             var context = constructor(me, screens);
             var result = null;
             if (context.init) {
@@ -81,7 +90,9 @@ function screens_setup(package_name, component_name, child_name, node) {
             }
             return result;
         };
-        init = { callback: component_obj.init, args: [component_obj], package_name, component_name, child_name };
+        if (!init) {
+            init = { callback: component_obj.init, args: [component_obj], package_name, component_name, child_name };
+        }
     }
     component_obj.require = platform;
     screens.components.push(id);
@@ -107,7 +118,7 @@ async function screens_init(items) {
                 }
                 if (init.callback) {
                     try {
-                        var promise = init.callback.apply(null, init.args);
+                        var promise = init.callback.apply(init.this, init.args);
                         if (promise && promise.then) {
                             await promise;
                         }

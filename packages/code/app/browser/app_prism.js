@@ -6,7 +6,7 @@
 screens.app.prism = function AppPrism(me, packages) {
     const { core } = packages;
     me.init = async function () {
-        await me.ui.transform.attach(me);
+        await me.ui.transform.implement(me);
     };
     me.launch = function (args) {
         if (!args) {

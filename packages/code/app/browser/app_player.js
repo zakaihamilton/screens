@@ -6,7 +6,7 @@
 screens.app.player = function AppPlayer(me, packages) {
     const { core, media, ui } = packages;
     me.init = async function () {
-        await ui.content.attach(me);
+        await ui.content.implement(me);
         me.content.search = me.search;
     };
     me.ready = function (methods) {

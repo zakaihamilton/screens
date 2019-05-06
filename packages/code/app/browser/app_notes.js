@@ -6,7 +6,7 @@
 screens.app.notes = function AppNotes(me, packages) {
     const { core } = packages;
     me.init = async function () {
-        await me.ui.content.attach(me);
+        await me.ui.content.implement(me);
     };
     me.launch = async function (args) {
         if (!args) {
