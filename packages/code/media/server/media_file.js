@@ -197,6 +197,11 @@ screens.media.file = function MediaFile(me, packages) {
         await db.shared.stream.use({ user: this.userName, group, session: name }, { date: new Date().toString() });
         return storage.aws.url(path);
     };
+    me.streamingList = async function (group, name) {
+        var records = await db.shared.stream.list({ group, session: name });
+        var users = records.map(record => record.user);
+        return users;
+    };
     me.convertItem = async function (resolution, group, session) {
         let result = false;
         try {

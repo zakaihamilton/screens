@@ -209,7 +209,17 @@
                         }
                     ]
                 },
-                "app.player.content.associated.menu"
+                "app.player.content.associated.menu",
+                {
+                    "text": "Users",
+                    "select": [
+                        "app.player.streamMenuList"
+                    ],
+                    "options": {
+                        "separator": true,
+                        "visible": "admin"
+                    }
+                }
             ]
         }
     ],

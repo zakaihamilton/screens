@@ -287,6 +287,7 @@ screens.app.player = function AppPlayer(me, packages) {
             resolution = "";
         }
         var target = await media.file.streamingPath(groupName, sessionName, extension, resolution);
+        me.streamingList = await media.file.streamingList(groupName, sessionName);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
         core.property.set(player, "source", target);
@@ -584,5 +585,15 @@ screens.app.player = function AppPlayer(me, packages) {
         let sessionName = window.options.sessionName;
         let [date] = sessionName.split(/(\d{4}-\d{2}-\d{2})\s(.+)/g).slice(1);
         return date;
+    };
+    me.streamMenuList = {
+        get: function (object) {
+            var info = {
+                list: me.streamingList,
+                options: { "state": "select" },
+                group: "group"
+            };
+            return me.widget.menu.collect(object, info);
+        }
     };
 };
