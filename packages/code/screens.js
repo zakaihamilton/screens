@@ -40,11 +40,13 @@ function screens_setup(package_name, component_name, child_name, node) {
     var constructor = node;
     var platform = null;
     var init = null;
+    let isClass = false;
     if (constructor._config) {
         let config = constructor._config();
         platform = config.platform;
         init = { callback: constructor.init, this: constructor, args: [constructor], package_name, component_name, child_name };
-        component_obj.class = constructor;
+        component_obj = constructor;
+        isClass = true;
     }
     else {
         platform = constructor(component_obj, screens);
@@ -81,7 +83,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             screens[package_name][component_name] = component_obj;
         }
     }
-    else {
+    else if (!isClass) {
         component_obj.implement = async (me) => {
             var context = constructor(me, screens);
             var result = null;
@@ -94,7 +96,9 @@ function screens_setup(package_name, component_name, child_name, node) {
             init = { callback: component_obj.init, args: [component_obj], package_name, component_name, child_name };
         }
     }
-    component_obj.require = platform;
+    if (!isClass) {
+        component_obj.require = platform;
+    }
     screens.components.push(id);
     /* Load child components */
     var initializers = children.map(function (child) {
@@ -365,6 +369,16 @@ async function screens_requireAll(root, exclude) {
     return components;
 }
 
+function screens_register(component) {
+    if (Array.isArray(component)) {
+        for (let item of component) {
+            screens_register(item);
+        }
+        return;
+    }
+    screens[component.name] = component;
+}
+
 var screens = {
     components: [],
     imports: [],
@@ -375,6 +389,7 @@ var screens = {
     browse: screens_browse,
     require: screens_require,
     requireAll: screens_requireAll,
+    register: screens_register,
     log: function (message, componentId, userName) {
         screens.core.console.log.call(this, message, componentId, userName);
     },
