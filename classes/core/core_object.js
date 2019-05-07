@@ -1,8 +1,3 @@
-/*
- @author Zakai Hamilton
- @component CoreObject
- */
-
 class CoreObject {
     constructor() {
         this._attachments = [];
@@ -70,4 +65,4 @@ class CoreTest extends CoreObject {
     }
 }
 
-component.register({ CoreObject, test: CoreTest });
+component.register({ CoreObject, CoreTest });

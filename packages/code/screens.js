@@ -377,25 +377,13 @@ async function screens_requireAll(root, exclude) {
     return components;
 }
 
-function screens_register(component, name) {
-    if (Array.isArray(component)) {
-        for (let item of component) {
-            screens_register(item);
+function screens_register(classes) {
+    component = Object.assign(component, classes);
+    for (let name in classes) {
+        const the_class = classes[name];
+        if (the_class.init) {
+            the_class.init(name);
         }
-        return;
-    }
-    if (typeof component === "object") {
-        for (let item in component) {
-            screens_register(component[item], item);
-        }
-        return;
-    }
-    if (!name) {
-        name = component.name;
-    }
-    screens[name] = component;
-    if (component.init) {
-        component.init(name);
     }
 }
 
