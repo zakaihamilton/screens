@@ -61,7 +61,7 @@ screens.apps = [
     "visualize"
 ];
 
-screens.requireAll("packages/code", ["platform", "app"]).then(async components => {
+screens.requireAll(["classes", "packages/code"], ["platform", "app"]).then(async components => {
     await screens.require(components);
     screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
     screens.core.file.alias.set("eve.js", "external/eve.min.js");

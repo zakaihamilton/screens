@@ -41,8 +41,8 @@ function screens_setup(package_name, component_name, child_name, node) {
     var platform = null;
     var init = null;
     let isClass = false;
-    if (constructor._config) {
-        let config = constructor._config();
+    if (constructor.config) {
+        let config = constructor.config();
         platform = config.platform;
         init = { callback: constructor.init, this: constructor, args: [constructor], package_name, component_name, child_name };
         component_obj = constructor;
@@ -342,8 +342,15 @@ async function screens_require(items) {
 }
 
 async function screens_requireAll(root, exclude) {
-    var fs = require("fs");
     var components = [];
+    if (Array.isArray(root)) {
+        for (let item of root) {
+            let result = await screens_requireAll(item, exclude);
+            components.push(...result);
+        }
+        return components;
+    }
+    var fs = require("fs");
     var names = fs.readdirSync(root);
     for (var name of names) {
         var path = root + "/" + name;
@@ -356,6 +363,7 @@ async function screens_requireAll(root, exclude) {
         }
         if (name.endsWith(".js")) {
             var module = path.split(".")[0].replace("packages", "..");
+            module = module.replace("classes", "../../classes");
             var [package, component] = name.split(".")[0].split("_");
             if (!component) {
                 continue;
@@ -377,6 +385,9 @@ function screens_register(component) {
         return;
     }
     screens[component.name] = component;
+    if (component.init) {
+        component.init();
+    }
 }
 
 var screens = {
@@ -389,7 +400,6 @@ var screens = {
     browse: screens_browse,
     require: screens_require,
     requireAll: screens_requireAll,
-    register: screens_register,
     log: function (message, componentId, userName) {
         screens.core.console.log.call(this, message, componentId, userName);
     },
@@ -401,7 +411,12 @@ var screens = {
     },
 };
 
+var component = {
+    register: screens_register
+};
+
 if (screens.platform === "server" ||
     screens.platform === "service") {
     global.screens = screens;
+    global.component = component;
 }

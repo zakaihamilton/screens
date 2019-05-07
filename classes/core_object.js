@@ -10,9 +10,9 @@ class CoreObject {
         this._holdCount = 0;
     }
     static init() {
-
+        console.log("init: " + this.name);
     }
-    static _config() {
+    static config() {
 
     }
     attach(component) {
@@ -70,4 +70,4 @@ class CoreTest extends CoreObject {
     }
 }
 
-screens.register([CoreObject, CoreTest]);
+component.register([CoreObject, CoreTest]);
