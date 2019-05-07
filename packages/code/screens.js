@@ -377,16 +377,6 @@ async function screens_requireAll(root, exclude) {
     return components;
 }
 
-function screens_register(classes) {
-    component = Object.assign(component, classes);
-    for (let name in classes) {
-        const the_class = classes[name];
-        if (the_class.init) {
-            the_class.init(name);
-        }
-    }
-}
-
 var screens = {
     components: [],
     imports: [],
@@ -408,12 +398,7 @@ var screens = {
     },
 };
 
-var component = {
-    register: screens_register
-};
-
 if (screens.platform === "server" ||
     screens.platform === "service") {
     global.screens = screens;
-    global.component = component;
 }

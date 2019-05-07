@@ -7,7 +7,10 @@ process.on("uncaughtException", (err) => {
     fs.writeFileSync("crash.txt", "error: " + date.toUTCString() + err.stack);
 });
 
-require("../screens.js");
+require("../screens");
+require("../../../classes/core/core");
+require("../../../classes/file/file");
+require("../../../classes/test");
 
 screens.admins = [
     "Zakai Hamilton",
@@ -61,7 +64,7 @@ screens.apps = [
     "visualize"
 ];
 
-screens.requireAll(["classes", "packages/code"], ["platform", "app"]).then(async components => {
+screens.requireAll(["packages/code"], ["platform", "app"]).then(async components => {
     await screens.require(components);
     screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
     screens.core.file.alias.set("eve.js", "external/eve.min.js");
