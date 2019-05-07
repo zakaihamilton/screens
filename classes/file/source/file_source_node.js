@@ -23,6 +23,31 @@ class FileSourceNode extends component.CoreFileSource {
         const writeFile = me.util.promisify(me.fs.writeFile);
         return await writeFile(this._path, data, options);
     }
+    async members() {
+        const me = FileSourceNode;
+        const readdir = me.util.promisify(me.fs.readdir);
+        return await readdir(this._path);
+    }
+    async info() {
+        const me = FileSourceNode;
+        const stat = me.util.promisify(me.fs.stat);
+        let info = await stat(this._path);
+        if (!info) {
+            info = {};
+        }
+        return info;
+    }
+    async isDirectory() {
+        return (await this.info()).isDirectory();
+    }
+    async size() {
+        return (await this.info()).size;
+    }
+    async exists() {
+        const me = FileSourceNode;
+        const exists = me.fs.existsSync(this._path);
+        return exists;
+    }
 }
 
 component.register({ FileSourceNode });
