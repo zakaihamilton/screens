@@ -42,6 +42,9 @@ class CoreFile extends component.CoreObject {
     async exists() {
         return this.forward("exists");
     }
+    async makeDir() {
+        return this.forward("makeDir");
+    }
 }
 
 class CoreFileSource extends component.CoreObject {
@@ -67,6 +70,9 @@ class CoreFileSource extends component.CoreObject {
     }
     async exists() {
         throw "exists operation not supported";
+    }
+    async makeDir() {
+        throw "makeDir operation not supported";
     }
 }
 

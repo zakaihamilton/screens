@@ -1,5 +1,6 @@
 class FileSourceNode extends component.CoreFileSource {
     static init(id) {
+        component.CoreObject.init(id);
         const me = FileSourceNode;
         me.fs = require("fs");
         me.util = require("util");
@@ -47,6 +48,11 @@ class FileSourceNode extends component.CoreFileSource {
         const me = FileSourceNode;
         const exists = me.fs.existsSync(this._path);
         return exists;
+    }
+    async makeDir() {
+        const me = FileSourceNode;
+        const mkdir = me.util.promisify(me.fs.mkdir);
+        return await mkdir(this._path);
     }
 }
 
