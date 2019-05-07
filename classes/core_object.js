@@ -9,8 +9,8 @@ class CoreObject {
         this._parent = null;
         this._holdCount = 0;
     }
-    static init() {
-        console.log("init: " + this.name);
+    static init(id) {
+        console.log("init: " + id);
     }
     static config() {
 
@@ -70,4 +70,4 @@ class CoreTest extends CoreObject {
     }
 }
 
-component.register([CoreObject, CoreTest]);
+component.register({ CoreObject, test: CoreTest });
