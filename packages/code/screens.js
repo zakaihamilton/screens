@@ -38,19 +38,8 @@ function screens_setup(package_name, component_name, child_name, node) {
         screens[package_name][component_name] = component_obj;
     }
     var constructor = node;
-    var platform = null;
     var init = null;
-    let isClass = false;
-    if (constructor.config) {
-        let config = constructor.config();
-        platform = config.platform;
-        init = { callback: constructor.init, this: constructor, args: [constructor], package_name, component_name, child_name };
-        component_obj = constructor;
-        isClass = true;
-    }
-    else {
-        platform = constructor(component_obj, screens);
-    }
+    var platform = constructor(component_obj, screens);
     if (typeof platform !== "string") {
         platform = null;
     }
@@ -83,7 +72,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             screens[package_name][component_name] = component_obj;
         }
     }
-    else if (!isClass) {
+    else {
         component_obj.implement = async (me) => {
             var context = constructor(me, screens);
             var result = null;
@@ -96,9 +85,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             init = { callback: component_obj.init, args: [component_obj], package_name, component_name, child_name };
         }
     }
-    if (!isClass) {
-        component_obj.require = platform;
-    }
+    component_obj.require = platform;
     screens.components.push(id);
     /* Load child components */
     var initializers = children.map(function (child) {

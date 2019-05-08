@@ -8,9 +8,9 @@ process.on("uncaughtException", (err) => {
 });
 
 require("../screens");
-require("../../../classes/core/core");
-require("../../../classes/file/file");
-require("../../../classes/test");
+require("../../../component");
+COMPONENT.import(["core/file", "core/object"], "components/");
+COMPONENT.start();
 
 screens.admins = [
     "Zakai Hamilton",

@@ -1,16 +1,16 @@
-class CoreObject {
-    constructor() {
+COMPONENT.define("CoreObject", {
+    init: function (me) {
+
+    },
+    start: function () {
+        const file = new COMPONENT.CoreObject("file://test.txt");
+    },
+    constructor: function (path) {
         this._attachments = [];
         this._parent = null;
         this._holdCount = 0;
-    }
-    static init(id) {
-        console.log("init: " + id);
-    }
-    static config() {
-
-    }
-    attach(component) {
+    },
+    attach: function (component) {
         let instance = this.cast(component);
         if (instance) {
             return instance;
@@ -20,8 +20,8 @@ class CoreObject {
         parent._attachments.push(instance);
         instance._parent = parent;
         return instance;
-    }
-    detach() {
+    },
+    detach: function () {
         const parent = this._parent || this;
         this._parent = null;
         parent._attachments = parent._attachments.filter(item => item !== this);
@@ -32,20 +32,20 @@ class CoreObject {
                 parent._attachments = null;
             }
         }
-    }
-    cast(component) {
+    },
+    cast: function (component) {
         if (this.constructor.name === component.name) {
             return this;
         }
         const parent = this._parent || this;
         const instance = parent._attachments.find(item => item.constructor.name === component.name);
         return instance;
-    }
-    hold() {
+    },
+    hold: function () {
         const parent = this._parent || this;
         parent._holdCount++;
-    }
-    release() {
+    },
+    release: function () {
         const parent = this._parent || this;
         if (parent._holdCount) {
             parent._holdCount--;
@@ -57,12 +57,4 @@ class CoreObject {
         }
         return true;
     }
-}
-
-class CoreTest extends CoreObject {
-    constructor() {
-        super();
-    }
-}
-
-component.register({ CoreObject, CoreTest });
+});
