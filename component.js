@@ -7,8 +7,10 @@ var COMPONENT = {
         }
         else {
             const hasConstructor = mapping.hasOwnProperty("constructor");
-            object = new Function("path", "COMPONENT.CoreObject.call(this, path);" + (hasConstructor ? "COMPONENT." + id + ".call(this, path)" : ""));
-            object.prototype = Object.create(COMPONENT.CoreObject.prototype);
+            const hasExtension = mapping.hasOwnProperty("extends");
+            let extension = hasExtension ? mapping.extends : "CoreObject";
+            object = new Function("path", "COMPONENT." + extension + ".call(this, path);" + (hasConstructor ? "COMPONENT." + id + ".call(this, path)" : ""));
+            object.prototype = Object.create(COMPONENT[extension].prototype);
             object.prototype.constructor = object;
             Object.defineProperty(object, "name", { value: id });
         }
@@ -105,8 +107,8 @@ COMPONENT.define("CoreObject", {
 
     },
     start: function () {
-        const file = COMPONENT.new("file://test.txt");
-        console.log("file: " + file.path);
+        const file = COMPONENT.new("dropbox://test.txt");
+        console.log("dropbox: " + file.path);
     },
     constructor: function CoreObjectConstructor(path) {
         this._attachments = [];
@@ -119,9 +121,8 @@ COMPONENT.define("CoreObject", {
         if (instance) {
             return instance;
         }
-        instance = new COMPONENT.CoreObject(this.path);
-        instance = Object.assign(instance, component);
         const parent = this._parent || this;
+        instance = new component(parent.path);
         parent._attachments.push(instance);
         instance._parent = parent;
         return instance;
