@@ -1,6 +1,6 @@
 COMPONENT.define("CoreFileDropbox", {
     config: {
-        protocol: /^dropbox:\\/,
+        protocol: /^dropbox:\/\//,
         platform: "server"
     },
     init: function (me) {

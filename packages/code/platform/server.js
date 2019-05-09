@@ -9,7 +9,7 @@ process.on("uncaughtException", (err) => {
 
 require("../screens");
 require("../../../component");
-COMPONENT.import(["core/file", "core/object"], "components/");
+COMPONENT.import(["core/file"], "components/");
 COMPONENT.start();
 
 screens.admins = [

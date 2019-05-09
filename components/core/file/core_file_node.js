@@ -1,6 +1,6 @@
 COMPONENT.define("CoreFileNode", {
     config: {
-        protocol: /^file:\\/,
+        protocol: /^file:\/\//,
         platform: "server"
     },
     init: function (me) {

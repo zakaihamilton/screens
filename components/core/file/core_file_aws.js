@@ -1,6 +1,6 @@
 COMPONENT.define("CoreFileAWS", {
     config: {
-        protocol: /^aws:\\/,
+        protocol: /^aws:\/\//,
         platform: "server"
     },
     init: function (me) {

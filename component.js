@@ -2,17 +2,27 @@
 var COMPONENT = {
     define: function (id, mapping) {
         let object = mapping;
-        if (mapping.constructor) {
+        if (id === "CoreObject") {
             object = mapping.constructor;
-            for (let property in mapping) {
-                if (property === "constructor") {
-                    continue;
-                }
-                object[property] = mapping[property];
+        }
+        else {
+            const hasConstructor = mapping.hasOwnProperty("constructor");
+            object = new Function("path", "COMPONENT.CoreObject.call(this, path);" + (hasConstructor ? "COMPONENT." + id + ".call(this, path)" : ""));
+            object.prototype = Object.create(COMPONENT.CoreObject.prototype);
+            object.prototype.constructor = object;
+            Object.defineProperty(object, "name", { value: id });
+        }
+        for (let property in mapping) {
+            if (property === "constructor") {
+                continue;
             }
+            object[property] = mapping[property];
         }
         COMPONENT[id] = object;
-        COMPONENT[id].id = id;
+        if (!COMPONENT[id].config) {
+            COMPONENT[id].config = {};
+        }
+        COMPONENT[id].config.id = id;
     },
     import: function (paths, root) {
         for (let path of paths) {
@@ -30,22 +40,126 @@ var COMPONENT = {
         }
     },
     platform: typeof module !== "undefined" && this.module !== module ? "server" : "browser",
+    config: function (name) {
+        let config = {};
+        let comp = COMPONENT[name];
+        if (comp.hasOwnProperty("config")) {
+            config = comp.config;
+        }
+        return config;
+    },
     start: async function () {
         for (let name in COMPONENT) {
+            let config = COMPONENT.config(name);
+            if (!config.id) {
+                continue;
+            }
             let comp = COMPONENT[name];
-            if (comp.hasOwnProperty("init")) {
+            if ((!config.platform || config.platform === COMPONENT.platform) && comp.hasOwnProperty("init")) {
                 await comp.init(comp);
             }
         }
         for (let name in COMPONENT) {
+            let config = COMPONENT.config(name);
+            if (!config.id) {
+                continue;
+            }
             let comp = COMPONENT[name];
-            if (comp.hasOwnProperty("start")) {
+            if ((!config.platform || config.platform === COMPONENT.platform) && comp.hasOwnProperty("start")) {
                 await comp.start(comp);
             }
         }
+    },
+    new: function (path) {
+        let matches = [];
+        for (let name in COMPONENT) {
+            let config = COMPONENT.config(name);
+            if (!config.id) {
+                continue;
+            }
+            if ((!config.platform || config.platform === COMPONENT.platform)) {
+                if (config.protocol && config.protocol.test(path)) {
+                    matches.push(name);
+                }
+            }
+        }
+        let instance = null;
+        for (let match of matches) {
+            if (instance) {
+                instance.attach(COMPONENT[match]);
+            }
+            else {
+                instance = new COMPONENT[match](path);
+            }
+        }
+        return instance;
     }
 };
 
 if (COMPONENT.platform === "server") {
     global.COMPONENT = COMPONENT;
 }
+
+COMPONENT.define("CoreObject", {
+    init: function (me) {
+
+    },
+    start: function () {
+        const file = COMPONENT.new("file://test.txt");
+        console.log("file: " + file.path);
+    },
+    constructor: function CoreObjectConstructor(path) {
+        this._attachments = [];
+        this._parent = null;
+        this._holdCount = 0;
+        this.path = path;
+    },
+    attach: function (component) {
+        let instance = this.cast(component);
+        if (instance) {
+            return instance;
+        }
+        instance = new COMPONENT.CoreObject(this.path);
+        instance = Object.assign(instance, component);
+        const parent = this._parent || this;
+        parent._attachments.push(instance);
+        instance._parent = parent;
+        return instance;
+    },
+    detach: function () {
+        const parent = this._parent || this;
+        this._parent = null;
+        parent._attachments = parent._attachments.filter(item => item !== this);
+        if (parent === this) {
+            const first = parent._attachments[0];
+            if (first) {
+                first._attachments = parent._attachments;
+                parent._attachments = null;
+            }
+        }
+    },
+    cast: function (component) {
+        if (this.constructor.name === component.name) {
+            return this;
+        }
+        const parent = this._parent || this;
+        const instance = parent._attachments.find(item => item.constructor.name === component.name);
+        return instance;
+    },
+    hold: function () {
+        const parent = this._parent || this;
+        parent._holdCount++;
+    },
+    release: function () {
+        const parent = this._parent || this;
+        if (parent._holdCount) {
+            parent._holdCount--;
+            return false;
+        }
+        let attachments = Array.from(parent._attachments);
+        for (let attachment of attachments) {
+            attachment.detach();
+        }
+        return true;
+    }
+});
