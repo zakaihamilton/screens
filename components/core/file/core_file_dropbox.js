@@ -18,9 +18,14 @@ COMPONENT.define("CoreFileDropbox", {
         var body = "";
         return new Promise((resolve, reject) => {
             me.https.get(result.link, res => {
-                res.on("data", function (chunk) {
-                    body += chunk;
-                });
+                if (options.path) {
+                    res.pipe(me.fs.createWriteStream(options.path));
+                }
+                else {
+                    res.on("data", function (chunk) {
+                        body += chunk;
+                    });
+                }
                 res.on("close", function () {
                     resolve(body);
                 });
@@ -32,7 +37,52 @@ COMPONENT.define("CoreFileDropbox", {
     },
     write: async function (data, options) {
         const me = this;
-        var response = await me.dropbox.filesUpload({ path: this.path, contents: data });
+        var response = null;
+        if (options.path) {
+            const fileSize = me.fs.statSync(options.path).size;
+            var cursor = { session_id: null, offset: 0 };
+            var chunkSize = 8 * 1000 * 1000;
+            const openFile = me.util.promisify(me.fs.open);
+            const readFile = me.util.promisify(me.fs.read);
+            const closeFile = me.util.promisify(me.fs.close);
+            const buffer = new Buffer(chunkSize);
+            const fd = openFile(options.path, "r");
+            for (; ;) {
+                const nread = readFile(fd, buffer, 0, chunkSize, null);
+                if (nread === 0) {
+                    closeFile(fd);
+                }
+                var contents = buffer;
+                if (nread < chunkSize) {
+                    contents = buffer.slice(0, nread);
+                }
+                if (options.progress) {
+                    options.progress(cursor.offset, fileSize);
+                }
+                if (cursor.offset + contents.length >= fileSize) {
+                    if (cursor.offset) {
+                        var commit = { path: this.path, mode: "overwrite", mute: false };
+                        await me.dropbox.filesUploadSessionFinish({ cursor, commit, contents });
+                    }
+                    else {
+                        await me.dropbox.filesUpload({ path: this.path, contents });
+                    }
+                    return;
+                }
+                else if (cursor.offset) {
+                    await me.dropbox.filesUploadSessionAppendV2({ cursor, close: false, contents });
+                    cursor.offset += contents.length;
+                }
+                else {
+                    await me.dropbox.filesUploadSessionStart({ close: false, contents });
+                    cursor.session_id = response.session_id;
+                    cursor.offset += contents.length;
+                }
+            }
+        }
+        else {
+            response = await me.dropbox.filesUpload({ path: this.path, contents: data });
+        }
         return response;
     },
     members: async function () {
