@@ -46,11 +46,12 @@ COMPONENT.define("CoreFileDropbox", {
             const readFile = me.util.promisify(me.fs.read);
             const closeFile = me.util.promisify(me.fs.close);
             const buffer = new Buffer(chunkSize);
-            const fd = openFile(options.path, "r");
+            const fd = await openFile(options.path, "r");
             for (; ;) {
-                const nread = readFile(fd, buffer, 0, chunkSize, null);
+                const nread = await readFile(fd, buffer, 0, chunkSize, null);
                 if (nread === 0) {
-                    closeFile(fd);
+                    await closeFile(fd);
+                    return;
                 }
                 var contents = buffer;
                 if (nread < chunkSize) {
