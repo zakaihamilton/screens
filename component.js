@@ -20,6 +20,7 @@ var COMPONENT = {
             }
             object[property] = mapping[property];
         }
+        object.package = COMPONENT;
         COMPONENT[id] = object;
         if (!COMPONENT[id].config) {
             COMPONENT[id].config = {};
