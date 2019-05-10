@@ -230,7 +230,8 @@
             "the Ophanim, the animals, and the cherubim": "the Ophanim, the animals2, and the cherubim",
             "animals are the angels": "animals2 are the angels",
             "1,000": "one thousand",
-            "6,000": "six thousand"
+            "6,000": "six thousand",
+            "Arie": "Aryeh"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -6595,6 +6596,14 @@
             "hebrew": "רפאל"
         },
         {
+            "term": "Nuriel",
+            "style": {
+                "category": "Angel",
+                "phase": "four"
+            },
+            "hebrew": "נוריאל"
+        },
+        {
             "term": "north",
             "source": "Tsaphon",
             "translation": "North",
@@ -7834,6 +7843,15 @@
             ]
         },
         {
+            "term": "Shanan",
+            "expansion": [
+                "Shor",
+                "Nesher",
+                "Aryeh",
+                "Adam"
+            ]
+        },
+        {
             "term": "Shor",
             "hebrew": "שור",
             "translation": "Ox",
@@ -7864,6 +7882,11 @@
             "term": "Matzpatz",
             "hebrew": "מצפץ",
             "explanation": "Inverted Tetragrammaton"
+        },
+        {
+            "term": "Gibor",
+            "hebrew": "גיבור",
+            "translation": "Hero"
         }
     ],
     "style": {
