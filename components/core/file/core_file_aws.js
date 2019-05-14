@@ -3,7 +3,7 @@ COMPONENT.define("CoreFileAWS", {
         protocol: /^aws:\/\//,
         platform: "server"
     },
-    init: function (me) {
+    init(me) {
         me.bufferSize = 10 * 1024 * 1024;
         let AWS = require("aws-sdk");
         me.fs = require("fs");
@@ -17,7 +17,7 @@ COMPONENT.define("CoreFileAWS", {
         });
         me.cdn = cdn;
     },
-    read: async function (options) {
+    async read(options) {
         const me = this;
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -47,7 +47,7 @@ COMPONENT.define("CoreFileAWS", {
             }
         });
     },
-    write: async function (data, options) {
+    async write(data, options) {
         const me = this;
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -73,11 +73,10 @@ COMPONENT.define("CoreFileAWS", {
             });
         });
     },
-    members: async function () {
+    async members() {
         const me = this;
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
-        let path = tokens.join("/");
         var params = {
             Bucket: bucketName
         };
@@ -97,7 +96,7 @@ COMPONENT.define("CoreFileAWS", {
             });
         });
     },
-    info: async function () {
+    async info() {
         const me = this;
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -117,10 +116,10 @@ COMPONENT.define("CoreFileAWS", {
             });
         });
     },
-    size: async function () {
+    async size() {
         return (await this.info()).ContentLength;
     },
-    exists: async function () {
+    async exists() {
         const me = this;
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();

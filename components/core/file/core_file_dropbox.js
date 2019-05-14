@@ -3,7 +3,7 @@ COMPONENT.define("CoreFileDropbox", {
         protocol: /^dropbox:\/\//,
         platform: "server"
     },
-    init: function (me) {
+    init(me) {
         require("es6-promise").polyfill();
         me.fs = require("fs");
         me.https = require("https");
@@ -12,7 +12,7 @@ COMPONENT.define("CoreFileDropbox", {
         const dropbox = require("dropbox").Dropbox;
         me.dropbox = new dropbox({ accessToken, fetch });
     },
-    read: async function (options) {
+    async read(options) {
         const me = this;
         var result = await me.dropbox.filesGetTemporaryLink({ path: this.path });
         var body = "";
@@ -35,7 +35,7 @@ COMPONENT.define("CoreFileDropbox", {
             });
         });
     },
-    write: async function (data, options) {
+    async write(data, options) {
         const me = this;
         var response = null;
         if (options.path) {
@@ -86,7 +86,7 @@ COMPONENT.define("CoreFileDropbox", {
         }
         return response;
     },
-    members: async function () {
+    async members() {
         const me = this;
         const entries = [];
         var response = await me.dropbox.filesListFolder({ path: this._path });
@@ -97,18 +97,18 @@ COMPONENT.define("CoreFileDropbox", {
         }
         return entries;
     },
-    info: async function () {
+    async info() {
         const me = this;
         var info = me.dropbox.filesGetMetadata({ path: this._path }) || {};
         return info;
     },
-    isDirectory: async function () {
+    async isDirectory() {
         return (await this.info())[".tag"] === "folder";
     },
-    size: async function () {
+    async size() {
         return (await this.info()).size;
     },
-    exists: async function () {
+    async exists() {
         let exists = true;
         try {
             await this.info();
@@ -118,7 +118,7 @@ COMPONENT.define("CoreFileDropbox", {
         }
         return exists;
     },
-    makeDir: async function (options) {
+    async makeDir(options) {
         const me = this;
         var folderRef = await me.dropbox.filesCreateFolder({ path: this._path, autorename: false });
         return folderRef;

@@ -27,6 +27,7 @@
         ]
     },
     "globals": {
-        "screens":true   
+        "screens": true,
+        "COMPONENT": true
     }
 }

@@ -1,45 +1,46 @@
+var COMPONENT;
 COMPONENT.define("CoreFileNode", {
     config: {
         protocol: /^file:\/\//,
         platform: "server"
     },
-    init: function (me) {
+    init(me) {
         me.fs = require("fs");
         me.util = require("util");
     },
-    read: async function (options) {
+    async read(options) {
         const me = this;
         const readFile = me.util.promisify(me.fs.readFile);
         return await readFile(this.path, options);
     },
-    write: async function (data, options) {
+    async write(data, options) {
         const me = this;
         const writeFile = me.util.promisify(me.fs.writeFile);
         return await writeFile(this.path, data, options);
     },
-    members: async function () {
+    async members() {
         const me = this;
         const readdir = me.util.promisify(me.fs.readdir);
         return await readdir(this.path);
     },
-    info: async function () {
+    async info() {
         const me = this;
         const stat = me.util.promisify(me.fs.stat);
         let info = await stat(this.path) || {};
         return info;
     },
-    isDirectory: async function () {
+    async isDirectory() {
         return (await this.info()).isDirectory();
     },
-    size: async function () {
+    async size() {
         return (await this.info()).size;
     },
-    exists: async function () {
+    exists() {
         const me = this;
         const exists = me.fs.existsSync(this._path);
         return exists;
     },
-    makeDir: async function (options) {
+    async makeDir(options) {
         const me = this;
         const mkdir = me.util.promisify(me.fs.mkdir);
         return await mkdir(this._path, options ? options.mode : 777);
