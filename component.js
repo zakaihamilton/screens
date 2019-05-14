@@ -130,7 +130,7 @@ var COMPONENT = {
             }
         }
     },
-    new(path) {
+    instance(path) {
         let matches = [];
         for (let name in COMPONENT) {
             let config = COMPONENT.config(name);
