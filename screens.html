@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Screens v2</title>
+    <meta name="Description" content="Screens Environment OS">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script type="module" src="component.js"></script>
+</head>
+
+<body>
+    <script>
+        window.addEventListener('load', async (event) => {
+            await COMPONENT.import(["ui_widget_custom.js", "ui_widget_window.js"], "./components/ui/widget/");
+            await COMPONENT.start();
+            let myWindow = new COMPONENT.UIWidgetWindow();
+            window.document.body.appendChild(myWindow.element);
+            myWindow.hide();
+            myWindow.show();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 COMPONENT.define({
-    nathis: "CoreFileNode",
+    name: "CoreFileNode",
     config: {
         protocol: /^file:\/\//,
         platform: "server"

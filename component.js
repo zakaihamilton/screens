@@ -1,5 +1,3 @@
-
-
 /* A component is defined with the following properties
 
 COMPONENT.define({
@@ -27,15 +25,11 @@ COMPONENT.define({
 var COMPONENT = {
     forward: {},
     define(mapping) {
-        let object = mapping;
         let name = mapping.name;
-        let prototype = null;
         let proxy = false;
-        if (name === "CoreObject") {
-            object = mapping.constructor;
-            prototype = object;
-        }
-        else if (mapping.config && mapping.config.platform && mapping.config.platform !== COMPONENT.platform) {
+        let component = null;
+        let constructor = null;
+        if (mapping.config && mapping.config.platform && mapping.config.platform !== COMPONENT.platform) {
             let platform = mapping.config.platform;
             let handler = {
                 get: function (object, property) {
@@ -59,34 +53,52 @@ var COMPONENT = {
             object.name = name;
             proxy = true;
         }
-        else {
-            const hasConstructor = mapping.hasOwnProperty("constructor");
-            const hasExtension = mapping.hasOwnProperty("extends");
-            let extension = hasExtension ? mapping.extends : "CoreObject";
-            object = new Function("path", "COMPONENT." + extension + ".call(this, path);" + (hasConstructor ? "COMPONENT." + name + ".call(this, path)" : ""));
-            prototype = COMPONENT[extension].prototype;
+        else if (name === "CoreObject") {
+            constructor = function () {
+                var args = Array.prototype.slice.call(arguments, 0);
+                mapping.constructor.apply(this, args);
+            };
+            component = constructor;
         }
-        object.prototype = Object.create(prototype);
-        object.prototype.constructor = object;
-        Object.defineProperty(object, "name", { value: name });
+        else {
+            let extension = mapping.config && mapping.config.extends ? mapping.config.extends : "CoreObject";
+            let parent = COMPONENT[extension];
+            constructor = function () {
+                var args = Array.prototype.slice.call(arguments, 0);
+                if (extension) {
+                    parent._mapping.constructor.apply(this, args);
+                }
+                mapping.constructor.apply(this, args);
+            };
+            constructor.prototype = Object.create(parent._constructor);
+            constructor.prototype.constructor = constructor;
+            component = constructor;
+        }
+        component._mapping = mapping;
+        component._constructor = constructor;
+        if (!component.prototype) {
+            component.prototype = {};
+        }
+        Object.defineProperty(component, "name", { value: name });
         if (!proxy) {
             for (let property in mapping) {
-                if (property === "constructor" || property === "name") {
+                if (property === "name") {
                     continue;
                 }
-                object[property] = mapping[property];
+                component.prototype[property] = mapping[property];
+                component[property] = mapping[property];
             }
         }
-        COMPONENT[name] = object;
-        object.package = COMPONENT;
-        if (!object.config) {
-            object.config = {};
+        COMPONENT[name] = component;
+        component.package = COMPONENT;
+        if (!component.config) {
+            component.config = {};
         }
-        object.config.name = name;
+        component.config.name = name;
     },
-    import(paths, root) {
-        for (let path of paths) {
-            if (global.platform === "server") {
+    async import(paths, root) {
+        if (COMPONENT.platform === "server") {
+            for (let path of paths) {
                 const fs = require("fs");
                 let dir = process.cwd();
                 path = require("path").resolve(dir, root + path);
@@ -96,6 +108,10 @@ var COMPONENT = {
                         require(path + "/" + name);
                     }
                 }
+            }
+        } else if (COMPONENT.platform === "browser") {
+            for (let path of paths) {
+                await import(root + path);
             }
         }
     },
@@ -117,6 +133,17 @@ var COMPONENT = {
             let comp = COMPONENT[name];
             if ((!config.platform || config.platform === COMPONENT.platform) && comp.hasOwnProperty("init")) {
                 await comp.init(comp);
+            }
+        }
+        for (let name in COMPONENT) {
+            let config = COMPONENT.config(name);
+            if (!config.extends) {
+                continue;
+            }
+            let comp = COMPONENT[name];
+            let parent = COMPONENT[config.extends];
+            if ((!config.platform || config.platform === COMPONENT.platform) && parent.hasOwnProperty("extends")) {
+                await parent.extends(comp);
             }
         }
         for (let name in COMPONENT) {
@@ -158,6 +185,8 @@ var COMPONENT = {
 
 if (COMPONENT.platform === "server") {
     global.COMPONENT = COMPONENT;
+} else if (COMPONENT.platform === "browser") {
+    window.COMPONENT = COMPONENT;
 }
 
 COMPONENT.define({
