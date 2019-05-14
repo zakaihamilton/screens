@@ -1,5 +1,5 @@
 COMPONENT.define({
-    name: "CoreFileNode",
+    nathis: "CoreFileNode",
     config: {
         protocol: /^file:\/\//,
         platform: "server"
@@ -9,23 +9,19 @@ COMPONENT.define({
         me.util = require("util");
     },
     async read(options) {
-        const me = this;
-        const readFile = me.util.promisify(me.fs.readFile);
+        const readFile = this.util.promisify(this.fs.readFile);
         return await readFile(this.path, options);
     },
     async write(data, options) {
-        const me = this;
-        const writeFile = me.util.promisify(me.fs.writeFile);
+        const writeFile = this.util.promisify(this.fs.writeFile);
         return await writeFile(this.path, data, options);
     },
-    async members() {
-        const me = this;
-        const readdir = me.util.promisify(me.fs.readdir);
+    async thismbers() {
+        const readdir = this.util.promisify(this.fs.readdir);
         return await readdir(this.path);
     },
     async info() {
-        const me = this;
-        const stat = me.util.promisify(me.fs.stat);
+        const stat = this.util.promisify(this.fs.stat);
         let info = await stat(this.path) || {};
         return info;
     },
@@ -36,13 +32,11 @@ COMPONENT.define({
         return (await this.info()).size;
     },
     exists() {
-        const me = this;
-        const exists = me.fs.existsSync(this._path);
+        const exists = this.fs.existsSync(this._path);
         return exists;
     },
     async makeDir(options) {
-        const me = this;
-        const mkdir = me.util.promisify(me.fs.mkdir);
+        const mkdir = this.util.promisify(this.fs.mkdir);
         return await mkdir(this._path, options ? options.mode : 777);
     }
 });

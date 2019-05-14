@@ -1,12 +1,63 @@
 
+
+/* A component is defined with the following properties
+
+COMPONENT.define({
+    name: "PackageComponent", // Component name
+    config: {  // an optional configuration
+        protocol: /^prefix:\/\// for path matching for new instances
+        platform: "server" // for platform specific components
+    },
+    init () {
+    
+    },
+    start() {
+    
+    },
+    constructor() {
+    
+    },
+    method() {
+    
+    },
+});
+
+*/
+
 var COMPONENT = {
+    forward: {},
     define(mapping) {
         let object = mapping;
         let name = mapping.name;
         let prototype = null;
+        let proxy = false;
         if (name === "CoreObject") {
             object = mapping.constructor;
             prototype = object;
+        }
+        else if (mapping.config && mapping.config.platform && mapping.config.platform !== COMPONENT.platform) {
+            let platform = mapping.config.platform;
+            let handler = {
+                get: function (object, property) {
+                    if (property in object) {
+                        return Reflect.get(object, property);
+                    }
+                    else {
+                        return new Proxy(() => {
+                            let path = object();
+                            return path + "." + property;
+                        }, handler);
+                    }
+                },
+                apply: function (target, thisArg, argumentList) {
+                    var args = Array.prototype.slice.call(argumentList);
+                    args.unshift(target());
+                    return COMPONENT.forward[platform].apply(thisArg, args);
+                }
+            };
+            object = new Proxy(() => { return name; }, handler);
+            object.name = name;
+            proxy = true;
         }
         else {
             const hasConstructor = mapping.hasOwnProperty("constructor");
@@ -18,18 +69,20 @@ var COMPONENT = {
         object.prototype = Object.create(prototype);
         object.prototype.constructor = object;
         Object.defineProperty(object, "name", { value: name });
-        for (let property in mapping) {
-            if (property === "constructor" || property === "name") {
-                continue;
+        if (!proxy) {
+            for (let property in mapping) {
+                if (property === "constructor" || property === "name") {
+                    continue;
+                }
+                object[property] = mapping[property];
             }
-            object[property] = mapping[property];
         }
-        object.package = COMPONENT;
         COMPONENT[name] = object;
-        if (!COMPONENT[name].config) {
-            COMPONENT[name].config = {};
+        object.package = COMPONENT;
+        if (!object.config) {
+            object.config = {};
         }
-        COMPONENT[name].config.name = name;
+        object.config.name = name;
     },
     import(paths, root) {
         for (let path of paths) {
@@ -111,10 +164,6 @@ COMPONENT.define({
     name: "CoreObject",
     init() {
 
-    },
-    start() {
-        const file = COMPONENT.new("dropbox://test.txt");
-        console.log("dropbox: " + file.path);
     },
     constructor(path) {
         this._attachments = [];
