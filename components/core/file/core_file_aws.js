@@ -1,4 +1,5 @@
-COMPONENT.define("CoreFileAWS", {
+COMPONENT.define({
+    name: "CoreFileAWS",
     config: {
         protocol: /^aws:\/\//,
         platform: "server"

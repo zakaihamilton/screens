@@ -1,31 +1,35 @@
 
 var COMPONENT = {
-    define(id, mapping) {
+    define(mapping) {
         let object = mapping;
-        if (id === "CoreObject") {
+        let name = mapping.name;
+        let prototype = null;
+        if (name === "CoreObject") {
             object = mapping.constructor;
+            prototype = object;
         }
         else {
             const hasConstructor = mapping.hasOwnProperty("constructor");
             const hasExtension = mapping.hasOwnProperty("extends");
             let extension = hasExtension ? mapping.extends : "CoreObject";
-            object = new Function("path", "COMPONENT." + extension + ".call(this, path);" + (hasConstructor ? "COMPONENT." + id + ".call(this, path)" : ""));
-            object.prototype = Object.create(COMPONENT[extension].prototype);
-            object.prototype.constructor = object;
-            Object.defineProperty(object, "name", { value: id });
+            object = new Function("path", "COMPONENT." + extension + ".call(this, path);" + (hasConstructor ? "COMPONENT." + name + ".call(this, path)" : ""));
+            prototype = COMPONENT[extension].prototype;
         }
+        object.prototype = Object.create(prototype);
+        object.prototype.constructor = object;
+        Object.defineProperty(object, "name", { value: name });
         for (let property in mapping) {
-            if (property === "constructor") {
+            if (property === "constructor" || property === "name") {
                 continue;
             }
             object[property] = mapping[property];
         }
         object.package = COMPONENT;
-        COMPONENT[id] = object;
-        if (!COMPONENT[id].config) {
-            COMPONENT[id].config = {};
+        COMPONENT[name] = object;
+        if (!COMPONENT[name].config) {
+            COMPONENT[name].config = {};
         }
-        COMPONENT[id].config.id = id;
+        COMPONENT[name].config.name = name;
     },
     import(paths, root) {
         for (let path of paths) {
@@ -54,7 +58,7 @@ var COMPONENT = {
     async start() {
         for (let name in COMPONENT) {
             let config = COMPONENT.config(name);
-            if (!config.id) {
+            if (!config.name) {
                 continue;
             }
             let comp = COMPONENT[name];
@@ -64,7 +68,7 @@ var COMPONENT = {
         }
         for (let name in COMPONENT) {
             let config = COMPONENT.config(name);
-            if (!config.id) {
+            if (!config.name) {
                 continue;
             }
             let comp = COMPONENT[name];
@@ -77,7 +81,7 @@ var COMPONENT = {
         let matches = [];
         for (let name in COMPONENT) {
             let config = COMPONENT.config(name);
-            if (!config.id) {
+            if (!config.name) {
                 continue;
             }
             if ((!config.platform || config.platform === COMPONENT.platform)) {
@@ -103,7 +107,8 @@ if (COMPONENT.platform === "server") {
     global.COMPONENT = COMPONENT;
 }
 
-COMPONENT.define("CoreObject", {
+COMPONENT.define({
+    name: "CoreObject",
     init() {
 
     },

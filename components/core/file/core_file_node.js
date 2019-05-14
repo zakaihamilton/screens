@@ -1,5 +1,5 @@
-var COMPONENT;
-COMPONENT.define("CoreFileNode", {
+COMPONENT.define({
+    name: "CoreFileNode",
     config: {
         protocol: /^file:\/\//,
         platform: "server"

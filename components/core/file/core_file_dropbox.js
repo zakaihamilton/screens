@@ -1,4 +1,5 @@
-COMPONENT.define("CoreFileDropbox", {
+COMPONENT.define({
+    name: "CoreFileDropbox",
     config: {
         protocol: /^dropbox:\/\//,
         platform: "server"
