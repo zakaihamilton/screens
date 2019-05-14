@@ -14,12 +14,9 @@
         window.addEventListener('load', async (event) => {
             await COMPONENT.import(["ui_widget_custom.js", "ui_widget_window.js"], "./components/ui/widget/");
             await COMPONENT.start();
-            let myWindow = new COMPONENT.UIWidgetWindow();
-            window.document.body.appendChild(myWindow.element);
-            myWindow.hide();
-            myWindow.show();
         });
     </script>
+    <widget-window></widget-window>
 </body>
 
 </html>
