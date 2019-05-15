@@ -3,26 +3,33 @@ COMPONENT.define({
     config: {
         platform: "browser",
     },
-    init(me) {
-    },
     stylesToHtml() {
-        let styles = "";
-        for (let key in this.styles) {
-            styles += key + ":" + this.styles[key] + ";";
+        let styles = typeof this.styles === "function" ? this.styles(this.element) : this.styles;
+        let html = "";
+        for (let key in styles) {
+            html += key + ":" + styles[key] + ";";
         }
-        if (styles) {
+        if (html) {
             return `
             <style>
                 ${this.config.tag} {
-                    ${styles}
+                    ${html}
                 }
             </style>`;
+        }
+    },
+    registerEvents() {
+        let events = typeof this.events === "function" ? this.events(this.element) : this.events;
+        for (let name in events) {
+            let callback = events[name];
+            this.element.addEventListener(name, callback);
         }
     },
     update() {
         let series = {
             data: "data",
             stylesToHtml: "styles",
+            eventsToHtml: null,
             render: null
         };
         let html = "";
@@ -48,6 +55,7 @@ COMPONENT.define({
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
+                instance.registerEvents();
                 instance.update();
             }
         });
