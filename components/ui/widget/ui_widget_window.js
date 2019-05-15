@@ -11,6 +11,7 @@ COMPONENT.define({
         border: "1px solid black",
         "background-color": "red",
         display: "flex",
+        position: "absolute",
         "flex-direction": "column",
         "align-items": "stretch",
         "align-content": "stretch",
