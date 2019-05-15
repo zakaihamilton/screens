@@ -110,11 +110,8 @@ var COMPONENT = {
                 }
             }
         } else if (COMPONENT.platform === "browser") {
-            let browserImport = async function (path) {
-                await import(root + path);
-            };
             for (let path of paths) {
-                await browserImport(root + path);
+                await import(root + path);
             }
         }
     },
@@ -188,6 +185,7 @@ var COMPONENT = {
 
 if (COMPONENT.platform === "server") {
     global.COMPONENT = COMPONENT;
+    global.import = require;
 } else if (COMPONENT.platform === "browser") {
     window.COMPONENT = COMPONENT;
 }
