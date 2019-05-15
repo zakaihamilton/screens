@@ -28,5 +28,9 @@ COMPONENT.define({
                 cancel: "mousecancel"
             };
         }
+        me.isWindow = {
+            move: true,
+            up: true
+        };
     }
 });

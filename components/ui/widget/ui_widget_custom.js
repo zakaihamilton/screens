@@ -34,16 +34,25 @@ COMPONENT.define({
         }
         this.prevClasses = classes;
     },
-    registerEvents(events) {
+    eventListenerManage(events, method) {
         events = typeof events === "function" ? events(this.element) : events;
         for (let name in events) {
             let callback = events[name];
-            let mapping = this.package.UIEventTouch.mapping[name];
+            let touch = this.package.UIEventTouch;
+            let mapping = touch.mapping[name];
+            let isWindow = touch.isWindow[name];
             if (mapping) {
                 name = mapping;
             }
-            this.element.addEventListener(name, callback);
+            let target = isWindow ? window : this.element;
+            target[method](name, callback);
         }
+    },
+    registerEvents(events) {
+        this.eventListenerManage(events, "addEventListener");
+    },
+    unregisterEvents(events) {
+        this.eventListenerManage(events, "removeEventListener");
     },
     update() {
         let series = {
