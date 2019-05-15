@@ -28,7 +28,6 @@ var COMPONENT = {
         let name = mapping.name;
         let proxy = false;
         let component = null;
-        let constructor = null;
         if (mapping.config && mapping.config.platform && mapping.config.platform !== COMPONENT.platform) {
             let platform = mapping.config.platform;
             let handler = {
@@ -49,37 +48,37 @@ var COMPONENT = {
                     return COMPONENT.forward[platform].apply(thisArg, args);
                 }
             };
-            object = new Proxy(() => { return name; }, handler);
-            object.name = name;
+            let object = new Proxy(() => { return name; }, handler);
+            object.id = name;
             proxy = true;
         }
         else if (name === "CoreObject") {
-            constructor = function () {
-                var args = Array.prototype.slice.call(arguments, 0);
-                mapping.constructor.apply(this, args);
+            component = class {
+                constructor(parent) {
+                    this.id = name;
+                    mapping.constructor.call(this, parent);
+                }
             };
-            component = constructor;
         }
         else {
             let extension = mapping.config && mapping.config.extends ? mapping.config.extends : "CoreObject";
             let parent = COMPONENT[extension];
-            constructor = function () {
-                var args = Array.prototype.slice.call(arguments, 0);
-                if (extension) {
-                    parent._mapping.constructor.apply(this, args);
+            component = class extends parent {
+                constructor(parent) {
+                    super(parent);
+                    this.id = name;
+                    if (mapping.hasOwnProperty("constructor")) {
+                        mapping.constructor.call(this, parent);
+                    }
                 }
-                mapping.constructor.apply(this, args);
             };
-            constructor.prototype = Object.create(parent._constructor);
-            constructor.prototype.constructor = constructor;
-            component = constructor;
         }
+        Object.defineProperty(component, "name", { value: name });
+        Object.defineProperty(component.prototype, "name", { value: name });
         component._mapping = mapping;
-        component._constructor = constructor;
         if (!component.prototype) {
             component.prototype = {};
         }
-        Object.defineProperty(component, "name", { value: name });
         if (!proxy) {
             for (let property in mapping) {
                 if (property === "name") {
@@ -189,7 +188,8 @@ var COMPONENT = {
                 instance.attach(COMPONENT[match]);
             }
             else {
-                instance = new COMPONENT[match](path);
+                instance = new COMPONENT[match]();
+                instance.path = path;
             }
         }
         return instance;
@@ -207,21 +207,36 @@ COMPONENT.define({
     init() {
 
     },
-    constructor(path) {
+    constructor(parent) {
         this._attachments = [];
-        this._parent = null;
+        this._parent = parent;
+        if (parent) {
+            parent._attachments.push(this);
+        }
         this._holdCount = 0;
-        this.path = path;
+        if (this.config) {
+            let attachments = this.config.attach;
+            if (attachments) {
+                for (let name in attachments) {
+                    let attachment = attachments[name];
+                    if (typeof attachment === "string") {
+                        attachment = COMPONENT[attachment];
+                    }
+                    this[name] = this.attach(attachment);
+                }
+            }
+        }
     },
     attach(component) {
+        if (!component) {
+            return null;
+        }
         let instance = this.cast(component);
         if (instance) {
             return instance;
         }
         const parent = this._parent || this;
-        instance = new component(parent.path);
-        parent._attachments.push(instance);
-        instance._parent = parent;
+        instance = new component(parent);
         return instance;
     },
     detach() {
@@ -237,11 +252,14 @@ COMPONENT.define({
         }
     },
     cast(component) {
-        if (this.constructor.name === component.name) {
+        if (!component) {
+            return null;
+        }
+        if (this.id === component.id) {
             return this;
         }
         const parent = this._parent || this;
-        const instance = parent._attachments.find(item => item.constructor.name === component.name);
+        const instance = parent._attachments.find(item => item.id === component.id);
         return instance;
     },
     hold() {

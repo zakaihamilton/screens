@@ -30,11 +30,9 @@ COMPONENT.define({
     config: {
         platform: "browser",
         extends: "UIWidgetCustom",
-        tag: "widget-window-title"
-    },
-    events: {
-        click() {
-            alert(this.getAttribute("title"));
+        tag: "widget-window-title",
+        attach: {
+            drag: "UIWidgetWindowMove"
         }
     },
     render: element => `
@@ -52,5 +50,21 @@ COMPONENT.define({
         border: "1px solid green",
         "background-color": "blue",
         "flex": "1"
+    }
+});
+
+COMPONENT.define({
+    name: "UIWidgetWindowMove",
+    config: {
+        platform: "browser"
+    },
+    events: {
+        down() {
+            alert("Hello");
+        }
+    },
+    constructor() {
+        let widget = this.cast(COMPONENT.UIWidgetWindow);
+        widget.registerEvents(this.events);
     }
 });

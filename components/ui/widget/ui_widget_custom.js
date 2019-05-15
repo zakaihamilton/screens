@@ -34,10 +34,14 @@ COMPONENT.define({
         }
         this.prevClasses = classes;
     },
-    registerEvents() {
-        let events = typeof this.events === "function" ? this.events(this.element) : this.events;
+    registerEvents(events) {
+        events = typeof events === "function" ? events(this.element) : events;
         for (let name in events) {
             let callback = events[name];
+            let mapping = this.package.UIEventTouch.mapping[name];
+            if (mapping) {
+                name = mapping;
+            }
             this.element.addEventListener(name, callback);
         }
     },
@@ -70,7 +74,7 @@ COMPONENT.define({
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
-                instance.registerEvents();
+                instance.registerEvents(instance.events);
                 instance.update();
             }
         });
