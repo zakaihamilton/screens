@@ -5,21 +5,19 @@ COMPONENT.define({
     },
     init(me) {
     },
-    stylesToHtml(element) {
-        let data = element.data;
-        if (!data.styles) {
-            return "";
-        }
+    stylesToHtml() {
         let styles = "";
-        for (let key in data.styles) {
-            styles += key + ":" + data.styles[key] + ";";
+        for (let key in this.styles) {
+            styles += key + ":" + this.styles[key] + ";";
         }
-        return `
-        <style>
-            ${this.config.tag} {
-                ${styles}
-            }
-        </style>`;
+        if (styles) {
+            return `
+            <style>
+                ${this.config.tag} {
+                    ${styles}
+                }
+            </style>`;
+        }
     },
     extends(me) {
         window.customElements.define(me.config.tag, class extends HTMLElement {
@@ -29,16 +27,21 @@ COMPONENT.define({
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
-                let data = typeof instance.data === "function" ? instance.data(this) : instance.data;
-                this.data = data;
+                let series = {
+                    data: "data",
+                    stylesToHtml: "styles",
+                    render: null
+                };
                 let html = "";
-                let styles = instance.stylesToHtml(this);
-                if (styles) {
-                    html += styles;
-                }
-                let content = typeof instance.render === "function" ? instance.render(this) : instance.render;
-                if (content) {
-                    html += content;
+                for (let method in series) {
+                    let result = typeof instance[method] === "function" ? instance[method](this) : instance[method];
+                    let varName = series[method];
+                    if (typeof result === "string") {
+                        html += result;
+                    }
+                    if (varName) {
+                        this[varName] = result;
+                    }
                 }
                 if (html) {
                     this.innerHTML = html;

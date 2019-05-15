@@ -5,18 +5,18 @@ COMPONENT.define({
         extends: "UIWidgetCustom",
         tag: "widget-window"
     },
+    styles: {
+        width: "500px",
+        height: "100px",
+        border: "1px solid black",
+        "background-color": "red",
+        display: "block"
+    },
     data: {
-        styles: {
-            width: "500px",
-            height: "100px",
-            border: "1px solid black",
-            "background-color": "red",
-            display: "block"
-        },
-        title: "Hello",
+        title: "Hello"
     },
     render: element => `
-        <widget-window-title>${element.data.title}</widget-window-title>`
+        <widget-window-title title="${element.data.title}"></widget-window-title>`
 });
 
 COMPONENT.define({
@@ -26,7 +26,9 @@ COMPONENT.define({
         extends: "UIWidgetCustom",
         tag: "widget-window-title"
     },
-    render() {
+    styles: {
 
-    }
+    },
+    render: element => `
+        <div>${element.getAttribute("title")}</div>`
 });
