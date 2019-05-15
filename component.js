@@ -56,6 +56,7 @@ var COMPONENT = {
             component = class {
                 constructor(parent) {
                     this.id = name;
+                    this.package = COMPONENT;
                     mapping.constructor.call(this, parent);
                 }
             };
@@ -69,6 +70,18 @@ var COMPONENT = {
                     this.id = name;
                     if (mapping.hasOwnProperty("constructor")) {
                         mapping.constructor.call(this, parent);
+                    }
+                    if (this.config) {
+                        let attachments = this.config.attach;
+                        if (attachments) {
+                            for (let name in attachments) {
+                                let attachment = attachments[name];
+                                if (typeof attachment === "string") {
+                                    attachment = COMPONENT[attachment];
+                                }
+                                this[name] = this.attach(attachment);
+                            }
+                        }
                     }
                 }
             };
@@ -214,18 +227,6 @@ COMPONENT.define({
             parent._attachments.push(this);
         }
         this._holdCount = 0;
-        if (this.config) {
-            let attachments = this.config.attach;
-            if (attachments) {
-                for (let name in attachments) {
-                    let attachment = attachments[name];
-                    if (typeof attachment === "string") {
-                        attachment = COMPONENT[attachment];
-                    }
-                    this[name] = this.attach(attachment);
-                }
-            }
-        }
     },
     attach(component) {
         if (!component) {
@@ -259,6 +260,9 @@ COMPONENT.define({
             return this;
         }
         const parent = this._parent || this;
+        if (parent.id === component.id) {
+            return parent;
+        }
         const instance = parent._attachments.find(item => item.id === component.id);
         return instance;
     },
@@ -277,5 +281,15 @@ COMPONENT.define({
             await attachment.detach();
         }
         return true;
+    },
+    async send(method, params) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        const parent = this._parent || this;
+        let list = [parent, ...parent._attachments];
+        list.map(item => {
+            if (method in item) {
+                item[method].apply(item, args);
+            }
+        });
     }
 });

@@ -74,10 +74,13 @@ COMPONENT.define({
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
-                instance.registerEvents(instance.events);
-                instance.update();
+                instance.send("register", instance);
+                instance.send("update", instance);
             }
         });
+    },
+    register() {
+        this.registerEvents(this.events);
     },
     show() {
         this.element.style.visibility = "visible";

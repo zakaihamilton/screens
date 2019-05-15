@@ -63,8 +63,7 @@ COMPONENT.define({
             alert("Hello");
         }
     },
-    constructor() {
-        let widget = this.cast(COMPONENT.UIWidgetWindow);
-        widget.registerEvents(this.events);
+    register(instance) {
+        instance.registerEvents(this.events);
     }
 });
