@@ -51,7 +51,6 @@ COMPONENT.define({
         window.customElements.define(me.config.tag, class extends HTMLElement {
             constructor() {
                 super();
-
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
