@@ -18,6 +18,22 @@ COMPONENT.define({
             </style>`;
         }
     },
+    updateClasses() {
+        let classes = typeof this.classes === "function" ? this.classes(this.element) : this.classes;
+        if (this.prevClasses) {
+            for (let name of this.prevClasses) {
+                if (!classes || !classes.includes(name)) {
+                    this.element.classList.remove(name);
+                }
+            }
+        }
+        if (classes) {
+            for (let name of classes) {
+                this.element.classList.add(name);
+            }
+        }
+        this.prevClasses = classes;
+    },
     registerEvents() {
         let events = typeof this.events === "function" ? this.events(this.element) : this.events;
         for (let name in events) {
@@ -28,8 +44,8 @@ COMPONENT.define({
     update() {
         let series = {
             data: "data",
-            stylesToHtml: "styles",
-            eventsToHtml: null,
+            stylesToHtml: null,
+            updateClasses: null,
             render: null
         };
         let html = "";
