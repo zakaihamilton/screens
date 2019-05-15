@@ -19,6 +19,27 @@ COMPONENT.define({
             </style>`;
         }
     },
+    update() {
+        let series = {
+            data: "data",
+            stylesToHtml: "styles",
+            render: null
+        };
+        let html = "";
+        for (let method in series) {
+            let result = typeof this[method] === "function" ? this[method](this.element) : this[method];
+            let varName = series[method];
+            if (typeof result === "string") {
+                html += result;
+            }
+            if (varName) {
+                this.element[varName] = result;
+            }
+        }
+        if (html) {
+            this.element.innerHTML = html;
+        }
+    },
     extends(me) {
         window.customElements.define(me.config.tag, class extends HTMLElement {
             constructor() {
@@ -27,25 +48,7 @@ COMPONENT.define({
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
-                let series = {
-                    data: "data",
-                    stylesToHtml: "styles",
-                    render: null
-                };
-                let html = "";
-                for (let method in series) {
-                    let result = typeof instance[method] === "function" ? instance[method](this) : instance[method];
-                    let varName = series[method];
-                    if (typeof result === "string") {
-                        html += result;
-                    }
-                    if (varName) {
-                        this[varName] = result;
-                    }
-                }
-                if (html) {
-                    this.innerHTML = html;
-                }
+                instance.update();
             }
         });
     },
