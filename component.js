@@ -111,7 +111,20 @@ var COMPONENT = {
             }
         } else if (COMPONENT.platform === "browser") {
             for (let path of paths) {
-                await import(root + path);
+                await new Promise((resolve, reject) => {
+                    let parentNode = document.getElementsByTagName("head")[0];
+                    var item = document.createElement("script");
+                    item.src = root + path;
+                    item.async = true;
+                    item.onload = () => {
+                        resolve(item);
+                    };
+                    item.onerror = () => {
+                        console.log("Failure in loading file: " + root + path);
+                        reject();
+                    };
+                    parentNode.appendChild(item);
+                });
             }
         }
     },
@@ -185,7 +198,6 @@ var COMPONENT = {
 
 if (COMPONENT.platform === "server") {
     global.COMPONENT = COMPONENT;
-    global.import = require;
 } else if (COMPONENT.platform === "browser") {
     window.COMPONENT = COMPONENT;
 }
