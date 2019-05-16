@@ -7,3 +7,6 @@
 .openodeignore
 /backup
 /hash
+/project
+/centos*
+/*.pem

@@ -13,12 +13,13 @@
     <script>
         window.addEventListener('load', async (event) => {
             await COMPONENT.import([
+                "ui_event_touch.js",
+                "ui_event_move.js"
+            ], "./components/ui/event/");
+            await COMPONENT.import([
                 "ui_widget_custom.js",
                 "ui_widget_window.js"
             ], "./components/ui/widget/");
-            await COMPONENT.import([
-                "ui_event_touch.js"
-            ], "./components/ui/event/");
             await COMPONENT.start();
         });
     </script>

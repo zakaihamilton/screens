@@ -64,10 +64,14 @@ var COMPONENT = {
         else {
             let extension = mapping.config && mapping.config.extends ? mapping.config.extends : "CoreObject";
             let parent = COMPONENT[extension];
+            if (!parent) {
+                throw "Cannot find " + extension + " component";
+            }
             component = class extends parent {
                 constructor(parent) {
                     super(parent);
                     this.id = name;
+                    this._extends.push(name);
                     if (mapping.hasOwnProperty("constructor")) {
                         mapping.constructor.call(this, parent);
                     }
@@ -107,6 +111,7 @@ var COMPONENT = {
             component.config = {};
         }
         component.config.name = name;
+        component.id = name;
     },
     async import(paths, root) {
         if (COMPONENT.platform === "server") {
@@ -227,6 +232,7 @@ COMPONENT.define({
             parent._attachments.push(this);
         }
         this._holdCount = 0;
+        this._extends = [];
     },
     attach(component) {
         if (!component) {
@@ -263,7 +269,7 @@ COMPONENT.define({
         if (parent.id === component.id) {
             return parent;
         }
-        const instance = parent._attachments.find(item => item.id === component.id);
+        const instance = parent._attachments.find(item => item._extends.includes(component.id));
         return instance;
     },
     hold() {
