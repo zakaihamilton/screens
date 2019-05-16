@@ -13,6 +13,9 @@
     <script>
         window.addEventListener('load', async (event) => {
             await COMPONENT.import([
+                "core_object.js",
+            ], "./components/core/object/");
+            await COMPONENT.import([
                 "ui_event_touch.js",
                 "ui_event_move.js"
             ], "./components/ui/event/");

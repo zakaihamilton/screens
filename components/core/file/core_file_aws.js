@@ -1,10 +1,11 @@
-COMPONENT.define({
-    name: "CoreFileAWS",
-    config: {
-        protocol: /^aws:\/\//,
-        platform: "server"
-    },
-    init(me) {
+COMPONENT.CoreFileAWS = class CoreFileAWS extends COMPONENT.CoreObject {
+    static config() {
+        return {
+            protocol: /^aws:\/\//,
+            platform: "server"
+        };
+    }
+    static init(me) {
         me.bufferSize = 10 * 1024 * 1024;
         let AWS = require("aws-sdk");
         me.fs = require("fs");
@@ -17,7 +18,7 @@ COMPONENT.define({
             secretAccessKey
         });
         me.cdn = cdn;
-    },
+    }
     async read(options) {
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -46,7 +47,7 @@ COMPONENT.define({
                 });
             }
         });
-    },
+    }
     async write(data, options) {
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -71,7 +72,7 @@ COMPONENT.define({
                 }
             });
         });
-    },
+    }
     async members() {
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -93,7 +94,7 @@ COMPONENT.define({
                 resolve(files);
             });
         });
-    },
+    }
     async info() {
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -112,10 +113,10 @@ COMPONENT.define({
                 }
             });
         });
-    },
+    }
     async size() {
         return (await this.info()).ContentLength;
-    },
+    }
     async exists() {
         let tokens = this._path.split("/");
         let bucketName = tokens.shift();
@@ -135,4 +136,4 @@ COMPONENT.define({
             });
         });
     }
-});
+};

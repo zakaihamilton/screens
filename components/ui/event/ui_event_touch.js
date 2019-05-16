@@ -1,9 +1,10 @@
-COMPONENT.define({
-    name: "UIEventTouch",
-    config: {
-        platform: "browser"
-    },
-    init(me) {
+COMPONENT.UIEventTouch = class UIEventTouch extends COMPONENT.CoreObject {
+    static config() {
+        return {
+            platform: "browser"
+        };
+    }
+    static init(me) {
         if (window.PointerEvent) {
             me.mapping = {
                 down: "pointerdown",
@@ -33,4 +34,4 @@ COMPONENT.define({
             up: true
         };
     }
-});
+};

@@ -1,9 +1,27 @@
-COMPONENT.define({
-    name: "UIWidgetCustom",
-    config: {
-        platform: "browser",
-    },
+COMPONENT.UIWidgetCustom = class UIWidgetCustom extends COMPONENT.CoreObject {
+    static config() {
+        return {
+            platform: "browser"
+        };
+    }
+    static start(me) {
+        let config = me.config();
+        if (!config.tag) {
+            return;
+        }
+        window.customElements.define(config.tag, class extends HTMLElement {
+            constructor() {
+                super();
+                let instance = new COMPONENT[me.name]();
+                instance.element = this;
+                this.instance = instance;
+                instance.send("register", instance);
+                instance.send("update", instance);
+            }
+        });
+    }
     stylesToHtml() {
+        let config = this.constructor.config();
         let styles = typeof this.styles === "function" ? this.styles(this.element) : this.styles;
         let html = "";
         for (let key in styles) {
@@ -12,12 +30,12 @@ COMPONENT.define({
         if (html) {
             return `
             <style>
-                ${this.config.tag} {
+                ${config.tag} {
                     ${html}
                 }
             </style>`;
         }
-    },
+    }
     updateClasses() {
         let classes = typeof this.classes === "function" ? this.classes(this.element) : this.classes;
         if (this.prevClasses) {
@@ -33,7 +51,7 @@ COMPONENT.define({
             }
         }
         this.prevClasses = classes;
-    },
+    }
     eventListenerManage(events, method) {
         events = typeof events === "function" ? events(this.element) : events;
         for (let name in events) {
@@ -47,13 +65,13 @@ COMPONENT.define({
             let target = isWindow ? window : this.element;
             target[method](name, callback);
         }
-    },
+    }
     registerEvents(events) {
         this.eventListenerManage(events, "addEventListener");
-    },
+    }
     unregisterEvents(events) {
         this.eventListenerManage(events, "removeEventListener");
-    },
+    }
     update() {
         let series = {
             data: "data",
@@ -75,32 +93,20 @@ COMPONENT.define({
         if (html) {
             this.element.innerHTML = html;
         }
-    },
-    extends(me) {
-        window.customElements.define(me.config.tag, class extends HTMLElement {
-            constructor() {
-                super();
-                let instance = new COMPONENT[me.name]();
-                instance.element = this;
-                this.instance = instance;
-                instance.send("register", instance);
-                instance.send("update", instance);
-            }
-        });
-    },
+    }
     register() {
         this.registerEvents(this.events);
-    },
+    }
     show() {
         this.element.style.visibility = "visible";
-    },
+    }
     hide() {
         this.element.style.visibility = "hidden";
-    },
+    }
     render() {
 
-    },
+    }
     data() {
         return {};
     }
-});
+};
