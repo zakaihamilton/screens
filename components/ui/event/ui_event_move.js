@@ -17,15 +17,17 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
                 if (!parent) {
                     return;
                 }
-                parent.startRect = parent.getBoundingClientRect().toJSON();
-                parent.startRect.left = event.clientX - parent.startRect.left;
-                parent.startRect.top = event.clientY - parent.startRect.top;
+                let superParent = parent.parentElement;
+                let parentRect = parent.getBoundingClientRect().toJSON();
+                let superRect = superParent.getBoundingClientRect().toJSON();
+                let left = event.clientX - parentRect.left + superRect.left;
+                let top = event.clientY - parentRect.top + superRect.top;
                 event.preventDefault();
                 parent.instance.send("move", true);
                 const events = {
                     move(event) {
-                        parent.style.left = (event.clientX - parent.startRect.left) + "px";
-                        parent.style.top = (event.clientY - parent.startRect.top) + "px";
+                        parent.style.left = (event.clientX - left) + "px";
+                        parent.style.top = (event.clientY - top) + "px";
                     },
                     up() {
                         instance.unregisterEvents(events);
