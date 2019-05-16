@@ -1,4 +1,4 @@
-COMPONENT.UIWidgetCustom = class UIWidgetCustom extends COMPONENT.CoreObject {
+COMPONENT.UIWidget = class UIWidget extends COMPONENT.CoreObject {
     static config() {
         return {
             platform: "browser"

@@ -1,4 +1,4 @@
-COMPONENT.UIWidgetWindow = class UIWidgetWindow extends COMPONENT.UIWidgetCustom {
+COMPONENT.UIWidgetWindow = class UIWidgetWindow extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",
@@ -30,7 +30,7 @@ COMPONENT.UIWidgetWindow = class UIWidgetWindow extends COMPONENT.UIWidgetCustom
     }
 };
 
-COMPONENT.UIWidgetWindowTitle = class UIWidgetWindowTitle extends COMPONENT.UIWidgetCustom {
+COMPONENT.UIWidgetWindowTitle = class UIWidgetWindowTitle extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",
@@ -46,7 +46,7 @@ COMPONENT.UIWidgetWindowTitle = class UIWidgetWindowTitle extends COMPONENT.UIWi
     }
 };
 
-COMPONENT.UIWidgetWindowContent = class UIWidgetWindowContent extends COMPONENT.UIWidgetCustom {
+COMPONENT.UIWidgetWindowContent = class UIWidgetWindowContent extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",

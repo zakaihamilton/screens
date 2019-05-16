@@ -9,7 +9,7 @@ COMPONENT.UIEventMove = class UIEventMove extends COMPONENT.CoreObject {
             down(event) {
                 let target = event.currentTarget;
                 let instance = target.instance;
-                let selector = instance.cast(COMPONENT.UIEventMove).selector();
+                let selector = instance.cast(UIEventMove).selector();
                 let parent = target.closest(selector);
                 parent.startRect = parent.getBoundingClientRect().toJSON();
                 parent.startRect.left = event.clientX - parent.startRect.left;
