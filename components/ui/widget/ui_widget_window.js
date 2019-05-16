@@ -10,13 +10,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             width: "500px",
             height: "100px",
             border: "1px solid black",
-            "background-color": "red",
             display: "flex",
             position: "absolute",
             "flex-direction": "column",
             "align-items": "stretch",
             "align-content": "stretch",
-            "justify-content": "stretch"
+            "justify-content": "stretch",
+            "border-radius": "6px"
         };
     }
     data() {
@@ -25,7 +25,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     render(element) {
-        return `<widget-window-title title="${element.data.title}"></widget-window-title>
+        return `<widget-window-title value="${element.data.title}"></widget-window-title>
         <widget-window-content><slot></slot></widget-window-content>`;
     }
 };
@@ -43,12 +43,17 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     }
     styles() {
         return {
-            border: "1px solid black",
-            "background-color": "yellow"
+            "background-color": "white",
+            "user-select": "none",
+            "padding": "3px",
+            "border-radius": "6px 6px 0px 0px"
         };
     }
+    css() {
+        return ":host(:hover) { filter:invert(10%);} :host(:active:hover) {filter:invert(20%);} ";
+    }
     render(element) {
-        return `<div>${element.getAttribute("title")}</div>`;
+        return `<div>${element.getAttribute("value")}</div>`;
     }
 };
 
@@ -61,8 +66,9 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     }
     styles() {
         return {
-            border: "1px solid green",
-            "background-color": "blue",
+            "border-top": "1px solid darkgray",
+            "background-color": "lightgray",
+            "border-radius": "0px 0px 6px 6px",
             "flex": "1"
         };
     }
