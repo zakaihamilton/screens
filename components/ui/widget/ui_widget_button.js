@@ -18,13 +18,8 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
             "justify-content": "stretch"
         };
     }
-    data() {
-        return {
-            label: "Button"
-        };
-    }
     render(element) {
-        return `<widget-button-label label="${element.data.label}"></widget-button-label>`;
+        return `<widget-button-label label="${element.getAttribute("label")}"></widget-button-label>`;
     }
 };
 
