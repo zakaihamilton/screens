@@ -1,4 +1,4 @@
-COMPONENT.UIEventMove = class UIEventMove extends COMPONENT.CoreObject {
+COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
     static config() {
         return {
             platform: "browser"
@@ -9,8 +9,14 @@ COMPONENT.UIEventMove = class UIEventMove extends COMPONENT.CoreObject {
             down(event) {
                 let target = event.currentTarget;
                 let instance = target.instance;
-                let selector = instance.cast(UIEventMove).selector();
-                let parent = target.closest(selector);
+                let owner = instance.cast(COMPONENT.UIEventMove).owner();
+                let parent = target.getRootNode().host;
+                while (parent && (!parent.tagName || parent.tagName.toLowerCase() !== owner)) {
+                    parent = parent.getRootNode().host;
+                }
+                if (!parent) {
+                    return;
+                }
                 parent.startRect = parent.getBoundingClientRect().toJSON();
                 parent.startRect.left = event.clientX - parent.startRect.left;
                 parent.startRect.top = event.clientY - parent.startRect.top;

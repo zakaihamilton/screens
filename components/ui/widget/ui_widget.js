@@ -1,4 +1,4 @@
-COMPONENT.UIWidget = class UIWidget extends COMPONENT.CoreObject {
+COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     static config() {
         return {
             platform: "browser"
@@ -21,7 +21,6 @@ COMPONENT.UIWidget = class UIWidget extends COMPONENT.CoreObject {
         });
     }
     stylesToHtml() {
-        let config = this.constructor.config();
         let styles = typeof this.styles === "function" ? this.styles(this.element) : this.styles;
         let html = "";
         for (let key in styles) {
@@ -30,7 +29,7 @@ COMPONENT.UIWidget = class UIWidget extends COMPONENT.CoreObject {
         if (html) {
             return `
             <style>
-                ${config.tag} {
+                :host {
                     ${html}
                 }
             </style>`;
@@ -91,7 +90,10 @@ COMPONENT.UIWidget = class UIWidget extends COMPONENT.CoreObject {
             }
         }
         if (html) {
-            this.element.innerHTML = html;
+            let template = document.createElement("template");
+            template.innerHTML = html;
+            let shadowRoot = this.element.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(template.content.cloneNode(true));
         }
     }
     register() {

@@ -1,4 +1,4 @@
-COMPONENT.CoreFileDropbox = class CoreFileDropbox extends COMPONENT.CoreObject {
+COMPONENT.CoreFileDropbox = class extends COMPONENT.CoreObject {
     static config() {
         return {
             protocol: /^dropbox:\/\//,

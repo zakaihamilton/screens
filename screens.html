@@ -21,12 +21,15 @@
             ], "./components/ui/event/");
             await COMPONENT.import([
                 "ui_widget.js",
-                "ui_widget_window.js"
+                "ui_widget_window.js",
+                "ui_widget_button.js"
             ], "./components/ui/widget/");
             await COMPONENT.start();
         });
     </script>
-    <widget-window></widget-window>
+    <widget-window>
+        <widget-button style="position:absolute;left:100px;top:30px"></widget-button>
+    </widget-window>
 </body>
 
 </html>

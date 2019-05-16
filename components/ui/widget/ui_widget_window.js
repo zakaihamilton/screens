@@ -1,4 +1,4 @@
-COMPONENT.UIWidgetWindow = class UIWidgetWindow extends COMPONENT.UIWidget {
+COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",
@@ -26,11 +26,11 @@ COMPONENT.UIWidgetWindow = class UIWidgetWindow extends COMPONENT.UIWidget {
     }
     render(element) {
         return `<widget-window-title title="${element.data.title}"></widget-window-title>
-        <widget-window-content></widget-window-content>`;
+        <widget-window-content><slot></slot></widget-window-content>`;
     }
 };
 
-COMPONENT.UIWidgetWindowTitle = class UIWidgetWindowTitle extends COMPONENT.UIWidget {
+COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",
@@ -41,12 +41,18 @@ COMPONENT.UIWidgetWindowTitle = class UIWidgetWindowTitle extends COMPONENT.UIWi
         super();
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
+    styles() {
+        return {
+            border: "1px solid black",
+            "background-color": "yellow"
+        };
+    }
     render(element) {
         return `<div>${element.getAttribute("title")}</div>`;
     }
 };
 
-COMPONENT.UIWidgetWindowContent = class UIWidgetWindowContent extends COMPONENT.UIWidget {
+COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     static config() {
         return {
             platform: "browser",
@@ -60,15 +66,18 @@ COMPONENT.UIWidgetWindowContent = class UIWidgetWindowContent extends COMPONENT.
             "flex": "1"
         };
     }
+    render() {
+        return "<slot></slot>";
+    }
 };
 
-COMPONENT.UIWidgetWindowMove = class UIWidgetWindowMove extends COMPONENT.UIEventMove {
+COMPONENT.UIWidgetWindowMove = class extends COMPONENT.UIEventMove {
     static config() {
         return {
             platform: "browser"
         };
     }
-    selector() {
+    owner() {
         return "widget-window";
     }
 };

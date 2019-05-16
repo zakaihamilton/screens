@@ -1,4 +1,4 @@
-COMPONENT.CoreFileAWS = class CoreFileAWS extends COMPONENT.CoreObject {
+COMPONENT.CoreFileAWS = class extends COMPONENT.CoreObject {
     static config() {
         return {
             protocol: /^aws:\/\//,

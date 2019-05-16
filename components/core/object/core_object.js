@@ -1,4 +1,4 @@
-COMPONENT.CoreObject = class CoreObject {
+COMPONENT.CoreObject = class {
     static config() {
         return {};
     }

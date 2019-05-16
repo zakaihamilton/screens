@@ -60,7 +60,7 @@ var COMPONENT = {
         let components = [];
         for (let name in COMPONENT) {
             let component = COMPONENT[name];
-            if (!component.prototype || !component.prototype.constructor.name) {
+            if (!component.prototype || !component.prototype.constructor) {
                 continue;
             }
             if (platform) {
@@ -69,6 +69,7 @@ var COMPONENT = {
                     continue;
                 }
             }
+            Object.defineProperty(component, "name", { value: name });
             components.push(component);
         }
         return components;

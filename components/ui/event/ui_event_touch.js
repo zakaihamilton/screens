@@ -1,4 +1,4 @@
-COMPONENT.UIEventTouch = class UIEventTouch extends COMPONENT.CoreObject {
+COMPONENT.UIEventTouch = class extends COMPONENT.CoreObject {
     static config() {
         return {
             platform: "browser"

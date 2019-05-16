@@ -1,4 +1,4 @@
-COMPONENT.CoreFileNode = class CoreFileNode extends COMPONENT.CoreObject {
+COMPONENT.CoreFileNode = class extends COMPONENT.CoreObject {
     static config() {
         return {
             protocol: /^file:\/\//,
