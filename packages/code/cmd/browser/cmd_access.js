@@ -16,10 +16,10 @@ screens.cmd.access = function CmdAccess(me, packages) {
             if (userName && userItem.name !== userName) {
                 continue;
             }
-            core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email);
-            var access = await me.user.access.get(userItem.userid);
+            core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email + " - " + userItem.user);
+            var access = await me.user.access.get(userItem.user);
             var modified = false;
-            if (!access) {
+            if (!access || !access.name) {
                 access = {};
                 modified = true;
             }
@@ -48,7 +48,7 @@ screens.cmd.access = function CmdAccess(me, packages) {
             if (modified) {
                 access.name = userItem.name;
                 access.email = userItem.email;
-                await me.user.access.set(access, userItem.userid);
+                await me.user.access.set(access, userItem.user);
                 core.property.set(terminal, "insert", " - Changed");
             }
             userIndex++;

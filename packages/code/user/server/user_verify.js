@@ -18,7 +18,7 @@ screens.user.verify = function UserVerify(me, packages) {
         return isMatch;
     };
     me.list = async function () {
-        return await storage.data.query(me.id);
+        return await db.shared.user.list();
     };
     me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
