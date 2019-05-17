@@ -21,8 +21,8 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         });
     }
     stylesToHtml() {
-        let styles = typeof this.styles === "function" ? this.styles(this.element) : this.styles;
-        let css = typeof this.css === "function" ? this.css(this.element) : this.css;
+        let styles = typeof this.styles === "function" ? this.styles(this.element) : {};
+        let css = typeof this.css === "function" ? this.css(this.element) : "";
         let html = "";
         for (let key in styles) {
             html += key + ":" + styles[key] + ";";
@@ -112,5 +112,9 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     }
     data() {
         return {};
+    }
+    trigger(name, event) {
+        var method = new Function("e", "with(document) { with(this) {" + this.element.getAttribute("on" + name) + "}}");
+        method.call(this.element, event);
     }
 };
