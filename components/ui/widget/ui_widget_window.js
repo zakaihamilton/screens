@@ -16,7 +16,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             "align-items": "stretch",
             "align-content": "stretch",
             "justify-content": "stretch",
-            "border-radius": "6px"
+            "border-radius": "6px",
+            "overflow": "scroll"
         };
     }
     data() {
@@ -45,7 +46,7 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         return {
             "background-color": "white",
             "user-select": "none",
-            "padding": "3px",
+            "padding": "6px",
             "border-radius": "6px 6px 0px 0px"
         };
     }
