@@ -117,4 +117,24 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         var method = new Function("e", "with(document) { with(this) {" + this.element.getAttribute("on" + name) + "}}");
         method.call(this.element, event);
     }
+    parent(filter) {
+        let parent = this.element;
+        var tagName = "";
+        do {
+            tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
+            parent = parent.parentNode;
+            if (parent === window.document.body) {
+                parent = null;
+                break;
+            }
+            if (parent) {
+                continue;
+            }
+            let root = this.element.getRootNode();
+            if (root) {
+                parent = root.host;
+            }
+        } while (filter && tagName !== filter);
+        return parent;
+    }
 };

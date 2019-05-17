@@ -6,6 +6,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     styles() {
+        let parent = this.parent();
         return {
             width: "500px",
             height: "100px",
@@ -17,7 +18,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             "align-content": "stretch",
             "justify-content": "stretch",
             "border-radius": "6px",
-            "overflow": "scroll"
+            "overflow": "scroll",
+            "margin": parent ? "6px" : ""
         };
     }
     data() {
@@ -26,8 +28,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     render(element) {
-        return `<widget-window-title value="${element.data.title}"></widget-window-title>
-        <widget-window-content><slot></slot></widget-window-content>`;
+        let parent = this.parent();
+        let html = "";
+        if (!parent) {
+            html = `<widget-window-title value="${element.data.title}"></widget-window-title>`;
+        }
+        html += "<widget-window-content><slot></slot></widget-window-content>";
+        return html;
     }
 };
 
@@ -66,10 +73,11 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
         };
     }
     styles() {
+        let parent = this.parent("widget-window");
         return {
             "border-top": "1px solid darkgray",
-            "background-color": "lightgray",
-            "border-radius": "0px 0px 6px 6px",
+            "background-color": parent ? "green" : "lightgray",
+            "border-radius": parent ? "6px 6px 6px 6px" : "0px 0px 6px 6px",
             "flex": "1"
         };
     }

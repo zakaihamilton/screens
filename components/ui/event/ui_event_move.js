@@ -28,6 +28,8 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
                     move(event) {
                         parent.style.left = (event.clientX - left) + "px";
                         parent.style.top = (event.clientY - top) + "px";
+                        parent.style.right = "";
+                        parent.style.bottom = "";
                     },
                     up() {
                         instance.unregisterEvents(events);
