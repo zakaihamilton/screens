@@ -20,17 +20,30 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             }
         });
     }
+    groups() {
+        return {
+            styles: ":host",
+            hover: ":host(:hover)",
+            touch: ":host(:active:hover)"
+        };
+    }
     stylesToHtml() {
-        let styles = typeof this.styles === "function" ? this.styles(this.element) : {};
-        let css = typeof this.css === "function" ? this.css(this.element) : "";
+        let groups = this.groups(this.element);
         let html = "";
-        for (let key in styles) {
-            html += "\n\t" + key + ":" + styles[key] + ";";
+        for (let method in groups) {
+            let result = method in this ? this[method](this.element) : "";
+            if (result) {
+                html += groups[method] + "{\n";
+                for (let key in result) {
+                    html += key + ":" + result[key] + ";\n";
+                }
+                html += "}\n";
+            }
         }
         if (html) {
-            return `
-            <style>:host {${html}\n}\n${css}</style>`;
+            html = "<style>\n" + html + "</style>";
         }
+        return html;
     }
     updateClasses() {
         let classes = typeof this.classes === "function" ? this.classes(this.element) : this.classes;

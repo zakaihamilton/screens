@@ -20,8 +20,15 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
             "border-radius": "6px"
         };
     }
-    css() {
-        return ":host(:hover) { filter:invert(10%);} :host(:active:hover) {filter:invert(20%);}";
+    hover() {
+        return {
+            filter: "invert(10%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(20%)"
+        };
     }
     render(element) {
         return `<widget-button-handle></widget-button-handle>
