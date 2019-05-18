@@ -9,7 +9,7 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
         const isDefault = element.getAttribute("default");
         return {
             height: "30px",
-            border: isDefault ? "1px solid rgba(81, 203, 238, 1)" : "1px solid darkgray",
+            border: "1px solid darkgray",
             "background-color": isDefault ? "white" : "lightgray",
             display: "flex",
             "flex-direction": "row",

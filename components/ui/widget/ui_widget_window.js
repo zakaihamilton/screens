@@ -10,16 +10,15 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return {
             width: "500px",
             height: "100px",
-            border: "1px solid black",
+            border: parent ? "" : "1px solid black",
             display: "flex",
-            position: "absolute",
+            position: parent ? "relative" : "absolute",
             "flex-direction": "column",
             "align-items": "stretch",
             "align-content": "stretch",
             "justify-content": "stretch",
-            "border-radius": "6px",
-            "overflow": "scroll",
-            "margin": parent ? "6px" : ""
+            "border-radius": parent ? "0px" : "6px",
+            "overflow": "scroll"
         };
     }
     data() {
@@ -75,9 +74,10 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     styles() {
         let parent = this.parent("widget-window");
         return {
-            "border-top": "1px solid darkgray",
-            "background-color": parent ? "green" : "lightgray",
-            "border-radius": parent ? "6px 6px 6px 6px" : "0px 0px 6px 6px",
+            "border-top": parent ? "" : "1px solid darkgray",
+            "border-bottom": parent ? "1px solid darkgray" : "",
+            "background-color": "lightgray",
+            "border-radius": parent ? "0px" : "0px 0px 6px 6px",
             "flex": "1"
         };
     }

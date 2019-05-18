@@ -25,16 +25,11 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         let css = typeof this.css === "function" ? this.css(this.element) : "";
         let html = "";
         for (let key in styles) {
-            html += key + ":" + styles[key] + ";";
+            html += "\n\t" + key + ":" + styles[key] + ";";
         }
         if (html) {
             return `
-            <style>
-                :host {
-                    ${html}
-                }
-                ${css}
-            </style>`;
+            <style>:host {${html}\n}\n${css}</style>`;
         }
     }
     updateClasses() {
