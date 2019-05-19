@@ -5,11 +5,18 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             tag: "widget-window"
         };
     }
-    styles() {
+    constructor() {
+        super();
+        this._isMinimized = false;
+        this._isMaximized = false;
+    }
+    normal() {
         let parent = this.parent();
         return {
             width: "500px",
             height: "100px",
+            ... this._isMaximized && { left: "0px" },
+            ... this._isMaximized && { top: "0px" },
             border: parent ? "" : "1px solid black",
             display: "flex",
             position: parent ? "relative" : "absolute",
@@ -22,25 +29,48 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             "box-sizing": "border-box"
         };
     }
+    styles() {
+        let styles = {};
+        if (this._isMaximized) {
+            styles.left = "0px";
+            styles.top = "0px";
+            styles.width = "100%";
+            styles.height = "100%";
+        }
+        return styles;
+    }
     data() {
         return {
             title: "Hello"
         };
     }
-    minimize() {
+    isMinimized() {
+        return this._isMinimized;
+    }
+    isMaximized() {
+        return this._isMaximized;
+    }
+    async minimize() {
         let parent = this.parent();
         if (!parent) {
-            this.element.style.height = "38px";
+            this._isMinimized = true;
+            await this.update();
         }
         return !parent;
     }
-    maximize() {
+    async maximize() {
         let parent = this.parent();
         if (!parent) {
-            this.element.style.left = "0px";
-            this.element.style.top = "0px";
-            this.element.style.width = "100%";
-            this.element.style.height = "100%";
+            this._isMaximized = true;
+            await this.update();
+        }
+        return !parent;
+    }
+    async restore() {
+        let parent = this.parent();
+        if (!parent) {
+            this._isMaximized = false;
+            await this.update();
         }
         return !parent;
     }
@@ -66,7 +96,7 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         super();
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
-    styles() {
+    normal() {
         return {
             "background-color": "white",
             "padding": "3px",
@@ -86,11 +116,13 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
             filter: "invert(20%)"
         };
     }
-    render(element) {
+    async render(element) {
+        let _isMaximized = (await this.emit("isMaximized"))[0];
+        let maximizedRestoreTag = _isMaximized ? "restore" : "maximize";
         return `<widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
         <widget-window-close></widget-window-close>
         <widget-window-minimize></widget-window-minimize>
-        <widget-window-maximize></widget-window-maximize>`;
+        <widget-window-${maximizedRestoreTag}></widget-window-${maximizedRestoreTag}>`;
     }
 };
 
@@ -101,7 +133,7 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
             tag: "widget-window-label"
         };
     }
-    styles() {
+    normal() {
         return {
             "user-select": "none",
             "padding-left": "6px",
@@ -130,7 +162,7 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
             tag: "widget-window-action"
         };
     }
-    styles() {
+    normal() {
         return {
             "border": "1px solid darkgray",
             "background-color": "lightgray",
@@ -138,6 +170,9 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
             "width": "25px",
             "height": "25px",
             "margin": "3px",
+            "display": "flex",
+            "align-items": "center",
+            "justify-content": "center"
         };
     }
     events() {
@@ -206,6 +241,20 @@ COMPONENT.UIWidgetWindowMaximize = class extends COMPONENT.UIWidgetWindowAction 
     }
 };
 
+COMPONENT.UIWidgetWindowRestore = class extends COMPONENT.UIWidgetWindowAction {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-restore"
+        };
+    }
+    action() {
+        return "restore";
+    }
+    render() {
+        return "<img title=\"Restore\" width=\"13px\" height=\"13px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM0g1YTIgMiAwIDAgMC0yIDJ2M20xOCAwVjVhMiAyIDAgMCAwLTItMmgtM20wIDE4aDNhMiAyIDAgMCAwIDItMnYtM00zIDE2djNhMiAyIDAgMCAwIDIgMmgzIi8+PC9zdmc+\"></img>";
+    }
+};
 COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     static config() {
         return {
@@ -213,7 +262,7 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
             tag: "widget-window-content"
         };
     }
-    styles() {
+    normal() {
         let parent = this.parent("widget-window");
         return {
             "border-top": parent ? "" : "1px solid darkgray",

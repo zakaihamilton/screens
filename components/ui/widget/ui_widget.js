@@ -22,12 +22,12 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     }
     groups() {
         return {
-            styles: ":host",
+            normal: ":host",
             hover: ":host(:hover)",
             touch: ":host(:active:hover)"
         };
     }
-    stylesToHtml() {
+    updateCss() {
         let groups = this.groups(this.element);
         let html = "";
         for (let method in groups) {
@@ -46,7 +46,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         return html;
     }
     updateClasses() {
-        let classes = typeof this.classes === "function" ? this.classes(this.element) : this.classes;
+        let classes = typeof this.classes === "function" ? this.classes(this.element) : null;
         if (this.prevClasses) {
             for (let name of this.prevClasses) {
                 if (!classes || !classes.includes(name)) {
@@ -60,6 +60,14 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             }
         }
         this.prevClasses = classes;
+    }
+    updateStyles() {
+        let styles = typeof this.styles === "function" ? this.styles(this.element) : null;
+        if (styles) {
+            for (let key in styles) {
+                this.element.style[key] = styles[key];
+            }
+        }
     }
     eventListenerManage(events, method) {
         events = typeof events === "function" ? events(this.element) : events;
@@ -81,16 +89,17 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     unregisterEvents(events) {
         this.eventListenerManage(events, "removeEventListener");
     }
-    update() {
+    async update() {
         let series = {
             data: "data",
-            stylesToHtml: null,
+            updateCss: null,
+            updateStyles: null,
             updateClasses: null,
             render: null
         };
         let html = "";
         for (let method in series) {
-            let result = typeof this[method] === "function" ? this[method](this.element) : this[method];
+            let result = typeof this[method] === "function" ? await this[method](this.element) : "";
             let varName = series[method];
             if (typeof result === "string") {
                 html += result;
@@ -102,7 +111,11 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         if (html) {
             let template = document.createElement("template");
             template.innerHTML = html;
-            let shadowRoot = this.element.attachShadow({ mode: "open" });
+            let shadowRoot = this.element.shadowRoot;
+            if (!shadowRoot) {
+                shadowRoot = this.element.attachShadow({ mode: "open" });
+            }
+            shadowRoot.innerHTML = "";
             shadowRoot.appendChild(template.content.cloneNode(true));
         }
     }
@@ -144,13 +157,15 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     async emit(method, params) {
         let args = Array.prototype.slice.call(arguments, 0);
         let parent = this;
+        let results = [];
         do {
-            let results = await parent.send.apply(parent, args);
+            results = await parent.send.apply(parent, args);
             results = results.filter(Boolean);
             if (results.length) {
                 break;
             }
             parent = parent.parent();
         } while (parent);
+        return results;
     }
 };

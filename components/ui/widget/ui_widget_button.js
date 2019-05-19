@@ -71,7 +71,7 @@ COMPONENT.UIWidgetButtonLabel = class extends COMPONENT.UIWidget {
         super();
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
-    styles() {
+    normal() {
         return {
             "user-select": "none",
             margin: "3px"
