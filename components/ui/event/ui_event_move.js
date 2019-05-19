@@ -4,12 +4,26 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
             platform: "browser"
         };
     }
+    constructor(parent) {
+        super(parent);
+        this._isEnabled = true;
+    }
+    isEnabled() {
+        return this._isEnabled;
+    }
+    enable(isEnabled) {
+        this._isEnabled = isEnabled;
+    }
     events() {
         return {
             down(event) {
                 let target = event.currentTarget;
                 let instance = target.instance;
-                let owner = instance.cast(COMPONENT.UIEventMove).owner();
+                let move = instance.cast(COMPONENT.UIEventMove);
+                if (!move._isEnabled) {
+                    return;
+                }
+                let owner = move.owner();
                 let parent = target.getRootNode().host;
                 while (parent && (!parent.tagName || parent.tagName.toLowerCase() !== owner)) {
                     parent = parent.getRootNode().host;

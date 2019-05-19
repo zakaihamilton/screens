@@ -43,8 +43,8 @@ COMPONENT.UIWidgetButtonHandle = class extends COMPONENT.UIWidget {
             tag: "widget-button-handle"
         };
     }
-    constructor() {
-        super();
+    constructor(parent) {
+        super(parent);
         this.drag = this.attach(COMPONENT.UIWidgetButtonMove);
     }
     styles(element) {
@@ -67,8 +67,8 @@ COMPONENT.UIWidgetButtonLabel = class extends COMPONENT.UIWidget {
             tag: "widget-button-label"
         };
     }
-    constructor() {
-        super();
+    constructor(parent) {
+        super(parent);
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
     normal() {

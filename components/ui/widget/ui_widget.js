@@ -10,8 +10,8 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             return;
         }
         window.customElements.define(config.tag, class extends HTMLElement {
-            constructor() {
-                super();
+            constructor(parent) {
+                super(parent);
                 let instance = new COMPONENT[me.name]();
                 instance.element = this;
                 this.instance = instance;
