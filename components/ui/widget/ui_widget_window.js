@@ -9,12 +9,14 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         super(parent);
         this._isMinimized = false;
         this._isMaximized = false;
+        this._pos = { left: 0, pos: 0 };
+        this._size = { width: 500, height: 100 };
     }
     normal() {
         let parent = this.parent();
         return {
-            width: "500px",
-            height: "100px",
+            "min-width": "100px",
+            "min-height": "100px",
             ... this._isMaximized && { left: "0px" },
             ... this._isMaximized && { top: "0px" },
             border: parent ? "" : "1px solid black",
@@ -30,12 +32,25 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     styles() {
+        let parent = this.parent();
         let styles = {};
         if (this._isMaximized) {
             styles.left = "0px";
             styles.top = "0px";
             styles.width = "100%";
             styles.height = "100%";
+        }
+        else if (parent) {
+            styles.left = "";
+            styles.top = "";
+            styles.width = "";
+            styles.height = "";
+        }
+        else {
+            styles.left = this._pos.left + "px";
+            styles.top = this._pos.top + "px";
+            styles.width = this._size.width + "px";
+            styles.height = this._size.height + "px";
         }
         return styles;
     }
@@ -74,6 +89,16 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         }
         return !parent;
     }
+    async move(pos) {
+        if (pos) {
+            let parent = this.parent();
+            if (!parent) {
+                this._pos = Object.assign({}, pos);
+                await this.update();
+            }
+            return !parent;
+        }
+    }
     render(element) {
         let parent = this.parent();
         let html = "";
@@ -103,7 +128,8 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
             "height": "32px",
             "border-radius": "6px 6px 0px 0px",
             "display": "flex",
-            "align-items": "center"
+            "align-items": "center",
+            "padding-right": "12px"
         };
     }
     hover() {

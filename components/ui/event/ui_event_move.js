@@ -31,23 +31,33 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
                 if (!parent) {
                     return;
                 }
+                let diff = 15;
                 let superParent = parent.parentElement;
+                let targetRect = target.getBoundingClientRect().toJSON();
                 let parentRect = parent.getBoundingClientRect().toJSON();
                 let superRect = superParent.getBoundingClientRect().toJSON();
-                let left = event.clientX - parentRect.left + superRect.left;
-                let top = event.clientY - parentRect.top + superRect.top;
+                let left = event.clientX - parentRect.left;
+                let top = event.clientY - parentRect.top;
+                let initialPos = { left: event.clientX - left, top: event.clientY - top };
+                let currentPos = { left: initialPos.left, top: initialPos.top };
+                let targetPos = null;
                 event.preventDefault();
-                parent.instance.send("move", true);
+                parent.instance.send("move");
                 const events = {
                     move(event) {
-                        parent.style.left = (event.clientX - left) + "px";
-                        parent.style.top = (event.clientY - top) + "px";
-                        parent.style.right = "";
-                        parent.style.bottom = "";
+                        currentPos = { left: event.clientX - left, top: event.clientY - top };
+                        if (targetPos || currentPos.left < initialPos.left - diff || currentPos.left > initialPos.left + diff ||
+                            currentPos.top < initialPos.top - diff || currentPos.top > initialPos.top + diff) {
+                            parent.style.left = currentPos.left + "px";
+                            parent.style.top = currentPos.top + "px";
+                            parent.style.right = "";
+                            parent.style.bottom = "";
+                            targetPos = { left: currentPos.left, top: currentPos.top };
+                        }
                     },
                     up() {
                         instance.unregisterEvents(events);
-                        parent.instance.send("move", false);
+                        parent.instance.send("move", targetPos);
                     }
                 };
                 instance.registerEvents(events);
