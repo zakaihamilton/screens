@@ -47,7 +47,8 @@
             </widget-button>
         </widget-window>
         <widget-window>
-            <widget-button onpress="alert('No!')" style="position:absolute;right:15px;top:50px" label="No">
+            <widget-button onpress="this.instance.emit('minimize', this.instance)"
+                style="position:absolute;right:15px;top:50px" label="No">
             </widget-button>
             <widget-button default="true" onpress="alert('Yes!')" style="position:absolute;left:15px;top:50px"
                 label="Yes">

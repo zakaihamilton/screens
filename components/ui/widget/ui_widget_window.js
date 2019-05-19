@@ -18,7 +18,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             "align-content": "stretch",
             "justify-content": "stretch",
             "border-radius": parent ? "0px" : "6px",
-            "overflow": "scroll"
+            "overflow": "scroll",
+            "box-sizing": "border-box"
         };
     }
     data() {
@@ -27,7 +28,21 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     minimize() {
-        alert("Yo! Minimize!");
+        let parent = this.parent();
+        if (!parent) {
+            this.element.style.height = "38px";
+        }
+        return !parent;
+    }
+    maximize() {
+        let parent = this.parent();
+        if (!parent) {
+            this.element.style.left = "0px";
+            this.element.style.top = "0px";
+            this.element.style.width = "100%";
+            this.element.style.height = "100%";
+        }
+        return !parent;
     }
     render(element) {
         let parent = this.parent();
