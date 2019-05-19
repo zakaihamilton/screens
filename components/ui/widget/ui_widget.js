@@ -145,4 +145,12 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (filter && tagName !== filter);
         return parent;
     }
+    emit(method, params) {
+        let args = Array.prototype.slice.call(arguments, 0);
+        let parent = this;
+        do {
+            parent.send.apply(parent, args);
+            parent = parent.parent();
+        } while (parent);
+    }
 };
