@@ -71,14 +71,16 @@ COMPONENT.CoreObject = class {
         }
         return true;
     }
-    async send(method, params) {
+    send(method, params) {
         var args = Array.prototype.slice.call(arguments, 1);
         const parent = this._parent || this;
         let list = [parent, ...parent._attachments];
+        let results = [];
         list.map(item => {
             if (method in item) {
-                item[method].apply(item, args);
+                results.push(item[method].apply(item, args));
             }
         });
+        return Promise.all(results);
     }
 };

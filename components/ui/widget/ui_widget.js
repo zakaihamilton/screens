@@ -135,21 +135,21 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
                 parent = null;
                 break;
             }
-            if (parent) {
-                continue;
-            }
-            let root = this.element.getRootNode();
-            if (root) {
-                parent = root.host;
+            if (!parent.parentElement && parent.host) {
+                parent = parent.host;
             }
         } while (filter && tagName !== filter);
-        return parent;
+        return parent ? parent.instance : null;
     }
-    emit(method, params) {
+    async emit(method, params) {
         let args = Array.prototype.slice.call(arguments, 0);
         let parent = this;
         do {
-            parent.send.apply(parent, args);
+            let results = await parent.send.apply(parent, args);
+            results = results.filter(Boolean);
+            if (results.length) {
+                break;
+            }
             parent = parent.parent();
         } while (parent);
     }

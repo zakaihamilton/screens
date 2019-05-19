@@ -26,6 +26,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             title: "Hello"
         };
     }
+    minimize() {
+        alert("Yo! Minimize!");
+    }
     render(element) {
         let parent = this.parent();
         let html = "";
@@ -121,6 +124,14 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
             "margin": "3px",
         };
     }
+    events() {
+        return {
+            click(event) {
+                const instance = this.instance;
+                instance.emit(instance.action(), instance);
+            }
+        };
+    }
     hover() {
         return {
             filter: "invert(10%)"
@@ -140,12 +151,8 @@ COMPONENT.UIWidgetWindowMinimize = class extends COMPONENT.UIWidgetWindowAction 
             tag: "widget-window-minimize"
         };
     }
-    events() {
-        return {
-            click(event) {
-                alert("Minimize");
-            }
-        };
+    action() {
+        return "minimize";
     }
     render() {
         return "<img title=\"Minimize\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM3YzYTIgMiAwIDAgMS0yIDJIM20xOCAwaC0zYTIgMiAwIDAgMS0yLTJWM20wIDE4di0zYTIgMiAwIDAgMSAyLTJoM00zIDE2aDNhMiAyIDAgMCAxIDIgMnYzIi8+PC9zdmc+\"></img>";
@@ -158,12 +165,8 @@ COMPONENT.UIWidgetWindowMaximize = class extends COMPONENT.UIWidgetWindowAction 
             tag: "widget-window-maximize"
         };
     }
-    events() {
-        return {
-            click(event) {
-                alert("Maximize");
-            }
-        };
+    action() {
+        return "maximize";
     }
     render() {
         return "<img title=\"Maximize\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM0g1YTIgMiAwIDAgMC0yIDJ2M20xOCAwVjVhMiAyIDAgMCAwLTItMmgtM20wIDE4aDNhMiAyIDAgMCAwIDItMnYtM00zIDE2djNhMiAyIDAgMCAwIDIgMmgzIi8+PC9zdmc+\"></img>";
