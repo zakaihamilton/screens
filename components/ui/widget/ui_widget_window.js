@@ -65,13 +65,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     isMaximized() {
         return this._isMaximized;
     }
-    async menu() {
-        let parent = this.parent();
-        if (!parent) {
-            await this.update();
-        }
-        return true;
-    }
     async close() {
         let parent = this.parent();
         if (!parent) {
@@ -147,8 +140,10 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     render(element) {
         let parent = this.parent();
         let html = "";
+        let hasMenu = "menu" in this;
+        let hasClose = "close" in this;
         if (!parent) {
-            html = `<widget-window-title label="${element.getAttribute("label") || ""}"></widget-window-title>`;
+            html = `<widget-window-title close="${hasClose}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
         }
         html += `<widget-window-content>${this.content()}</widget-window-content>`;
         return html;
@@ -175,9 +170,9 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     }
     async render(element) {
         return `
-        <widget-window-menu></widget-window-menu>
+        <widget-window-menu show="${this.checkAttrib("menu")}"></widget-window-menu>
         <widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
-        <widget-window-close></widget-window-close>`;
+        <widget-window-close show="${this.checkAttrib("close")}"></widget-window-close>`;
     }
 };
 
@@ -219,7 +214,7 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
             "width": "25px",
             "height": "25px",
             "margin": "3px",
-            "display": "flex",
+            "display": this.checkAttrib("show") ? "flex" : "none",
             "align-items": "center",
             "justify-content": "center"
         };
@@ -256,7 +251,7 @@ COMPONENT.UIWidgetWindowMenu = class extends COMPONENT.UIWidget {
             "width": "25px",
             "height": "25px",
             "margin": "3px",
-            "display": "flex",
+            "display": this.checkAttrib("show") ? "flex" : "none",
             "align-items": "center",
             "justify-content": "center",
             "filter": "invert(100%)"
