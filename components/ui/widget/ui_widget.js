@@ -142,7 +142,6 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         let parent = this.element;
         var tagName = "";
         do {
-            tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
             parent = parent.parentNode;
             if (parent === window.document.body) {
                 parent = null;
@@ -151,6 +150,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             if (!parent.parentElement && parent.host) {
                 parent = parent.host;
             }
+            tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
         } while (filter && tagName !== filter);
         return parent ? parent.instance : null;
     }

@@ -17,18 +17,18 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return {
             "min-width": "100px",
             "min-height": "100px",
-            ... this._isMaximized && { left: "0px" },
-            ... this._isMaximized && { top: "0px" },
-            border: parent ? "" : "1px solid black",
+            ... this._isMaximized && { left: "0px", top: "0px" },
+            ... !parent && !this._isMaximized && { border: "1px solid black" },
             display: "flex",
             position: parent ? "relative" : "absolute",
             "flex-direction": "column",
             "align-items": "stretch",
             "align-content": "stretch",
             "justify-content": "stretch",
-            "border-radius": parent ? "0px" : "6px",
+            "border-radius": (this._isMaximized || parent) ? "0px" : "6px",
             "overflow": "scroll",
-            "box-sizing": "border-box"
+            "box-sizing": "border-box",
+            "font-family": "Arial, Helvetica, sans-serif"
         };
     }
     styles() {
@@ -53,11 +53,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             styles.height = this._size.height + "px";
         }
         return styles;
-    }
-    data() {
-        return {
-            title: "Hello"
-        };
     }
     isMinimized() {
         return this._isMinimized;
@@ -103,7 +98,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let parent = this.parent();
         let html = "";
         if (!parent) {
-            html = `<widget-window-title label="${element.data.title}"></widget-window-title>`;
+            html = `<widget-window-title label="${element.getAttribute("label") || ""}"></widget-window-title>`;
         }
         html += "<widget-window-content><slot></slot></widget-window-content>";
         return html;
@@ -290,7 +285,7 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
         };
     }
     normal() {
-        let parent = this.parent("widget-window");
+        let parent = this.parent();
         return {
             "border-top": parent ? "" : "1px solid darkgray",
             "border-bottom": parent ? "1px solid darkgray" : "",
