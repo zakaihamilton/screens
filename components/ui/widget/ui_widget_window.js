@@ -148,16 +148,10 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
             tag: "widget-window-title"
         };
     }
-    constructor(element) {
-        super(element);
-        this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
-    }
     normal() {
         let isMaximized = this.state("isMaximized");
         return {
             "background-color": "#2e0150",
-            "padding": "3px",
-            "height": "32px",
             ... !isMaximized && { "border-radius": "6px 6px 0px 0px" },
             "display": "flex",
             "align-items": "center",
@@ -165,22 +159,11 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
             "color": "white"
         };
     }
-    hover() {
-        return {
-            filter: "invert(10%)"
-        };
-    }
-    touch() {
-        return {
-            filter: "invert(20%)"
-        };
-    }
     async render(element) {
         return `
         <widget-window-menu></widget-window-menu>
         <widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
-        <widget-window-close></widget-window-close>
-        <widget-window-minimize></widget-window-minimize>`;
+        <widget-window-close></widget-window-close>`;
     }
 };
 
@@ -191,22 +174,17 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
             tag: "widget-window-label"
         };
     }
+    constructor(element) {
+        super(element);
+        this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
+    }
     normal() {
         return {
             "user-select": "none",
-            "padding-top": "3px",
-            "padding-left": "6px",
-            "flex-grow": "1"
-        };
-    }
-    hover() {
-        return {
-            filter: "invert(10%)"
-        };
-    }
-    touch() {
-        return {
-            filter: "invert(20%)"
+            "padding": "6px",
+            "display": "flex",
+            "flex-grow": "1",
+            "min-height": "16px",
         };
     }
     render(element) {
@@ -223,8 +201,6 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
     }
     normal() {
         return {
-            "border": "1px solid darkgray",
-            "background-color": "lightgray",
             "border-radius": "6px",
             "width": "25px",
             "height": "25px",
@@ -302,27 +278,27 @@ COMPONENT.UIWidgetWindowClose = class extends COMPONENT.UIWidgetWindowAction {
             tag: "widget-window-close"
         };
     }
+    normal() {
+        return {
+            ...super.normal(),
+            filter: "invert(100%)"
+        };
+    }
+    hover() {
+        return {
+            filter: "invert(50%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(80%)"
+        };
+    }
     action() {
         return "close";
     }
     render() {
-        return "<img title=\"Close\" width=\"25px\" height=\"25px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNNDM3LjUsMzg2LjZMMzA2LjksMjU2bDEzMC42LTEzMC42YzE0LjEtMTQuMSwxNC4xLTM2LjgsMC01MC45Yy0xNC4xLTE0LjEtMzYuOC0xNC4xLTUwLjksMEwyNTYsMjA1LjFMMTI1LjQsNzQuNSAgYy0xNC4xLTE0LjEtMzYuOC0xNC4xLTUwLjksMGMtMTQuMSwxNC4xLTE0LjEsMzYuOCwwLDUwLjlMMjA1LjEsMjU2TDc0LjUsMzg2LjZjLTE0LjEsMTQuMS0xNC4xLDM2LjgsMCw1MC45ICBjMTQuMSwxNC4xLDM2LjgsMTQuMSw1MC45LDBMMjU2LDMwNi45bDEzMC42LDEzMC42YzE0LjEsMTQuMSwzNi44LDE0LjEsNTAuOSwwQzQ1MS41LDQyMy40LDQ1MS41LDQwMC42LDQzNy41LDM4Ni42eiIvPjwvc3ZnPg==\"></img>";
-    }
-};
-
-
-COMPONENT.UIWidgetWindowMinimize = class extends COMPONENT.UIWidgetWindowAction {
-    static config() {
-        return {
-            platform: "browser",
-            tag: "widget-window-minimize"
-        };
-    }
-    action() {
-        return "minimize";
-    }
-    render() {
-        return "<img title=\"Minimize\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM3YzYTIgMiAwIDAgMS0yIDJIM20xOCAwaC0zYTIgMiAwIDAgMS0yLTJWM20wIDE4di0zYTIgMiAwIDAgMSAyLTJoM00zIDE2aDNhMiAyIDAgMCAxIDIgMnYzIi8+PC9zdmc+\"></img>";
+        return "<img title=\"Close\" width=\"22px\" height=\"22px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMjU2LDMzQzEzMi4zLDMzLDMyLDEzMy4zLDMyLDI1N2MwLDEyMy43LDEwMC4zLDIyNCwyMjQsMjI0YzEyMy43LDAsMjI0LTEwMC4zLDIyNC0yMjRDNDgwLDEzMy4zLDM3OS43LDMzLDI1NiwzM3ogICAgTTM2NC4zLDMzMi41YzEuNSwxLjUsMi4zLDMuNSwyLjMsNS42YzAsMi4xLTAuOCw0LjItMi4zLDUuNmwtMjEuNiwyMS43Yy0xLjYsMS42LTMuNiwyLjMtNS42LDIuM2MtMiwwLTQuMS0wLjgtNS42LTIuM0wyNTYsMjg5LjggICBsLTc1LjQsNzUuN2MtMS41LDEuNi0zLjYsMi4zLTUuNiwyLjNjLTIsMC00LjEtMC44LTUuNi0yLjNsLTIxLjYtMjEuN2MtMS41LTEuNS0yLjMtMy41LTIuMy01LjZjMC0yLjEsMC44LTQuMiwyLjMtNS42bDc1LjctNzYgICBsLTc1LjktNzVjLTMuMS0zLjEtMy4xLTguMiwwLTExLjNsMjEuNi0yMS43YzEuNS0xLjUsMy41LTIuMyw1LjYtMi4zYzIuMSwwLDQuMSwwLjgsNS42LDIuM2w3NS43LDc0LjdsNzUuNy03NC43ICAgYzEuNS0xLjUsMy41LTIuMyw1LjYtMi4zYzIuMSwwLDQuMSwwLjgsNS42LDIuM2wyMS42LDIxLjdjMy4xLDMuMSwzLjEsOC4yLDAsMTEuM2wtNzUuOSw3NUwzNjQuMywzMzIuNXoiLz48L2c+PC9zdmc+\"></img>";
     }
 };
 
