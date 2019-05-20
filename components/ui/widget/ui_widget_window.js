@@ -95,7 +95,12 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     async restore() {
         let parent = this.parent();
         if (!parent) {
-            this._isMaximized = false;
+            if (this._isMinimized) {
+                this._isMinimized = false;
+            }
+            else {
+                this._isMaximized = false;
+            }
             await this.update();
         }
         return true;
@@ -155,8 +160,9 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     }
     async render(element) {
         let _isMaximized = (await this.emit("isMaximized"))[0];
-        this.drag.enable(!_isMaximized);
-        let maximizedRestoreTag = _isMaximized ? "restore" : "maximize";
+        let _isMinimized = (await this.emit("isMinimized"))[0];
+        this.drag.enable(!_isMaximized || !_isMinimized);
+        let maximizedRestoreTag = (_isMaximized || _isMinimized) ? "restore" : "maximize";
         return `<widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
         <widget-window-close></widget-window-close>
         <widget-window-minimize></widget-window-minimize>
