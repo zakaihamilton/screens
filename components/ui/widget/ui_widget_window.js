@@ -68,7 +68,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     async menu() {
         let parent = this.parent();
         if (!parent) {
-            this._showMenu = !this._showMenu;
             await this.update();
         }
         return true;
@@ -126,6 +125,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                 let region = Object.assign({}, this._region);
                 region.left = pos.left + "px";
                 region.top = pos.top + "px";
+                region.right = "";
+                region.bottom = "";
                 this.region = region;
                 if (!this._isMaximized) {
                     this._region = region;
@@ -148,9 +149,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let html = "";
         if (!parent) {
             html = `<widget-window-title label="${element.getAttribute("label") || ""}"></widget-window-title>`;
-        }
-        if (this._showMenu) {
-            html += "<widget-menu></widget-menu>";
         }
         html += `<widget-window-content>${this.content()}</widget-window-content>`;
         return html;

@@ -34,8 +34,13 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
         };
     }
     async move(pos) {
-        if (pos || this._isMaximized) {
-            this._pos = Object.assign({}, pos);
+        if (pos) {
+            let region = Object.assign({}, this.region);
+            region.left = pos.left + "px";
+            region.top = pos.top + "px";
+            region.right = "";
+            region.bottom = "";
+            this.region = region;
             await this.updateStyles();
         }
     }

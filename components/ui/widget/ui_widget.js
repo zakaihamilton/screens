@@ -194,4 +194,8 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         style.width = region.width || "";
         style.height = region.height || "";
     }
+    checkAttrib(name) {
+        let result = this.element.getAttribute(name);
+        return !(!result || result === "" || result === "0" || result.toLowerCase() === "false");
+    }
 };
