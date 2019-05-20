@@ -38,22 +38,21 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
                 let currentPos = { left: initialPos.left, top: initialPos.top };
                 let targetPos = null;
                 event.preventDefault();
-                parent.send("move");
+                let moveCallback = (event) => {
+                    currentPos = { left: event.clientX - left, top: event.clientY - top };
+                    if (targetPos || currentPos.left < initialPos.left - diff || currentPos.left > initialPos.left + diff ||
+                        currentPos.top < initialPos.top - diff || currentPos.top > initialPos.top + diff) {
+                        targetPos = { left: currentPos.left, top: currentPos.top };
+                        parent.send("move", targetPos);
+                    }
+                };
                 const events = {
                     move(event) {
-                        currentPos = { left: event.clientX - left, top: event.clientY - top };
-                        if (targetPos || currentPos.left < initialPos.left - diff || currentPos.left > initialPos.left + diff ||
-                            currentPos.top < initialPos.top - diff || currentPos.top > initialPos.top + diff) {
-                            parent.element.style.left = currentPos.left + "px";
-                            parent.element.style.top = currentPos.top + "px";
-                            parent.element.style.right = "";
-                            parent.element.style.bottom = "";
-                            targetPos = { left: currentPos.left, top: currentPos.top };
-                        }
+                        moveCallback(event);
                     },
-                    up() {
+                    up(event) {
+                        moveCallback(event);
                         instance.unregisterEvents(events);
-                        parent.send("move", targetPos);
                     }
                 };
                 instance.registerEvents(events);

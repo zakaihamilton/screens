@@ -106,11 +106,26 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return true;
     }
     async move(pos) {
-        if (pos) {
+        if (pos || this._isMaximized) {
             let parent = this.parent();
+            let update = false;
             if (!parent) {
+                if (pos && pos.top <= 0) {
+                    if (!this._isMaximized) {
+                        return this.maximize();
+                    }
+                }
+                else if (this._isMaximized) {
+                    this._isMaximized = false;
+                    update = true;
+                }
                 this._pos = Object.assign({}, pos);
-                await this.update();
+                if (update) {
+                    await this.update();
+                }
+                else {
+                    await this.updateStyles();
+                }
             }
             return !parent;
         }
@@ -161,9 +176,11 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     async render(element) {
         let _isMaximized = (await this.emit("isMaximized"))[0];
         let _isMinimized = (await this.emit("isMinimized"))[0];
-        this.drag.enable(!_isMaximized || !_isMinimized);
+        this.drag.enable(!_isMinimized);
         let maximizedRestoreTag = (_isMaximized || _isMinimized) ? "restore" : "maximize";
-        return `<widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
+        return `
+        <widget-window-menu></widget-window-menu>
+        <widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
         <widget-window-close></widget-window-close>
         <widget-window-minimize></widget-window-minimize>
         <widget-window-${maximizedRestoreTag}></widget-window-${maximizedRestoreTag}>`;
@@ -180,6 +197,7 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
     normal() {
         return {
             "user-select": "none",
+            "padding-top": "3px",
             "padding-left": "6px",
             "flex-grow": "1"
         };
@@ -236,6 +254,46 @@ COMPONENT.UIWidgetWindowAction = class extends COMPONENT.UIWidget {
         return {
             filter: "invert(20%)"
         };
+    }
+};
+
+COMPONENT.UIWidgetWindowMenu = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-menu"
+        };
+    }
+    normal() {
+        return {
+            "width": "25px",
+            "height": "25px",
+            "margin": "3px",
+            "display": "flex",
+            "align-items": "center",
+            "justify-content": "center"
+        };
+    }
+    events() {
+        return {
+            click(event) {
+                const instance = this.instance;
+                instance.emit("menu", instance);
+            }
+        };
+    }
+    hover() {
+        return {
+            filter: "invert(10%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(20%)"
+        };
+    }
+    render() {
+        return "<img title=\"Menu\" width=\"25px\" height=\"25px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgaWQ9InN2ZzgiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEyLjcgMTIuNyIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBpZD0ibGF5ZXIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0yODQuMjk5OTgpIj48cGF0aCBkPSJtIDIuODIyMjIyMywyODcuMTIyMiB2IDEuNDExMTEgaCA3LjA1NTU1NTggdiAtMS40MTExMSB6IG0gMCwyLjgyMjIyIHYgMS40MTExMiBoIDcuMDU1NTU1OCB2IC0xLjQxMTEyIHogbSAwLDIuODIyMjMgdiAxLjQxMTExIGggNy4wNTU1NTU4IHYgLTEuNDExMTEgeiIgaWQ9InJlY3Q0NDg3IiBzdHlsZT0ib3BhY2l0eToxO3ZlY3Rvci1lZmZlY3Q6bm9uZTtmaWxsOiMwMDAwMDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjAuMDcwNTU1NTU7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1kYXNob2Zmc2V0OjA7c3Ryb2tlLW9wYWNpdHk6MSIvPjwvZz48L3N2Zz4=\"></img>";
     }
 };
 
