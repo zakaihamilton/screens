@@ -174,16 +174,11 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         };
     }
     async render(element) {
-        let _isMaximized = (await this.emit("isMaximized"))[0];
-        let _isMinimized = (await this.emit("isMinimized"))[0];
-        this.drag.enable(!_isMinimized);
-        let maximizedRestoreTag = (_isMaximized || _isMinimized) ? "restore" : "maximize";
         return `
         <widget-window-menu></widget-window-menu>
         <widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
         <widget-window-close></widget-window-close>
-        <widget-window-minimize></widget-window-minimize>
-        <widget-window-${maximizedRestoreTag}></widget-window-${maximizedRestoreTag}>`;
+        <widget-window-minimize></widget-window-minimize>`;
     }
 };
 
@@ -328,35 +323,6 @@ COMPONENT.UIWidgetWindowMinimize = class extends COMPONENT.UIWidgetWindowAction 
     }
 };
 
-COMPONENT.UIWidgetWindowMaximize = class extends COMPONENT.UIWidgetWindowAction {
-    static config() {
-        return {
-            platform: "browser",
-            tag: "widget-window-maximize"
-        };
-    }
-    action() {
-        return "maximize";
-    }
-    render() {
-        return "<img title=\"Maximize\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM0g1YTIgMiAwIDAgMC0yIDJ2M20xOCAwVjVhMiAyIDAgMCAwLTItMmgtM20wIDE4aDNhMiAyIDAgMCAwIDItMnYtM00zIDE2djNhMiAyIDAgMCAwIDIgMmgzIi8+PC9zdmc+\"></img>";
-    }
-};
-
-COMPONENT.UIWidgetWindowRestore = class extends COMPONENT.UIWidgetWindowAction {
-    static config() {
-        return {
-            platform: "browser",
-            tag: "widget-window-restore"
-        };
-    }
-    action() {
-        return "restore";
-    }
-    render() {
-        return "<img title=\"Restore\" width=\"13px\" height=\"13px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM0g1YTIgMiAwIDAgMC0yIDJ2M20xOCAwVjVhMiAyIDAgMCAwLTItMmgtM20wIDE4aDNhMiAyIDAgMCAwIDItMnYtM00zIDE2djNhMiAyIDAgMCAwIDIgMmgzIi8+PC9zdmc+\"></img>";
-    }
-};
 COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     static config() {
         return {
