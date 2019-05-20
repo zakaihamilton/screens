@@ -17,16 +17,16 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return {
             "min-width": "100px",
             "min-height": "200px",
-            ... this._isMaximized && { left: "0px", top: "0px" },
-            ... !parent && !this._isMaximized && { border: "1px solid black" },
+            ... (this._isMaximized || this._isMinimized) && { left: "0px", top: "0px" },
+            ... !parent && !this._isMaximized && !this._isMinimized && { border: "1px solid black" },
             display: "flex",
             position: parent ? "relative" : "absolute",
             "flex-direction": "column",
             "align-items": "stretch",
             "align-content": "stretch",
             "justify-content": "stretch",
-            "border-radius": (this._isMaximized || parent) ? "0px" : "6px",
-            "overflow": "scroll",
+            "border-radius": (this._isMaximized || this._isMinimized || parent) ? "0px" : "6px",
+            "overflow": this._isMinimized ? "hidden" : "scroll",
             "box-sizing": "border-box",
             "font-family": "Arial, Helvetica, sans-serif"
         };
@@ -34,23 +34,32 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     styles() {
         let parent = this.parent();
         let styles = {};
-        if (this._isMaximized) {
+        if (this._isMaximized || this._isMinimized) {
             styles.left = "0px";
             styles.top = "0px";
             styles.width = "100%";
-            styles.height = "100%";
+            if (this._isMinimized) {
+                styles.height = "38px";
+                styles["min-height"] = "38px";
+            }
+            else {
+                styles.height = "100%";
+                styles["min-height"] = "";
+            }
         }
         else if (parent) {
             styles.left = "";
             styles.top = "";
             styles.width = "";
             styles.height = "";
+            styles["min-height"] = "";
         }
         else {
             styles.left = this._pos.left + "px";
             styles.top = this._pos.top + "px";
             styles.width = this._size.width + "px";
             styles.height = this._size.height + "px";
+            styles["min-height"] = "";
         }
         return styles;
     }
@@ -60,13 +69,20 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     isMaximized() {
         return this._isMaximized;
     }
+    async close() {
+        let parent = this.parent();
+        if (!parent) {
+            this.element.remove();
+        }
+        return true;
+    }
     async minimize() {
         let parent = this.parent();
         if (!parent) {
             this._isMinimized = true;
             await this.update();
         }
-        return !parent;
+        return true;
     }
     async maximize() {
         let parent = this.parent();
@@ -74,7 +90,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             this._isMaximized = true;
             await this.update();
         }
-        return !parent;
+        return true;
     }
     async restore() {
         let parent = this.parent();
@@ -82,7 +98,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             this._isMaximized = false;
             await this.update();
         }
-        return !parent;
+        return true;
     }
     async move(pos) {
         if (pos) {
