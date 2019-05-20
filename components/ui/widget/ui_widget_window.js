@@ -9,8 +9,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         super(element);
         this._isMinimized = false;
         this._isMaximized = false;
-        this._pos = { left: parseInt(element.style.left) || 0, top: parseInt(element.style.top) || 0 };
-        this._size = { width: parseInt(element.style.width) || 500, height: parseInt(element.style.height) || 100 };
+        this._region = this.region;
     }
     normal() {
         let parent = this.parent();
@@ -55,10 +54,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             styles["min-height"] = "";
         }
         else {
-            styles.left = this._pos.left + "px";
-            styles.top = this._pos.top + "px";
-            styles.width = this._size.width + "px";
-            styles.height = this._size.height + "px";
+            this.region = this._region;
             styles["min-height"] = "";
         }
         return styles;
@@ -127,7 +123,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                     this._isMaximized = false;
                     update = true;
                 }
-                this._pos = Object.assign({}, pos);
+                let region = Object.assign({}, this._region);
+                region.left = pos.left + "px";
+                region.top = pos.top + "px";
+                this.region = region;
+                if (!this._isMaximized) {
+                    this._region = region;
+                }
                 if (update) {
                     await this.update();
                 }
@@ -138,6 +140,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             return !parent;
         }
     }
+    content() {
+        return "<slot></slot>";
+    }
     render(element) {
         let parent = this.parent();
         let html = "";
@@ -147,7 +152,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         if (this._showMenu) {
             html += "<widget-menu></widget-menu>";
         }
-        html += "<widget-window-content><slot></slot></widget-window-content>";
+        html += `<widget-window-content>${this.content()}</widget-window-content>`;
         return html;
     }
 };

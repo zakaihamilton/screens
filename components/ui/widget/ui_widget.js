@@ -174,4 +174,24 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     async state(method, params) {
         return (await this.emit(method, params))[0];
     }
+    get region() {
+        let style = this.element.style;
+        return {
+            left: style.left,
+            top: style.top,
+            right: style.right,
+            bottom: style.bottom,
+            width: style.width,
+            height: style.height
+        };
+    }
+    set region(region) {
+        let style = this.element.style;
+        style.left = region.left || "";
+        style.top = region.top || "";
+        style.right = region.right || "";
+        style.bottom = region.bottom || "";
+        style.width = region.width || "";
+        style.height = region.height || "";
+    }
 };

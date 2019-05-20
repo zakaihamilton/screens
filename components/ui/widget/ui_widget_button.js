@@ -5,10 +5,12 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
             tag: "widget-button"
         };
     }
+    constructor(element) {
+        super(element);
+    }
     styles(element) {
         const isDefault = element.getAttribute("default");
         return {
-            height: "30px",
             border: "1px solid darkgray",
             "background-color": isDefault ? "white" : "lightgray",
             display: "flex",
@@ -17,7 +19,8 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
             "align-content": "center",
             "justify-content": "center",
             padding: "3px",
-            "border-radius": "6px"
+            "border-radius": "6px",
+            ...this.region
         };
     }
     hover() {
@@ -29,6 +32,12 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
         return {
             filter: "invert(20%)"
         };
+    }
+    async move(pos) {
+        if (pos || this._isMaximized) {
+            this._pos = Object.assign({}, pos);
+            await this.updateStyles();
+        }
     }
     render(element) {
         return `<widget-button-handle></widget-button-handle>
