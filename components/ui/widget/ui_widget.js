@@ -171,4 +171,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (parent);
         return results;
     }
+    async state(method, params) {
+        return (await this.emit(method, params))[0];
+    }
 };

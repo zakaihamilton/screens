@@ -153,14 +153,16 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
     normal() {
+        let isMaximized = this.state("isMaximized");
         return {
-            "background-color": "white",
+            "background-color": "#2e0150",
             "padding": "3px",
             "height": "32px",
-            "border-radius": "6px 6px 0px 0px",
+            ... !isMaximized && { "border-radius": "6px 6px 0px 0px" },
             "display": "flex",
             "align-items": "center",
-            "padding-right": "12px"
+            "padding-right": "12px",
+            "color": "white"
         };
     }
     hover() {
@@ -266,7 +268,8 @@ COMPONENT.UIWidgetWindowMenu = class extends COMPONENT.UIWidget {
             "margin": "3px",
             "display": "flex",
             "align-items": "center",
-            "justify-content": "center"
+            "justify-content": "center",
+            "filter": "invert(100%)"
         };
     }
     events() {
@@ -279,12 +282,12 @@ COMPONENT.UIWidgetWindowMenu = class extends COMPONENT.UIWidget {
     }
     hover() {
         return {
-            filter: "invert(10%)"
+            filter: "invert(90%)"
         };
     }
     touch() {
         return {
-            filter: "invert(20%)"
+            filter: "invert(80%)"
         };
     }
     render() {
