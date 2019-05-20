@@ -5,18 +5,18 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             tag: "widget-window"
         };
     }
-    constructor(parent) {
-        super(parent);
+    constructor(element) {
+        super(element);
         this._isMinimized = false;
         this._isMaximized = false;
-        this._pos = { left: 0, pos: 0 };
-        this._size = { width: 500, height: 100 };
+        this._pos = { left: parseInt(element.style.left) || 0, top: parseInt(element.style.top) || 0 };
+        this._size = { width: parseInt(element.style.width) || 500, height: parseInt(element.style.height) || 100 };
     }
     normal() {
         let parent = this.parent();
         return {
             "min-width": "100px",
-            "min-height": "100px",
+            "min-height": "200px",
             ... this._isMaximized && { left: "0px", top: "0px" },
             ... !parent && !this._isMaximized && { border: "1px solid black" },
             display: "flex",
@@ -112,8 +112,8 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
             tag: "widget-window-title"
         };
     }
-    constructor(parent) {
-        super(parent);
+    constructor(element) {
+        super(element);
         this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
     }
     normal() {
