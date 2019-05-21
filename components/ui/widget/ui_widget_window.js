@@ -20,27 +20,28 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return "";
     }
     normal() {
-        let parent = this.state("isEmbedded");
+        let isEmbedded = this.state("isEmbedded");
         let inFocus = this.inFocus();
         let border = inFocus ? "1px solid black" : "1px solid darkgray";
         return {
             "min-width": "100px",
             "min-height": "200px",
-            ... !parent && !this._isMaximized && !this._isMinimized && { border, "width": "300px" },
+            ... !isEmbedded && !this._isMaximized && !this._isMinimized && { border, "width": "300px" },
             display: "flex",
-            position: parent ? "relative" : "absolute",
+            position: isEmbedded ? "relative" : "absolute",
             "flex-direction": "column",
+            "flex": "1",
             "align-items": "stretch",
             "align-content": "stretch",
             "justify-content": "stretch",
-            "border-radius": (this._isMaximized || this._isMinimized || parent) ? "0px" : "6px",
+            "border-radius": (this._isMaximized || this._isMinimized || isEmbedded) ? "0px" : "6px",
             "overflow": this._isMinimized ? "hidden" : "scroll",
             "box-sizing": "border-box",
             "font-family": "Arial, Helvetica, sans-serif"
         };
     }
     styles() {
-        let parent = this.state("isEmbedded");
+        let isEmbedded = this.state("isEmbedded");
         let styles = {};
         if (this._isMaximized || this._isMinimized) {
             styles.left = "0px";
@@ -57,7 +58,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                 styles["min-height"] = "";
             }
         }
-        else if (parent) {
+        else if (isEmbedded) {
             styles.left = "";
             styles.top = "";
             styles.right = "";
@@ -94,31 +95,31 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return this.parent("widget-window");
     }
     async close() {
-        let parent = this.state("isEmbedded");
-        if (!parent) {
+        let isEmbedded = this.state("isEmbedded");
+        if (!isEmbedded) {
             this.element.remove();
         }
         return true;
     }
     async minimize() {
-        let parent = this.state("isEmbedded");
-        if (!parent) {
+        let isEmbedded = this.state("isEmbedded");
+        if (!isEmbedded) {
             this._isMinimized = true;
             await this.update();
         }
         return true;
     }
     async maximize() {
-        let parent = this.state("isEmbedded");
-        if (!parent) {
+        let isEmbedded = this.state("isEmbedded");
+        if (!isEmbedded) {
             this._isMaximized = true;
             await this.update();
         }
         return true;
     }
     async restore() {
-        let parent = this.state("isEmbedded");
-        if (parent) {
+        let isEmbedded = this.state("isEmbedded");
+        if (isEmbedded) {
             document.body.appendChild(this.element);
             await this.update();
             this.send("focus");
@@ -136,9 +137,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     async move(pos) {
         if (pos || this._isMaximized) {
-            let parent = this.state("isEmbedded");
+            let isEmbedded = this.state("isEmbedded");
             let update = false;
-            if (!parent) {
+            if (!isEmbedded) {
                 if (pos && pos.top <= 0) {
                     if (!this._isMaximized) {
                         return this.maximize();
@@ -164,14 +165,14 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                     this.updateStyles();
                 }
             }
-            return !parent;
+            return !isEmbedded;
         }
     }
     async resize(size) {
         if (size && !this._isMaximized) {
-            let parent = this.state("isEmbedded");
+            let isEmbedded = this.state("isEmbedded");
             let update = false;
-            if (!parent) {
+            if (!isEmbedded) {
                 let region = Object.assign({}, this._region);
                 region.width = size.width + "px";
                 region.height = size.height + "px";
@@ -186,7 +187,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                     this.updateStyles();
                 }
             }
-            return !parent;
+            return !isEmbedded;
         }
     }
     focusEvent() {
@@ -198,11 +199,11 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this.update();
     }
     render(element) {
-        let parent = this.state("isEmbedded");
+        let isEmbedded = this.state("isEmbedded");
         let html = "";
         let hasMenu = "menu" in this;
         let handle = "";
-        if (!parent) {
+        if (!isEmbedded) {
             html = `<widget-window-title close="${this.canClose()}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
             html += "<widget-window-header></widget-window-header>";
         }
@@ -210,7 +211,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             handle = "<widget-window-handle></widget-window-handle>";
         }
         html += `<widget-window-content>${handle}${this.content()}</widget-window-content>`;
-        if (!parent) {
+        if (!isEmbedded) {
             html += "<widget-window-footer></widget-window-footer>";
         }
         return html;
@@ -396,25 +397,27 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
         };
     }
     slotted() {
-        let parent = this.state("isEmbedded");
+        let isEmbedded = this.state("isEmbedded");
         return {
-            ...!parent && {
+            ...!isEmbedded && {
                 "margin-top": "36px !important"
             }
         };
     }
     normal() {
-        let parent = this.state("isEmbedded");
+        let isEmbedded = this.state("isEmbedded");
         return {
-            ...!parent && {
+            ...!isEmbedded && {
             },
-            ...parent && {
-                "border-top": "-1px solid darkgray",
+            ...isEmbedded && {
+                "border-top": "1px solid darkgray",
                 "border-bottom": "1px solid darkgray",
                 "padding-top": "20px"
             },
             "background-color": "lightgray",
-            "flex": "1"
+            "flex": "1",
+            "display": "flex",
+            "flex-direction": "column"
         };
     }
     render() {
