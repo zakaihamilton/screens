@@ -21,10 +21,12 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     normal() {
         let parent = this.parent();
+        let inFocus = this.inFocus();
+        let border = inFocus ? "1px solid black" : "1px solid darkgray";
         return {
             "min-width": "100px",
             "min-height": "200px",
-            ... !parent && !this._isMaximized && !this._isMinimized && { border: "1px solid black", "width": "300px" },
+            ... !parent && !this._isMaximized && !this._isMinimized && { border, "width": "300px" },
             display: "flex",
             position: parent ? "relative" : "absolute",
             "flex-direction": "column",
@@ -211,11 +213,9 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         };
     }
     normal() {
-        let isMaximized = this.state("isMaximized");
         let inFocus = this.state("inFocus");
         return {
             "background-color": inFocus ? "#2e0150" : "darkgray",
-            ... !isMaximized && { "border-radius": "6px 6px 0px 0px" },
             "display": "flex",
             "height": "36px",
             "align-items": "center",
