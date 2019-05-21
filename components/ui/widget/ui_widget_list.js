@@ -9,9 +9,8 @@ COMPONENT.UIWidgetList = class extends COMPONENT.UIWidget {
         super(element);
     }
     styles(element) {
-        const isDefault = element.getAttribute("default");
         return {
-            "background-color": isDefault ? "white" : "lightgray",
+            "background-color": "lightgray",
             display: "flex",
             "flex-direction": "row",
             "align-items": "center",

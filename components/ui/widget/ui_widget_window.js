@@ -14,7 +14,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._canClose = true;
         this.send("unfocus");
-        this._inFocus = true;
+        this._inFocus = !this.parent();
     }
     status() {
         return "";
@@ -115,7 +115,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     async restore() {
         let parent = this.parent();
-        if (!parent) {
+        if (parent) {
+            document.body.appendChild(this.element);
+            await this.update();
+            this.send("unfocus");
+            this.send("focus");
+        }
+        else {
             if (this._isMinimized) {
                 this._isMinimized = false;
             }
@@ -193,11 +199,15 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let parent = this.parent();
         let html = "";
         let hasMenu = "menu" in this;
+        let handle = "";
         if (!parent) {
             html = `<widget-window-title close="${this.canClose()}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
             html += "<widget-window-header></widget-window-header>";
         }
-        html += `<widget-window-content>${this.content()}</widget-window-content>`;
+        else {
+            handle = "<widget-window-handle></widget-window-handle>";
+        }
+        html += `<widget-window-content>${handle}${this.content()}</widget-window-content>`;
         if (!parent) {
             html += "<widget-window-footer></widget-window-footer>";
         }
@@ -494,5 +504,46 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
     }
     render() {
         return "<img title=\"Resize\" width=\"32px\" height=\"32px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOTguOSwxODQuN2wxLjgsMi4xbDEzNiwxNTYuNWM0LjYsNS4zLDExLjUsOC42LDE5LjIsOC42YzcuNywwLDE0LjYtMy40LDE5LjItOC42TDQxMSwxODcuMWwyLjMtMi42ICBjMS43LTIuNSwyLjctNS41LDIuNy04LjdjMC04LjctNy40LTE1LjgtMTYuNi0xNS44djBIMTEyLjZ2MGMtOS4yLDAtMTYuNiw3LjEtMTYuNiwxNS44Qzk2LDE3OS4xLDk3LjEsMTgyLjIsOTguOSwxODQuN3oiLz48L3N2Zz4=\"></img>";
+    }
+};
+
+
+COMPONENT.UIWidgetWindowHandle = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-handle"
+        };
+    }
+    normal() {
+        return {
+            "background": "url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTggM0g1YTIgMiAwIDAgMC0yIDJ2M20xOCAwVjVhMiAyIDAgMCAwLTItMmgtM20wIDE4aDNhMiAyIDAgMCAwIDItMnYtM00zIDE2djNhMiAyIDAgMCAwIDIgMmgzIi8+PC9zdmc+') no-repeat",
+            "background-size": "16px 16px",
+            "position": "absolute",
+            "top": "6px",
+            "right": "6px",
+            width: "16px",
+            height: "16px",
+            "border-radius": "6px",
+            filter: "invert(70%)"
+        };
+    }
+    events() {
+        return {
+            click(event) {
+                const instance = this.instance;
+                instance.emit("restore", instance);
+            }
+        };
+    }
+    hover() {
+        return {
+            filter: "invert(40%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(0%)"
+        };
     }
 };
