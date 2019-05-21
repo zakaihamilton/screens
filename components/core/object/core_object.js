@@ -49,7 +49,7 @@ COMPONENT.CoreObject = class {
             return this;
         }
         const parent = this._parent || this;
-        if (parent.constructor.name === component.constructor.name) {
+        if (parent instanceof component) {
             return parent;
         }
         const instance = parent._attachments.find(item => item instanceof component);

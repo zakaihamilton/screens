@@ -10,7 +10,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._isMinimized = false;
         this._isMaximized = false;
         this._region = this.region;
-        this.focus = this.attach(COMPONENT.UIEventFocus);
+        this._focus = this.attach(COMPONENT.UIEventFocus);
+        this.send("unfocus");
+        this._inFocus = true;
     }
     status() {
         return "";
@@ -71,6 +73,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     isMaximized() {
         return this._isMaximized;
+    }
+    inFocus() {
+        return this._inFocus;
     }
     async close() {
         let parent = this.parent();
@@ -163,6 +168,14 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             return !parent;
         }
     }
+    focusEvent() {
+        this._inFocus = true;
+        this.update();
+    }
+    blurEvent() {
+        this._inFocus = false;
+        this.update();
+    }
     content() {
         return "<slot></slot>";
     }
@@ -192,13 +205,14 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     }
     normal() {
         let isMaximized = this.state("isMaximized");
+        let inFocus = this.state("inFocus");
         return {
-            "background-color": "#2e0150",
+            "background-color": inFocus ? "#2e0150" : "white",
             ... !isMaximized && { "border-radius": "6px 6px 0px 0px" },
             "display": "flex",
             "align-items": "center",
             "padding-right": "12px",
-            "color": "white"
+            "color": inFocus ? "white" : "darkgray"
         };
     }
     async render(element) {
@@ -218,7 +232,7 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
     }
     constructor(element) {
         super(element);
-        this.move = this.attach(COMPONENT.UIWidgetWindowMoveEvent);
+        this._move = this.attach(COMPONENT.UIWidgetWindowMoveEvent);
     }
     normal() {
         return {
@@ -445,7 +459,7 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
     }
     constructor(element) {
         super(element);
-        this.move = this.attach(COMPONENT.UIWidgetWindowResizeEvent);
+        this._move = this.attach(COMPONENT.UIWidgetWindowResizeEvent);
     }
     normal() {
         return {

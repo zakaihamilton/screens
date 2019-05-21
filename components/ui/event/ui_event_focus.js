@@ -31,13 +31,36 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
                         return;
                     }
                 }
-                let children = Array.from(parent.element.parentElement.children);
-                children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
-                children = children.filter(a => a !== target);
-                children.push(target);
-                children.map((child, index) => child.style.zIndex = index * 100);
+                parent.send("focus");
             }
         };
+    }
+    unfocus() {
+        let widget = this.cast(COMPONENT.UIWidget);
+        let children = Array.from(widget.element.parentElement.children);
+        children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
+        for (let child of children) {
+            let instance = child.instance;
+            if (instance && instance.inFocus()) {
+                instance.send("blurEvent");
+            }
+        }
+    }
+    focus() {
+        let widget = this.cast(COMPONENT.UIWidget);
+        let children = Array.from(widget.element.parentElement.children);
+        children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
+        if (children[children.length - 1] === widget.element) {
+            return;
+        }
+        children = children.filter(a => a !== widget.element);
+        let current = children[children.length - 1];
+        if (current && current.instance) {
+            current.instance.send("blurEvent");
+        }
+        children.push(widget.element);
+        children.map((child, index) => child.style.zIndex = index * 100);
+        this.send("focusEvent");
     }
     register(instance) {
         instance.registerEvents(this.events);

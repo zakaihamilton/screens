@@ -146,7 +146,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         var tagName = "";
         do {
             parent = parent.parentNode;
-            if (parent === window.document.body) {
+            if (!parent || parent === window.document.body) {
                 parent = null;
                 break;
             }
