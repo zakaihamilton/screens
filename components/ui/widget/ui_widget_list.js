@@ -117,6 +117,9 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
         let isExpanded = children.some(child => child.style.display !== "none");
         return isExpanded;
     }
+    hasParent() {
+        return this.parent("widget-list-item");
+    }
     hasChildren() {
         return this.members().length;
     }
@@ -126,7 +129,7 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
             "padding": "3px",
             "display": "block",
             "user-select": "none",
-            "padding-left": "16px"
+            ... this.hasParent() && { "padding-left": "16px" }
         };
     }
     render() {
