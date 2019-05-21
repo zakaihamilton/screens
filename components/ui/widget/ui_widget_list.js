@@ -134,6 +134,7 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
     itemClass() {
         return {
             width: "100%",
+            height: "24px",
             display: "flex",
             "border-radius": "6px"
         };
@@ -149,7 +150,7 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
             "left": "0px",
             "right": "0px",
             "position": "relative",
-            ... this.hasParent() && { "margin-left": "16px" }
+            ... this.hasParent() && { "margin-left": "22px", "margin-right": "-3px" }
         };
     }
     render(element) {
@@ -210,7 +211,7 @@ COMPONENT.UIWidgetListItemExpand = class extends COMPONENT.UIWidget {
             "border-radius": "6px",
             "user-select": "none",
             "padding-left": "3px",
-            "margin-right": "3px",
+            "padding-right": "3px",
             "border": "1px solid lightgray",
             "width": "20px",
             "height": "20px",
@@ -255,7 +256,9 @@ COMPONENT.UIWidgetListItemLabel = class extends COMPONENT.UIWidget {
             "border-radius": "6px",
             "user-select": "none",
             "width": "100%",
-            "padding": "3px"
+            "padding": "3px",
+            "padding-left": "6px",
+            "padding-right": "6px"
         };
     }
 };
