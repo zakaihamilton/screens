@@ -14,13 +14,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._canClose = true;
         this.send("unfocus");
-        this._inFocus = !this.parent();
+        this._inFocus = !this.parent("widget-window");
     }
     status() {
         return "";
     }
     normal() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         let inFocus = this.inFocus();
         let border = inFocus ? "1px solid black" : "1px solid darkgray";
         return {
@@ -40,7 +40,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         };
     }
     styles() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         let styles = {};
         if (this._isMaximized || this._isMinimized) {
             styles.left = "0px";
@@ -90,15 +90,18 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     inFocus() {
         return this._inFocus;
     }
+    isEmbedded() {
+        return this.parent("widget-window");
+    }
     async close() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         if (!parent) {
             this.element.remove();
         }
         return true;
     }
     async minimize() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         if (!parent) {
             this._isMinimized = true;
             await this.update();
@@ -106,7 +109,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return true;
     }
     async maximize() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         if (!parent) {
             this._isMaximized = true;
             await this.update();
@@ -114,11 +117,10 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return true;
     }
     async restore() {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         if (parent) {
             document.body.appendChild(this.element);
             await this.update();
-            this.send("unfocus");
             this.send("focus");
         }
         else {
@@ -134,7 +136,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     async move(pos) {
         if (pos || this._isMaximized) {
-            let parent = this.parent();
+            let parent = this.state("isEmbedded");
             let update = false;
             if (!parent) {
                 if (pos && pos.top <= 0) {
@@ -167,7 +169,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     async resize(size) {
         if (size && !this._isMaximized) {
-            let parent = this.parent();
+            let parent = this.state("isEmbedded");
             let update = false;
             if (!parent) {
                 let region = Object.assign({}, this._region);
@@ -196,7 +198,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this.update();
     }
     render(element) {
-        let parent = this.parent();
+        let parent = this.state("isEmbedded");
         let html = "";
         let hasMenu = "menu" in this;
         let handle = "";
@@ -387,13 +389,32 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
             tag: "widget-window-content"
         };
     }
-    normal() {
-        let parent = this.parent();
+    groups() {
         return {
-            "border-top": parent ? "" : "1px solid darkgray",
-            "border-bottom": parent ? "1px solid darkgray" : "",
+            ...super.groups(),
+            slotted: "::slotted(:not(widget-window))"
+        };
+    }
+    slotted() {
+        let parent = this.state("isEmbedded");
+        return {
+            ...!parent && {
+                "margin-top": "20px !important"
+            }
+        };
+    }
+    normal() {
+        let parent = this.state("isEmbedded");
+        return {
+            ...!parent && {
+                "border-radius": "0px 0px 6px 6px",
+            },
+            ...parent && {
+                "border-top": "1px solid darkgray",
+                "border-bottom": "1px solid darkgray",
+                "padding-top": "20px"
+            },
             "background-color": "lightgray",
-            "border-radius": parent ? "0px" : "0px 0px 6px 6px",
             "flex": "1"
         };
     }
