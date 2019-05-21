@@ -155,8 +155,13 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
                 parent = null;
                 break;
             }
-            if (!parent.parentElement && parent.host) {
-                parent = parent.host;
+            if (!parent.parentElement) {
+                if (parent.host) {
+                    parent = parent.host;
+                }
+                else if (parent.parentNode && parent.parentNode.host) {
+                    parent = parent.parentNode.host;
+                }
             }
             tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
         } while (filter && tagName !== filter);

@@ -37,12 +37,12 @@ COMPONENT.UIEventMove = class extends COMPONENT.CoreObject {
                 let superRect = superParent.getBoundingClientRect().toJSON();
                 let left = event.clientX - parentRect.left + superRect.left;
                 let top = event.clientY - parentRect.top + superRect.top;
-                let initialPos = { left: event.clientX - left, top: event.clientY - top };
+                let initialPos = { left: parseInt(event.clientX) - left, top: parseInt(event.clientY) - top };
                 let currentPos = { left: initialPos.left, top: initialPos.top };
                 let targetPos = null;
                 event.preventDefault();
                 let moveCallback = (event) => {
-                    currentPos = { left: event.clientX - left, top: event.clientY - top };
+                    currentPos = { left: parseInt(event.clientX) - left, top: parseInt(event.clientY) - top };
                     if (targetPos || currentPos.left < initialPos.left - diff || currentPos.left > initialPos.left + diff ||
                         currentPos.top < initialPos.top - diff || currentPos.top > initialPos.top + diff) {
                         targetPos = { left: currentPos.left, top: currentPos.top };

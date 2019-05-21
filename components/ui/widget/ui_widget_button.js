@@ -91,9 +91,9 @@ COMPONENT.UIWidgetButtonLabel = class extends COMPONENT.UIWidget {
         return {
             click(event) {
                 let target = event.currentTarget;
-                let parent = target.getRootNode().host;
+                let parent = target.instance.parent("widget-button");
                 if (parent) {
-                    parent.instance.trigger("press");
+                    parent.trigger("press");
                 }
             }
         };

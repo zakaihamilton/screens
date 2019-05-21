@@ -123,17 +123,45 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
     hasChildren() {
         return this.members().length;
     }
-    normal(element) {
+    groups() {
         return {
-            "border-radius": "6px",
+            ...super.groups(),
+            itemClass: ".item",
+            itemHoverClass: ".item:hover",
+            itemTouchClass: ".item:hover:active"
+        };
+    }
+    itemClass() {
+        return {
+            width: "100%",
+            display: "flex",
+            "border-radius": "6px"
+        };
+    }
+    press() {
+        alert("Hello");
+    }
+    normal() {
+        return {
             "padding": "3px",
             "display": "block",
             "user-select": "none",
-            ... this.hasParent() && { "padding-left": "16px" }
+            "left": "0px",
+            "right": "0px",
+            "position": "relative",
+            ... this.hasParent() && { "margin-left": "16px" }
         };
     }
-    render() {
-        let html = "<widget-list-item-expand></widget-list-item-expand><slot></slot>";
+    render(element) {
+        let html = "<div class=\"item\">";
+        if (this.hasChildren()) {
+            html += "<widget-list-item-expand></widget-list-item-expand>";
+        }
+        let label = element.getAttribute("label");
+        if (label) {
+            html += `<widget-list-item-label>${label}</widget-list-item-label>`;
+        }
+        html += "</div><slot></slot>";
         return html;
     }
 };
@@ -147,8 +175,7 @@ COMPONENT.UIWidgetListItemExpand = class extends COMPONENT.UIWidget {
     }
     hover() {
         return {
-            filter: "invert(20%)",
-            "background-color": "white"
+            filter: "invert(20%)"
         };
     }
     touch() {
@@ -156,20 +183,23 @@ COMPONENT.UIWidgetListItemExpand = class extends COMPONENT.UIWidget {
             filter: "invert(10%)"
         };
     }
+    toggle() {
+        let children = this.state("members");
+        let isExpanded = this.state("isExpanded");
+        for (let child of children) {
+            if (!isExpanded) {
+                child.style.display = "block";
+            }
+            else {
+                child.style.display = "none";
+            }
+        }
+        this.update();
+    }
     events() {
         return {
             click() {
-                let children = this.instance.state("members");
-                let isExpanded = this.instance.state("isExpanded");
-                for (let child of children) {
-                    if (!isExpanded) {
-                        child.style.display = "block";
-                    }
-                    else {
-                        child.style.display = "none";
-                    }
-                }
-                this.instance.update();
+                this.instance.toggle();
             }
         };
     }
@@ -179,16 +209,53 @@ COMPONENT.UIWidgetListItemExpand = class extends COMPONENT.UIWidget {
         return {
             "border-radius": "6px",
             "user-select": "none",
-            "padding-left": "10px",
-            "padding-right": "6px",
+            "padding-left": "3px",
             "margin-right": "3px",
             "border": "1px solid lightgray",
-            "width": "16px",
-            "height": "16px",
+            "width": "20px",
+            "height": "20px",
             "visibility": hasChildren ? "visible" : "hidden",
             ...!isExpanded && { "background": "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNMTg0LjcsNDEzLjFsMi4xLTEuOGwxNTYuNS0xMzZjNS4zLTQuNiw4LjYtMTEuNSw4LjYtMTkuMmMwLTcuNy0zLjQtMTQuNi04LjYtMTkuMkwxODcuMSwxMDFsLTIuNi0yLjMgIEMxODIsOTcsMTc5LDk2LDE3NS44LDk2Yy04LjcsMC0xNS44LDcuNC0xNS44LDE2LjZoMHYyODYuOGgwYzAsOS4yLDcuMSwxNi42LDE1LjgsMTYuNkMxNzkuMSw0MTYsMTgyLjIsNDE0LjksMTg0LjcsNDEzLjF6Ii8+PC9zdmc+) no-repeat" },
             ...isExpanded && { "background": "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOTguOSwxODQuN2wxLjgsMi4xbDEzNiwxNTYuNWM0LjYsNS4zLDExLjUsOC42LDE5LjIsOC42YzcuNywwLDE0LjYtMy40LDE5LjItOC42TDQxMSwxODcuMWwyLjMtMi42ICBjMS43LTIuNSwyLjctNS41LDIuNy04LjdjMC04LjctNy40LTE1LjgtMTYuNi0xNS44djBIMTEyLjZ2MGMtOS4yLDAtMTYuNiw3LjEtMTYuNiwxNS44Qzk2LDE3OS4xLDk3LjEsMTgyLjIsOTguOSwxODQuN3oiLz48L3N2Zz4=) no-repeat" },
-            "background-size": "16px 16px",
+            "background-size": "20px 20px",
+        };
+    }
+};
+
+COMPONENT.UIWidgetListItemLabel = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-list-item-label"
+        };
+    }
+    hover() {
+        return {
+            "background-color": "darkgray"
+        };
+    }
+    touch() {
+        return {
+            "background-color": "white"
+        };
+    }
+    events() {
+        return {
+            click(event) {
+                let target = event.currentTarget;
+                let parent = target.instance.parent("widget-list-item");
+                if (parent) {
+                    parent.trigger("press");
+                }
+            }
+        };
+    }
+    normal(element) {
+        return {
+            "border-radius": "6px",
+            "user-select": "none",
+            "width": "100%",
+            "padding": "3px"
         };
     }
 };

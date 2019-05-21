@@ -65,25 +65,26 @@
                 label="Yes">
             </widget-button>
             <widget-list style="position:absolute;left:100px;top:50px;height:100px;">
-                <widget-list-item>Apple</widget-list-item>
-                <widget-list-item>Banana</widget-list-item>
-                <widget-list-item>Orange</widget-list-item>
-                <widget-list-item>One
-                    <widget-list-item>Sub One
-                        <widget-list-item>This is a long item</widget-list-item>
-                        <widget-list-item>123</widget-list-item>
+                <widget-list-item label="Apple"></widget-list-item>
+                <widget-list-item label="Banana"></widget-list-item>
+                <widget-list-item label="Orange"></widget-list-item>
+                <widget-list-item label="One">
+                    <widget-list-item label="Sub One">
+                        <widget-list-item label="This is a long item"></widget-list-item>
+                        <widget-list-item label="123"></widget-list-item>
                     </widget-list-item>
-                    <widget-list-item>Sub Two</widget-list-item>
+                    <widget-list-item label="Sub Two"></widget-list-item>
                 </widget-list-item>
-                <widget-list-item>Two</widget-list-item>
-                <widget-list-item>Three</widget-list-item>
-                <widget-list-item>Four</widget-list-item>
-                <widget-list-item>Five</widget-list-item>
-                <widget-list-item>Six</widget-list-item>
-                <widget-list-item>Seven</widget-list-item>
-                <widget-list-item>Eight</widget-list-item>
-                <widget-list-item>Nine</widget-list-item>
-                <widget-list-item>Ten</widget-list-item>
+                <widget-list-item onpress="alert('hello')" label="Apple"></widget-list-item>
+                <widget-list-item label="Banana"></widget-list-item>
+                <widget-list-item label="Orange"></widget-list-item>
+                <widget-list-item label="Two">
+                    <widget-list-item label="Sub Two">
+                        <widget-list-item label="This is how we do it!"></widget-list-item>
+                        <widget-list-item label="3 O' Clock"></widget-list-item>
+                    </widget-list-item>
+                    <widget-list-item label="Sub Three"></widget-list-item>
+                </widget-list-item>
             </widget-list>
         </widget-window>
 </body>
