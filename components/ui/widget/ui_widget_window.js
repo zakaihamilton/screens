@@ -399,7 +399,7 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
         let parent = this.state("isEmbedded");
         return {
             ...!parent && {
-                "margin-top": "20px !important"
+                "margin-top": "36px !important"
             }
         };
     }
