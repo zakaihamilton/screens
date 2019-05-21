@@ -401,8 +401,12 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
         };
     }
     async render(element) {
-        return `
-        <widget-window-status>Hello</widget-window-status><widget-window-resize></widget-window-resize>`;
+        let isMaximized = this.state("isMaximized");
+        let html = "<widget-window-status>Hello</widget-window-status>";
+        if (!isMaximized) {
+            html += "<widget-window-resize></widget-window-resize>";
+        }
+        return html;
     }
 };
 

@@ -81,6 +81,6 @@ COMPONENT.CoreObject = class {
                 results.push(item[method].apply(item, args));
             }
         });
-        return Promise.all(results);
+        return results;
     }
 };

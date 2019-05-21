@@ -157,12 +157,12 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (filter && tagName !== filter);
         return parent ? parent.instance : null;
     }
-    async emit(method, params) {
+    emit(method, params) {
         let args = Array.prototype.slice.call(arguments, 0);
         let parent = this;
         let results = [];
         do {
-            results = await parent.send.apply(parent, args);
+            results = parent.send.apply(parent, args);
             results = results.filter(Boolean);
             if (results.length) {
                 break;
@@ -171,8 +171,8 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (parent);
         return results;
     }
-    async state(method, params) {
-        return (await this.emit(method, params))[0];
+    state(method, params) {
+        return this.emit(method, params)[0];
     }
     get region() {
         let style = this.element.style;
