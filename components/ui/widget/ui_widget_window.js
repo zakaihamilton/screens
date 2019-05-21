@@ -11,6 +11,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._isMaximized = false;
         this._region = this.region;
     }
+    status() {
+        return "";
+    }
     normal() {
         let parent = this.parent();
         return {
@@ -402,7 +405,7 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
     }
     async render(element) {
         let isMaximized = this.state("isMaximized");
-        let html = "<widget-window-status>Hello</widget-window-status>";
+        let html = "<widget-window-status></widget-window-status>";
         if (!isMaximized) {
             html += "<widget-window-resize></widget-window-resize>";
         }
@@ -427,7 +430,8 @@ COMPONENT.UIWidgetWindowStatus = class extends COMPONENT.UIWidget {
         };
     }
     render(element) {
-        return "<slot></slot>";
+        let status = this.state("status");
+        return status;
     }
 };
 
