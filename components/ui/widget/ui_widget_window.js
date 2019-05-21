@@ -176,9 +176,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._inFocus = false;
         this.update();
     }
-    content() {
-        return "<slot></slot>";
-    }
     render(element) {
         let parent = this.parent();
         let html = "";
@@ -218,7 +215,7 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     async render(element) {
         return `
         <widget-window-menu show="${this.checkAttrib("menu")}"></widget-window-menu>
-        <widget-window-label label="${element.getAttribute("label")}"></widget-window-label>
+        <widget-window-label>${element.getAttribute("label")}</widget-window-label>
         <widget-window-close show="${this.checkAttrib("close")}"></widget-window-close>`;
     }
 };
@@ -238,13 +235,10 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
         return {
             "user-select": "none",
             "padding": "6px",
-            "display": "flex",
+            "text-align": "center",
             "flex-grow": "1",
-            "min-height": "16px",
+            "min-height": "16px"
         };
-    }
-    render(element) {
-        return `<div>${element.getAttribute("label")}</div>`;
     }
 };
 
@@ -335,9 +329,10 @@ COMPONENT.UIWidgetWindowClose = class extends COMPONENT.UIWidgetWindowAction {
         };
     }
     normal() {
+        let inFocus = this.state("inFocus");
         return {
             ...super.normal(),
-            filter: "invert(100%)"
+            filter: inFocus ? "invert(100%)" : "invert(0%)"
         };
     }
     hover() {

@@ -131,8 +131,13 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     hide() {
         this.element.style.visibility = "hidden";
     }
+    content() {
+        return "<slot></slot>";
+    }
     render() {
-
+        if (this.content) {
+            return `${this.content()}`;
+        }
     }
     data() {
         return {};
