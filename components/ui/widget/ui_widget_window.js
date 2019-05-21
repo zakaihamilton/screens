@@ -407,10 +407,9 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
         let parent = this.state("isEmbedded");
         return {
             ...!parent && {
-                "border-radius": "0px 0px 6px 6px",
             },
             ...parent && {
-                "border-top": "1px solid darkgray",
+                "border-top": "-1px solid darkgray",
                 "border-bottom": "1px solid darkgray",
                 "padding-top": "20px"
             },
@@ -542,7 +541,7 @@ COMPONENT.UIWidgetWindowHandle = class extends COMPONENT.UIWidget {
             "background-size": "16px 16px",
             "position": "absolute",
             "top": "6px",
-            "right": "6px",
+            "left": "6px",
             width: "16px",
             height: "16px",
             "border-radius": "6px",

@@ -36,8 +36,9 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
     async move(pos) {
         if (pos) {
             let region = Object.assign({}, this.region);
+            var style = this.element.currentStyle || window.getComputedStyle(this.element);
             region.left = pos.left + "px";
-            region.top = pos.top + "px";
+            region.top = pos.top - parseInt(style.marginTop) + "px";
             region.right = "";
             region.bottom = "";
             this.region = region;

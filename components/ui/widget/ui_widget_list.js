@@ -82,6 +82,7 @@ COMPONENT.UIWidgetListHandle = class extends COMPONENT.UIWidget {
             "background-size": "16px 16px",
             width: "16px",
             height: "16px",
+            "margin-right": "6px",
             "border-radius": "6px",
             filter: "invert(75%)"
         };
