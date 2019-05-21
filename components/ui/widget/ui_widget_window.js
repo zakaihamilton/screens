@@ -9,6 +9,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         super(element);
         this._isMinimized = false;
         this._isMaximized = false;
+        this._isResizable = true;
         this._region = this.region;
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._canClose = true;
@@ -80,6 +81,9 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     isMaximized() {
         return this._isMaximized;
+    }
+    isResizable() {
+        return this._isResizable;
     }
     inFocus() {
         return this._inFocus;
@@ -428,8 +432,9 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
     }
     async render(element) {
         let isMaximized = this.state("isMaximized");
+        let isResizable = this.state("isResizable");
         let html = "<widget-window-status></widget-window-status>";
-        if (!isMaximized) {
+        if (!isMaximized && isResizable) {
             html += "<widget-window-resize></widget-window-resize>";
         }
         return html;
