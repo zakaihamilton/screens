@@ -168,7 +168,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         let results = [];
         do {
             results = parent.send.apply(parent, args);
-            results = results.filter(Boolean);
+            results = results.filter(e => typeof e !== "undefined");
             if (results.length) {
                 break;
             }

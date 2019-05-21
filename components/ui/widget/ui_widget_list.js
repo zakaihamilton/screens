@@ -33,8 +33,11 @@ COMPONENT.UIWidgetList = class extends COMPONENT.UIWidget {
             "border": "1px solid darkgray",
             "overflow": "scroll",
             "max-height": "150px",
+            "padding": "6px",
             "padding-right": "16px",
-            "border-radius": "6px"
+            "border-radius": "6px",
+            "display": "flex",
+            "flex-direction": "column"
         };
     }
     async move(pos) {
@@ -104,6 +107,41 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
             tag: "widget-list-item"
         };
     }
+    members() {
+        let children = Array.from(this.element.children);
+        children = children.filter(child => child.tagName && child.tagName.toLowerCase() === "widget-list-item");
+        return children;
+    }
+    isExpanded() {
+        let children = this.members();
+        let isExpanded = children.some(child => child.style.display !== "none");
+        return isExpanded;
+    }
+    hasChildren() {
+        return this.members().length;
+    }
+    normal(element) {
+        return {
+            "border-radius": "6px",
+            "padding": "3px",
+            "display": "block",
+            "user-select": "none",
+            "padding-left": "16px"
+        };
+    }
+    render() {
+        let html = "<widget-list-item-expand></widget-list-item-expand><slot></slot>";
+        return html;
+    }
+};
+
+COMPONENT.UIWidgetListItemExpand = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-list-item-expand"
+        };
+    }
     hover() {
         return {
             filter: "invert(20%)",
@@ -115,11 +153,39 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
             filter: "invert(10%)"
         };
     }
+    events() {
+        return {
+            click() {
+                let children = this.instance.state("members");
+                let isExpanded = this.instance.state("isExpanded");
+                for (let child of children) {
+                    if (!isExpanded) {
+                        child.style.display = "block";
+                    }
+                    else {
+                        child.style.display = "none";
+                    }
+                }
+                this.instance.update();
+            }
+        };
+    }
     normal(element) {
+        let isExpanded = this.state("isExpanded");
+        let hasChildren = this.state("hasChildren");
         return {
             "border-radius": "6px",
-            "display": "block",
-            "user-select": "none"
+            "user-select": "none",
+            "padding-left": "10px",
+            "padding-right": "6px",
+            "margin-right": "3px",
+            "border": "1px solid lightgray",
+            "width": "16px",
+            "height": "16px",
+            "visibility": hasChildren ? "visible" : "hidden",
+            ...!isExpanded && { "background": "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNMTg0LjcsNDEzLjFsMi4xLTEuOGwxNTYuNS0xMzZjNS4zLTQuNiw4LjYtMTEuNSw4LjYtMTkuMmMwLTcuNy0zLjQtMTQuNi04LjYtMTkuMkwxODcuMSwxMDFsLTIuNi0yLjMgIEMxODIsOTcsMTc5LDk2LDE3NS44LDk2Yy04LjcsMC0xNS44LDcuNC0xNS44LDE2LjZoMHYyODYuOGgwYzAsOS4yLDcuMSwxNi42LDE1LjgsMTYuNkMxNzkuMSw0MTYsMTgyLjIsNDE0LjksMTg0LjcsNDEzLjF6Ii8+PC9zdmc+) no-repeat" },
+            ...isExpanded && { "background": "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOTguOSwxODQuN2wxLjgsMi4xbDEzNiwxNTYuNWM0LjYsNS4zLDExLjUsOC42LDE5LjIsOC42YzcuNywwLDE0LjYtMy40LDE5LjItOC42TDQxMSwxODcuMWwyLjMtMi42ICBjMS43LTIuNSwyLjctNS41LDIuNy04LjdjMC04LjctNy40LTE1LjgtMTYuNi0xNS44djBIMTEyLjZ2MGMtOS4yLDAtMTYuNiw3LjEtMTYuNiwxNS44Qzk2LDE3OS4xLDk3LjEsMTgyLjIsOTguOSwxODQuN3oiLz48L3N2Zz4=) no-repeat" },
+            "background-size": "16px 16px",
         };
     }
 };
