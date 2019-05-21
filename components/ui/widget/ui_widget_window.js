@@ -185,7 +185,7 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
     }
     constructor(element) {
         super(element);
-        this.drag = this.attach(COMPONENT.UIWidgetWindowMove);
+        this.move = this.attach(COMPONENT.UIWidgetWindowMove);
     }
     normal() {
         return {
