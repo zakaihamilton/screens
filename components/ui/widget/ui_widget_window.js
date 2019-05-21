@@ -16,7 +16,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return {
             "min-width": "100px",
             "min-height": "200px",
-            ... (this._isMaximized || this._isMinimized) && { left: "0px", top: "0px" },
             ... !parent && !this._isMaximized && !this._isMinimized && { border: "1px solid black" },
             display: "flex",
             position: parent ? "relative" : "absolute",
@@ -37,6 +36,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             styles.left = "0px";
             styles.top = "0px";
             styles.width = "100%";
+            styles.right = "";
+            styles.bottom = "";
             if (this._isMinimized) {
                 styles.height = "38px";
                 styles["min-height"] = "38px";
@@ -49,6 +50,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         else if (parent) {
             styles.left = "";
             styles.top = "";
+            styles.right = "";
+            styles.bottom = "";
             styles.width = "";
             styles.height = "";
             styles["min-height"] = "";
@@ -128,7 +131,29 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                     await this.update();
                 }
                 else {
-                    await this.updateStyles();
+                    this.updateStyles();
+                }
+            }
+            return !parent;
+        }
+    }
+    async resize(size) {
+        if (size && !this._isMaximized) {
+            let parent = this.parent();
+            let update = false;
+            if (!parent) {
+                let region = Object.assign({}, this._region);
+                region.width = size.width + "px";
+                region.height = size.height + "px";
+                region.right = "";
+                region.bottom = "";
+                this.region = region;
+                this._region = region;
+                if (update) {
+                    await this.update();
+                }
+                else {
+                    this.updateStyles();
                 }
             }
             return !parent;
@@ -144,8 +169,12 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let hasClose = "close" in this;
         if (!parent) {
             html = `<widget-window-title close="${hasClose}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
+            html += "<widget-window-header></widget-window-header>";
         }
         html += `<widget-window-content>${this.content()}</widget-window-content>`;
+        if (!parent) {
+            html += "<widget-window-footer></widget-window-footer>";
+        }
         return html;
     }
 };
@@ -185,7 +214,7 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
     }
     constructor(element) {
         super(element);
-        this.move = this.attach(COMPONENT.UIWidgetWindowMove);
+        this.move = this.attach(COMPONENT.UIWidgetWindowMoveEvent);
     }
     normal() {
         return {
@@ -333,7 +362,7 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     }
 };
 
-COMPONENT.UIWidgetWindowMove = class extends COMPONENT.UIEventMove {
+COMPONENT.UIWidgetWindowMoveEvent = class extends COMPONENT.UIEventMove {
     static config() {
         return {
             platform: "browser"
@@ -341,5 +370,92 @@ COMPONENT.UIWidgetWindowMove = class extends COMPONENT.UIEventMove {
     }
     owner() {
         return "widget-window";
+    }
+};
+
+COMPONENT.UIWidgetWindowResizeEvent = class extends COMPONENT.UIEventResize {
+    static config() {
+        return {
+            platform: "browser"
+        };
+    }
+    owner() {
+        return "widget-window";
+    }
+};
+
+COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-footer"
+        };
+    }
+    normal() {
+        let isMaximized = this.state("isMaximized");
+        return {
+            "background-color": "lightgray",
+            ... !isMaximized && { "border-radius": "0px 0px 6px 6px" },
+            "display": "flex",
+            "align-items": "center"
+        };
+    }
+    async render(element) {
+        return `
+        <widget-window-status>Hello</widget-window-status><widget-window-resize></widget-window-resize>`;
+    }
+};
+
+COMPONENT.UIWidgetWindowStatus = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-status"
+        };
+    }
+    normal() {
+        return {
+            "user-select": "none",
+            "padding": "6px",
+            "display": "flex",
+            "flex-grow": "1",
+            "min-height": "16px",
+        };
+    }
+    render(element) {
+        return "<slot></slot>";
+    }
+};
+
+COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-resize"
+        };
+    }
+    constructor(element) {
+        super(element);
+        this.move = this.attach(COMPONENT.UIWidgetWindowResizeEvent);
+    }
+    normal() {
+        return {
+            "margin-top": "-16px",
+            "margin-right": "10px",
+            filter: "invert(60%)"
+        };
+    }
+    hover() {
+        return {
+            filter: "invert(50%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(20%)"
+        };
+    }
+    render() {
+        return "<img title=\"Resize\" width=\"32px\" height=\"32px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOTguOSwxODQuN2wxLjgsMi4xbDEzNiwxNTYuNWM0LjYsNS4zLDExLjUsOC42LDE5LjIsOC42YzcuNywwLDE0LjYtMy40LDE5LjItOC42TDQxMSwxODcuMWwyLjMtMi42ICBjMS43LTIuNSwyLjctNS41LDIuNy04LjdjMC04LjctNy40LTE1LjgtMTYuNi0xNS44djBIMTEyLjZ2MGMtOS4yLDAtMTYuNiw3LjEtMTYuNiwxNS44Qzk2LDE3OS4xLDk3LjEsMTgyLjIsOTguOSwxODQuN3oiLz48L3N2Zz4=\"></img>";
     }
 };
