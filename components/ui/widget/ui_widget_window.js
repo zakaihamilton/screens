@@ -10,6 +10,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._isMinimized = false;
         this._isMaximized = false;
         this._region = this.region;
+        this.focus = this.attach(COMPONENT.UIEventFocus);
     }
     status() {
         return "";
@@ -448,7 +449,7 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
     }
     normal() {
         return {
-            "margin-top": "-16px",
+            "margin-top": "-15px",
             "margin-right": "10px",
             filter: "invert(60%)"
         };

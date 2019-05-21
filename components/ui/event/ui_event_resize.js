@@ -23,10 +23,13 @@ COMPONENT.UIEventResize = class extends COMPONENT.CoreObject {
                 if (!move._isEnabled) {
                     return;
                 }
-                let owner = move.owner();
-                let parent = instance.parent(owner);
-                if (!parent) {
-                    return;
+                let parent = instance;
+                if (move.owner) {
+                    let owner = move.owner();
+                    parent = instance.parent(owner);
+                    if (!parent) {
+                        return;
+                    }
                 }
                 let diff = 15;
                 let parentRect = parent.element.getBoundingClientRect().toJSON();

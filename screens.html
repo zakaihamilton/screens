@@ -18,7 +18,8 @@
             await COMPONENT.import([
                 "ui_event_touch.js",
                 "ui_event_move.js",
-                "ui_event_resize.js"
+                "ui_event_resize.js",
+                "ui_event_focus.js"
             ], "./components/ui/event/");
             await COMPONENT.import([
                 "ui_widget.js",
@@ -30,6 +31,10 @@
     </script>
     <widget-window style="left:50px;top:50px" label="Window Title">
         <widget-button onpress="alert('Yo!')" style="position:absolute;right:15px;top:50px" label="This is a label">
+        </widget-button>
+    </widget-window>
+    <widget-window style="left:250px;top:75px" label="Ths is a window">
+        <widget-button onpress="alert('Yo!')" style="position:absolute;left:15px;top:50px" label="This is a button">
         </widget-button>
     </widget-window>
     <widget-window style="left:100px;top:200px;width:500px">
