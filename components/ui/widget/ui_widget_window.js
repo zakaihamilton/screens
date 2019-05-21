@@ -471,7 +471,8 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
     }
     normal() {
         return {
-            "margin-top": "-15px",
+            "align-items": "flex-start",
+            "margin-top": "-20px",
             "margin-right": "10px",
             filter: "invert(60%)"
         };

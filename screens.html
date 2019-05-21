@@ -19,19 +19,23 @@
                 "ui_event_touch.js",
                 "ui_event_move.js",
                 "ui_event_resize.js",
-                "ui_event_focus.js"
+                "ui_event_focus.js",
+                "ui_event_clipboard.js"
             ], "./components/ui/event/");
             await COMPONENT.import([
                 "ui_widget.js",
                 "ui_widget_window.js",
-                "ui_widget_button.js"
+                "ui_widget_button.js",
+                "ui_widget_label.js"
             ], "./components/ui/widget/");
             await COMPONENT.start();
         });
     </script>
     <widget-window style="left:50px;top:50px" label="Window Title">
-        <widget-button onpress="alert('Yo!')" style="position:absolute;right:15px;top:50px" label="This is a label">
+        <widget-button onpress="alert('Yo!')" style="position:absolute;right:15px;top:50px" label="This is a button">
         </widget-button>
+        <widget-label style="position:absolute;right:15px;top:100px" label="This is a label">
+        </widget-label>
     </widget-window>
     <widget-window style="left:250px;top:75px;width:300px" label="This is a window">
         <widget-button onpress="alert('Yo!')" style="position:absolute;left:15px;top:50px" label="This is a button">
