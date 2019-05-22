@@ -65,7 +65,7 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
             if (!child.instance) {
                 return;
             }
-            if (child.instance._alwaysOnTop) {
+            if (child.instance.alwaysOnTop) {
                 child.style.zIndex = (index + 1) * 1000;
             }
             else {

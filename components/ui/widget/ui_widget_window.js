@@ -125,6 +125,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         if (!isEmbedded) {
             this._isMaximized = true;
             await this.update();
+            this.send("focus");
         }
         return true;
     }
