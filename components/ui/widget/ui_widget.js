@@ -18,6 +18,20 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             }
         });
     }
+    static tag(instance, component) {
+        let widget = instance.cast(component);
+        if (!widget) {
+            widget = instance.cast(COMPONENT.UIWidget).parent(component);
+        }
+        return COMPONENT[widget.constructor.name].config().tag;
+    }
+    tag(component) {
+        let widget = this.cast(component);
+        if (!widget) {
+            widget = this.parent(component);
+        }
+        return COMPONENT[widget.constructor.name].config().tag;
+    }
     constructor(element) {
         super();
         this.element = element;
@@ -164,7 +178,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
                 }
             }
             tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
-        } while (filter && tagName !== filter);
+        } while (filter && (tagName !== filter) && (typeof filter === "string" || !parent.instance.cast(filter)));
         return parent ? parent.instance : null;
     }
     emit(method, params) {

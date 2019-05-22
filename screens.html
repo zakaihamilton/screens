@@ -29,9 +29,14 @@
                 "ui_widget_label.js",
                 "ui_widget_list.js"
             ], "./components/ui/widget/");
+            await COMPONENT.import([
+                "app_home.js",
+            ], "./components/app/home/");
             await COMPONENT.start();
         });
     </script>
+    <app-home id="home" style="left:50px;top:50px" label="Launcher">
+    </app-home>
     <widget-window style="left:50px;top:50px" label="Window Title">
         <widget-button onpress="alert('Yo!')" style="position:absolute;right:15px;top:50px" label="This is a button">
         </widget-button>

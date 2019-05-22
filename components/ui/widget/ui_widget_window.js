@@ -12,9 +12,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._isResizable = true;
         this._region = this.region;
         this._focus = this.attach(COMPONENT.UIEventFocus);
-        this._canClose = true;
         this._alwaysOnTop = false;
-        let inFocus = !this.parent("widget-window");
+        let inFocus = !this.parent(this.tag(COMPONENT.UIWidgetWindow));
         if (inFocus) {
             this.send("unfocus");
             this._inFocus = inFocus;
@@ -79,7 +78,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return styles;
     }
     canClose() {
-        return this._canClose;
+        return true;
     }
     isMinimized() {
         return this._isMinimized;
@@ -104,7 +103,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this.update();
     }
     isEmbedded() {
-        return this.parent("widget-window");
+        return this.parent(this.tag(COMPONENT.UIWidgetWindow));
     }
     async close() {
         let isEmbedded = this.state("isEmbedded");
@@ -212,7 +211,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     dblclickTitle() {
         if (this._isMaximized) {
-
+            document.body.getElementsByTagName("app-home")[0].instance.send("focus");
         }
         else {
             this._alwaysOnTop = !this._alwaysOnTop;
@@ -460,7 +459,7 @@ COMPONENT.UIWidgetWindowMoveEvent = class extends COMPONENT.UIEventMove {
         };
     }
     owner() {
-        return "widget-window";
+        return COMPONENT.UIWidget.tag(this, COMPONENT.UIWidgetWindow);
     }
 };
 
@@ -471,7 +470,7 @@ COMPONENT.UIWidgetWindowResizeEvent = class extends COMPONENT.UIEventResize {
         };
     }
     owner() {
-        return "widget-window";
+        return COMPONENT.UIWidget.tag(this, COMPONENT.UIWidgetWindow);
     }
 };
 
