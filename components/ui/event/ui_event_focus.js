@@ -7,12 +7,20 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
     constructor(parent) {
         super(parent);
         this._isEnabled = true;
+        this._alwaysOnTop = false;
     }
     isEnabled() {
         return this._isEnabled;
     }
     enable(isEnabled) {
         this._isEnabled = isEnabled;
+    }
+    get alwaysOnTop() {
+        return this._alwaysOnTop;
+    }
+    set alwaysOnTop(state) {
+        this._alwaysOnTop = state;
+        this.focus();
     }
     events() {
         return {
@@ -53,17 +61,33 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
         }
         let children = Array.from(widget.element.parentElement.children);
         children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
-        if (children[children.length - 1] === widget.element && widget.element.style.zIndex) {
-            return;
-        }
-        children = children.filter(a => a !== widget.element);
+        children = children.filter(child => child !== widget.element && child.instance);
+        children.map(child => {
+            if (child.instance.inFocus && child.instance.inFocus()) {
+                child.instance.send("blurEvent");
+            }
+        });
         let current = children[children.length - 1];
-        if (current && current.instance) {
+        children.push(widget.element);
+        children.map((child, index) => {
+            if (!child.instance) {
+                return;
+            }
+            let focus = child.instance.cast(COMPONENT.UIEventFocus);
+            if (focus && focus._alwaysOnTop) {
+                child.style.zIndex = (index + 1) * 1000;
+            }
+            else {
+                child.style.zIndex = (index + 1) * 100;
+            }
+        });
+        children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
+        if (current && current.instance && current.instance.inFocus && current.instance.inFocus()) {
             current.instance.send("blurEvent");
         }
-        children.push(widget.element);
-        children.map((child, index) => child.style.zIndex = (index + 1) * 100);
-        this.send("focusEvent");
+        if (widget && widget.inFocus && !widget.inFocus()) {
+            this.send("focusEvent");
+        }
     }
     register(instance) {
         instance.registerEvents(this.events);

@@ -13,8 +13,11 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._region = this.region;
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._canClose = true;
-        this.send("unfocus");
-        this._inFocus = !this.parent("widget-window");
+        let inFocus = !this.parent("widget-window");
+        if (inFocus) {
+            this.send("unfocus");
+            this._inFocus = inFocus;
+        }
     }
     status() {
         return "";
@@ -22,7 +25,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     normal() {
         let isEmbedded = this.state("isEmbedded");
         let inFocus = this.inFocus();
-        let border = inFocus ? "1px solid black" : "1px solid darkgray";
+        let borderColor = inFocus ? "#2e0150" : "darkgray";
+        let border = (this._focus.alwaysOnTop ? "2px solid" : "1px solid") + " " + borderColor;
         return {
             "min-width": "100px",
             "min-height": "200px",
@@ -198,6 +202,15 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._inFocus = false;
         this.update();
     }
+    dblclickTitle() {
+        if (this._isMaximized) {
+
+        }
+        else {
+            this._focus.alwaysOnTop = !this._focus.alwaysOnTop;
+            this.update();
+        }
+    }
     render(element) {
         let isEmbedded = this.state("isEmbedded");
         let html = "";
@@ -260,6 +273,13 @@ COMPONENT.UIWidgetWindowLabel = class extends COMPONENT.UIWidget {
     constructor(element) {
         super(element);
         this._move = this.attach(COMPONENT.UIWidgetWindowMoveEvent);
+    }
+    events() {
+        return {
+            dblclick() {
+                this.instance.emit("dblclickTitle");
+            }
+        };
     }
     normal() {
         return {
