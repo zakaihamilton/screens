@@ -134,7 +134,7 @@ COMPONENT.UIWidgetListItem = class extends COMPONENT.UIWidget {
     itemClass() {
         return {
             width: "100%",
-            height: "24px",
+            "min-height": "24px",
             display: "flex",
             "border-radius": "6px"
         };

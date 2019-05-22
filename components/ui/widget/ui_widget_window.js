@@ -457,6 +457,7 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
     normal() {
         let isMaximized = this.state("isMaximized");
         return {
+            "border-top": "1px solid darkgray",
             "background-color": "lightgray",
             ... !isMaximized && { "border-radius": "0px 0px 6px 6px" },
             "display": "flex",
