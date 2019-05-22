@@ -13,6 +13,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._region = this.region;
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._canClose = true;
+        this._alwaysOnTop = false;
         let inFocus = !this.parent("widget-window");
         if (inFocus) {
             this.send("unfocus");
@@ -26,7 +27,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let isEmbedded = this.state("isEmbedded");
         let inFocus = this.inFocus();
         let borderColor = inFocus ? "#2e0150" : "darkgray";
-        let border = (this._focus.alwaysOnTop ? "2px solid" : "1px solid") + " " + borderColor;
+        let border = (this.alwaysOnTop ? "2px solid" : "1px solid") + " " + borderColor;
         return {
             "min-width": "100px",
             "min-height": "200px",
@@ -94,6 +95,13 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     inFocus() {
         return this._inFocus;
+    }
+    get alwaysOnTop() {
+        return this._alwaysOnTop && !this.isMaximized();
+    }
+    set alwaysOnTop(state) {
+        this._alwaysOnTop = state;
+        this.update();
     }
     isEmbedded() {
         return this.parent("widget-window");
@@ -207,7 +215,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
 
         }
         else {
-            this._focus.alwaysOnTop = !this._focus.alwaysOnTop;
+            this._alwaysOnTop = !this._alwaysOnTop;
             this.update();
         }
     }

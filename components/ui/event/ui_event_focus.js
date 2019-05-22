@@ -7,20 +7,12 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
     constructor(parent) {
         super(parent);
         this._isEnabled = true;
-        this._alwaysOnTop = false;
     }
     isEnabled() {
         return this._isEnabled;
     }
     enable(isEnabled) {
         this._isEnabled = isEnabled;
-    }
-    get alwaysOnTop() {
-        return this._alwaysOnTop;
-    }
-    set alwaysOnTop(state) {
-        this._alwaysOnTop = state;
-        this.focus();
     }
     events() {
         return {
@@ -73,8 +65,7 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
             if (!child.instance) {
                 return;
             }
-            let focus = child.instance.cast(COMPONENT.UIEventFocus);
-            if (focus && focus._alwaysOnTop) {
+            if (child.instance._alwaysOnTop) {
                 child.style.zIndex = (index + 1) * 1000;
             }
             else {
