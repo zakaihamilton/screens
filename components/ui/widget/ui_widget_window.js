@@ -55,7 +55,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             "align-content": "stretch",
             "justify-content": "stretch",
             "border-radius": (this._isMaximized || this._isMinimized || isEmbedded) ? "0px" : "6px",
-            "overflow": this._isMinimized ? "hidden" : "scroll",
+            "overflow": "hidden",
             "box-sizing": "border-box",
             "font-family": "Arial, Helvetica, sans-serif"
         };
@@ -470,6 +470,7 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
                 "border-bottom": "1px solid darkgray",
                 "padding-top": "20px"
             },
+            "overflow": "scroll",
             "flex": "1",
             "display": "flex",
             "flex-direction": "column"
@@ -512,11 +513,15 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
     normal() {
         let isMaximized = this.state("isMaximized");
         return {
-            "border-top": "1px solid darkgray",
+            "border-top": "1px solid #2e0150",
             "background-color": "lightgray",
             ... !isMaximized && { "border-radius": "0px 0px 6px 6px" },
             "display": "flex",
-            "align-items": "center"
+            "align-items": "center",
+            "bottom": "0px",
+            "height": "32px",
+            "position": "absolute",
+            "width": "100%"
         };
     }
     async render(element) {
@@ -566,14 +571,14 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
     normal() {
         return {
             "align-items": "flex-start",
-            "margin-top": "-20px",
-            "margin-right": "10px",
-            filter: "invert(60%)"
+            "padding": "3px",
+            "border-left": "1px solid #2e0150",
+            "background-color": "lightgray"
         };
     }
     hover() {
         return {
-            filter: "invert(50%)"
+            filter: "invert(10%)"
         };
     }
     touch() {
@@ -582,7 +587,7 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
         };
     }
     render() {
-        return "<img title=\"Resize\" width=\"32px\" height=\"32px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOTguOSwxODQuN2wxLjgsMi4xbDEzNiwxNTYuNWM0LjYsNS4zLDExLjUsOC42LDE5LjIsOC42YzcuNywwLDE0LjYtMy40LDE5LjItOC42TDQxMSwxODcuMWwyLjMtMi42ICBjMS43LTIuNSwyLjctNS41LDIuNy04LjdjMC04LjctNy40LTE1LjgtMTYuNi0xNS44djBIMTEyLjZ2MGMtOS4yLDAtMTYuNiw3LjEtMTYuNiwxNS44Qzk2LDE3OS4xLDk3LjEsMTgyLjIsOTguOSwxODQuN3oiLz48L3N2Zz4=\"></img>";
+        return "<img title=\"Resize\" width=\"22px\" height=\"22px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAwMDAwLCAtMjg4LjAwMDAwMCkiPjxwYXRoIGQ9Ik0yLDI5MSBMMiwzMDEgTDE0LDMwMSBMMTQsMjkxIFogTTEuOTk0MDYwMjgsMjg5IEwxNC4wMDU5Mzk3LDI4OSBDMTUuMTA1NDg2MiwyODkgMTYsMjg5Ljg5ODA1NCAxNiwyOTEuMDA1ODU5IEwxNiwzMDAuOTk0MTQxIEMxNiwzMDIuMTAyOTQgMTUuMTA3MjI4OCwzMDMgMTQuMDA1OTM5NywzMDMgTDEuOTk0MDYwMjgsMzAzIEMwLjg5NDUxMzc1NiwzMDMgMCwzMDIuMTAxOTQ2IDAsMzAwLjk5NDE0MSBMMCwyOTEuMDA1ODU5IEMwLDI4OS44OTcwNiAwLjg5Mjc3MTE5NiwyODkgMS45OTQwNjAyOCwyODkgWiBNOCwyOTggTDUsMjk0IEwxMSwyOTQgWiBNOCwyOTgiIGlkPSJSZWN0YW5nbGUgMTcyIi8+PC9nPjwvZz48L3N2Zz4=\"></img>";
     }
 };
 

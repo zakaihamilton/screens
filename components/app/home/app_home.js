@@ -6,7 +6,7 @@ COMPONENT.AppHome = class extends COMPONENT.UIWidgetWindow {
         };
     }
     constructor(element) {
-        element.setAttribute("label", "Home");
+        element.setAttribute("label", "Screens");
         element.setAttribute("maximize", "true");
         super(element);
     }
