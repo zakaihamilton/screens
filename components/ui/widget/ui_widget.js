@@ -178,7 +178,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
                 }
             }
             tagName = parent.tagName ? parent.tagName.toLowerCase() : "";
-        } while (filter && (tagName !== filter) && (typeof filter === "string" || !parent.instance.cast(filter)));
+        } while (filter && (tagName !== filter) && (typeof filter === "string" || !parent.instance || !parent.instance.cast(filter)));
         return parent ? parent.instance : null;
     }
     emit(method, params) {
