@@ -14,6 +14,20 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._focus = this.attach(COMPONENT.UIEventFocus);
         this._alwaysOnTop = this.checkAttrib("always-on-top");
         this._showMenu = false;
+        if (this.isEmbedded()) {
+            let parent = this.parent(COMPONENT.UIWidgetWindow);
+            if (parent) {
+                parent = parent.element;
+            }
+            else {
+                parent = this.element.parentElement;
+            }
+            if (!parent._embedded) {
+                parent._embedded = [];
+            }
+            this.element._parent = parent;
+            parent._embedded.push(this.element);
+        }
         let inFocus = !this.parent(COMPONENT.UIWidgetWindow);
         if (inFocus) {
             this.send("unfocus");
@@ -108,6 +122,20 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let isEmbedded = this.state("isEmbedded");
         if (!isEmbedded) {
             this.element.remove();
+            if (this.element._parent) {
+                let embedded = this.element._parent._embedded;
+                if (embedded) {
+                    embedded.splice(embedded.indexOf(this.element), 1);
+                }
+            }
+            if (this.element._embedded) {
+                let embedded = Array.from(this.element._embedded);
+                for (let item of embedded) {
+                    if (item.instance) {
+                        item.instance.close();
+                    }
+                }
+            }
         }
         return true;
     }
