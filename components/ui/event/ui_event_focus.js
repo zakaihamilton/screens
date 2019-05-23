@@ -87,6 +87,38 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
             this.send("focusEvent");
         }
     }
+    sendToBack() {
+        let widget = this.cast(COMPONENT.UIWidget);
+        if (widget.parent()) {
+            return;
+        }
+        let children = Array.from(widget.element.parentElement.children);
+        children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
+        children = children.filter(child => child !== widget.element && child.instance);
+        children.map(child => {
+            if (child.instance.inFocus && child.instance.inFocus()) {
+                child.instance.send("blurEvent");
+            }
+        });
+        let current = children[children.length - 1];
+        children.unshift(widget.element);
+        children.map((child, index) => {
+            if (!child.instance) {
+                return;
+            }
+            if (child.instance.alwaysOnTop) {
+                child.style.zIndex = (index + 1) * 1000;
+            }
+            else {
+                child.style.zIndex = (index + 1) * 100;
+            }
+        });
+        children = children.sort((a, b) => a.style.zIndex - b.style.zIndex);
+        if (current && current.instance && current.instance.inFocus && current.instance.inFocus()) {
+            current.instance.send("blurEvent");
+        }
+        children[children.length - 1].instance.send("focus");
+    }
     register(instance) {
         instance.registerEvents(this.events);
     }

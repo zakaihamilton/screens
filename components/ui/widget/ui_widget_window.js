@@ -137,6 +137,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
                 }
             }
         }
+        COMPONENT.UIEventFocus.focus();
         return true;
     }
     async minimize() {
