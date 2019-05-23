@@ -102,7 +102,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this.update();
     }
     isEmbedded() {
-        return this.parent(COMPONENT.UIWidgetWindow);
+        return this.element.parentElement !== document.body;
     }
     async close() {
         let isEmbedded = this.state("isEmbedded");
