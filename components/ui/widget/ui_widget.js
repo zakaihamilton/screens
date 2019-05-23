@@ -4,7 +4,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
             platform: "browser"
         };
     }
-    static start(me) {
+    static init(me) {
         let config = me.config();
         if (!config.tag) {
             return;

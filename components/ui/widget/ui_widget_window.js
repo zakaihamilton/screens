@@ -7,13 +7,14 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     }
     constructor(element) {
         super(element);
-        this._isMinimized = false;
-        this._isMaximized = false;
+        this._isMinimized = this.checkAttrib("minimize");
+        this._isMaximized = this.checkAttrib("maximize");
         this._isResizable = true;
         this._region = this.region;
         this._focus = this.attach(COMPONENT.UIEventFocus);
-        this._alwaysOnTop = false;
-        let inFocus = !this.parent(this.tag(COMPONENT.UIWidgetWindow));
+        this._alwaysOnTop = this.checkAttrib("always-on-top");
+        this._showMenu = false;
+        let inFocus = !this.parent(COMPONENT.UIWidgetWindow);
         if (inFocus) {
             this.send("unfocus");
             this._inFocus = inFocus;
@@ -33,6 +34,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             ... !isEmbedded && !this._isMaximized && !this._isMinimized && { border, "width": "300px" },
             display: "flex",
             position: isEmbedded ? "relative" : "absolute",
+            "background-color": "lightgray",
             "flex-direction": "column",
             "flex": "1",
             "align-items": "stretch",
@@ -83,9 +85,6 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     isMinimized() {
         return this._isMinimized;
     }
-    menu() {
-        alert("Hello");
-    }
     isMaximized() {
         return this._isMaximized;
     }
@@ -103,7 +102,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this.update();
     }
     isEmbedded() {
-        return this.parent(this.tag(COMPONENT.UIWidgetWindow));
+        return this.parent(COMPONENT.UIWidgetWindow);
     }
     async close() {
         let isEmbedded = this.state("isEmbedded");
@@ -442,7 +441,6 @@ COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
                 "border-bottom": "1px solid darkgray",
                 "padding-top": "20px"
             },
-            "background-color": "lightgray",
             "flex": "1",
             "display": "flex",
             "flex-direction": "column"

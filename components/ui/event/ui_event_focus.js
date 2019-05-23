@@ -4,6 +4,13 @@ COMPONENT.UIEventFocus = class extends COMPONENT.CoreObject {
             platform: "browser"
         };
     }
+    static start() {
+        COMPONENT.UIEventFocus.focus();
+    }
+    static focus() {
+        let children = Array.from(document.body.children);
+        children[children.length - 1].instance.send("focus");
+    }
     constructor(parent) {
         super(parent);
         this._isEnabled = true;
