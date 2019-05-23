@@ -121,12 +121,12 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     async close() {
         let isEmbedded = this.state("isEmbedded");
         if (!isEmbedded) {
-            this.element.remove();
             if (this.element._parent) {
-                let embedded = this.element._parent._embedded;
-                if (embedded) {
-                    embedded.splice(embedded.indexOf(this.element), 1);
-                }
+                this.element._parent.appendChild(this.element);
+                await this.update();
+            }
+            else {
+                this.element.remove();
             }
             if (this.element._embedded) {
                 let embedded = Array.from(this.element._embedded);
