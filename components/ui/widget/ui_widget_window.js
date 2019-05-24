@@ -11,7 +11,8 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         this._isMaximized = this.checkAttrib("maximize");
         this._isResizable = true;
         this._region = this.region;
-        this._focus = this.attach(COMPONENT.UIEventFocus);
+        this.attach(COMPONENT.UIEventFocus);
+        this.attach(COMPONENT.UIRegion);
         this._alwaysOnTop = this.checkAttrib("always-on-top");
         this._showMenu = false;
         if (this.isEmbedded()) {
@@ -172,6 +173,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             document.body.appendChild(this.element);
             await this.update();
             this.send("focus");
+            this.send("center");
         }
         else {
             if (this._isMinimized) {
