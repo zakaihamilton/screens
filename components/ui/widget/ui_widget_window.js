@@ -99,8 +99,11 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         }
         return styles;
     }
+    canEmbed() {
+        return this.element && this.element._parent;
+    }
     canClose() {
-        return true;
+        return this.element && !this.element._parent;
     }
     isMinimized() {
         return this._isMinimized;
@@ -259,7 +262,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         let hasMenu = "menu" in this;
         let handle = "";
         if (!isEmbedded) {
-            html = `<widget-window-title close="${this.canClose()}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
+            html = `<widget-window-title embed="${this.canEmbed()}" close="${this.canClose()}" menu="${hasMenu}" label="${element.getAttribute("label") || ""}"></widget-window-title>`;
             html += "<widget-window-header></widget-window-header>";
         }
         else {
@@ -300,6 +303,7 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
         html += `<widget-window-label>${element.getAttribute("label")}</widget-window-label>`;
         if (inFocus) {
             html += `<widget-window-close show="${this.checkAttrib("close")}"></widget-window-close>`;
+            html += `<widget-window-embed show="${this.checkAttrib("embed")}"></widget-window-embed>`;
         }
         return html;
     }
@@ -444,6 +448,39 @@ COMPONENT.UIWidgetWindowClose = class extends COMPONENT.UIWidgetWindowAction {
         return "<img title=\"Close\" width=\"22px\" height=\"22px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMjU2LDMzQzEzMi4zLDMzLDMyLDEzMy4zLDMyLDI1N2MwLDEyMy43LDEwMC4zLDIyNCwyMjQsMjI0YzEyMy43LDAsMjI0LTEwMC4zLDIyNC0yMjRDNDgwLDEzMy4zLDM3OS43LDMzLDI1NiwzM3ogICAgTTM2NC4zLDMzMi41YzEuNSwxLjUsMi4zLDMuNSwyLjMsNS42YzAsMi4xLTAuOCw0LjItMi4zLDUuNmwtMjEuNiwyMS43Yy0xLjYsMS42LTMuNiwyLjMtNS42LDIuM2MtMiwwLTQuMS0wLjgtNS42LTIuM0wyNTYsMjg5LjggICBsLTc1LjQsNzUuN2MtMS41LDEuNi0zLjYsMi4zLTUuNiwyLjNjLTIsMC00LjEtMC44LTUuNi0yLjNsLTIxLjYtMjEuN2MtMS41LTEuNS0yLjMtMy41LTIuMy01LjZjMC0yLjEsMC44LTQuMiwyLjMtNS42bDc1LjctNzYgICBsLTc1LjktNzVjLTMuMS0zLjEtMy4xLTguMiwwLTExLjNsMjEuNi0yMS43YzEuNS0xLjUsMy41LTIuMyw1LjYtMi4zYzIuMSwwLDQuMSwwLjgsNS42LDIuM2w3NS43LDc0LjdsNzUuNy03NC43ICAgYzEuNS0xLjUsMy41LTIuMyw1LjYtMi4zYzIuMSwwLDQuMSwwLjgsNS42LDIuM2wyMS42LDIxLjdjMy4xLDMuMSwzLjEsOC4yLDAsMTEuM2wtNzUuOSw3NUwzNjQuMywzMzIuNXoiLz48L2c+PC9zdmc+\"></img>";
     }
 };
+
+COMPONENT.UIWidgetWindowEmbed = class extends COMPONENT.UIWidgetWindowAction {
+    static config() {
+        return {
+            platform: "browser",
+            tag: "widget-window-embed"
+        };
+    }
+    normal() {
+        let inFocus = this.state("inFocus");
+        return {
+            ...super.normal(),
+            filter: inFocus ? "invert(100%)" : "invert(0%)"
+        };
+    }
+    hover() {
+        return {
+            filter: "invert(50%)"
+        };
+    }
+    touch() {
+        return {
+            filter: "invert(80%)"
+        };
+    }
+    action() {
+        return "close";
+    }
+    render() {
+        return "<img title=\"Embed\" width=\"22px\" height=\"22px\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDk2IDk2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PGc+PHBhdGggZD0iTTQ4LDBBNDgsNDgsMCwxLDAsOTYsNDgsNDguMDUxMiw0OC4wNTEyLDAsMCwwLDQ4LDBabTAsODRBMzYsMzYsMCwxLDEsODQsNDgsMzYuMDM5MywzNi4wMzkzLDAsMCwxLDQ4LDg0WiIvPjxwYXRoIGQ9Ik02MCw0MkgzNmE2LDYsMCwwLDAsMCwxMkg2MGE2LDYsMCwwLDAsMC0xMloiLz48L2c+PC9zdmc+\"></img>";
+    }
+};
+
 
 COMPONENT.UIWidgetWindowContent = class extends COMPONENT.UIWidget {
     static config() {

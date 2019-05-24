@@ -46,8 +46,13 @@ COMPONENT.UIWidgetButton = class extends COMPONENT.UIWidget {
         }
     }
     render(element) {
-        return `<widget-button-handle></widget-button-handle>
-        <widget-button-label label="${element.getAttribute("label")}"></widget-button-label>`;
+        let html = "";
+        let style = getComputedStyle(element);
+        if (style.position === "absolute") {
+            html += "<widget-button-handle></widget-button-handle>";
+        }
+        html += `<widget-button-label label="${element.getAttribute("label")}"></widget-button-label>`;
+        return html;
     }
 };
 

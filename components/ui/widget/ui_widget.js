@@ -234,7 +234,7 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     }
     checkAttrib(name) {
         let result = this.element.getAttribute(name);
-        return !(!result || result === "" || result === "0" || result.toLowerCase() === "false");
+        return !(!result || result === "" || result === "0" || result === "undefined" || result.toLowerCase() === "false");
     }
     colors() {
         return {};
