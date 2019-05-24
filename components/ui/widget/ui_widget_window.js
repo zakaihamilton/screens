@@ -37,10 +37,16 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
     status() {
         return "";
     }
+    colors() {
+        return {
+            "accent-color": "#2e0150",
+            "background-color": "lightgray"
+        };
+    }
     normal() {
         let isEmbedded = this.state("isEmbedded");
         let inFocus = this.inFocus();
-        let borderColor = inFocus ? "#2e0150" : "darkgray";
+        let borderColor = inFocus ? this.color("accent-color") : "darkgray";
         let border = (this.alwaysOnTop ? "2px solid" : "1px solid") + " " + borderColor;
         return {
             "min-width": "100px",
@@ -48,7 +54,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             ... !isEmbedded && !this._isMaximized && !this._isMinimized && { border, "width": "300px" },
             display: "flex",
             position: isEmbedded ? "relative" : "absolute",
-            "background-color": "lightgray",
+            "background-color": this.color("background-color"),
             "flex-direction": "column",
             "flex": "1",
             "align-items": "stretch",
@@ -277,7 +283,7 @@ COMPONENT.UIWidgetWindowTitle = class extends COMPONENT.UIWidget {
     normal() {
         let inFocus = this.state("inFocus");
         return {
-            "background-color": inFocus ? "#2e0150" : "darkgray",
+            "background-color": inFocus ? this.color("accent-color") : "darkgray",
             "display": "flex",
             "height": "36px",
             "align-items": "center",
@@ -513,8 +519,8 @@ COMPONENT.UIWidgetWindowFooter = class extends COMPONENT.UIWidget {
     normal() {
         let isMaximized = this.state("isMaximized");
         return {
-            "border-top": "1px solid #2e0150",
-            "background-color": "lightgray",
+            "border-top": "1px solid " + this.color("accent-color"),
+            "background-color": this.color("background-color"),
             ... !isMaximized && { "border-radius": "0px 0px 6px 6px" },
             "display": "flex",
             "align-items": "center",
@@ -572,8 +578,8 @@ COMPONENT.UIWidgetWindowResize = class extends COMPONENT.UIWidget {
         return {
             "align-items": "flex-start",
             "padding": "3px",
-            "border-left": "1px solid #2e0150",
-            "background-color": "lightgray"
+            "border-left": "1px solid " + this.color("accent-color"),
+            "background-color": this.color("background-color")
         };
     }
     hover() {

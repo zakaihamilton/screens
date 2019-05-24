@@ -195,6 +195,20 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (parent);
         return results;
     }
+    collect(method, params) {
+        let args = Array.prototype.slice.call(arguments, 0);
+        let parent = this;
+        let results = [];
+        do {
+            let result = parent.send.apply(parent, args);
+            result = result.filter(e => typeof e !== "undefined");
+            parent = parent.parent();
+            results.unshift(...result);
+        } while (parent);
+        results.unshift({});
+        let list = Object.assign.apply(null, results);
+        return list;
+    }
     state(method, params) {
         return this.emit(method, params)[0];
     }
@@ -221,5 +235,12 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
     checkAttrib(name) {
         let result = this.element.getAttribute(name);
         return !(!result || result === "" || result === "0" || result.toLowerCase() === "false");
+    }
+    colors() {
+        return {};
+    }
+    color(name) {
+        let colors = this.collect("colors");
+        return colors[name];
     }
 };
