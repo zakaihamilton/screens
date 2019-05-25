@@ -7,14 +7,24 @@ COMPONENT.UIRegion = class extends COMPONENT.CoreObject {
     constructor(parent) {
         super(parent);
     }
+    static screen() {
+        return {
+            left: 0,
+            top: 0,
+            width: window.innerWidth
+                || document.documentElement.clientWidth
+                || document.body.clientWidth,
+            height: window.innerHeight
+                || document.documentElement.clientHeight
+                || document.body.clientHeight
+        };
+    }
     center() {
         let widget = this.cast(COMPONENT.UIWidget);
-        let style = widget.element.style;
-        style.left = "25%";
-        style.top = "25%";
-        style.right = "25%";
-        style.bottom = "25%";
-        style.width = "";
-        style.height = "";
+        let screenRegion = COMPONENT.UIRegion.screen();
+        let region = widget.element.getBoundingClientRect().toJSON();
+        let left = ((screenRegion.width - region.width) / 2);
+        let top = ((screenRegion.height - region.height) / 2);
+        widget.send("move", { left, top });
     }
 };

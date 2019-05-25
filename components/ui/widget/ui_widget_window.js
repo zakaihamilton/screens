@@ -187,7 +187,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         return true;
     }
     async move(pos) {
-        if (pos || this._isMaximized) {
+        if (pos) {
             let isEmbedded = this.state("isEmbedded");
             let update = false;
             if (!isEmbedded) {
@@ -220,7 +220,7 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
         }
     }
     async resize(size) {
-        if (size && !this._isMaximized) {
+        if (size) {
             let isEmbedded = this.state("isEmbedded");
             let update = false;
             if (!isEmbedded) {
