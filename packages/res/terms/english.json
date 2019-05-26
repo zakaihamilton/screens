@@ -2878,8 +2878,12 @@
             "hebrew": "ג׳ ראשונות"
         },
         {
+            "explanation": "Implementation",
             "translation": "Lower Seven",
             "term": "Zayin Tachtonot",
+            "style": {
+                "category": "Intensity"
+            },
             "hebrew": "ז׳ תחתונות"
         },
         {
