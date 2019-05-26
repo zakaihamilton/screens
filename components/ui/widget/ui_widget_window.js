@@ -29,6 +29,11 @@ COMPONENT.UIWidgetWindow = class extends COMPONENT.UIWidget {
             this.element._parent = parent;
             parent._embedded.push(this.element);
         }
+        else if (!this._isMaximized) {
+            setTimeout(() => {
+                this.send("center");
+            });
+        }
         let inFocus = !this.parent(COMPONENT.UIWidgetWindow);
         if (inFocus) {
             this.send("unfocus");
