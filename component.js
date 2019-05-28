@@ -1,25 +1,5 @@
 /* A component is defined with the following properties
 
-COMPONENT.define({
-    name: "PackageComponent", // Component name
-    config: {  // an optional configuration
-        protocol: /^prefix:\/\// for path matching for new instances
-        platform: "server" // for platform specific components
-    },
-    init () {
-    
-    },
-    start() {
-    
-    },
-    constructor() {
-    
-    },
-    method() {
-    
-    },
-});
-
 */
 
 var COMPONENT = {
