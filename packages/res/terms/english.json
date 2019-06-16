@@ -234,7 +234,8 @@
             "6,000": "six thousand",
             "Arie": "Aryeh",
             "Or even": "__Or even",
-            "ofhis": "of his"
+            "ofhis": "of his",
+            "Immature": "__Immature"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -5889,9 +5890,6 @@
             "translation": "Evil",
             "explanation": "Immature",
             "term": "evil"
-        },
-        {
-            "term": "Immature"
         },
         {
             "expansion": [
