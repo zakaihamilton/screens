@@ -235,7 +235,7 @@
             "Arie": "Aryeh",
             "Or even": "__Or even",
             "ofhis": "of his",
-            "Immature": "__Immature"
+            "Het [sin] is male": "Het2 [sin] is male"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -7895,6 +7895,27 @@
             "term": "Gibor",
             "hebrew": "גיבור",
             "translation": "Hero"
+        },
+        {
+            "term": "Het2",
+            "source": "Het",
+            "hebrew": "חטא",
+            "translation": "Sin"
+        },
+        {
+            "term": "Hatat",
+            "hebrew": "חטאת",
+            "translation": "Sin"
+        },
+        {
+            "term": "Dinim Azim",
+            "hebrew": "דינים עזים",
+            "translation": "Harsh Judgements"
+        },
+        {
+            "term": "Izim",
+            "hebrew": "עיזים",
+            "translation": "Goats"
         }
     ],
     "style": {
