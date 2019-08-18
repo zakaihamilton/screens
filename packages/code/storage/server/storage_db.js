@@ -30,7 +30,7 @@ screens.storage.db = function StorageDB(me, packages) {
                 return clusterHandle;
             }
             var url = me.keys.url;
-            clusterHandle = await me.mongodb.MongoClient.connect(url, { useNewUrlParser: true });
+            clusterHandle = await me.mongodb.MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
             me.clusterHandle = clusterHandle;
             me.log("connected to cluster: " + url);
         }
