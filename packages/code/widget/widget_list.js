@@ -73,6 +73,7 @@ screens.widget.list = function WidgetList(me, packages) {
 };
 
 screens.widget.list.dropdown = function WidgetDropDownList(me, packages) {
+    const { core } = packages;
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text"]

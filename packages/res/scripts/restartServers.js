@@ -9,8 +9,11 @@ async function run() {
         let commands = [
             "cd screens",
             "rm -rf cache/*",
+            "git checkout package.json",
             "git pull",
-            "pm2 reload all",
+            "npm install",
+            "npm audit fix",
+            "pm2 reload all --update-env",
             "exit"
         ];
         let cmd = "ssh root@" + ip + " '" + commands.join(";") + "'";
