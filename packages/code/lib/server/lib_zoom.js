@@ -92,6 +92,9 @@ screens.lib.zoom = function LibZoom(me, packages) {
             }
             if (event.event === "participant_joined" || event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
+                if (!participant.user_name) {
+                    continue;
+                }
                 let id = participant.user_name.trim().toLowerCase();
                 let info = users[id];
                 if (event.event === "participant_joined") {
