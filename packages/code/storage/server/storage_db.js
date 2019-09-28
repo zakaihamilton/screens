@@ -207,7 +207,15 @@ screens.storage.db = function StorageDB(me, packages) {
                     cursor = cursor[param](params[param]);
                 }
             }
-            return await cursor.toArray();
+            const items = await cursor.toArray();
+            if (params && params.project.user) {
+                const users = await me.db.shared.user.list();
+                for (const item of items) {
+                    const user = users.find(user => user.user === item.user);
+                    item.user = user ? user.name.split("@")[0] : "Unknown";
+                }
+            }
+            return items;
         }, 500);
         me.setCache(location, hash, array);
         return array;

@@ -10,7 +10,7 @@ screens.manager.content = function ManagerContent(me, packages) {
         if (!userId) {
             userId = this.userId;
         }
-        var project = { title: 1, package: 1, component: 1 };
+        var project = { title: 1, package: 1, component: 1, user: 1 };
         var publicList = await db.shared.content.list({ private: null }, { project });
         var privateList = await db.shared.content.list({ private: userId }, { project });
         return { publicList, privateList };

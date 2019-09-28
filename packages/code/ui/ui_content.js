@@ -150,7 +150,11 @@ screens.ui.content = function UIContent(me, packages) {
                 group: "public",
                 reverse: true,
                 sort: true,
-                itemMethod: me.content.import
+                itemMethod: me.content.import,
+                metadata: {
+                    "Name": "title",
+                    "User": "user"
+                }
             };
             return me.widget.menu.collect(object, info);
         },
