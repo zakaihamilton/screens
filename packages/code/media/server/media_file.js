@@ -50,6 +50,17 @@ screens.media.file = function MediaFile(me, packages) {
             file.path = me.rootPath + "/" + file.name;
             var sessions = await me.listing(file, update);
             sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
+            sessions.map(item => {
+                ["is_downloadable",
+                    "content_hash",
+                    ".tag",
+                    "path_lower",
+                    "path_display",
+                    "_id",
+                    "client_modified",
+                    "server_modified",
+                    "rev"].map(key => delete item[key]);
+            });
             sessions.reverse();
             file.sessions = sessions;
         }
