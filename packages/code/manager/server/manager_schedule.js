@@ -30,6 +30,7 @@ screens.manager.schedule = function ManagerSchedule(me, packages) {
                         name,
                         group: group.name,
                         path: item.path,
+                        user: group.name,
                         title: core.path.fileName(item.name),
                         app: "Player",
                         launch: ["player", group.name, core.path.fileName(item.name)]
@@ -41,12 +42,12 @@ screens.manager.schedule = function ManagerSchedule(me, packages) {
         for (var source in sources) {
             let list = sources[source];
             for (let app in list) {
-                for (let title of list[app]) {
-                    let [year, month, day, name] = title.split(/(\d{4})-(\d{2})-(\d{2})\s(.+)/g).slice(1);
+                for (let item of list[app]) {
+                    let [year, month, day, name] = item.title.split(/(\d{4})-(\d{2})-(\d{2})\s(.+)/g).slice(1);
                     month = parseInt(month) - 1;
                     let eventDate = me.toDate({ year, month, day });
                     if (startDate <= eventDate && eventDate <= endDate) {
-                        var group = core.string.language(title) === "english" ? "American" : "Israel";
+                        var group = core.string.language(item.title) === "english" ? "American" : "Israel";
                         events.push({
                             date: {
                                 year: parseInt(year),
@@ -55,9 +56,10 @@ screens.manager.schedule = function ManagerSchedule(me, packages) {
                             },
                             name,
                             group,
-                            title,
+                            title: item.title,
+                            user: item.user,
                             app: core.string.title(app),
-                            launch: [app, title, source === "privateList"]
+                            launch: [app, item.title, source === "privateList"]
                         });
                     }
                 }

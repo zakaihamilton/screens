@@ -269,11 +269,13 @@ screens.widget.schedule = function WidgetSchedule(me, packages) {
                                     }
                                     if (matches) {
                                         for (let name in matches) {
+                                            const events = matches[name];
                                             let classes = ["widget-schedule-event", type];
                                             html += me.ui.html.item({ classes }, () => {
                                                 let html = "";
+                                                const user = core.string.title(events[0].user);
                                                 let classes = ["widget-schedule-event-name", type];
-                                                var label = name.split(" - ").join("<br>");
+                                                var label = "<b>" + user + "</b><br>" + name.split(" - ").join("<br>");
                                                 html += me.ui.html.item({ classes, value: label });
                                                 classes = ["widget-schedule-apps", type];
                                                 html += me.ui.html.item({ classes }, () => {

@@ -45,11 +45,11 @@ screens.manager.content = function ManagerContent(me, packages) {
                 if (title && !item.title.startsWith(title) && !title.startsWith(item.title)) {
                     continue;
                 }
-                var titles = results[item.component];
-                if (!titles) {
-                    titles = results[item.component] = [];
+                var items = results[item.component];
+                if (!items) {
+                    items = results[item.component] = [];
                 }
-                titles.push(item.title);
+                items.push({ title: item.title, user: item.user });
             }
             lists[listName] = results;
         }
