@@ -208,7 +208,7 @@ screens.storage.db = function StorageDB(me, packages) {
                 }
             }
             const items = await cursor.toArray();
-            if (params && params.project.user) {
+            if (params && params.project && params.project.user) {
                 const users = await me.db.shared.user.list();
                 for (const item of items) {
                     const user = users.find(user => user.user === item.user);
