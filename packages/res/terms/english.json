@@ -1425,6 +1425,16 @@
             "term": "AHP"
         },
         {
+            "translation": "Expression",
+            "term": "Gadlut Bet",
+            "defaultTerm": true,
+            "style": {
+                "category": "State",
+                "phase": "two"
+            },
+            "hebrew": "גדלות ב"
+        },
+        {
             "translation": "Greatness",
             "term": "Gadlut",
             "defaultTerm": true,
@@ -7819,6 +7829,12 @@
             "term": "Situmim",
             "translation": "Obstacles",
             "hebrew": "סיתומים"
+        },
+        {
+            "term": "Sod Ha Ibur",
+            "translation": "The Secret of Conception",
+            "hebrew": "סוד העיבור",
+            "explanation": "Postulate Processing"
         },
         {
             "term": "Sod Ha Nevuah",
