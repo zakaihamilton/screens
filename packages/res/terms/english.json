@@ -7159,6 +7159,24 @@
             "translation": "Father"
         },
         {
+            "term": "Mi",
+            "hebrew": "מי",
+            "explanation": "Who",
+            "context": [
+                "Mi",
+                "Mah"
+            ]
+        },
+        {
+            "term": "Mah",
+            "hebrew": "מה",
+            "explanation": "What",
+            "context": [
+                "Mi",
+                "Mah"
+            ]
+        },
+        {
             "term": "MI",
             "hebrew": "מי",
             "explanation": "Thought"
