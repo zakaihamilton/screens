@@ -7760,6 +7760,22 @@
             ]
         },
         {
+            "term": "Duchra",
+            "translation": "Male",
+            "hebrew": "דוכרא"
+        },
+        {
+            "translation": "Next World",
+            "explanation": "Spirituality",
+            "style": {
+                "category": "World",
+                "phase": "two"
+            },
+            "source": "Olam ha Ba",
+            "term": "next world",
+            "hebrew": "עולם הבא"
+        },
+        {
             "translation": "This World",
             "explanation": "Reality",
             "style": {
