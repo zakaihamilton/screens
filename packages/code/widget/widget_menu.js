@@ -66,6 +66,22 @@ screens.widget.menu = function WidgetMenu(me, packages) {
                 items.reverse();
             }
             var first = true;
+            if (info.split) {
+                if (!info.split.min || info.split.min < items.length) {
+                    const values = Array.from(new Set(items.map(item => item[info.split.property])));
+                    const filterInfo = {
+                        list: values,
+                        group: info.split.property,
+                        itemMethod: [(object, label) => {
+                            var subInfo = Object.assign({}, info);
+                            subInfo.list = info.list.filter(item => item[info.split.property] === label);
+                            delete subInfo.split;
+                            return me.widget.menu.collect(object, subInfo);
+                        }]
+                    };
+                    return me.widget.menu.collect(object, filterInfo);
+                }
+            }
             items = items.map(function (item) {
                 var title = item;
                 if (info.property) {
@@ -284,6 +300,9 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
             trail = [];
         }
         trail.push(label);
+        if (typeof values[0] === "function") {
+            values = values[0](object, label);
+        }
         values = [{ text: label, select: "header" }, ...values];
         core.property.set(item, "ui.class.add", "selected");
         core.property.set(object.var.modal, "ui.style.display", "block");

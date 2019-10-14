@@ -142,6 +142,7 @@ screens.app.player = function AppPlayer(me, packages) {
                 list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
                     metadata.group === groupName && metadata[property]));
             }
+            list.map(session => session.year = session.session.split("-")[0]);
             var info = {
                 list,
                 property: "label",
@@ -152,6 +153,11 @@ screens.app.player = function AppPlayer(me, packages) {
                     "Name": "label",
                     "Duration": "durationText",
                     "Number": "number"
+                },
+                split: {
+                    name: "Year",
+                    property: "year",
+                    min: 100
                 }
             };
             return me.widget.menu.collect(object, info);
