@@ -78,7 +78,7 @@ screens.storage.db = function StorageDB(me, packages) {
             });
         });
         if (!collection) {
-            throw "Cannot find collection for location: " + location.toString();
+            throw "Cannot find collection for location: " + location.collection;
         }
         if (location.indexes) {
             for (let index of location.indexes) {
