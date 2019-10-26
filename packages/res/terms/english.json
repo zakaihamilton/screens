@@ -236,7 +236,8 @@
             "Or even": "__Or even",
             "ofhis": "of his",
             "Het [sin] is male": "Het2 [sin] is male",
-            "to shed": "to __shed"
+            "to shed": "to __shed",
+            "I heard on ": "I heard on __"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
