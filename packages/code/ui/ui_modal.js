@@ -16,8 +16,7 @@ screens.ui.modal = function UIModal(me, packages) {
             }
         }
     };
-    me.launch = function (appName) {
-        var appArgs = Array.prototype.slice.call(arguments, 1);
+    me.launch = function (appName, ...appArgs) {
         return core.message.send("modal." + appName + ".launch", appArgs);
     };
     return "browser";

@@ -181,12 +181,11 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (filter && (tagName !== filter) && (typeof filter === "string" || !parent.instance || !parent.instance.cast(filter)));
         return parent ? parent.instance : null;
     }
-    emit(method, params) {
-        let args = Array.prototype.slice.call(arguments, 0);
+    emit(method, ...params) {
         let parent = this;
         let results = [];
         do {
-            results = parent.send.apply(parent, args);
+            results = parent.send.call(parent, method, ...params);
             results = results.filter(e => typeof e !== "undefined");
             if (results.length) {
                 break;
@@ -195,12 +194,11 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         } while (parent);
         return results;
     }
-    collect(method, params) {
-        let args = Array.prototype.slice.call(arguments, 0);
+    collect(method, ...params) {
         let parent = this;
         let results = [];
         do {
-            let result = parent.send.apply(parent, args);
+            let result = parent.send.call(parent, method, ...params);
             result = result.filter(e => typeof e !== "undefined");
             parent = parent.parent();
             results.unshift(...result);
@@ -209,8 +207,8 @@ COMPONENT.UIWidget = class extends COMPONENT.CoreObject {
         let list = Object.assign.apply(null, results);
         return list;
     }
-    state(method, params) {
-        return this.emit(method, params)[0];
+    state(method, ...params) {
+        return this.emit(method, ...params)[0];
     }
     get region() {
         let style = this.element.style;

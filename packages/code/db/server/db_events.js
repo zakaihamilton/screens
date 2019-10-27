@@ -123,13 +123,11 @@ screens.db.events.msg = function DbEventsMsg(me, packages) {
             me.busy = false;
         }
     };
-    me.send = function (method) {
-        var args = Array.prototype.slice.call(arguments, 0);
-        me.push({ date: new Date().toString(), args });
+    me.send = function (method, ...params) {
+        me.push({ date: new Date().toString(), args: [method, ...params] });
     };
-    me.sendTo = function (ip, method) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        me.push({ date: new Date().toString(), args, ip });
+    me.sendTo = function (ip, method, ...params) {
+        me.push({ date: new Date().toString(), args: [method, ...params], ip });
     };
     me.sendParallel = async function (array) {
         var servers = await db.events.servers.list({});

@@ -99,9 +99,8 @@ screens.ui.element = function UIElement(me, packages) {
             return document.body;
         }
     };
-    me.combine = function (maps) {
+    me.combine = function (...maps) {
         var combined = {};
-        var maps = Array.prototype.slice.call(arguments, 0);
         for (var mapIndex = 0; mapIndex < maps.length; mapIndex++) {
             var map = maps[mapIndex];
             if (map) {

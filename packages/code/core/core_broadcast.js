@@ -9,14 +9,13 @@ screens.core.broadcast = function CoreBroadcast(me, packages) {
     me.register = function (component, mapping) {
         me.registered.push({ component, mapping });
     };
-    me.send = async function (method) {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send = async function (method, ...params) {
         var components = me.registered;
         var results = [];
         for (let component of components) {
-            args[0] = component.mapping[method];
-            if (args[0]) {
-                results.push(core.message.send.apply(null, args));
+            const value = component.mapping[method];
+            if (value) {
+                results.push(core.message.send(value, ...params));
             }
         }
         results = await Promise.all(results);

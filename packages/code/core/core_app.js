@@ -39,7 +39,7 @@ screens.core.app = function CoreApp(me, packages) {
             me.launch(property, value);
         }
     };
-    me.launch = async function (appName) {
+    me.launch = async function (appName, ...appArgs) {
         if (!appName) {
             return null;
         }
@@ -47,7 +47,6 @@ screens.core.app = function CoreApp(me, packages) {
             return null;
         }
         var result = null;
-        var appArgs = Array.prototype.slice.call(arguments, 1);
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }

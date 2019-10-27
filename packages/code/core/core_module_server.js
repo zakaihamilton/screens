@@ -62,6 +62,7 @@ screens.core.module = function CoreModule(me, packages) {
         if (filePath.startsWith("platform/")) {
             let platform = filePath.split("/").pop().split(".")[0];
             let code = await core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
+            console.log("handleCode" + ": " + filePath + "\n" + code + "***********************");
             return code;
         }
         if (filePath.startsWith("res/")) {

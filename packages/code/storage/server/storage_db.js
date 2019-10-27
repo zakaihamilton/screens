@@ -247,10 +247,9 @@ screens.storage.db = function StorageDB(me, packages) {
         }));
         return string;
     };
-    me.getCache = function (location) {
-        var args = Array.prototype.slice.call(arguments, 1);
+    me.getCache = function (location, ...params) {
         var result = null;
-        var string = me.queryAsString(args);
+        var string = me.queryAsString(params);
         var hash = core.string.hash(string);
         if (location.cache) {
             result = location.cache[hash];

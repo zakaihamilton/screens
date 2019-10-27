@@ -25,18 +25,17 @@ screens.core.service = function CoreService(me, packages) {
     me.config = async function (name) {
         return await core.util.config("settings." + name);
     };
-    me.sendAll = async function (method) {
+    me.sendAll = async function (method, ...params) {
         var responses = [];
-        var args = Array.prototype.slice.call(arguments);
         if (me.platform === "service") {
             for (var serviceName of me.serviceNames) {
-                args[0] = "service." + serviceName + "." + method;
-                responses.push(await core.message.send.apply(null, args));
+                const fullMethod = "service." + serviceName + "." + method;
+                responses.push(await core.message.send(fullMethod, ...params));
             }
             return responses;
         }
         else {
-            return core.socket.sendAll("service", ...args);
+            return core.socket.sendAll("service", method, ...params);
         }
     };
 };

@@ -178,12 +178,11 @@ screens.core.util = function CoreUtil(me, packages) {
     me.override = function (modulePath, methodName, overrideCallback) {
         var handle = require(modulePath);
         var originalMethod = handle[methodName];
-        handle[methodName] = function () {
+        handle[methodName] = function (...params) {
             var _this = this;
-            var args = Array.prototype.slice.call(arguments, 0);
             overrideCallback(() => {
-                originalMethod.apply(_this, args);
-            }, args, _this);
+                originalMethod.call(_this, ...params);
+            }, params, _this);
         };
         module.exports = handle;
     };

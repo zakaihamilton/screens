@@ -71,14 +71,13 @@ COMPONENT.CoreObject = class {
         }
         return true;
     }
-    send(method, params) {
-        var args = Array.prototype.slice.call(arguments, 1);
+    send(method, ...params) {
         const parent = this._parent || this;
         let list = [parent, ...parent._attachments];
         let results = [];
         list.map(item => {
             if (method in item) {
-                results.push(item[method].apply(item, args));
+                results.push(item[method].call(item, ...params));
             }
         });
         return results;

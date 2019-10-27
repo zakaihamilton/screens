@@ -103,12 +103,11 @@ screens.storage.local.db = function StorageLocalDb(me, packages) {
             };
         });
     };
-    me.method = async function (collection, methodName) {
+    me.method = async function (collection, methodName, ...params) {
         let storeName = "screens";
         if (me.platform === "server" || me.platform === "service") {
             return;
         }
-        var args = Array.prototype.slice.call(arguments, 2);
         var access = {
             "get": "readonly",
             "put": "readwrite",
@@ -122,7 +121,7 @@ screens.storage.local.db = function StorageLocalDb(me, packages) {
         return new Promise((resolve, reject) => {
             let storeHandle = transaction.objectStore(storeName);
             let method = storeHandle[methodName];
-            let request = method.apply(storeHandle, args);
+            let request = method.call(storeHandle, ...params);
             request.onerror = () => {
                 reject(request.error.name);
             };

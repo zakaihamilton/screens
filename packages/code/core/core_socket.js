@@ -144,9 +144,8 @@ screens.core.socket = function CoreSocket(me, packages) {
         }
         return items;
     };
-    me.sendFirst = async function (platform, method) {
+    me.sendFirst = async function (platform, method, ...params) {
         var promise = null;
-        var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
         if (me.sockets) {
             me.log("number of sockets: " + me.sockets.size);
@@ -157,7 +156,7 @@ screens.core.socket = function CoreSocket(me, packages) {
                 me.log("socket platform: " + info.platform + " ref: " + info.ref);
                 if (!platform || info.platform === platform) {
                     me.log("sending to ref: " + info.ref + " platform: " + info.platform + " match: " + platform);
-                    promise = core.message.send_socket.apply(socket, args);
+                    promise = core.message.send_socket.call(socket, method, ...params);
                     count++;
                 }
             });
@@ -166,15 +165,14 @@ screens.core.socket = function CoreSocket(me, packages) {
         var response = await promise;
         return response;
     };
-    me.sendAll = async function (platform, method) {
+    me.sendAll = async function (platform, method, ...params) {
         var promises = [];
-        var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
         if (me.sockets) {
             me.sockets.forEach((info, socket) => {
                 if (!platform || info.platform === platform) {
                     me.log("sending to ref: " + info.ref + " platform: " + info.platform + " match: " + platform);
-                    var promise = core.message.send_socket.apply(socket, args);
+                    var promise = core.message.send_socket.call(socket, method, ...params);
                     promises.push(promise);
                     count++;
                 }

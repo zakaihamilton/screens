@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: I don't have any test yet :-[\" && exit 1",
-    "start": "node ./packages/code/platform/server.js"
+    "start": "node ./packages/code/platform/server.js",
+    "dev": "node ./packages/code/platform/server.js -port=5050 -localhost"
   },
   "license": "Unlicense",
   "dependencies": {

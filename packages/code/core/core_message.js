@@ -3,58 +3,52 @@
  @component CoreMessage
  */
 
-screens.core.message = function CoreMessage(me, packages) {
-    const { core } = packages;
-    me.send_server = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+screens.core.message = function CoreMessage(me, { core }) {
+    me.send_server = function (...params) {
         if (me.platform === "server") {
-            return me.send.apply(null, args);
+            return me.send(...params);
         }
         else if (me.platform === "client") {
-            args.unshift("core.message.send_server");
-            return me.send_browser.apply(null, args);
+            params.unshift("core.message.send_server");
+            return me.send_browser(...params);
         }
         else {
-            return core.interface.send.apply(null, args);
+            return core.interface.send(...params);
         }
     };
-    me.send_browser = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send_browser = function (...params) {
         if (me.platform === "client") {
             return me.send_info((info) => {
                 return me.worker.postMessage(info);
-            }, args);
+            }, params);
         } else if (me.platform === "browser") {
-            return me.send.apply(this, args);
+            return me.send.call(this, ...params);
         } else if (me.platform === "server") {
-            return core.interface.send.apply(null, args);
+            return core.interface.send(...params);
         }
     };
-    me.send_client = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send_client = function (...params) {
         if (me.platform === "browser") {
             return me.send_info((info) => {
                 return me.worker.postMessage(info);
-            }, args);
+            }, params);
         } else if (me.platform === "client") {
-            return me.send.apply(this, args);
+            return me.send.call(this, ...params);
         }
     };
-    me.send_service_worker = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send_service_worker = function (...params) {
         if (me.platform === "browser" || me.platform === "client") {
             return me.send_info((info) => {
                 return me.service_worker.postMessage(info);
-            }, args);
+            }, params);
         } else if (me.platform === "service_worker") {
-            return me.send.apply(this, args);
+            return me.send.call(this, ...params);
         }
     };
-    me.send_socket = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send_socket = function (...params) {
         return me.send_info((info) => {
             return core.socket.send(this, "send", info);
-        }, args);
+        }, params);
     };
     me.send_info = async function (send_callback, args) {
         var info = {
@@ -68,24 +62,22 @@ screens.core.message = function CoreMessage(me, packages) {
         var result = send_callback(info);
         return result;
     };
-    me.send_service = function () {
-        var args = Array.prototype.slice.call(arguments, 0);
+    me.send_service = function (...params) {
         if (me.platform === "server") {
-            return me.send_socket.apply(this, args);
+            return me.send_socket.call(this, ...params);
         } else if (me.platform === "service") {
-            return me.send.apply(this, args);
+            return me.send.call(this, ...params);
         } else if (me.platform === "browser") {
-            args.unshift("service");
-            args.unshift("core.socket.sendFirst");
-            return me.send_server.apply(this, args);
+            params.unshift("service");
+            params.unshift("core.socket.sendFirst");
+            return me.send_server.call(this, ...params);
         }
     };
-    me.send_platform = function (platform) {
-        var args = Array.prototype.slice.call(arguments, 1);
+    me.send_platform = function (platform, ...params) {
         if (!platform) {
             platform = me.platform;
         }
-        return me["send_" + platform].apply(null, args);
+        return me["send_" + platform](...params);
     };
     me.processArg = function (info, arg) {
         if (Array.isArray(arg)) {
@@ -116,9 +108,8 @@ screens.core.message = function CoreMessage(me, packages) {
                 }
                 if (core.handle.isHandle(arg, "function")) {
                     let handle = arg;
-                    arg = function () {
-                        var sendArgs = Array.prototype.slice.call(arguments, 0);
-                        var sendInfo = { args: sendArgs, callback: handle };
+                    arg = function (...params) {
+                        var sendInfo = { args: params, callback: handle };
                         info.socket.emit("notify", sendInfo);
                     };
                 }
@@ -127,9 +118,8 @@ screens.core.message = function CoreMessage(me, packages) {
         else if (me.platform === "client") {
             if (core.handle.isHandle(arg, "function")) {
                 let handle = arg;
-                arg = function () {
-                    var sendArgs = Array.prototype.slice.call(arguments, 0);
-                    var sendInfo = { args: sendArgs, callback: handle };
+                arg = function (...params) {
+                    var sendInfo = { args: params, callback: handle };
                     return me.worker.postMessage(sendInfo);
                 };
             }
@@ -179,15 +169,14 @@ screens.core.message = function CoreMessage(me, packages) {
         }
         info.args = args;
     };
-    me.send = function (path) {
-        var args = Array.prototype.slice.call(arguments, 1);
+    me.send = function (path, ...params) {
         var callback = null;
         var result = null;
         if (!path) {
             return undefined;
         }
         if (typeof path === "function") {
-            result = path.apply(this, args);
+            result = path.call(this, ...params);
             return result;
         }
         try {
@@ -197,7 +186,7 @@ screens.core.message = function CoreMessage(me, packages) {
             return undefined;
         }
         if (typeof callback === "function") {
-            result = callback.apply(this, args);
+            result = callback.call(this, ...params);
             return result;
         } else if (typeof callback !== "undefined") {
             me.log("callback for " + path + " is not a function but rather " + JSON.stringify(callback));
@@ -231,8 +220,7 @@ screens.core.message = function CoreMessage(me, packages) {
     };
 };
 
-screens.core.message.worker = function CoreMessageWorker(me, packages) {
-    const { core } = packages;
+screens.core.message.worker = function CoreMessageWorker(me, { core }) {
     me.init = async function () {
         if (me.platform === "browser") {
             window.module = {};
@@ -274,8 +262,7 @@ screens.core.message.worker = function CoreMessageWorker(me, packages) {
     };
 };
 
-screens.core.message.service_worker = function CoreMessageServiceWorker(me, packages) {
-    const { core } = packages;
+screens.core.message.service_worker = function CoreMessageServiceWorker(me, { core }) {
     me.init = async function () {
         if (me.platform === "service_worker") {
             await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");

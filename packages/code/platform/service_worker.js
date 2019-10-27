@@ -1,5 +1,8 @@
+
 importScripts("/packages/code/screens.js?platform=service_worker");
+
 importScripts("/platform/service_worker.js?platform=service_worker");
+
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.0.0/workbox-sw.js");
 
 var components = [];

@@ -52,9 +52,8 @@ screens.core.interface = function CoreInterface(me, packages) {
         });
         return args;
     };
-    me.send = async function (method) {
-        var args = Array.prototype.slice.call(arguments, 0);
-        var body = me.toTypeFormat(args);
+    me.send = async function (method, ...params) {
+        var body = me.toTypeFormat([method, ...params]);
         var result = null;
         if (!core.util.isOnline()) {
             result = await me.storage.local.db.get(me.id, body);

@@ -102,7 +102,7 @@ screens.ui.scroll = function UIScroll(me, packages) {
                     }
                     var params = {
                         top: targetPos,
-                        behavior: 'smooth'
+                        behavior: "smooth"
                     };
                     container.scroll(params);
                     core.property.notify(container, "scrolled");
