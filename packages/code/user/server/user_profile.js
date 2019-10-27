@@ -3,8 +3,7 @@
  @component UserProfile
  */
 
-screens.user.profile = function UserProfile(me, packages) {
-    const { db, storage } = packages;
+screens.user.profile = function UserProfile(me, { db, storage }) {
     me.profiles = null;
     me.reset = function () {
         me.profiles = null;

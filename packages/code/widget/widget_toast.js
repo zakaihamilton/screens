@@ -3,8 +3,7 @@
  @component WidgetToast
  */
 
-screens.widget.toast = function WidgetToast(me, packages) {
-    const { core } = packages;
+screens.widget.toast = function WidgetToast(me, { core }) {
     me.timeout = 3000;
     me.messages = {};
     me.currentType = null;

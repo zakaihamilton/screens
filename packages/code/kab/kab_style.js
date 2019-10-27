@@ -3,8 +3,7 @@
  @component KabStyle
  */
 
-screens.kab.style = function KabStyle(me, packages) {
-    const { core } = packages;
+screens.kab.style = function KabStyle(me, { core }) {
     me.process = function (session, instance, replacement, expansion) {
         var nightModeClass = session.options.nightMode ? "night-mode" : "";
         var styles = instance.item.style;

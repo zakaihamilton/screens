@@ -3,7 +3,7 @@
  @component UIShare
  */
 
-screens.ui.share = function UIClipboard(me, packages) {
+screens.ui.share = function UIClipboard(me) {
     me.importData = async function (object, text, title) {
         if (navigator.share) {
             await navigator.share({

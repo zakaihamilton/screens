@@ -3,7 +3,7 @@
  @component CoreListener
  */
 
-screens.core.listener = function CoreListener(me, packages) {
+screens.core.listener = function CoreListener(me) {
     me.listener = {};
     me.register = function (callback, id) {
         var listener = me.listener[id];

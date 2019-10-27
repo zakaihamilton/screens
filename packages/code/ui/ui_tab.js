@@ -3,8 +3,7 @@
  @component UITab
  */
 
-screens.ui.tab = function UITab(me, packages) {
-    const { core } = packages;
+screens.ui.tab = function UITab(me, { core }) {
     me.control = function (object) {
         me.ui.node.iterate(object, (element) => {
             var tab = core.property.get(element, "ui.attribute.tab");

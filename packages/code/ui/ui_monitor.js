@@ -3,8 +3,7 @@
  @component UIMonitor
  */
 
-screens.ui.monitor = function UIMonitor(me, packages) {
-    const { core } = packages;
+screens.ui.monitor = function UIMonitor(me, { core }) {
     me.change = {
         set: function (object, value) {
             core.event.register(null, object, "change", value);

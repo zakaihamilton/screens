@@ -3,8 +3,7 @@
     @component CmdState
 */
 
-screens.cmd.state = function CmdState(me, packages) {
-    const { core, db } = packages;
+screens.cmd.state = function CmdState(me, { core, db }) {
     me.cmd = async function (terminal, args) {
         var items = null;
         if (args[1] === "clear") {

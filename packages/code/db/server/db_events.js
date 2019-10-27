@@ -3,27 +3,24 @@
  @component DbEvents
  */
 
-screens.db.events = function DbEvents(me, packages) {
+screens.db.events = function DbEvents(me) {
     return "server";
 };
 
-screens.db.events.participants = function DbEventsParticipants(me, packages) {
-    const { storage } = packages;
+screens.db.events.participants = function DbEventsParticipants(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.options = { capped: true, size: 242880, max: 250 };
     return "server";
 };
 
-screens.db.events.logs = function DbEventsLogs(me, packages) {
-    const { storage } = packages;
+screens.db.events.logs = function DbEventsLogs(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.options = { capped: true, size: 242880, max: 250 };
     return "server";
 };
 
-screens.db.events.servers = function DbEventsServers(me, packages) {
-    const { core, storage } = packages;
+screens.db.events.servers = function DbEventsServers(me, { core, storage }) {
     me.init = async () => {
         storage.db.extension(me);
         core.broadcast.register(me, {
@@ -46,8 +43,7 @@ screens.db.events.servers = function DbEventsServers(me, packages) {
     return "server";
 };
 
-screens.db.events.state = function DbEventsState(me, packages) {
-    const { core, storage } = packages;
+screens.db.events.state = function DbEventsState(me, { core, storage }) {
     me.init = async () => {
         storage.db.extension(me);
     };
@@ -71,8 +67,7 @@ screens.db.events.state = function DbEventsState(me, packages) {
     return "server";
 };
 
-screens.db.events.msg = function DbEventsMsg(me, packages) {
-    const { core, storage, db } = packages;
+screens.db.events.msg = function DbEventsMsg(me, { core, storage, db }) {
     me.lastMsgId = 0;
     me.busy = false;
     me.init = async () => {

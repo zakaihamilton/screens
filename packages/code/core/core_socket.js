@@ -3,8 +3,7 @@
  @component CoreSocket
  */
 
-screens.core.socket = function CoreSocket(me, packages) {
-    const { core } = packages;
+screens.core.socket = function CoreSocket(me, { core }) {
     me.init = async function () {
         if (me.platform === "server") {
             me.sockets = new Map();

@@ -3,8 +3,7 @@
  @component WidgetEmbed
  */
 
-screens.widget.embed = function WidgetEmbed(me, packages) {
-    const { core } = packages;
+screens.widget.embed = function WidgetEmbed(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "iframe",

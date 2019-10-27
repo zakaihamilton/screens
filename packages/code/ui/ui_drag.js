@@ -3,8 +3,7 @@
  @component UIDrag
  */
 
-screens.ui.drag = function UIDrag(me, packages) {
-    const { core } = packages;
+screens.ui.drag = function UIDrag(me, { core }) {
     me.start = {
         set: function (object, value) {
             core.event.register(null, object, "dragstart", value);
@@ -42,8 +41,7 @@ screens.ui.drag = function UIDrag(me, packages) {
     };
 }
 
-screens.ui.drag.icon = function UIDragIcon(me, packages) {
-    const { core } = packages;
+screens.ui.drag.icon = function UIDragIcon(me, { core }) {
     me.source = null;
     me.target = null;
     me.element = {

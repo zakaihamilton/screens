@@ -3,8 +3,7 @@
  @component WidgetSchedule
  */
 
-screens.widget.schedule = function WidgetSchedule(me, packages) {
-    const { core } = packages;
+screens.widget.schedule = function WidgetSchedule(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

@@ -3,8 +3,7 @@
  @component MediaSpeech
  */
 
-screens.media.speech = function MediaSpeech(me, packages) {
-    const { core } = packages;
+screens.media.speech = function MediaSpeech(me, { core }) {
     me.init = function () {
         const ffprobePath = require("@ffprobe-installer/ffprobe").path;
         me.ffmpeg = require("fluent-ffmpeg");

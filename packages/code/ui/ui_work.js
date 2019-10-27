@@ -3,8 +3,7 @@
  @component UIWork
  */
 
-screens.ui.work = function UIWork(me, packages) {
-    const { core } = packages;
+screens.ui.work = function UIWork(me, { core }) {
     me.state = {
         get: function (object) {
             return object.inWork;

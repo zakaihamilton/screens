@@ -3,8 +3,7 @@
  @component CoreInterface
  */
 
-screens.core.interface = function CoreInterface(me, packages) {
-    const { core } = packages;
+screens.core.interface = function CoreInterface(me, { core }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.interface.receive", true);
         core.mutex.enable(me.id, true);

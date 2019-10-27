@@ -3,8 +3,7 @@
  @component CoreProperty
  */
 
-screens.core.property = function CoreProperty(me, packages) {
-    const { core } = packages;
+screens.core.property = function CoreProperty(me, { core }) {
     me.fullname = function (object, name, default_name = null) {
         if (typeof name !== "string") {
             throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;
@@ -328,7 +327,7 @@ screens.core.property = function CoreProperty(me, packages) {
     };
 };
 
-screens.core.property.object = function CorePropertyObject(me, packages) {
+screens.core.property.object = function CorePropertyObject(me) {
     me.create = function (component, object = null) {
         if (!object) {
             object = {};

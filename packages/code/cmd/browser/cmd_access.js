@@ -3,8 +3,7 @@
     @component CmdAccess
 */
 
-screens.cmd.access = function CmdAccess(me, packages) {
-    const { core } = packages;
+screens.cmd.access = function CmdAccess(me, { core }) {
     me.cmd = async function (terminal, args) {
         var appName = args[1] || "";
         var toggle = args[2] || "";

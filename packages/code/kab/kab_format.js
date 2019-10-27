@@ -3,8 +3,7 @@
  @component KabFormat
  */
 
-screens.kab.format = function KabFormat(me, packages) {
-    const { core } = packages;
+screens.kab.format = function KabFormat(me, { core }) {
     me.process = function (wordsString, dict) {
         if (dict) {
             dict.map(function (item) {

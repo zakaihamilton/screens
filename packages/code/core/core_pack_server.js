@@ -3,8 +3,7 @@
     @component CorePack
 */
 
-screens.core.pack = function CorePack(me, packages) {
-    const { core } = packages;
+screens.core.pack = function CorePack(me, { core }) {
     me.init = function () {
         me.postcss = require("postcss");
         me.autoprefixer = require("autoprefixer");
@@ -136,10 +135,10 @@ screens.core.pack = function CorePack(me, packages) {
         var body = "";
         var platforms = ["server", "service", "browser", "client", "service_worker"];
         if (platforms.includes(info.folder) && info.folder !== info.target) {
-            body += `screens.${info.package}.${info.component} = function (me, packages) { return "${info.folder}"; };\n`;
+            body += `screens.${info.package}.${info.component} = function (me, ) { return "${info.folder}"; };\n`;
         }
         else if (info.platform && info.platform !== info.target) {
-            body += `screens.${info.package}.${info.component} = function (me, packages) { return "${info.platform}"; };\n`;
+            body += `screens.${info.package}.${info.component} = function (me, ) { return "${info.platform}"; };\n`;
         }
         else {
             body += await me.minify(info.path, data) + "\n";

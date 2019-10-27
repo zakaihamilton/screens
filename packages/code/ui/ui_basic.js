@@ -3,8 +3,7 @@
  @component UIBasic
  */
 
-screens.ui.basic = function UIBasic(me, packages) {
-    const { core } = packages;
+screens.ui.basic = function UIBasic(me, { core }) {
     me.tag = {
         get: function (object) {
             return object.tagName.toLowerCase();

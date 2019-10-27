@@ -3,7 +3,7 @@
  @component UIRect
  */
 
-screens.ui.rect = function UIRect(me, packages) {
+screens.ui.rect = function UIRect(me) {
     me.relativeRegion = function (object, parent = object.parentNode) {
         var parent_region = me.absoluteRegion(parent);
         var region = me.absoluteRegion(object);

@@ -3,8 +3,7 @@
  @component CoreService
  */
 
-screens.core.service = function CoreService(me, packages) {
-    const { core } = packages;
+screens.core.service = function CoreService(me, { core }) {
     me.init = async function () {
         if (me.platform === "service") {
             me.log("arguments: " + JSON.stringify(process.argv));

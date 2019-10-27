@@ -3,8 +3,7 @@
  @component UIContent
  */
 
-screens.ui.content = function UIContent(me, packages) {
-    const { core, ui, manager } = packages;
+screens.ui.content = function UIContent(me, { core, ui, manager }) {
     me.content = {
         init: async function () {
         },
@@ -441,7 +440,7 @@ screens.ui.content = function UIContent(me, packages) {
     return me.content;
 };
 
-screens.ui.content.data = function (me, packages) {
+screens.ui.content.data = function (me) {
     me.ready = function (methods) {
         methods["ui.content.data.setLists"] = ["manager.content.lists"];
     };

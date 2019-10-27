@@ -3,8 +3,7 @@
  @component CoreStartup
  */
 
-screens.core.startup = function CoreStartup(me, packages) {
-    const { core } = packages;
+screens.core.startup = function CoreStartup(me, { core }) {
     me.app = {
         name: "",
         params: null

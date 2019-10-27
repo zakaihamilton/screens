@@ -3,8 +3,7 @@
  @component ManagerPacket
  */
 
-screens.manager.packet = function ManagerPacket(me, packages) {
-    const { core } = packages;
+screens.manager.packet = function ManagerPacket(me, { core }) {
     me.packetInfo = {
         streamRequests: [],
         effects: {},

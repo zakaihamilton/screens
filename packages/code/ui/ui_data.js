@@ -3,8 +3,7 @@
  @component UIData
  */
 
-screens.ui.data = function UIData(me, packages) {
-    const { core } = packages;
+screens.ui.data = function UIData(me, { core }) {
     me.default = {
         get: function (object) {
             return object.data_default;

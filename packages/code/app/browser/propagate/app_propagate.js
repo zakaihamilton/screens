@@ -3,7 +3,8 @@
  @component AppPropagate
  */
 
-screens.app.propagate = function AppPropagate(me, { core }) {
+screens.app.propagate = function AppPropagate(me, packages) {
+    const { core } = packages;
     me.scriptsDir = "packages/res/scripts";
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {

@@ -3,8 +3,7 @@
  @component ModalQuestion
  */
 
-screens.modal.question = function ModalQuestion(me, packages) {
-    const { core, widget, ui } = packages;
+screens.modal.question = function ModalQuestion(me, { core, widget, ui }) {
     me.launch = function (args) {
         let window = ui.element.create(me.json, "workspace", "self", args[0]);
         window.promise = new Promise((resolve, reject) => {

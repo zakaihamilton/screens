@@ -3,8 +3,7 @@
  @component WidgetChart
  */
 
-screens.widget.chart = function WidgetChart(me, packages) {
-    const { core } = packages;
+screens.widget.chart = function WidgetChart(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

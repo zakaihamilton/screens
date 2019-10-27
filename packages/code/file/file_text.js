@@ -3,7 +3,7 @@
  @component FileText
  */
 
-screens.file.text = function FileText(me, packages) {
+screens.file.text = function FileText(me) {
     me.export = function (filename, text) {
         var blob = new Blob([text], { type: "text/plain;charset=utf-8;" });
         var link = document.createElement("a");

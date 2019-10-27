@@ -3,8 +3,7 @@
  @component UILink
  */
 
-screens.ui.link = function UILink(me, packages) {
-    const { core } = packages;
+screens.ui.link = function UILink(me, { core }) {
     me.init = async function () {
         window.addEventListener("click", me.handleClick);
     };

@@ -3,8 +3,7 @@
     @component CoreServer
 */
 
-screens.core.server = function CoreServer(me, packages) {
-    const { core } = packages;
+screens.core.server = function CoreServer(me, { core }) {
     me.init = function () {
         me.cmd = require("node-cmd");
         me.child_process = require("child_process");

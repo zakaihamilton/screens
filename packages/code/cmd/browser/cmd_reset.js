@@ -3,8 +3,7 @@
     @component CmdReset
 */
 
-screens.cmd.reset = function CmdReset(me, packages) {
-    const { core } = packages;
+screens.cmd.reset = function CmdReset(me, { core }) {
     me.cmd = async function (terminal, args) {
         let result = await core.message.service_worker.unregister();
         core.property.set(terminal, "print", result ? "Service worker unregistered" : "Service worker failed to unregister");

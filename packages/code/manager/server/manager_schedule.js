@@ -3,8 +3,7 @@
  @component ManagerSchedule
  */
 
-screens.manager.schedule = function ManagerSchedule(me, packages) {
-    const { core } = packages;
+screens.manager.schedule = function ManagerSchedule(me, { core }) {
     me.events = async function (query) {
         var events = [];
         var { start, end } = query;

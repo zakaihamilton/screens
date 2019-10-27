@@ -3,8 +3,7 @@
  @component UserAccess
  */
 
-screens.user.access = function UserAccess(me, packages) {
-    const { core } = packages;
+screens.user.access = function UserAccess(me, { core }) {
     me.init = function () {
         core.property.link("core.socket.access", "user.access.access", true);
     };

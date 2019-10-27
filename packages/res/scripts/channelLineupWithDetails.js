@@ -9,7 +9,7 @@
 var me = me, object = object, packages = packages;
 
 async function run() {
-    const { core, widget } = packages;
+    const { core, widget }) {
     var window = widget.window.get(object);
     var channelsLineup = await me.content(window, "channelsLineup.json");
     var channelDetails = await me.content(window, "channelDetails.json");

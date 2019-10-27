@@ -3,8 +3,7 @@
  @component CoreLogin
  */
 
-screens.core.login = function CoreLogin(me, packages) {
-    const { core, storage } = packages;
+screens.core.login = function CoreLogin(me, { core, storage }) {
     me.init = async function () {
         me.state = false;
         me.wasLoggedIn = false;

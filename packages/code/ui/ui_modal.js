@@ -3,8 +3,7 @@
  @component UIModal
  */
 
-screens.ui.modal = function UIModal(me, packages) {
-    const { core } = packages;
+screens.ui.modal = function UIModal(me, { core }) {
     me.lookup = {
         set: function (object, value, property) {
             if (Array.isArray(value)) {

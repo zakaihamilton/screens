@@ -3,8 +3,7 @@
  @component WidgetDropdown
  */
 
-screens.widget.dropdown = function WidgetDropDown(me, packages) {
-    const { core } = packages;
+screens.widget.dropdown = function WidgetDropDown(me, { core }) {
     me.element = {
         redirect: {
             "ui.basic.text": "text",

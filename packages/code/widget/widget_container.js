@@ -3,8 +3,7 @@
  @component WidgetContainer
  */
 
-screens.widget.container = function WidgetContainer(me, packages) {
-    const { core } = packages;
+screens.widget.container = function WidgetContainer(me, { core }) {
     me.element = {
         properties: {
             "ui.class.class": "root",

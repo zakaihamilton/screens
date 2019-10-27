@@ -3,8 +3,7 @@
  @component UINode
  */
 
-screens.ui.node = function UINode(me, packages) {
-    const { core } = packages;
+screens.ui.node = function UINode(me, { core }) {
     me.childList = function (object) {
         if (!object) {
             return [];

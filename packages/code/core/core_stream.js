@@ -3,7 +3,7 @@
  @component CoreStream
  */
 
-screens.core.stream = function CoreStream(me, packages) {
+screens.core.stream = function CoreStream(me) {
     me.init = function () {
         if (screens.platform === "server" || screens.platform === "service") {
             me.fs = require("fs");

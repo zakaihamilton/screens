@@ -3,8 +3,7 @@
  @component UITransform
  */
 
-screens.ui.transform = function UITransform(me, packages) {
-    const { core } = packages;
+screens.ui.transform = function UITransform(me, { core }) {
     me.transform = {
         menu: function () {
             var prefix = me.id + ".";

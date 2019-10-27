@@ -3,8 +3,7 @@
  @component KabForm
  */
 
-screens.kab.form = function KabForm(me, packages) {
-    const { core, kab } = packages;
+screens.kab.form = function KabForm(me, { core, kab }) {
     me.index = function (form) {
         for (var index = -1; form; index++) {
             form = form.cause;

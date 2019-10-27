@@ -3,8 +3,7 @@
  @component UIScroll
  */
 
-screens.ui.scroll = function UIScroll(me, packages) {
-    const { core } = packages;
+screens.ui.scroll = function UIScroll(me, { core }) {
     me.isScrollable = function (object) {
         var result = true;
         if (object.scrollWidth > object.offsetWidth) {

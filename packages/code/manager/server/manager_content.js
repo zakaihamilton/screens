@@ -3,8 +3,7 @@
  @component ManagerContent
  */
 
-screens.manager.content = function ManagerContent(me, packages) {
-    const { db } = packages;
+screens.manager.content = function ManagerContent(me, { db }) {
     me.cache = {};
     me.lists = async function (userId) {
         if (!userId) {

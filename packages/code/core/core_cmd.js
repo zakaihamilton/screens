@@ -3,8 +3,7 @@
     @component CoreCmd
 */
 
-screens.core.cmd = function CoreCmd(me, packages) {
-    const { core } = packages;
+screens.core.cmd = function CoreCmd(me, { core }) {
     me.application = function (terminal) {
         return terminal.application;
     };

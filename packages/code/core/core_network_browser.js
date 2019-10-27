@@ -3,8 +3,7 @@
  @component CoreNetwork
  */
 
-screens.core.network = function CoreNetwork(me, packages) {
-    const { core } = packages;
+screens.core.network = function CoreNetwork(me, { core }) {
     me.isOnline = function () {
         return navigator.onLine;
     };

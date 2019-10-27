@@ -3,8 +3,7 @@
  @component CoreBroadcast
  */
 
-screens.core.broadcast = function CoreBroadcast(me, packages) {
-    const { core } = packages;
+screens.core.broadcast = function CoreBroadcast(me, { core }) {
     me.registered = [];
     me.register = function (component, mapping) {
         me.registered.push({ component, mapping });

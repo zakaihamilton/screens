@@ -3,8 +3,7 @@
  @component UIGroup
  */
 
-screens.ui.group = function UIGroup(me, packages) {
-    const { core } = packages;
+screens.ui.group = function UIGroup(me, { core }) {
     me.lookup = {
         set: function (object, value, property) {
             if (Array.isArray(value)) {

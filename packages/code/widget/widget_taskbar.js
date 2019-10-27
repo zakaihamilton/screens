@@ -3,8 +3,7 @@
  @component WidgetTaskBar
  */
 
-screens.widget.taskbar = function WidgetTaskBar(me, packages) {
-    const { core } = packages;
+screens.widget.taskbar = function WidgetTaskBar(me, { core }) {
     me.init = function () {
         me.element = {
             properties: me.json
@@ -91,8 +90,7 @@ screens.widget.taskbar = function WidgetTaskBar(me, packages) {
     return "browser";
 };
 
-screens.widget.taskbar.task = function WidgetTaskbarTask(me, packages) {
-    const { core } = packages;
+screens.widget.taskbar.task = function WidgetTaskbarTask(me, { core }) {
     me.init = function () {
         me.element = {
             redirect: {

@@ -3,8 +3,7 @@
  @component StartupApp
  */
 
-screens.startup.app = function StartupApp(me, packages) {
-    const { core } = packages;
+screens.startup.app = function StartupApp(me, { core }) {
     me.firstTime = true;
     me.init = function () {
         core.listener.register(me.start, core.login.id);

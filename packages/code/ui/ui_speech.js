@@ -3,8 +3,7 @@
  @component UISpeech
  */
 
-screens.ui.speech = function UISpeech(me, packages) {
-    const { core } = packages;
+screens.ui.speech = function UISpeech(me, { core }) {
     me.start = function (object, options = null) {
         var recognition = null;
         me.stop(object);

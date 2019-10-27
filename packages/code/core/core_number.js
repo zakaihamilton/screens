@@ -3,8 +3,7 @@
  @component CoreNumber
  */
 
-screens.core.number = function CoreNumber(me, packages) {
-    const { core } = packages;
+screens.core.number = function CoreNumber(me, { core }) {
     me.fillArray = function (object, range) {
         var result = [];
         range = range.split("-");

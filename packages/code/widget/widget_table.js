@@ -3,8 +3,7 @@
  @component WidgetTable
  */
 
-screens.widget.table = function WidgetTable(me, packages) {
-    const { core } = packages;
+screens.widget.table = function WidgetTable(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "table"
@@ -56,7 +55,7 @@ screens.widget.table = function WidgetTable(me, packages) {
     };
 };
 
-screens.widget.table.header = function WidgetTableHeader(me, packages) {
+screens.widget.table.header = function WidgetTableHeader(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "th"
@@ -64,7 +63,7 @@ screens.widget.table.header = function WidgetTableHeader(me, packages) {
     };
 };
 
-screens.widget.table.row = function WidgetTableRow(me, packages) {
+screens.widget.table.row = function WidgetTableRow(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "tr"
@@ -72,7 +71,7 @@ screens.widget.table.row = function WidgetTableRow(me, packages) {
     };
 };
 
-screens.widget.table.data = function WidgetTableData(me, packages) {
+screens.widget.table.data = function WidgetTableData(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "td"

@@ -3,7 +3,7 @@
  @component KabLetters
  */
 
-screens.kab.letters = function KabLetters(me, packages) {
+screens.kab.letters = function KabLetters(me) {
     me.numerologyTable = {
         "א": 1,
         "ב": 2,

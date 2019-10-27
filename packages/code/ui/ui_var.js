@@ -3,7 +3,7 @@
  @component UIVar
  */
 
-screens.ui.var = function UIVar(me, packages) {
+screens.ui.var = function UIVar(me) {
     me.lookup = {
         get: function (object, value, property) {
             var variable = null;

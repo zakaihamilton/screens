@@ -3,8 +3,7 @@
  @component WidgetIcon
  */
 
-screens.widget.icon = function WidgetIcon(me, packages) {
-    const { core } = packages;
+screens.widget.icon = function WidgetIcon(me, { core }) {
     me.init = function () {
         me.element = {
             dependencies: {

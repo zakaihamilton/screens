@@ -3,8 +3,7 @@
  @component DbLibrary
  */
 
-screens.db.library = function DbLibrary(me, packages) {
-    const { core, storage } = packages;
+screens.db.library = function DbLibrary(me, { core, storage }) {
     me.findContentById = function (id) {
         return me.content.findById(id);
     };
@@ -129,21 +128,18 @@ screens.db.library = function DbLibrary(me, packages) {
     return "server";
 };
 
-screens.db.library.tags = function DbLibraryTag(me, packages) {
-    const { storage } = packages;
+screens.db.library.tags = function DbLibraryTag(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     return "server";
 };
 
-screens.db.library.content = function DbLibraryContent(me, packages) {
-    const { storage } = packages;
+screens.db.library.content = function DbLibraryContent(me, { storage }) {
     me.init = () => storage.db.extension(me);
     return "server";
 };
 
-screens.db.library.query = function DbLibraryQuery(me, packages) {
-    const { core } = packages;
+screens.db.library.query = function DbLibraryQuery(me, { core }) {
     me.tokens = function (query) {
         const regex = /(?:[^\s,"]|"(?:\\.|[^"])*")+/gm;
         let m;

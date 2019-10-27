@@ -3,8 +3,7 @@
  @component UIStyle
  */
 
-screens.ui.style = function UIStyle(me, packages) {
-    const { core } = packages;
+screens.ui.style = function UIStyle(me, { core }) {
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {

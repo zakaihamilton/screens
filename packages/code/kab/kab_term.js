@@ -3,8 +3,7 @@
  @component KabTerm
  */
 
-screens.kab.term = function KabTerm(me, packages) {
-    const { core } = packages;
+screens.kab.term = function KabTerm(me, { core }) {
     me.init = function () {
         me.terms = {};
     };

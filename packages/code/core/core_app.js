@@ -3,8 +3,7 @@
  @component CoreApp
  */
 
-screens.core.app = function CoreApp(me, packages) {
-    const { core, ui, app } = packages;
+screens.core.app = function CoreApp(me, { core, ui, app }) {
     me.init = async function () {
         core.listener.register(me.sendReady, core.login.id);
     };

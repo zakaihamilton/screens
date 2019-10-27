@@ -3,8 +3,7 @@
  @component UIProperty
  */
 
-screens.ui.property = function UIProperty(me, packages) {
-    const { core } = packages;
+screens.ui.property = function UIProperty(me, { core }) {
     me.init = function () {
         me.afterQueue = [];
         me.afterQueueTimer = null;

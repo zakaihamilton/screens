@@ -3,8 +3,7 @@
  @component CoreSession
  */
 
-screens.core.session = function CoreSession(me, packages) {
-    const { core } = packages;
+screens.core.session = function CoreSession(me, { core }) {
     me.init = function () {
         me.sessions = {};
     };

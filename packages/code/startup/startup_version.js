@@ -3,8 +3,7 @@
  @component StartupVersion
  */
 
-screens.startup.version = function StartupVersion(me, packages) {
-    const { core } = packages;
+screens.startup.version = function StartupVersion(me, { core }) {
     me.init = function () {
         core.broadcast.register(me, {
             prepare: "startup.version.prepare"

@@ -3,8 +3,7 @@
     @component CmdFiles
 */
 
-screens.cmd.files = function CmdFiles(me, packages) {
-    const { core, media, storage } = packages;
+screens.cmd.files = function CmdFiles(me, { core, media, storage }) {
     me.cmd = async function (terminal, args) {
         if (args.length <= 1) {
             core.property.set(terminal, "print", "files resolution");

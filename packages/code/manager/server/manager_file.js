@@ -3,8 +3,7 @@
  @component ManagerFile
  */
 
-screens.manager.file = function ManagerFile(me, packages) {
-    const { core } = packages;
+screens.manager.file = function ManagerFile(me, { core }) {
     me.init = function () {
         core.mutex.enable(me.id, true);
     };

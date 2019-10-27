@@ -3,8 +3,7 @@
  @component UIArrange
  */
 
-screens.ui.arrange = function UIArrange(me, packages) {
-    const { core } = packages;
+screens.ui.arrange = function UIArrange(me, { core }) {
     me.cascade = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);

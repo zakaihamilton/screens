@@ -3,8 +3,7 @@
     @component CmdHlsGet
 */
 
-screens.cmd.hlsget = function CmdHlsGet(me, packages) {
-    const { core } = packages;
+screens.cmd.hlsget = function CmdHlsGet(me, { core }) {
     me.cmd = async function (terminal, args) {
         if (args.length <= 2) {
             core.property.set(terminal, "print", "hlsget path.m3u8 files");

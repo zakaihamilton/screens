@@ -3,8 +3,7 @@
  @component LibDictionary
  */
 
-screens.lib.dictionary = function LibDictionary(me, packages) {
-    const { core, db } = packages;
+screens.lib.dictionary = function LibDictionary(me, { core, db }) {
     me.definition = async function (name) {
         var cache = await db.cache.dictionary.find({ name });
         if (cache) {

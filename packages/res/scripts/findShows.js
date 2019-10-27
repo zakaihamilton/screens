@@ -1,7 +1,7 @@
 var me = me, object = object, packages = packages;
 
 async function run() {
-    const { core } = packages;
+    const { core }) {
     let shows = [];
     let catalogs = await core.json.get("http://localhost:8085/curationchoreographer/staticdata/catalogs");
     for (let catalog of catalogs) {

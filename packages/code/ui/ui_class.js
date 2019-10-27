@@ -3,8 +3,7 @@
  @component UIClass
  */
 
-screens.ui.class = function UIClass(me, packages) {
-    const { core } = packages;
+screens.ui.class = function UIClass(me, { core }) {
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {

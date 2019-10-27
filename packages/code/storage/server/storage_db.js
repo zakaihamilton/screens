@@ -3,8 +3,7 @@
  @component StorageDB
  */
 
-screens.storage.db = function StorageDB(me, packages) {
-    const { core } = packages;
+screens.storage.db = function StorageDB(me, { core }) {
     me.init = async function () {
         me.mongodb = require("mongodb");
         me.clusterHandle = null;

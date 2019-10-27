@@ -3,7 +3,7 @@
     @component CoreType
 */
 
-screens.core.type = function CoreType(me, packages) {
+screens.core.type = function CoreType(me) {
     me.wrap = function (data) {
         var result = null;
         if (data === null) {

@@ -3,8 +3,7 @@
  @component UIKey
  */
 
-screens.ui.key = function UIKey(me, packages) {
-    const { core } = packages;
+screens.ui.key = function UIKey(me, { core }) {
     me.handle = {
         keydown: function (object, method, event) {
             return true;

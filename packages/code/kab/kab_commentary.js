@@ -3,8 +3,7 @@
  @component KabCommentary
  */
 
-screens.kab.commentary = function KabCommentary(me, packages) {
-    const { core, db } = packages;
+screens.kab.commentary = function KabCommentary(me, { core, db }) {
     me.query = function (options) {
         var query = {};
         var userName = options.commentaryUser;

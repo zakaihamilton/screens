@@ -3,8 +3,7 @@
  @component WidgetMenu
  */
 
-screens.widget.menu = function WidgetMenu(me, packages) {
-    const { core } = packages;
+screens.widget.menu = function WidgetMenu(me, { core }) {
     me.element = {
         properties: {
             "ui.class.class": "horizontal",
@@ -240,8 +239,7 @@ screens.widget.menu = function WidgetMenu(me, packages) {
     };
 };
 
-screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
-    const { core } = packages;
+screens.widget.menu.popup = function WidgetMenuPopup(me, { core }) {
     me.element = {
         properties: {
             "ui.class.class": "widget.menu.vertical",
@@ -354,8 +352,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, packages) {
     };
 };
 
-screens.widget.menu.list = function WidgetMenuList(me, packages) {
-    const { core } = packages;
+screens.widget.menu.list = function WidgetMenuList(me, { core }) {
     me.filterMinCount = 30;
     me.element = {
         properties: {
@@ -523,8 +520,7 @@ screens.widget.menu.list = function WidgetMenuList(me, packages) {
     };
 };
 
-screens.widget.menu.item = function WidgetMenuItem(me, packages) {
-    const { core } = packages;
+screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",

@@ -3,8 +3,7 @@
     @component CmdRm
 */
 
-screens.cmd.rm = function CmdRm(me, packages) {
-    const { core } = packages;
+screens.cmd.rm = function CmdRm(me, { core }) {
     me.cmd = function (terminal, args) {
         var file_path = terminal.current_dir;
         if (!file_path) {

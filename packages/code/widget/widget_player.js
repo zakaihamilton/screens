@@ -3,8 +3,7 @@
  @component WidgetPlayer
  */
 
-screens.widget.player = function WidgetPlayer(me, packages) {
-    const { core } = packages;
+screens.widget.player = function WidgetPlayer(me, { core }) {
     me.showError = function (e) {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
@@ -61,8 +60,7 @@ screens.widget.player = function WidgetPlayer(me, packages) {
     };
 };
 
-screens.widget.player.audio = function WidgetPlayerAudio(me, packages) {
-    const { core } = packages;
+screens.widget.player.audio = function WidgetPlayerAudio(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -118,8 +116,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me, packages) {
     };
 };
 
-screens.widget.player.video = function WidgetPlayerVideo(me, packages) {
-    const { core } = packages;
+screens.widget.player.video = function WidgetPlayerVideo(me, { core }) {
     me.init = function () {
         core.property.link("ui.style.display", "update", false);
     };
@@ -190,8 +187,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me, packages) {
     };
 };
 
-screens.widget.player.controls = function WidgetPlayerControls(me, packages) {
-    const { core } = packages;
+screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.var": "controls",

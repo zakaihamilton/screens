@@ -3,7 +3,7 @@
  @component UIShared
  */
 
-screens.ui.shared = function UIShared(me, packages) {
+screens.ui.shared = function UIShared(me) {
     me.shared = {
         init: function () {
             me.shared.userList = null;

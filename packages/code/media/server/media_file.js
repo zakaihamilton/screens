@@ -3,8 +3,7 @@
  @component MediaFile
  */
 
-screens.media.file = function MediaFile(me, packages) {
-    const { core, storage, media, db } = packages;
+screens.media.file = function MediaFile(me, { core, storage, media, db }) {
     me.resolutions = ["800x600", "1024x768"];
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";

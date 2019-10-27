@@ -3,8 +3,7 @@
  @component CoreLink
  */
 
-screens.core.link = function CoreLink(me, packages) {
-    const { core } = packages;
+screens.core.link = function CoreLink(me, { core }) {
     me.lookup = {
         set: function (object, value, property) {
             if (typeof value !== "undefined") {

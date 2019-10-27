@@ -3,8 +3,7 @@
  @component MediaMpd
  */
 
-screens.media.mpd = function MediaMPD(me, packages) {
-    const { core } = packages;
+screens.media.mpd = function MediaMPD(me, { core }) {
     core.property.link("core.http.receive", "media.mpd.receive", true);
     me.receive = async function (info) {
         let { url } = info;

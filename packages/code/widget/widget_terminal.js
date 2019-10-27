@@ -3,8 +3,7 @@
  @component WidgetTerminal
  */
 
-screens.widget.terminal = function WidgetTerminal(me, packages) {
-    const { core } = packages;
+screens.widget.terminal = function WidgetTerminal(me, { core }) {
     me.init = function () {
         me.element = {
             properties: me.json

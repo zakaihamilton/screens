@@ -3,8 +3,7 @@
  @component WidgetList
  */
 
-screens.widget.list = function WidgetList(me, packages) {
-    const { core } = packages;
+screens.widget.list = function WidgetList(me, { core }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count"]
@@ -72,8 +71,7 @@ screens.widget.list = function WidgetList(me, packages) {
     };
 };
 
-screens.widget.list.dropdown = function WidgetDropDownList(me, packages) {
-    const { core } = packages;
+screens.widget.list.dropdown = function WidgetDropDownList(me, { core }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text"]
@@ -177,8 +175,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me, packages) {
     };
 };
 
-screens.widget.list.popup = function WidgetListPopup(me, packages) {
-    const { core } = packages;
+screens.widget.list.popup = function WidgetListPopup(me, { core }) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -233,8 +230,7 @@ screens.widget.list.popup = function WidgetListPopup(me, packages) {
     };
 };
 
-screens.widget.list.item = function WidgetListItem(me, packages) {
-    const { core } = packages;
+screens.widget.list.item = function WidgetListItem(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",

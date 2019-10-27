@@ -3,7 +3,7 @@
  @component CoreRef
  */
 
-screens.core.ref = function CoreRef(me, packages) {
+screens.core.ref = function CoreRef(me) {
     me.current = 1000;
     me.gen = function (prefix = "ref") {
         me.current++;

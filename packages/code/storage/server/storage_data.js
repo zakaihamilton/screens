@@ -3,8 +3,7 @@
  @component StorageData
  */
 
-screens.storage.data = function StorageData(me, packages) {
-    const { core } = packages;
+screens.storage.data = function StorageData(me, { core }) {
     me.init = async function () {
         me.log("initialising storage data");
         me.datastore = require("@google-cloud/datastore");

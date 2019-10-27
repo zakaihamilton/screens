@@ -3,8 +3,7 @@
  @component ServiceNetControl
  */
 
-screens.service.netcontrol = function ServiceNetControl(me, packages) {
-    const { core } = packages;
+screens.service.netcontrol = function ServiceNetControl(me, { core }) {
     me.setup = function (ref) {
 
     };

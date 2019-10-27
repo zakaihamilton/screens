@@ -3,7 +3,7 @@
  @component UIClipboard
  */
 
-screens.ui.clipboard = function UIClipboard(me, packages) {
+screens.ui.clipboard = function UIClipboard(me) {
     me.permissionStatus = null;
     me.init = async function () {
         try {

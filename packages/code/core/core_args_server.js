@@ -3,7 +3,7 @@
  @component CoreArgs
  */
 
-screens.core.args = function CoreArgs(me, packages) {
+screens.core.args = function CoreArgs(me) {
     me.value = function (name) {
         let value = undefined;
         for (let arg of process.argv) {

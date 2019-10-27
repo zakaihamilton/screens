@@ -3,8 +3,7 @@
  @component StorageAWS
  */
 
-screens.storage.aws = function StorageAWS(me, packages) {
-    const { core } = packages;
+screens.storage.aws = function StorageAWS(me, { core }) {
     me.bufferSize = 10 * 1024 * 1024;
     me.init = async function () {
         let AWS = require("aws-sdk");

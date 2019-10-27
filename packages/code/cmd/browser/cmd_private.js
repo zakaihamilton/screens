@@ -3,8 +3,7 @@
     @component CmdPrivate
 */
 
-screens.cmd.private = function CmdPrivate(me, packages) {
-    const { core, db } = packages;
+screens.cmd.private = function CmdPrivate(me, { core, db }) {
     me.cmd = async function (terminal, args) {
         try {
             var data = await db.shared.settings.set("system.private", args[1]);

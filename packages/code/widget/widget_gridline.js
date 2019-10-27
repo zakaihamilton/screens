@@ -3,8 +3,7 @@
  @component WidgetGridLine
  */
 
-screens.widget.gridline = function WidgetGridLine(me, packages) {
-    const { core } = packages;
+screens.widget.gridline = function WidgetGridLine(me, { core }) {
     me.element = {
         dependencies: {
             properties: ["line"]

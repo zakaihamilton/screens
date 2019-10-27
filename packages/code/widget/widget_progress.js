@@ -3,8 +3,7 @@
  @component WidgetProgress
  */
 
-screens.widget.progress = function WidgetProgress(me, packages) {
-    const { core } = packages;
+screens.widget.progress = function WidgetProgress(me, { core }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

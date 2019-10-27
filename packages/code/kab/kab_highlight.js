@@ -3,8 +3,7 @@
  @component KabHighlight
  */
 
-screens.kab.highlight = function KabHighlight(me, packages) {
-    const { core } = packages;
+screens.kab.highlight = function KabHighlight(me, { core }) {
     me.query = function () {
         var query = { user: "$userId" };
         return query;

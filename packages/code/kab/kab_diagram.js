@@ -3,7 +3,7 @@
  @component KabDiagram
  */
 
-screens.kab.diagram = function KabDiagram(me, packages) {
+screens.kab.diagram = function KabDiagram(me) {
     me.init = function () {
 
     };

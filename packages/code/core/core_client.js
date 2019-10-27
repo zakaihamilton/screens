@@ -3,8 +3,7 @@
  @component CoreClient
  */
 
-screens.core.client = function CoreClient(me, packages) {
-    const { core, user } = packages;
+screens.core.client = function CoreClient(me, { core, user }) {
     me.send = function (methods) {
         return core.message.send_server("core.client.handle", methods);
     };

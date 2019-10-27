@@ -3,8 +3,7 @@
  @component StorageUpload
  */
 
-screens.storage.upload = function StorageUpload(me, packages) {
-    const { core } = packages;
+screens.storage.upload = function StorageUpload(me, { core }) {
     me.chunkSize = 1024 * 256;
     me.file = async function (file, path, progress) {
         var chunkSize = me.chunkSize;

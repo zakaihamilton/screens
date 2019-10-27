@@ -3,8 +3,7 @@
  @component WidgetDesktop
  */
 
-screens.widget.desktop = function WidgetDesktop(me, packages) {
-    const { core, ui } = packages;
+screens.widget.desktop = function WidgetDesktop(me, { core, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

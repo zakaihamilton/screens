@@ -3,8 +3,7 @@
  @component MediaHls
  */
 
-screens.media.hls = function MediaHLS(me, packages) {
-    const { core } = packages;
+screens.media.hls = function MediaHLS(me, { core }) {
     me.init = function () {
         me.ffprobePath = require("@ffprobe-installer/ffprobe").path;
         core.property.link("core.http.receive", "media.mux.receive", true);

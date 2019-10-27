@@ -3,8 +3,7 @@
  @component WidgetSpinner
  */
 
-screens.widget.spinner = function WidgetSpinner(me, packages) {
-    const { core } = packages;
+screens.widget.spinner = function WidgetSpinner(me, { core }) {
     me.element = {
         properties: {
             "ui.class.class": "loader",

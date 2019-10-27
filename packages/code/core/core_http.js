@@ -3,8 +3,7 @@
  @component CoreHttp
  */
 
-screens.core.http = function CoreHttp(me, packages) {
-    const { core, db } = packages;
+screens.core.http = function CoreHttp(me, { core, db }) {
     if (screens.platform === "server") {
         let port = core.args.value("-port");
         if (port) {

@@ -3,8 +3,7 @@
  @component CoreFile
  */
 
-screens.core.file = function CoreFile(me, packages) {
-    const { core } = packages;
+screens.core.file = function CoreFile(me, { core }) {
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");
@@ -291,7 +290,7 @@ screens.core.file = function CoreFile(me, packages) {
     return "server";
 };
 
-screens.core.file.buffer = function CoreFileBuffer(me, packages) {
+screens.core.file.buffer = function CoreFileBuffer(me) {
     me.read = function (path, options) {
         var buffer = undefined;
         path = me.upper.path(path);
@@ -306,7 +305,7 @@ screens.core.file.buffer = function CoreFileBuffer(me, packages) {
     };
 };
 
-screens.core.file.alias = function CoreFileAlias(me, packages) {
+screens.core.file.alias = function CoreFileAlias(me) {
     me.aliases = {};
     me.set = function (source, target) {
         if (target) {

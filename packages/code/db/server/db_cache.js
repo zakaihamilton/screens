@@ -3,12 +3,11 @@
  @component DbCache
  */
 
-screens.db.cache = function DbCache(me, packages) {
+screens.db.cache = function DbCache(me) {
     return "server";
 };
 
-screens.db.cache.data = function DbCacheData(me, packages) {
-    const { storage } = packages;
+screens.db.cache.data = function DbCacheData(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
@@ -20,8 +19,7 @@ screens.db.cache.data = function DbCacheData(me, packages) {
     return "server";
 };
 
-screens.db.cache.dictionary = function DbCacheDictionary(me, packages) {
-    const { storage } = packages;
+screens.db.cache.dictionary = function DbCacheDictionary(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
@@ -32,8 +30,7 @@ screens.db.cache.dictionary = function DbCacheDictionary(me, packages) {
     return "server";
 };
 
-screens.db.cache.metadata = function DbCacheMetadata(me, packages) {
-    const { storage } = packages;
+screens.db.cache.metadata = function DbCacheMetadata(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
@@ -44,8 +41,7 @@ screens.db.cache.metadata = function DbCacheMetadata(me, packages) {
     return "server";
 };
 
-screens.db.cache.tokens = function DbCacheTokens(me, packages) {
-    const { storage } = packages;
+screens.db.cache.tokens = function DbCacheTokens(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
@@ -56,8 +52,7 @@ screens.db.cache.tokens = function DbCacheTokens(me, packages) {
     return "server";
 };
 
-screens.db.cache.file = function DbCacheFile(me, packages) {
-    const { core, storage, db } = packages;
+screens.db.cache.file = function DbCacheFile(me, { core, storage, db }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [

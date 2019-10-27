@@ -3,8 +3,7 @@
  @component UIOptions
  */
 
-screens.ui.options = function UIOptions(me, packages) {
-    const { core } = packages;
+screens.ui.options = function UIOptions(me, { core }) {
     me.getStorage = function (component, object) {
         var storage = "local";
         if (object && object.storageName) {

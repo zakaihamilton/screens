@@ -1,7 +1,7 @@
 var me = me, object = object, packages = packages;
 
 async function run() {
-    const { core, db } = packages;
+    const { core, db }) {
     var servers = await db.events.servers.list({});
     var ipList = servers.map(server => server.ip).filter(Boolean);
     let results = [];

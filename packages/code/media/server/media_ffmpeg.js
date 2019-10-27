@@ -3,7 +3,7 @@
  @component MediaFFMpeg
  */
 
-screens.media.ffmpeg = function MediaFFMpeg(me, packages) {
+screens.media.ffmpeg = function MediaFFMpeg(me) {
     me.init = function () {
         const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
         me.ffmpeg = require("fluent-ffmpeg");

@@ -3,8 +3,7 @@
  @component KabDraw
  */
 
-screens.kab.draw = function KabDraw(me, packages) {
-    const { core } = packages;
+screens.kab.draw = function KabDraw(me, { core }) {
     me.options = {
         circleMultiplier: 2.5,
         animation: true

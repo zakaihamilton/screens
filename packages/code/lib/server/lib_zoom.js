@@ -3,8 +3,7 @@
  @component LibZoom
  */
 
-screens.lib.zoom = function LibZoom(me, packages) {
-    const { core } = packages;
+screens.lib.zoom = function LibZoom(me, { core }) {
     me.init = async function () {
         me.request = require("request");
         me.shuffleSeed = require("shuffle-seed");

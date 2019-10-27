@@ -3,8 +3,7 @@
  @component WidgetTransform
  */
 
-screens.widget.transform = function WidgetTransform(me, packages) {
-    const { core } = packages;
+screens.widget.transform = function WidgetTransform(me, { core }) {
     me.init = function () {
         me.element = {
             properties: me.json
@@ -638,8 +637,7 @@ screens.widget.transform = function WidgetTransform(me, packages) {
     };
 };
 
-screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
-    const { core } = packages;
+screens.widget.transform.popup = function WidgetTransformPopup(me, { core }) {
     me.init = function () {
         me.definitionCounter = 0;
         me.associatedCounter = 0;
@@ -749,8 +747,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, packages) {
     };
 };
 
-screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
-    const { core } = packages;
+screens.widget.transform.player = function WidgetTransformPlayer(me, { core }) {
     me.changeVoice = function (object) {
         var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
@@ -993,8 +990,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, packages) {
     };
 };
 
-screens.widget.transform.layout = function WidgetTransformLayout(me, packages) {
-    const { core } = packages;
+screens.widget.transform.layout = function WidgetTransformLayout(me, { core }) {
     me.move = function (source, target) {
         do {
             var widget = source.firstElementChild;

@@ -3,8 +3,7 @@
  @component UITouch
  */
 
-screens.ui.touch = function UITouch(me, packages) {
-    const { core } = packages;
+screens.ui.touch = function UITouch(me, { core }) {
     me.init = function () {
         me.click_delay = 200;
         me.click_repeat_delay = 250;

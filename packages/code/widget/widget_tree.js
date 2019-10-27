@@ -3,8 +3,7 @@
  @component WidgetTree
  */
 
-screens.widget.tree = function WidgetTree(me, packages) {
-    const { core } = packages;
+screens.widget.tree = function WidgetTree(me, { core }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "widget.tree.collapse"]
@@ -61,7 +60,7 @@ screens.widget.tree = function WidgetTree(me, packages) {
     };
 };
 
-screens.widget.tree.dropdown = function WidgetDropDownList(me, packages) {
+screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
@@ -164,7 +163,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me, packages) {
         }
     };
 };
-screens.widget.tree.popup = function WidgetListPopup(me, packages) {
+screens.widget.tree.popup = function WidgetListPopup(me) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -219,7 +218,7 @@ screens.widget.tree.popup = function WidgetListPopup(me, packages) {
     };
 };
 
-screens.widget.tree.list = function WidgetTreeList(me, packages) {
+screens.widget.tree.list = function WidgetTreeList(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "ul",
@@ -228,7 +227,7 @@ screens.widget.tree.list = function WidgetTreeList(me, packages) {
     };
 };
 
-screens.widget.tree.item = function WidgetTreeItem(me, packages) {
+screens.widget.tree.item = function WidgetTreeItem(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "li",

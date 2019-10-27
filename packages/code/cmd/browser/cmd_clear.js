@@ -3,8 +3,7 @@
     @component CmdClear
 */
 
-screens.cmd.clear = function CmdClear(me, packages) {
-    const { core } = packages;
+screens.cmd.clear = function CmdClear(me, { core }) {
     me.cmd = function (terminal, args) {
         core.property.set(terminal, "clear");
         core.cmd.exit(terminal);

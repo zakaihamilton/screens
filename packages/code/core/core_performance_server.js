@@ -3,8 +3,7 @@
     @component CorePerformance
 */
 
-screens.core.performance = function CorePerformance(me, packages) {
-    const { core } = packages;
+screens.core.performance = function CorePerformance(me, { core }) {
     me.users = {};
     me.profile = function (name, userId, userName) {
         var userInfo = me.users[userId];

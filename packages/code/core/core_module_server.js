@@ -3,8 +3,7 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me, packages) {
-    const { core } = packages;
+screens.core.module = function CoreModule(me, { core }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
@@ -62,7 +61,6 @@ screens.core.module = function CoreModule(me, packages) {
         if (filePath.startsWith("platform/")) {
             let platform = filePath.split("/").pop().split(".")[0];
             let code = await core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
-            console.log("handleCode" + ": " + filePath + "\n" + code + "***********************");
             return code;
         }
         if (filePath.startsWith("res/")) {

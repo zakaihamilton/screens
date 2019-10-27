@@ -3,8 +3,7 @@
  @component StorageDropBox
  */
 
-screens.storage.dropbox = function StorageDropBox(me, packages) {
-    const { core } = packages;
+screens.storage.dropbox = function StorageDropBox(me, { core }) {
     me.init = async function () {
         require("es6-promise").polyfill();
         me.dropbox = require("dropbox").Dropbox;

@@ -3,8 +3,7 @@
     @component CoreTask
 */
 
-screens.core.task = function CoreTask(me, packages) {
-    const { core } = packages;
+screens.core.task = function CoreTask(me, { core }) {
     me.tasks = [];
     me.push = function (method, delay) {
         var task = {

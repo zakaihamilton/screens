@@ -3,8 +3,7 @@
  @component CoreEvent
  */
 
-screens.core.event = function CoreEvent(me, packages) {
-    const { core } = packages;
+screens.core.event = function CoreEvent(me, { core }) {
     me.events = {};
     me.lookup = {
         set: function (object, value, property) {

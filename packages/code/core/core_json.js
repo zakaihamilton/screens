@@ -3,8 +3,7 @@
     @component CoreJson
 */
 
-screens.core.json = function CoreJson(me, packages) {
-    const { core } = packages;
+screens.core.json = function CoreJson(me, { core }) {
     me.init = function () {
         if (me.platform === "server") {
             me.request = require("request");

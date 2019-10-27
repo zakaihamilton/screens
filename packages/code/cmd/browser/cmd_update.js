@@ -3,8 +3,7 @@
     @component CmdUpdate
 */
 
-screens.cmd.update = function CmdUpdate(me, packages) {
-    const { core, db } = packages;
+screens.cmd.update = function CmdUpdate(me, { core, db }) {
     me.cmd = async function (terminal, args) {
         await db.events.msg.send("core.server.run", "git checkout package.json");
         await db.events.msg.send("core.server.run", "git pull");

@@ -3,8 +3,7 @@
  @component WidgetFilter
  */
 
-screens.widget.filter = function WidgetFilter(me, packages) {
-    const { core } = packages;
+screens.widget.filter = function WidgetFilter(me, { core }) {
     me.element = {
         dependencies: {
             properties: ["line"]

@@ -3,8 +3,7 @@
     @component CorePrivate
 */
 
-screens.core.private = function CorePrivate(me, packages) {
-    const { core } = packages;
+screens.core.private = function CorePrivate(me, { core }) {
     me.keys = async function (name) {
         let path = me.path(name);
         var data = await me.file(path);

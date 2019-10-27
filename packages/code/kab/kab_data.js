@@ -3,8 +3,7 @@
  @component KabData
  */
 
-screens.kab.data = function KabData(me, packages) {
-    const { core } = packages;
+screens.kab.data = function KabData(me, { core }) {
     me.init = function () {
         me.files = {};
     };

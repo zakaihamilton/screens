@@ -3,8 +3,7 @@
  @component LibZLib
  */
 
-screens.lib.zlib = function LibZLib(me, packages) {
-    const { core } = packages;
+screens.lib.zlib = function LibZLib(me, { core }) {
     me.init = function () {
         me.zlib = require("zlib");
         core.property.link("core.http.compress", "lib.zlib.compress", true);

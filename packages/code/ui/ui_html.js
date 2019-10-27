@@ -3,8 +3,7 @@
  @component UIHtml
  */
 
-screens.ui.html = function UIHtml(me, packages) {
-    const { core } = packages;
+screens.ui.html = function UIHtml(me, { core }) {
     me.init = function () {
         me.files = {};
     };

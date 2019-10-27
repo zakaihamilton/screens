@@ -3,8 +3,7 @@
  @component CoreUtil
  */
 
-screens.core.util = function CoreUtil(me, packages) {
-    const { core, storage } = packages;
+screens.core.util = function CoreUtil(me, { core, storage }) {
     me.init = async function () {
         if (me.platform === "browser") {
             me.info = await storage.local.db.get(me.id, "info");

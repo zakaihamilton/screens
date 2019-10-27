@@ -3,8 +3,7 @@
     @component CoreHandle
 */
 
-screens.core.handle = function CoreHandle(me, packages) {
-    const { core } = packages;
+screens.core.handle = function CoreHandle(me, { core }) {
     me.handles = {};
     me.isHandle = function (ref, type = "handle") {
         return core.ref.isRef(ref, type);

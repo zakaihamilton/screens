@@ -3,8 +3,7 @@
  @component StorageLocal
  */
 
-screens.storage.local = function StorageLocal(me, packages) {
-    const { core } = packages;
+screens.storage.local = function StorageLocal(me, { core }) {
     me.get = function (key) {
         key = me.validKey(key);
         return localStorage.getItem(key);
@@ -70,8 +69,7 @@ screens.storage.local = function StorageLocal(me, packages) {
     return "browser";
 };
 
-screens.storage.local.db = function StorageLocalDb(me, packages) {
-    const { core } = packages;
+screens.storage.local.db = function StorageLocalDb(me, { core }) {
     me.databases = {};
     me.database = async function (dbName, storeName) {
         core.mutex.enable(me.id, true);

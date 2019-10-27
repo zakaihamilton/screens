@@ -3,8 +3,7 @@
  @component UserChat
  */
 
-screens.user.chat = function UserChat(me, packages) {
-    const { db } = packages;
+screens.user.chat = function UserChat(me, { db }) {
     me.messages = function (user) {
         if (!user) {
             user = this.userId;

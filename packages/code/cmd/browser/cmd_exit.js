@@ -3,8 +3,7 @@
     @component CmdExit
 */
 
-screens.cmd.exit = function CmdExit(me, packages) {
-    const { core } = packages;
+screens.cmd.exit = function CmdExit(me, { core }) {
     me.cmd = function (terminal, args) {
         var window = me.widget.window.get(terminal);
         core.property.set(window, "close");

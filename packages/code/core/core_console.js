@@ -3,8 +3,7 @@
  @component CoreConsole
  */
 
-screens.core.console = function CoreConsole(me, packages) {
-    const { core, db, storage } = packages;
+screens.core.console = function CoreConsole(me, { core, db, storage }) {
     me.messages = [];
     me.enabled = true;
     me.fixedSize = 5000;

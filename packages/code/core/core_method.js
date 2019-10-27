@@ -3,8 +3,7 @@
  @component CoreMethod
  */
 
-screens.core.method = function CoreMethod(me, packages) {
-    const { core } = packages;
+screens.core.method = function CoreMethod(me, { core }) {
     me.content = {
         name: "Components",
         search: function (text) {

@@ -3,8 +3,7 @@
     @component CoreTask
 */
 
-screens.core.tunnel = function CoreTunnel(me, packages) {
-    const { core } = packages;
+screens.core.tunnel = function CoreTunnel(me, { core }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.tunnel.receive", true);
         me.request = require("request");

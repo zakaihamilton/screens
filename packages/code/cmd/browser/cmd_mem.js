@@ -3,8 +3,7 @@
     @component CmdMem
 */
 
-screens.cmd.mem = function CmdMem(me, packages) {
-    const { core } = packages;
+screens.cmd.mem = function CmdMem(me, { core }) {
     me.cmd = async function (terminal, args) {
         const memoryUsage = await core.server.memoryUsage();
         const used = parseInt(memoryUsage.heapUsed / 1024 / 1024);

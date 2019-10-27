@@ -3,8 +3,7 @@
     @component CmdCd
 */
 
-screens.cmd.cd = function CmdCd(me, packages) {
-    const { core } = packages;
+screens.cmd.cd = function CmdCd(me, { core }) {
     me.cmd = function (terminal, args) {
         var current_dir = terminal.current_dir;
         if (!current_dir) {
@@ -16,7 +15,7 @@ screens.cmd.cd = function CmdCd(me, packages) {
         }
         current_dir = core.path.goto(current_dir, args[1]);
         try {
-            var items = core.file.readDir(current_dir);
+            core.file.readDir(current_dir);
             terminal.current_dir = current_dir;
         }
         catch (err) {

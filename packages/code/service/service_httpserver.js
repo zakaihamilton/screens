@@ -3,8 +3,7 @@
  @component HttpServer
  */
 
-screens.service.httpserver = function HttpServer(me, packages) {
-    const { core } = packages;
+screens.service.httpserver = function HttpServer(me, { core }) {
     me.init = function () {
         me.fs = require("fs");
         me.mime = require("mime");

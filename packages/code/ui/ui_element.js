@@ -3,8 +3,7 @@
  @component UIElement
  */
 
-screens.ui.element = function UIElement(me, packages) {
-    const { core } = packages;
+screens.ui.element = function UIElement(me, { core }) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;

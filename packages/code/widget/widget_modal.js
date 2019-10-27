@@ -3,8 +3,7 @@
  @component UIModal
  */
 
-screens.widget.modal = function WidgetModal(me, packages) {
-    const { core } = packages;
+screens.widget.modal = function WidgetModal(me, { core }) {
     me.element = {
         properties: {
             "ui.touch.click": "click",

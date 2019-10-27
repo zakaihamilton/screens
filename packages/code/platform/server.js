@@ -8,8 +8,6 @@ process.on("uncaughtException", (err) => {
 });
 
 require("../screens");
-require("../../../component");
-COMPONENT.start();
 
 screens.admins = [
     "Zakai Hamilton",

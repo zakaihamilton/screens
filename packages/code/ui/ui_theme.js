@@ -3,8 +3,7 @@
  @component UITheme
  */
 
-screens.ui.theme = function UITheme(me, packages) {
-    const { core } = packages;
+screens.ui.theme = function UITheme(me, { core }) {
     me.themes = [];
     me.init = async function () {
         me.ui.options.load(me, null, {

@@ -3,8 +3,7 @@
     @component CmdServer
 */
 
-screens.cmd.server = function CmdServer(me, packages) {
-    const { core } = packages;
+screens.cmd.server = function CmdServer(me, { core }) {
     me.cmd = async function (terminal, args) {
         var cmd = args.slice(1).join(" ");
         try {

@@ -4,8 +4,7 @@
  @prerequisites npm install pcap2
  */
 
-screens.service.netmonitor = function ServiceNetMonitor(me, packages) {
-    const { core } = packages;
+screens.service.netmonitor = function ServiceNetMonitor(me, { core }) {
     me.setup = async function () {
         me.device = null;
         me.packets = [];
