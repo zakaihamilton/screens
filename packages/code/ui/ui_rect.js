@@ -111,13 +111,13 @@ screens.ui.rect = function UIRect(me) {
         return !(x < region.left || y < region.top || x > region.right || y > region.bottom);
     };
     me.viewport = function () {
-        var e = window, a = 'inner';
-        if (!('innerWidth' in window)) {
-            a = 'client';
+        var e = window, a = "inner";
+        if (!("innerWidth" in window)) {
+            a = "client";
             e = document.documentElement || document.body;
         }
-        var width = e[a + 'Width'];
-        var height = e[a + 'Height'];
+        var width = e[a + "Width"];
+        var height = e[a + "Height"];
         return { left: 0, top: 0, width: width, height: height, right: width, bottom: height };
     };
     me.inView = function (object, parent) {
@@ -143,5 +143,5 @@ screens.ui.rect = function UIRect(me) {
             inView = false;
         }
         return inView;
-    }
+    };
 };

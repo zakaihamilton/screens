@@ -3,7 +3,7 @@
  @component ServiceNetControl
  */
 
-screens.service.netcontrol = function ServiceNetControl(me, { core, manager }) {
+screens.service.netcontrol = function ServiceNetControl(me, { core, manager, service }) {
     me.setup = function (ref) {
 
     };
@@ -42,7 +42,7 @@ screens.service.netcontrol = function ServiceNetControl(me, { core, manager }) {
         });
     };
     me.applyEffects = async function (effects) {
-        var device = me.service.netmonitor.device;
+        var device = service.netmonitor.device;
         if (!device) {
             device = "wlan0";
         }

@@ -4,7 +4,7 @@
  @prerequisites npm install pcap2
  */
 
-screens.service.netmonitor = function ServiceNetMonitor(me, { core, manager }) {
+screens.service.netmonitor = function ServiceNetMonitor(me, { core, manager, service }) {
     me.setup = async function () {
         me.device = null;
         me.packets = [];
@@ -105,7 +105,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me, { core, manager }) {
                     var packet_lines = packet_string.split("\n");
                     if (me.options.searchFilter) {
                         var searchFilter = core.string.regex(me.options.searchFilter);
-                        for (line of packet_lines) {
+                        for (let line of packet_lines) {
                             if (line.search(searchFilter) != -1) {
                                 match = line;
                                 break;
@@ -114,9 +114,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me, { core, manager }) {
                     }
                 }
                 var effects = {};
-                var netcontrol = me.service.netcontrol;
+                var netcontrol = service.netcontrol;
                 if (netcontrol) {
-                    var effects = netcontrol.effects;
+                    effects = netcontrol.effects;
                 }
                 var packet = {
                     source: packet_source,

@@ -610,7 +610,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                 me.gotoArticle(object, info.item);
             }, 250);
         };
-        var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
+        var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== "user" && name !== "_id").map(name => {
             return { name: name, title: core.string.title(name), type: "text" };
         });
         $(window.var.resultsGrid).jsGrid("clearFilter");

@@ -3,7 +3,7 @@
  @component AppLogin
  */
 
-screens.app.login = function AppLogin(me, { core, ui }) {
+screens.app.login = function AppLogin(me, { core, ui, startup }) {
     me.init = function () {
         core.listener.register(me.signin, core.login.id);
     };
@@ -36,7 +36,7 @@ screens.app.login = function AppLogin(me, { core, ui }) {
         if (state && me.autoLogin) {
             if (core.startup.app.name !== "login") {
                 core.property.set(me.singleton, "close");
-                me.startup.app.start();
+                startup.app.start();
             }
         }
     };

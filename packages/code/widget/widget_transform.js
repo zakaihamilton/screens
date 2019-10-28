@@ -3,7 +3,7 @@
  @component WidgetTransform
  */
 
-screens.widget.transform = function WidgetTransform(me, { core, ui, media, widget, kab }) {
+screens.widget.transform = function WidgetTransform(me, { core, ui, media, widget, kab, db }) {
     me.init = function () {
         me.element = {
             properties: me.json
@@ -522,7 +522,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
     };
     me.commentaryUsers = function (object) {
         var info = {
-            list: me.db.shared.commentary.users(),
+            list: db.shared.commentary.users(),
             group: "users",
             itemMethod: "widget.transform.commentaryUser",
             options: { "state": "select" }
@@ -637,7 +637,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
     };
 };
 
-screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui, lib }) {
+screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui, lib, kab }) {
     me.init = function () {
         me.definitionCounter = 0;
         me.associatedCounter = 0;

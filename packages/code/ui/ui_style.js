@@ -24,7 +24,7 @@ screens.ui.style = function UIStyle(me, { core }) {
     };
     me.values = function (values) {
         var result = { left: 0, top: 0, right: 0, bottom: 0 };
-        if (!values || !(typeof values === 'string' || values instanceof String)) {
+        if (!values || !(typeof values === "string" || values instanceof String)) {
             return result;
         }
         var array = values.split(" ");

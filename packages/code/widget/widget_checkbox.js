@@ -45,7 +45,7 @@ screens.widget.checkbox = function WidgetCheckBox(me) {
         set: function (object, value) {
             object.parentNode.var.input.checked = !object.parentNode.var.input.checked;
         }
-    }
+    };
     me.text = {
         get: function (object) {
             return object.var.label.innerHTML;

@@ -3,7 +3,7 @@
  @component WidgetCodeEditor
  */
 
-screens.widget.codeeditor = function WidgetCodeEditor(me) {
+screens.widget.codeeditor = function WidgetCodeEditor(me, { ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

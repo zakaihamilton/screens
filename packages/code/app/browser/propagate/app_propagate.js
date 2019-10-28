@@ -162,7 +162,7 @@ screens.app.propagate = function AppPropagate(me, { core, ui, widget, storage })
         try {
             var func = new Function("me", "object", "packages", code);
             if (func) {
-                func(me, object, packages);
+                func(me, object, screens);
             }
         }
         catch (err) {

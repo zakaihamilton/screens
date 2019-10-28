@@ -3,7 +3,7 @@
  @component UIScreenshot
  */
 
-screens.ui.screenshot = function UIScreenshot(me, { core }) {
+screens.ui.screenshot = function UIScreenshot(me, { core, ui, widget }) {
     me.capture = async function (object) {
         var window = widget.window.get(object);
         var label = core.property.get(window, "widget.window.label");

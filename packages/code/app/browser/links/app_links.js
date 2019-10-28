@@ -3,7 +3,7 @@
  @component AppLinks
  */
 
-screens.app.links = function AppLinks(me, { core, ui }) {
+screens.app.links = function AppLinks(me, { core, ui, widget }) {
     me.maxLinkCount = 20;
     me.init = async function () {
         await ui.content.implement(me);

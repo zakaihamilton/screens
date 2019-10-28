@@ -39,9 +39,9 @@ screens.ui.drag = function UIDrag(me, { core }) {
             core.event.register(null, object, "drag", value);
         }
     };
-}
+};
 
-screens.ui.drag.icon = function UIDragIcon(me, { core }) {
+screens.ui.drag.icon = function UIDragIcon(me, { core, ui }) {
     me.source = null;
     me.target = null;
     me.element = {

@@ -3,7 +3,7 @@
  @component WidgetWheel
  */
 
-screens.widget.wheel = function WidgetWheel(me, { core }) {
+screens.widget.wheel = function WidgetWheel(me, { core, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",
