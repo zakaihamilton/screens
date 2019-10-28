@@ -5,7 +5,7 @@
 
 screens.cmd.exit = function CmdExit(me, { core }) {
     me.cmd = function (terminal, args) {
-        var window = me.widget.window.get(terminal);
+        var window = widget.window.get(terminal);
         core.property.set(window, "close");
         core.cmd.exit(terminal);
     };

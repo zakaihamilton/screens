@@ -3,9 +3,9 @@
  @component UITab
  */
 
-screens.ui.tab = function UITab(me, { core }) {
+screens.ui.tab = function UITab(me, { core, ui, widget }) {
     me.control = function (object) {
-        me.ui.node.iterate(object, (element) => {
+        ui.node.iterate(object, (element) => {
             var tab = core.property.get(element, "ui.attribute.tab");
             if (!tab) {
                 return;
@@ -14,34 +14,34 @@ screens.ui.tab = function UITab(me, { core }) {
         });
     };
     me.activate = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var tab = core.property.get(object, "ui.attribute.tab");
-        var widget = null;
+        var result = null;
         if (tab) {
-            widget = object;
+            result = object;
         }
         else {
-            me.ui.node.iterate(object, (element) => {
+            ui.node.iterate(object, (element) => {
                 var tab = core.property.get(element, "ui.attribute.tab");
                 if (!tab) {
                     return;
                 }
                 var isActive = core.property.get(element, "ui.class.is-active");
                 if (isActive) {
-                    widget = element;
+                    result = element;
                     return;
                 }
             });
-            if (!widget) {
+            if (!result) {
                 return;
             }
-            tab = core.property.get(widget, "ui.attribute.tab");
+            tab = core.property.get(result, "ui.attribute.tab");
         }
-        me.ui.node.iterate(widget.parentNode, (element) => {
+        ui.node.iterate(result.parentNode, (element) => {
             core.property.set(element, "ui.class.remove", "is-active");
         }, false);
-        core.property.set(widget, "ui.class.add", "is-active");
-        me.ui.node.iterate(window, (element) => {
+        core.property.set(result, "ui.class.add", "is-active");
+        ui.node.iterate(window, (element) => {
             var owner = core.property.get(element, "ui.tab.owner");
             if (owner) {
                 core.property.set(element, "ui.class.ui-tab-hidden", owner !== tab);

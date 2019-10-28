@@ -3,7 +3,7 @@
  @component WidgetMenu
  */
 
-screens.widget.menu = function WidgetMenu(me, { core }) {
+screens.widget.menu = function WidgetMenu(me, { core, ui, widget }) {
     me.element = {
         properties: {
             "ui.class.class": "horizontal",
@@ -75,10 +75,10 @@ screens.widget.menu = function WidgetMenu(me, { core }) {
                             var subInfo = Object.assign({}, info);
                             subInfo.list = info.list.filter(item => item[info.split.property] === label);
                             delete subInfo.split;
-                            return me.widget.menu.collect(object, subInfo);
+                            return widget.menu.collect(object, subInfo);
                         }]
                     };
-                    return me.widget.menu.collect(object, filterInfo);
+                    return widget.menu.collect(object, filterInfo);
                 }
             }
             items = items.map(function (item) {
@@ -140,8 +140,8 @@ screens.widget.menu = function WidgetMenu(me, { core }) {
     };
     me.items = {
         set: function (object, value) {
-            var window = me.widget.window.get(object);
-            var parent = me.widget.window.parent(window);
+            var window = widget.window.get(object);
+            var parent = widget.window.parent(window);
             if (parent) {
                 window = parent;
             }
@@ -151,7 +151,7 @@ screens.widget.menu = function WidgetMenu(me, { core }) {
                     parent = window.var.header;
                 }
                 if (!window.var.menu) {
-                    window.var.menu = me.ui.element.create({
+                    window.var.menu = ui.element.create({
                         "ui.element.component": "widget.menu",
                         "ui.style.position": "relative"
                     }, parent);
@@ -211,18 +211,18 @@ screens.widget.menu = function WidgetMenu(me, { core }) {
                 core.property.set(object, info, item);
             } else if (Array.isArray(info)) {
                 var window = core.property.get(object, "widget.window.active");
-                let trail = me.core.property.get(object, "trail");
+                let trail = core.property.get(object, "trail");
                 let label = core.property.get(item, "ui.basic.html");
                 if (!trail) {
                     trail = [];
                 }
                 trail.push(label);
-                object.var.menu = me.create_menu(window, object, me.ui.rect.absoluteRegion(item), info, trail);
+                object.var.menu = me.create_menu(window, object, ui.rect.absoluteRegion(item), info, trail);
             }
         }
     };
     me.create_menu = function (window, object, region, values, trail, bottomUp = false) {
-        var menu = me.ui.element.create({
+        var menu = ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.left": region.left + "px",
@@ -239,7 +239,7 @@ screens.widget.menu = function WidgetMenu(me, { core }) {
     };
 };
 
-screens.widget.menu.popup = function WidgetMenuPopup(me, { core }) {
+screens.widget.menu.popup = function WidgetMenuPopup(me, { core, ui, widget }) {
     me.element = {
         properties: {
             "ui.class.class": "widget.menu.vertical",
@@ -305,7 +305,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, { core }) {
         core.property.set(item, "ui.class.add", "selected");
         core.property.set(object.var.modal, "ui.style.display", "block");
         var window = core.property.get(object, "widget.window.active");
-        var region = me.ui.rect.absoluteRegion(object);
+        var region = ui.rect.absoluteRegion(object);
         region.bottom = region.top;
         core.property.set(object, "ui.style.display", "none");
         object.var.menu = me.upper.create_menu(window, object, region, values, trail);
@@ -334,7 +334,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, { core }) {
                     text = core.property.get(item, "ui.basic.html");
                 }
             }
-            let trail = me.core.property.get(object, "trail");
+            let trail = core.property.get(object, "trail");
             let label = "";
             if (core.property.get(item, "ui.basic.tag") === "tr") {
                 label = core.property.get(item.firstElementChild, "ui.basic.html");
@@ -346,13 +346,13 @@ screens.widget.menu.popup = function WidgetMenuPopup(me, { core }) {
                 trail = [];
             }
             trail.push(label);
-            me.widget.toast.show(me.id, trail.join(" &#x2799; "));
+            widget.toast.show(me.id, trail.join(" &#x2799; "));
             core.property.set(object.window, method, text);
         }
     };
 };
 
-screens.widget.menu.list = function WidgetMenuList(me, { core }) {
+screens.widget.menu.list = function WidgetMenuList(me, { core, ui }) {
     me.filterMinCount = 30;
     me.element = {
         properties: {
@@ -393,7 +393,7 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
         }
         var list = object.lists[name];
         if (!list) {
-            list = me.ui.element.create({
+            list = ui.element.create({
                 "ui.element.component": "widget.menu.list",
                 "ui.basic.window": object.window,
             }, object);
@@ -404,14 +404,14 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
             if (properties.metadata) {
                 membersTag = "table";
             }
-            me.ui.element.create({
+            ui.element.create({
                 "ui.basic.var": "members",
                 "ui.class.class": "widget.menu.members",
                 "ui.basic.tag": membersTag
             }, list, list);
         }
         if (!list.var.filter && list.var.members.childNodes.length >= me.filterMinCount) {
-            me.ui.element.create({
+            ui.element.create({
                 "ui.element.component": "widget.filter",
                 "filter": "widget.menu.list.filter",
                 "ui.basic.var": "filter"
@@ -421,7 +421,7 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
         return list.var.members;
     };
     me.filter = function (object, info) {
-        var list = me.ui.node.container(object, "widget.menu.list");
+        var list = ui.node.container(object, "widget.menu.list");
         if (list.filterTimer) {
             clearTimeout(list.filterTimer);
             list.filterTimer = null;
@@ -440,22 +440,22 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
                     continue;
                 }
                 var mark = !info.text || childText.toUpperCase().includes(info.text.toUpperCase());
-                me.ui.html.markElement(child, mark ? info.text : "");
+                ui.html.markElement(child, mark ? info.text : "");
                 if (mark) {
                     found = true;
                 }
-                me.core.property.set(child, "ui.basic.display", mark);
+                core.property.set(child, "ui.basic.display", mark);
             }
             if (!found) {
                 if (!list.var.noMatch) {
-                    list.var.noMatch = list.var.members.appendChild(me.ui.element.create({
+                    list.var.noMatch = list.var.members.appendChild(ui.element.create({
                         "ui.basic.tag": "div",
                         "ui.basic.html": "No Match Found",
                         "ui.class.add": "no-match"
                     }));
                 }
             }
-            me.core.property.set(list.var.noMatch, "ui.basic.display", !found);
+            core.property.set(list.var.noMatch, "ui.basic.display", !found);
         };
         if (info.text) {
             list.filterTimer = setTimeout(updateFunc, 250);
@@ -465,7 +465,7 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
         }
     };
     me.sort = function (object) {
-        var list = me.ui.node.container(object, "widget.menu.list");
+        var list = ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
         var columnIndex = Array.from(object.parentNode.children).indexOf(object);
         var direction = "desc";
@@ -520,7 +520,7 @@ screens.widget.menu.list = function WidgetMenuList(me, { core }) {
     };
 };
 
-screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
+screens.widget.menu.item = function WidgetMenuItem(me, { core, ui, widget }) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",
@@ -546,7 +546,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
             if (!text) {
                 return null;
             }
-            var element = me.ui.node.findByText(parent, text);
+            var element = ui.node.findByText(parent, text);
             if (element) {
                 if (!element.menu_options || !element.menu_options.edit) {
                     core.property.set(element, properties);
@@ -573,12 +573,12 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
         container: function (object, parent, properties) {
             var groupName = properties["group"];
             if (groupName) {
-                return me.widget.menu.list.use(parent, groupName, object, properties);
+                return widget.menu.list.use(parent, groupName, object, properties);
             }
         }
     };
     me.promise = async function (object, info) {
-        var parent = me.ui.node.container(object, me.widget.menu.list.id);
+        var parent = ui.node.container(object, widget.menu.list.id);
         if (!parent) {
             return;
         }
@@ -641,7 +641,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
             object.menu_options = Object.assign({}, object.menu_options, options);
             if (options) {
                 if (options.var) {
-                    var window = me.widget.window.get(object);
+                    var window = widget.window.get(object);
                     if (!window.var) {
                         window.var = {};
                     }
@@ -762,7 +762,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
         if (!parent) {
             parent = object.parentList;
         }
-        var popup = me.ui.node.container(object, "widget.menu.popup");
+        var popup = ui.node.container(object, "widget.menu.popup");
         if (popup) {
             parent = popup;
         }
@@ -772,7 +772,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
         set: function (object, value) {
             var parentMenu = me.parentMenu(object);
             if (parentMenu.selected_item !== object && object.menu_select) {
-                me.ui.html.markElement(object, null);
+                ui.html.markElement(object, null);
                 core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
         }
@@ -780,7 +780,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
     me.click = {
         set: function (object) {
             var parentMenu = me.parentMenu(object);
-            me.ui.html.markElement(object, null);
+            ui.html.markElement(object, null);
             if (object.menu_select) {
                 core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
@@ -789,7 +789,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
     me.upload = {
         set: function (object, value) {
             if (!object.var.upload) {
-                me.ui.element.create({
+                ui.element.create({
                     "ui.basic.tag": "input",
                     "ui.basic.type": "file",
                     "ui.basic.html": "",
@@ -798,7 +798,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
                     "ui.style.userSelect": "none",
                     "ui.attribute.multiple": "multiple",
                     "core.event.change": (files) => {
-                        core.property.set(me.ui.node.container(object, "widget.menu.popup"), "back");
+                        core.property.set(ui.node.container(object, "widget.menu.popup"), "back");
                         core.property.set(object, value, files);
                     }
                 }, object, object);
@@ -825,7 +825,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core }) {
                 "ui.touch.down": tag === "th" ? "widget.menu.list.sort" : undefined
             });
         }
-        me.ui.element.create(elements, object, object);
+        ui.element.create(elements, object, object);
     };
     me.ref = {
         get: function (object) {

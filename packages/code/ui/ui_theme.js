@@ -3,21 +3,21 @@
  @component UITheme
  */
 
-screens.ui.theme = function UITheme(me, { core }) {
+screens.ui.theme = function UITheme(me, { core, ui }) {
     me.themes = [];
     me.init = async function () {
-        me.ui.options.load(me, null, {
+        ui.options.load(me, null, {
             nightMode: true,
             colors: {},
             fontSize: "1em"
         });
-        me.ui.options.toggleSet(me, me, {
+        ui.options.toggleSet(me, me, {
             "nightMode": me.update
         });
-        me.ui.options.choiceSet(me, me, {
+        ui.options.choiceSet(me, me, {
             "fontSize": me.updateFontSize
         });
-        me.ui.options.listSet(me, me, "colors", me.update);
+        ui.options.listSet(me, me, "colors", me.update);
         me.update();
         me.updateFontSize();
     };
@@ -71,7 +71,7 @@ screens.ui.theme = function UITheme(me, { core }) {
         colors = Object.assign({}, colors, me.options.colors);
         for (var name in colors) {
             var color = colors[name];
-            me.ui.color.set(name, color);
+            ui.color.set(name, color);
         }
     };
     return "browser";

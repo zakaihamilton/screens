@@ -56,23 +56,23 @@ screens.widget.richeditor = function WidgetRichEditor(me, { core }) {
                     el.setAttribute("title", tooltip);
                 };
 
-                var window = me.widget.window.get(object);
-                var toolbar = me.ui.node.classMember(window, "ql-toolbar");
+                var window = widget.window.get(object);
+                var toolbar = ui.node.classMember(window, "ql-toolbar");
                 if (toolbar) {
                     let matches = toolbar.querySelectorAll("button");
                     for (let el of matches) {
                         showTooltip(el);
                     }
                 }
-                me.ui.theme.updateElements(toolbar);
+                ui.theme.updateElements(toolbar);
             }
         }
     };
     me.toggleSpeech = function (object) {
-        var window = me.widget.window.get(object);
-        var result = me.ui.speech.toggle(object);
-        var toolbar = me.ui.node.classMember(window, "ql-toolbar");
-        var button = me.ui.node.classMember(toolbar, "ql-speech");
+        var window = widget.window.get(object);
+        var result = ui.speech.toggle(object);
+        var toolbar = ui.node.classMember(window, "ql-toolbar");
+        var button = ui.node.classMember(toolbar, "ql-speech");
         core.property.set(button, "ui.class.speechActive", result);
     };
     me.contents = {

@@ -21,7 +21,7 @@ screens.lib.zlib = function LibZLib(me, { core }) {
             }
         }
         if (compressMethod) {
-            return me.core.pack.cache(info.url, info.body, () => {
+            return core.pack.cache(info.url, info.body, () => {
                 return new Promise((resolve, reject) => {
                     compressMethod(info.body, (err, buf) => {
                         if (err) {

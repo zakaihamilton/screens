@@ -3,7 +3,7 @@
  @component WidgetTerminal
  */
 
-screens.widget.terminal = function WidgetTerminal(me, { core }) {
+screens.widget.terminal = function WidgetTerminal(me, { core, ui }) {
     me.init = function () {
         me.element = {
             properties: me.json
@@ -11,8 +11,8 @@ screens.widget.terminal = function WidgetTerminal(me, { core }) {
     };
     me.timeout = 5000;
     me.sendInput = function (terminal, message, type) {
-        var window = me.widget.window.get(terminal);
-        var field = me.ui.element.create({
+        var window = widget.window.get(terminal);
+        var field = ui.element.create({
             "ui.basic.tag": "input",
             "ui.class.class": "widget.terminal.field"
         }, window);
@@ -103,14 +103,14 @@ screens.widget.terminal = function WidgetTerminal(me, { core }) {
     };
     me.insert = {
         set: function (terminal, message) {
-            var print = me.ui.node.lastChild(terminal.var.output);
+            var print = ui.node.lastChild(terminal.var.output);
             if (print) {
                 var text = core.property.get(print, "ui.basic.text");
                 text += message;
                 core.property.set(print, "ui.basic.text", text);
             }
             else {
-                me.ui.element.create({
+                ui.element.create({
                     "ui.basic.tag": "div",
                     "ui.basic.text": message
                 }, terminal.var.output);
@@ -120,7 +120,7 @@ screens.widget.terminal = function WidgetTerminal(me, { core }) {
     };
     me.print = {
         set: function (terminal, message) {
-            me.ui.element.create({
+            ui.element.create({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);
@@ -129,7 +129,7 @@ screens.widget.terminal = function WidgetTerminal(me, { core }) {
     };
     me.scroll = {
         set: function (terminal) {
-            var container = me.ui.node.container(terminal, me.widget.container.id);
+            var container = ui.node.container(terminal, widget.container.id);
             container.scrollTop = container.scrollHeight;
             core.property.notify(container, "update");
         }

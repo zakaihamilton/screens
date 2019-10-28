@@ -3,7 +3,7 @@
  @component UIScroll
  */
 
-screens.ui.scroll = function UIScroll(me, { core }) {
+screens.ui.scroll = function UIScroll(me, { core, widget, ui }) {
     me.isScrollable = function (object) {
         var result = true;
         if (object.scrollWidth > object.offsetWidth) {
@@ -26,10 +26,10 @@ screens.ui.scroll = function UIScroll(me, { core }) {
     };
     me.container = function (object) {
         var container = null;
-        if (object.component === me.widget.window.id) {
+        if (object.component === widget.window.id) {
             container = object.var.container;
         } else {
-            container = me.ui.node.container(object, me.widget.container.id);
+            container = ui.node.container(object, widget.container.id);
         }
         return container;
     };
@@ -112,13 +112,13 @@ screens.ui.scroll = function UIScroll(me, { core }) {
     me.positions = {
         get: function (object) {
             var list = [];
-            me.ui.node.iterate(object, (element) => {
+            ui.node.iterate(object, (element) => {
                 list.push({ element, scrollLeft: element.scrollLeft, scrollTop: element.scrollTop });
             }, true);
             return list;
         },
         set: function (object, list) {
-            me.ui.node.iterate(object, (element) => {
+            ui.node.iterate(object, (element) => {
                 var item = list.shift();
                 for (let key in item) {
                     element[key] = item[key];
@@ -129,7 +129,7 @@ screens.ui.scroll = function UIScroll(me, { core }) {
     };
     me.toWidget = function (widget, target, delta) {
         if (widget) {
-            var region = me.ui.rect.relativeRegion(widget, target);
+            var region = ui.rect.relativeRegion(widget, target);
             var offset = region.top;
             if (offset) {
                 offset -= delta;

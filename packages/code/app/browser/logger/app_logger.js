@@ -9,25 +9,25 @@ screens.app.logger = function AppLogger(me, { core, ui }) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         me.singleton.isEnabled = false;
         return me.singleton;
     };
     me.init = function () {
-        me.ui.options.load(me, null, {
+        ui.options.load(me, null, {
             "source": "Browser",
             "filter": "",
             "format": true,
             "autoRefresh": false
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             "autoRefresh": "app.logger.refresh",
             "format": "app.logger.refresh"
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "source": "app.logger.refresh"
         });
-        me.ui.options.listSet(me, null, {
+        ui.options.listSet(me, null, {
             "filter": "app.logger.refresh"
         });
     };

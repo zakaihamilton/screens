@@ -3,12 +3,12 @@
  @component AppLauncher
  */
 
-screens.app.launcher = function AppLauncher(me, { core }) {
+screens.app.launcher = function AppLauncher(me, { core, ui, widget }) {
     me.init = function () {
         me.searchCounter = 0;
     };
     me.launch = async function () {
-        var window = me.ui.element.create(me.json, "workspace", "self");
+        var window = ui.element.create(me.json, "workspace", "self");
         if (core.device.isMobile()) {
             core.property.set(window, "maximize");
         }
@@ -42,10 +42,10 @@ screens.app.launcher = function AppLauncher(me, { core }) {
         core.property.set(object, "ui.attribute.title", tooltip);
     };
     me.search = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = object.value.toLowerCase().trim();
         if (text) {
-            var progress = me.ui.node.findByName(window, "progress");
+            var progress = ui.node.findByName(window, "progress");
             core.property.set(window, "temp", false);
             core.property.set(progress, "ui.class.progress", true);
             clearTimeout(window.searchTimer);
@@ -66,7 +66,7 @@ screens.app.launcher = function AppLauncher(me, { core }) {
         }
     };
     me.searchNow = async function (object, text) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var results = [];
         var names = [];
         var lists = [];
@@ -78,7 +78,7 @@ screens.app.launcher = function AppLauncher(me, { core }) {
                 if (name === "ui.content") {
                     continue;
                 }
-                let component = me.browse(name);
+                let component = screens.browse(name);
                 if ("content" in component) {
                     if ("search" in component.content) {
                         let label = null;
@@ -129,14 +129,14 @@ screens.app.launcher = function AppLauncher(me, { core }) {
             if (root) {
                 classes.push("root");
             }
-            html += me.ui.html.item({
+            html += ui.html.item({
                 classes,
             }, () => {
                 let html = "";
                 let title = item.title;
                 var onclick = null;
                 if (!root) {
-                    title = me.ui.html.markHtml(title, search);
+                    title = ui.html.markHtml(title, search);
                 }
                 let classes = [];
                 if (root) {
@@ -146,7 +146,7 @@ screens.app.launcher = function AppLauncher(me, { core }) {
                     classes.push("members");
                     onclick = "screens.app.launcher.collapseSearchCollection(this)";
                 }
-                html += me.ui.html.item({
+                html += ui.html.item({
                     tag: "div",
                     classes: [...classes, "app-launcher-results-branch"],
                     attributes: {
@@ -154,11 +154,11 @@ screens.app.launcher = function AppLauncher(me, { core }) {
                     }
                 }, () => {
                     let html = "";
-                    html += me.ui.html.item({
+                    html += ui.html.item({
                         tag: "div",
                         classes: [...classes, "app-launcher-results-collapse"]
                     });
-                    html += me.ui.html.item({
+                    html += ui.html.item({
                         tag: "div",
                         value: title,
                         classes: [...classes, "app-launcher-results-label"]
@@ -178,8 +178,8 @@ screens.app.launcher = function AppLauncher(me, { core }) {
                         classes.push("private");
                     }
                     let styles = { direction: core.string.direction(child.title) };
-                    html += me.ui.html.item({
-                        value: me.ui.html.markHtml(child.title, search),
+                    html += ui.html.item({
+                        value: ui.html.markHtml(child.title, search),
                         classes,
                         styles,
                         attributes: {

@@ -28,7 +28,7 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
         object.editor.resize();
     };
     me.updateTheme = function (object) {
-        var nightMode = me.ui.theme.options.nightMode;
+        var nightMode = ui.theme.options.nightMode;
         object.editor.setTheme(nightMode ? "ace/theme/monokai" : "ace/theme/tomorrow");
     };
     me.path = {

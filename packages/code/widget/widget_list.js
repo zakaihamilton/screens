@@ -3,7 +3,7 @@
  @component WidgetList
  */
 
-screens.widget.list = function WidgetList(me, { core }) {
+screens.widget.list = function WidgetList(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count"]
@@ -44,7 +44,7 @@ screens.widget.list = function WidgetList(me, { core }) {
     me.selection = {
         get: function (object, value) {
             var selection = [];
-            var childList = me.ui.node.childList(object.var.container);
+            var childList = ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -59,7 +59,7 @@ screens.widget.list = function WidgetList(me, { core }) {
             return selection;
         },
         set: function (object, value) {
-            var childList = me.ui.node.childList(object.var.container);
+            var childList = ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -121,8 +121,8 @@ screens.widget.list.dropdown = function WidgetDropDownList(me, { core }) {
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.ui.rect.absoluteRegion(object.parentNode);
-            object.var.list = me.ui.element.create({
+            var region = ui.rect.absoluteRegion(object.parentNode);
+            object.var.list = ui.element.create({
                 "ui.element.component": "widget.list.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -207,7 +207,7 @@ screens.widget.list.popup = function WidgetListPopup(me, { core }) {
     };
     me.selection = {
         set: function (object, value) {
-            var childList = me.ui.node.childList(object.var.container);
+            var childList = ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -280,7 +280,7 @@ screens.widget.list.item = function WidgetListItem(me, { core }) {
         set: function (object) {
             if (object.group) {
                 core.property.set(object, "ui.class.add", "selected");
-                var childList = me.ui.node.childList(object.parentNode);
+                var childList = ui.node.childList(object.parentNode);
                 if (childList) {
                     for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                         var child = childList[childIndex];
@@ -290,7 +290,7 @@ screens.widget.list.item = function WidgetListItem(me, { core }) {
                         core.property.set(child, "ui.class.remove", "selected");
                     }
                 }
-                var popup = me.ui.node.container(object, "widget.list.popup");
+                var popup = ui.node.container(object, "widget.list.popup");
                 core.property.set(popup, "select", object);
             }
             else {

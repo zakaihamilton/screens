@@ -72,7 +72,7 @@ screens.media.hls = function MediaHLS(me, { core }) {
                         };
                         let video_codec = "avc1." + profile[video_stream.profile] + video_stream.level.toString(16);
                         let resolution = video_stream.width + "x" + video_stream.height;
-                        let extension = me.core.path.extension(source.info.format.filename) || "ts";
+                        let extension = core.path.extension(source.info.format.filename) || "ts";
                         body += `#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=${source.info.format.bit_rate},RESOLUTION=${resolution},CODECS="${video_codec}, mp4a.40.2"\n`;
                         let m3u8_file = core.path.replaceExtension(source_dir + "/" + source_file, "m3u8");
                         body += core.util.url() + "/api/hls/vod/" + m3u8_file + "?duration=" + duration + "&extension=" + extension;

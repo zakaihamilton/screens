@@ -39,12 +39,12 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
         return paths;
     };
     me.download = async function (groupName, path) {
-        var target = await me.manager.file.download(me.rootPath + "/" + groupName + "/" + path,
+        var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + path,
             me.cachePath + "/" + path);
         return target;
     };
     me.groups = async function (update = false) {
-        var files = await me.db.cache.file.listing(me.rootPath, update);
+        var files = await db.cache.file.listing(me.rootPath, update);
         for (let file of files) {
             file.path = me.rootPath + "/" + file.name;
             var sessions = await me.listing(file, update);
@@ -80,7 +80,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
     };
     me.listing = async function (parent, update = false) {
         let argList = [];
-        var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
+        var files = await db.cache.file.listing(parent.path, update, async (file) => {
             let result = false;
             file.group = parent.name;
             file.session = core.path.fileName(file.name);
@@ -93,7 +93,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
 
             if (!await storage.aws.exists(awsPath)) {
                 me.log("Downloading file: " + file.local + ", size: " + file.size);
-                await me.manager.file.download(file.remote, file.local);
+                await manager.file.download(file.remote, file.local);
                 deleteFile = true;
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
                 await storage.aws.uploadFile(file.local, awsPath);
@@ -190,7 +190,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
                         if (!me.media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);
                             await me.media.speech.transcribe(file.local);
-                            var info = await me.manager.download.clean(me.tempDir, "flac");
+                            var info = await manager.download.clean(me.tempDir, "flac");
                             me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                         }
                     }

@@ -3,9 +3,9 @@
     @component CmdPackets
 */
 
-screens.cmd.packets = function CmdPackets(me, { core }) {
+screens.cmd.packets = function CmdPackets(me, { core, manager }) {
     me.cmd = async function (terminal, args) {
-        var effects = await me.manager.packet.retrieveEffects();
+        var effects = await manager.packet.retrieveEffects();
         if (!effects) {
             effects = {};
         }
@@ -14,7 +14,7 @@ screens.cmd.packets = function CmdPackets(me, { core }) {
             var key = args[1];
             var value = args[2];
             effects[key] = value;
-            await me.manager.packet.applyEffects(effects);
+            await manager.packet.applyEffects(effects);
         }
         for (var key in effects) {
             core.property.set(terminal, "print", key + "=" + effects[key]);

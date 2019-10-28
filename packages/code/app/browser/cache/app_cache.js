@@ -51,7 +51,7 @@ screens.app.cache = function AppCache(me, { core, ui, storage }) {
     me.onChangeKey = {
         set: function () {
             var key = core.property.get(me.singleton.var.key, "ui.basic.text");
-            var value = me.storage.local.get(key);
+            var value = storage.local.get(key);
             core.property.set(me.singleton.var.value, "ui.basic.text", value);
         }
     };

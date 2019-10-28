@@ -74,7 +74,7 @@ screens.widget.wheel = function WidgetWheel(me, { core }) {
         wheel.animatetime = 250;
         wheel.navItemsEnabled = !object.wheel_readonly;
         wheel.animateeffect = "linear";
-        var color = me.ui.color.get("--color");
+        var color = ui.color.get("--color");
         wheel.markerAttr = { stroke: color, fill: color, "stroke-width": 10 };
         if (object.wheel_options) {
             for (var key in object.wheel_options) {

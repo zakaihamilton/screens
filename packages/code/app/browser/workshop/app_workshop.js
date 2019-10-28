@@ -3,21 +3,21 @@
  @component AppWorkshop
  */
 
-screens.app.workshop = function AppWorkshop(me, { core }) {
+screens.app.workshop = function AppWorkshop(me, { core, ui }) {
     me.init = async function () {
-        await me.ui.shared.implement(me);
+        await ui.shared.implement(me);
     };
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         await me.prepare(me.singleton);
         return me.singleton;
     };
     me.prepare = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "app", me);
         core.property.set(window.var.users, {
             "navigate": "app.workshop.navigate",
@@ -29,7 +29,7 @@ screens.app.workshop = function AppWorkshop(me, { core }) {
                 spreaderTitleFont: "100 2em Impact, Charcoal, sans-serif"
             }
         });
-        me.ui.options.load(me, window, {
+        ui.options.load(me, window, {
             autoRefresh: true,
             shuffle: true,
             filter: false,
@@ -37,10 +37,10 @@ screens.app.workshop = function AppWorkshop(me, { core }) {
             broadcast: false,
             userName: ""
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "userName": me.updateUser
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             "autoRefresh": me.refresh,
             "shuffle": me.refresh,
             "filter": me.refresh,
@@ -51,7 +51,7 @@ screens.app.workshop = function AppWorkshop(me, { core }) {
         await me.refresh(window);
     };
     me.refresh = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var names = await me.lib.zoom.participants(window.options.shuffle, window.options.test);
         if (window.options.filter) {
             names = names.filter(name => !name.toLowerCase().includes("listen"));
@@ -76,11 +76,11 @@ screens.app.workshop = function AppWorkshop(me, { core }) {
         }
     };
     me.resize = function (object) {
-        var window = me.widget.window.get(object);
-        me.ui.resize.centerWidget(window.var.users);
+        var window = widget.window.get(object);
+        ui.resize.centerWidget(window.var.users);
     };
     me.updateUser = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var content = await me.shared.content(object);
         var readonly = true;
         if (content === undefined) {
@@ -99,7 +99,7 @@ screens.app.workshop = function AppWorkshop(me, { core }) {
         }
     };
     me.navigate = function (object, name) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.navigate_name = name;
         if (window.options.broadcast) {
             window.isBroadcast = true;

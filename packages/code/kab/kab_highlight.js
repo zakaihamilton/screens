@@ -3,14 +3,14 @@
  @component KabHighlight
  */
 
-screens.kab.highlight = function KabHighlight(me, { core }) {
+screens.kab.highlight = function KabHighlight(me, { core, kab, ui }) {
     me.query = function () {
         var query = { user: "$userId" };
         return query;
     };
     me.line = async function (session, highlight, line) {
         var hash = String(session.hash);
-        let source = me.kab.text.clean(session.line);
+        let source = kab.text.clean(session.line);
         var classes = [];
         var ondblclick = null;
         if (highlight) {
@@ -37,7 +37,7 @@ screens.kab.highlight = function KabHighlight(me, { core }) {
         else {
             value = line;
         }
-        var html = me.ui.html.item({
+        var html = ui.html.item({
             tag,
             classes,
             styles,
@@ -62,7 +62,7 @@ screens.kab.highlight = function KabHighlight(me, { core }) {
         core.property.set(element, "ui.class.remove", "kab-term-highlight");
         var hash = core.property.get(element, "ui.attribute.#hash");
         var source = core.property.get(element, "ui.attribute.#source");
-        var data = await me.db.shared.highlight.find({
+        var data = await db.shared.highlight.find({
             "user": "$userId",
             "hash": hash
         });
@@ -75,7 +75,7 @@ screens.kab.highlight = function KabHighlight(me, { core }) {
             name,
             source
         });
-        me.db.shared.highlight.remove({
+        db.shared.highlight.remove({
             "user": "$userId"
         });
     };
@@ -86,7 +86,7 @@ screens.kab.highlight = function KabHighlight(me, { core }) {
         var highlight = core.property.get(element, "ui.class.kab-term-highlight");
         var hash = core.property.get(element, "ui.attribute.#hash");
         var source = core.property.get(element, "ui.attribute.#source");
-        var data = await me.db.shared.highlight.find({
+        var data = await db.shared.highlight.find({
             "user": "$userId",
             "hash": hash
         });
@@ -102,13 +102,13 @@ screens.kab.highlight = function KabHighlight(me, { core }) {
             date
         });
         if (highlight) {
-            me.db.shared.highlight.use({
+            db.shared.highlight.use({
                 "user": "$userId",
                 "hash": hash
             }, data);
         }
         else {
-            me.db.shared.highlight.remove({
+            db.shared.highlight.remove({
                 "user": "$userId"
             });
         }

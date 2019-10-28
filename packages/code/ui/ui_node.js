@@ -3,7 +3,7 @@
  @component UINode
  */
 
-screens.ui.node = function UINode(me, { core }) {
+screens.ui.node = function UINode(me, { core, ui }) {
     me.childList = function (object) {
         if (!object) {
             return [];
@@ -108,7 +108,7 @@ screens.ui.node = function UINode(me, { core }) {
             class_names = [class_name];
         }
         while (object) {
-            if (object === me.ui.element.workspace()) {
+            if (object === ui.element.workspace()) {
                 return null;
             }
             for (let class_name of class_names) {
@@ -129,7 +129,7 @@ screens.ui.node = function UINode(me, { core }) {
             component_names = [component_name];
         }
         while (object) {
-            if (object === me.ui.element.workspace()) {
+            if (object === ui.element.workspace()) {
                 return null;
             }
             if (component_names.includes(object.component)) {
@@ -202,7 +202,7 @@ screens.ui.node = function UINode(me, { core }) {
         if (object) {
             while (object) {
                 array.push(object);
-                if (object === me.ui.element.workspace()) {
+                if (object === ui.element.workspace()) {
                     break;
                 }
                 object = object.parentNode;
@@ -353,7 +353,7 @@ screens.ui.node = function UINode(me, { core }) {
     me.bind = function (object, data, bindings, baseDefault) {
         var widgets = [];
         for (var binding in bindings) {
-            var widget = widgets[binding] = me.ui.node.findByName(object, binding);
+            var widget = widgets[binding] = ui.node.findByName(object, binding);
             if (!widget) {
                 continue;
             }

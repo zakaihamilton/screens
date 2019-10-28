@@ -3,7 +3,7 @@
  @component ServiceNetControl
  */
 
-screens.service.netcontrol = function ServiceNetControl(me, { core }) {
+screens.service.netcontrol = function ServiceNetControl(me, { core, manager }) {
     me.setup = function (ref) {
 
     };
@@ -79,7 +79,7 @@ screens.service.netcontrol = function ServiceNetControl(me, { core }) {
         me.log("toggle interval: " + interval + " effects are: " + (effects.useEffects ? "on" : "off"));
         me.effects = effects;
         if (core.socket.isConnected) {
-            await me.manager.packet.updateEffects(effects);
+            await manager.packet.updateEffects(effects);
         }
         if (!effects.useEffects) {
             return;

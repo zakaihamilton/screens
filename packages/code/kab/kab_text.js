@@ -3,7 +3,7 @@
  @component KabText
  */
 
-screens.kab.text = function KabText(me, { core }) {
+screens.kab.text = function KabText(me, { core, kab, db }) {
     me.splitWords = function (session, wordsString) {
         wordsString = core.string.parseWords(function (words) {
             if (session.json.options && session.json.options.splitPartial) {
@@ -191,7 +191,7 @@ screens.kab.text = function KabText(me, { core }) {
         if (!wordsString) {
             wordsString = "";
         }
-        var globalJson = await me.kab.data.load(language, options.reload);
+        var globalJson = await kab.data.load(language, options.reload);
         if (!globalJson) {
             return { text: wordsString };
         }
@@ -205,15 +205,15 @@ screens.kab.text = function KabText(me, { core }) {
         });
         var request = {};
         if (options.showHighlights) {
-            request.highlight = me.kab.highlight.query(options);
+            request.highlight = kab.highlight.query(options);
         }
         if (options.commentaryEdit || options.commentaryUser) {
-            request.commentary = me.kab.commentary.query(options);
+            request.commentary = kab.commentary.query(options);
         }
-        var items = await me.db.shared.hashResults(request, hashes);
+        var items = await db.shared.hashResults(request, hashes);
         var languages = {};
         for (let language of ["english", "hebrew"]) {
-            let json = await me.kab.data.load(language);
+            let json = await kab.data.load(language);
             let terms = core.message.send("kab.text.prepare", json, json.term, options);
             languages[language] = {
                 json,
@@ -245,10 +245,10 @@ screens.kab.text = function KabText(me, { core }) {
             }
             if (items) {
                 if (options.showHighlights) {
-                    line = await me.kab.highlight.line(session, items.highlight[index], line);
+                    line = await kab.highlight.line(session, items.highlight[index], line);
                 }
                 if (options.commentaryEdit || options.commentaryUser) {
-                    line = await me.kab.commentary.line(session, items.commentary[index], line);
+                    line = await kab.commentary.line(session, items.commentary[index], line);
                 }
             }
             if (session.diagrams) {
@@ -274,7 +274,7 @@ screens.kab.text = function KabText(me, { core }) {
         });
         lines = lines.filter(Boolean);
         diagrams = Array.from(new Set(diagrams));
-        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data, diagrams };
+        var info = { text: lines.join("\n"), terms: kab.term.terms, data: globalJson.data, diagrams };
         return info;
     };
     me.handleInstance = function (session, instance) {
@@ -352,7 +352,7 @@ screens.kab.text = function KabText(me, { core }) {
                     translation = parseSingle(session, instance, translation, true);
                 }
             }
-            me.kab.term.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
+            kab.term.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
             if (translation && instance.upperCase) {
                 translation = translation.toUpperCase();
             }
@@ -362,16 +362,16 @@ screens.kab.text = function KabText(me, { core }) {
             modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
             match = true;
         } else if (session.options.addStyles && instance.item.style) {
-            me.kab.term.setTerm(session.options, session.json.style, instance.item);
+            kab.term.setTerm(session.options, session.json.style, instance.item);
             modify(session, instance, "", source ? source : instance.source, null, "", false, false);
             match = true;
         } else if (source) {
             if (typeof stam === "undefined" || stam) {
                 if (Array.isArray(source)) {
-                    source = source.map(text => me.kab.style.formatHebrewText(text));
+                    source = source.map(text => kab.style.formatHebrewText(text));
                 }
                 else {
-                    source = me.kab.style.formatHebrewText(source);
+                    source = kab.style.formatHebrewText(source);
                 }
             }
             instance.words.splice(instance.wordIndex, instance.span);
@@ -412,7 +412,7 @@ screens.kab.text = function KabText(me, { core }) {
         } else if (keepSource && !core.string.caselessCompare(term, replacement)) {
             replacement = term + prefix + replacement + suffix;
         }
-        me.kab.format.replaceDuplicate(session, instance, replacement);
+        kab.format.replaceDuplicate(session, instance, replacement);
         var prefixLetters = instance.prefixLetters;
         if (!prefixLetters && instance.parent) {
             prefixLetters = instance.prefixLetters = instance.parent.prefixLetters;
@@ -425,7 +425,7 @@ screens.kab.text = function KabText(me, { core }) {
             applyStyles = true;
         }
         if (applyStyles) {
-            replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
+            replacementWithStyles = kab.style.process(session, instance, replacement, expansion);
         }
         else if (prefixLetters) {
             replacementWithStyles = prefixLetters + replacementWithStyles;
@@ -436,9 +436,9 @@ screens.kab.text = function KabText(me, { core }) {
         }
         instance.words.splice(instance.wordIndex, 0, insert);
         if (!instance.item.includePrefix && !session.options.ignorePrefix) {
-            me.kab.format.insert(instance.words, instance.wordIndex, session.json.prefix, instance.item.prefix, instance.prefixWord, text);
+            kab.format.insert(instance.words, instance.wordIndex, session.json.prefix, instance.item.prefix, instance.prefixWord, text);
         }
-        me.kab.format.insert(instance.words, instance.wordIndex + 1, session.json.suffix, instance.item.suffix, instance.suffixWord, text);
+        kab.format.insert(instance.words, instance.wordIndex + 1, session.json.suffix, instance.item.suffix, instance.suffixWord, text);
     };
     me.prepare = function (json, terms, options) {
         var result = new Map();
@@ -460,7 +460,7 @@ screens.kab.text = function KabText(me, { core }) {
                                 item.associated[type] = [];
                             }
                             item.associated[type].push(...set);
-                            me.kab.term.setTerm(options, json.style, item, null, null, null, false);
+                            kab.term.setTerm(options, json.style, item, null, null, null, false);
                         }
                     }
                 }
@@ -471,7 +471,7 @@ screens.kab.text = function KabText(me, { core }) {
             let key = words[0].toUpperCase();
             let lookup = result[key];
             if (item.defaultTerm) {
-                me.kab.term.setTerm(options, json.style, item, null, null, null, false);
+                kab.term.setTerm(options, json.style, item, null, null, null, false);
             }
             if (!lookup) {
                 lookup = new Map();

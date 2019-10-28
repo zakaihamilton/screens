@@ -3,7 +3,7 @@
  @component UIClass
  */
 
-screens.ui.class = function UIClass(me, { core }) {
+screens.ui.class = function UIClass(me, { core, ui }) {
     me.stylesheets = {};
     me.lookup = {
         get: function (object, value, property) {
@@ -110,7 +110,7 @@ screens.ui.class = function UIClass(me, { core }) {
                 path = core.property.to_full_name(object, path);
                 class_name = me.to_class(object, path);
             }
-            var nightMode = me.ui.theme.options.nightMode;
+            var nightMode = ui.theme.options.nightMode;
             if (nightMode) {
                 class_name += " night-mode is-dark";
             }

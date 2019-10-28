@@ -48,7 +48,7 @@ screens.ui.move = function UIMove(me, { core }) {
             target = object;
         }
         else if (type === "window") {
-            target = me.widget.window.get(object);
+            target = widget.window.get(object);
         }
         if (!target) {
             return;
@@ -57,7 +57,7 @@ screens.ui.move = function UIMove(me, { core }) {
             core.property.set(target, "ui.focus.active", true);
             return;
         }
-        var regionMethod = target.move_relative ? me.ui.rect.relativeRegion : me.ui.rect.absoluteRegion;
+        var regionMethod = target.move_relative ? ui.rect.relativeRegion : ui.rect.absoluteRegion;
         var target_region = regionMethod(target);
         me.info = {
             target: target,
@@ -84,11 +84,11 @@ screens.ui.move = function UIMove(me, { core }) {
     };
     me.move = function (object, event) {
         var type = object.move_type;
-        var regionMethod = me.info.target.move_relative ? me.ui.rect.relativeRegion : me.ui.rect.absoluteRegion;
+        var regionMethod = me.info.target.move_relative ? ui.rect.relativeRegion : ui.rect.absoluteRegion;
         var target_region = regionMethod(me.info.target);
         target_region.left = event.clientX - me.info.left;
         target_region.top = event.clientY - me.info.top;
-        me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
+        ui.rect.setAbsoluteRegion(me.info.target, target_region);
         if (type === "window") {
             me.snap(object, true);
         }
@@ -104,7 +104,7 @@ screens.ui.move = function UIMove(me, { core }) {
         core.property.set(me.info.target, "ui.property.broadcast", {
             "transition": false
         });
-        var window = me.widget.window.get(me.info.target);
+        var window = widget.window.get(me.info.target);
         core.property.notify(window, "update");
 
         if (type === "window") {
@@ -112,14 +112,14 @@ screens.ui.move = function UIMove(me, { core }) {
         }
     };
     me.snap = function (object, signalOnly) {
-        var window = me.widget.window.get(object);
-        var target_region = me.ui.rect.absoluteRegion(window);
-        var parent = me.widget.window.parent(window);
-        var parent_region = me.ui.rect.absoluteRegion(parent);
+        var window = widget.window.get(object);
+        var target_region = ui.rect.absoluteRegion(window);
+        var parent = widget.window.parent(window);
+        var parent_region = ui.rect.absoluteRegion(parent);
         if (!parent) {
-            parent = me.ui.element.desktop();
-            var workspace = me.ui.element.workspace();
-            parent_region = me.ui.rect.absoluteRegion(workspace);
+            parent = ui.element.desktop();
+            var workspace = ui.element.workspace();
+            parent_region = ui.rect.absoluteRegion(workspace);
         }
         core.property.notify(parent, "update");
         var alignToLeft = target_region.left + me.snapSensitivity < parent_region.left;
@@ -129,37 +129,37 @@ screens.ui.move = function UIMove(me, { core }) {
         if (alignToLeft) {
             if (!signalOnly) {
                 if (alignToTop) {
-                    me.ui.arrange.alignToLeftTop(object);
+                    ui.arrange.alignToLeftTop(object);
                 }
                 else if (alignToBottom) {
-                    me.ui.arrange.alignToLeftBottom(object);
+                    ui.arrange.alignToLeftBottom(object);
                 }
                 else {
-                    me.ui.arrange.alignToLeft(object);
+                    ui.arrange.alignToLeft(object);
                 }
             }
         }
         else if (alignToRight) {
             if (!signalOnly) {
                 if (alignToTop) {
-                    me.ui.arrange.alignToRightTop(object);
+                    ui.arrange.alignToRightTop(object);
                 }
                 else if (alignToBottom) {
-                    me.ui.arrange.alignToRightBottom(object);
+                    ui.arrange.alignToRightBottom(object);
                 }
                 else {
-                    me.ui.arrange.alignToRight(object);
+                    ui.arrange.alignToRight(object);
                 }
             }
         }
         else if (alignToTop) {
             if (!signalOnly) {
-                me.ui.arrange.alignToTop(object);
+                ui.arrange.alignToTop(object);
             }
         }
         else if (alignToBottom) {
             if (!signalOnly) {
-                me.ui.arrange.alignToBottom(object);
+                ui.arrange.alignToBottom(object);
             }
         }
         core.property.set(parent.var.align, "ui.class.show", signalOnly);

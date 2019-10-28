@@ -7,7 +7,7 @@ screens.ui.windowkey = function UIWindowKey(me, { core }) {
     me.lookup = {
         get: function (object, value, property) {
             if (property.endsWith("-")) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var key = core.property.get(window, "key");
                 return property + key;
             }

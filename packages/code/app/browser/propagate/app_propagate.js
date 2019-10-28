@@ -3,8 +3,7 @@
  @component AppPropagate
  */
 
-screens.app.propagate = function AppPropagate(me, packages) {
-    const { core } = packages;
+screens.app.propagate = function AppPropagate(me, { core, ui, widget, storage }) {
     me.scriptsDir = "packages/res/scripts";
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
@@ -12,20 +11,20 @@ screens.app.propagate = function AppPropagate(me, packages) {
             return me.singleton;
         }
         me.scriptList = await core.file.readDir(me.scriptsDir);
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window.get(object);
-        me.ui.options.load(me, window, {
+        var window = widget.window.get(object);
+        ui.options.load(me, window, {
             type: "Auto",
             format: true
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             format: (object) => {
                 me.setFormat(object);
             }
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             type: (object) => {
                 me.setFileType(object);
                 me.setFormat(object);
@@ -36,19 +35,19 @@ screens.app.propagate = function AppPropagate(me, packages) {
         window.files = [];
     };
     me.clear = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.files = [];
         me.fileName.set(object, null);
     };
     me.selectFiles = function (object, event) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.files = Array.from(event.files);
         if (window.files && window.files.length) {
             me.fileName.set(object, window.files[0].name);
         }
     };
     me.files = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var info = {
             list: window.files,
             options: { "state": "select" },
@@ -59,16 +58,16 @@ screens.app.propagate = function AppPropagate(me, packages) {
             emptyMsg: "No Files Selected",
             itemMethod: "app.propagate.fileName"
         };
-        return me.widget.menu.collect(object, info);
+        return widget.menu.collect(object, info);
     };
     me.fileName = {
         get: function (object, name) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var fileName = core.property.get(window, "name");
             return fileName.toLowerCase() === name.toLowerCase();
         },
         set: async function (object, name) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var content = await me.content(object, name);
             core.property.set(window, "name", name);
             me.setFileType(object);
@@ -77,7 +76,7 @@ screens.app.propagate = function AppPropagate(me, packages) {
         }
     };
     me.setFileType = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var name = core.property.get(window, "name", name);
         if (window.options.type === "Auto") {
             core.property.set(window.var.editor, "path", name);
@@ -87,13 +86,13 @@ screens.app.propagate = function AppPropagate(me, packages) {
         }
     };
     me.setFormat = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         if (window.options.format) {
             core.property.set(window.var.editor, "format");
         }
     };
     me.content = async function (object, name) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var content = "";
         if (name) {
             var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
@@ -102,25 +101,25 @@ screens.app.propagate = function AppPropagate(me, packages) {
                     content = file.content;
                 }
                 else {
-                    content = await me.storage.upload.readFile(file, true);
+                    content = await storage.upload.readFile(file, true);
                 }
             }
         }
         return content;
     };
     me.download = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = core.property.get(window.var.editor, "text");
         var name = core.property.get(window, "name");
         me.file.text.export(name, text);
     };
     me.importData = function (object, text, title) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "name", title);
         core.property.set(window.var.editor, "text", text);
     };
     me.exportText = function (object, target) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = core.property.get(window.var.editor, "text");
         core.property.set(target, "importData", text);
     };
@@ -134,13 +133,13 @@ screens.app.propagate = function AppPropagate(me, packages) {
             emptyMsg: "No Scripts Available",
             itemMethod: "app.propagate.runScript"
         };
-        return me.widget.menu.collect(object, info);
+        return widget.menu.collect(object, info);
     };
     me.refresh = async function () {
         me.scriptList = await core.file.readDir(me.scriptsDir);
     };
     me.output = function (object, name, text, activate) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
         if (file) {
             file.content = text;

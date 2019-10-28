@@ -3,7 +3,7 @@
  @component UIContent
  */
 
-screens.ui.content = function UIContent(me, { core, ui, manager }) {
+screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }) {
     me.content = {
         init: async function () {
         },
@@ -97,8 +97,8 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
             me.content.privateList = lists.privateList.filter(filter);
         },
         refresh: async function (object) {
-            var window = me.widget.window.get(object);
-            let lists = await me.manager.content.lists();
+            var window = widget.window.get(object);
+            let lists = await manager.content.lists();
             ui.content.data.setLists(lists);
             me.content.update();
             var info = me.content.info(window);
@@ -109,11 +109,11 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
             if (typeof item === "object") {
                 name = item.key.name;
             }
-            var fullItem = await me.manager.content.load(me.id, name, private);
+            var fullItem = await manager.content.load(me.id, name, private);
             return [fullItem.content, fullItem.title, fullItem.options];
         },
         import: async function (object, item, private) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var title = item;
             if (typeof item !== "string") {
                 title = item.key.name;
@@ -121,7 +121,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                     title = item.title;
                 }
             }
-            var fullItem = await me.manager.content.load(me.id, title, private);
+            var fullItem = await manager.content.load(me.id, title, private);
             if (!fullItem) {
                 return;
             }
@@ -155,7 +155,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                     "User": "user"
                 }
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         },
         privateMenu: function (object) {
             var info = {
@@ -166,16 +166,16 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                 sort: true,
                 itemMethod: me.content.importPrivate
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         },
         save: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var [content] = me.exportData(window);
                 return content;
             },
             set: async function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 var private = info._private;
                 var [content, options] = me.exportData(window);
@@ -218,7 +218,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                         (private ? "private" : "public") +
                         "</b> content:<br/>" + title + "?"
                 }).then(async () => {
-                    await me.manager.content.save(me.id, title, data, private);
+                    await manager.content.save(me.id, title, data, private);
                     await me.content.refresh(object);
                 }).catch(() => {
 
@@ -227,7 +227,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
         },
         delete: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 if (info) {
                     var locked = info._locked;
@@ -240,7 +240,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                 return false;
             },
             set: async function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 var private = info._private;
                 var title = "";
@@ -269,25 +269,25 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
         },
         copyUrl: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 return info._title;
             },
             set: function (object) {
                 var appName = me.id.split(".").pop();
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 core.util.copyUrl(appName, [info._title]);
             }
         },
         title: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 return info._title;
             },
             set: function (object, title) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 var text = title;
                 if (typeof text !== "string") {
@@ -301,24 +301,24 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
         },
         locked: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 return info._locked;
             },
             set: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 info._locked = !info._locked;
             }
         },
         private: {
             get: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 return info._private;
             },
             set: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 info._private = !info._private;
             }
@@ -342,11 +342,11 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
         },
         associated: {
             update: async function (object, name) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 var list = [];
                 if (name) {
-                    var lists = await me.manager.content.associated(name);
+                    var lists = await manager.content.associated(name);
                     if (lists) {
                         var { publicList, privateList } = lists;
                         var playerItems = await me.content.associated.playerItems(name);
@@ -367,7 +367,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                 if ("app.player" === me.id) {
                     return [];
                 }
-                var group = await me.media.file.exists(name);
+                var group = await media.file.exists(name);
                 if (group) {
                     list.push([
                         "Player",
@@ -410,7 +410,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager }) {
                 return list;
             },
             menu: function (object) {
-                var window = me.widget.window.get(object);
+                var window = widget.window.get(object);
                 var info = me.content.info(window);
                 if (!info.associated || !info.associated.length) {
                     return null;

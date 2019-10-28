@@ -29,12 +29,12 @@ screens.ui.resize = function UIResize(me, { core }) {
         set: function (object, event) {
             var target = object.resize_target;
             if (!target) {
-                target = me.widget.window.get(object);
+                target = widget.window.get(object);
             }
             if (!target.resize_enabled) {
                 return;
             }
-            var target_region = me.ui.rect.absoluteRegion(target);
+            var target_region = ui.rect.absoluteRegion(target);
             me.info = {
                 target: target,
                 left: event.clientX - target_region.left,
@@ -54,10 +54,10 @@ screens.ui.resize = function UIResize(me, { core }) {
     };
     me.move = {
         set: function (object, event) {
-            var target_region = me.ui.rect.absoluteRegion(me.info.target);
-            var object_region = me.ui.rect.absoluteRegion(object);
+            var target_region = ui.rect.absoluteRegion(me.info.target);
+            var object_region = ui.rect.absoluteRegion(object);
             var shift_region = {};
-            me.ui.rect.emptyRegion(shift_region);
+            ui.rect.emptyRegion(shift_region);
             var min_width = parseInt(core.property.get(me.info.target, "ui.style.minWidth"), 10);
             var min_height = parseInt(core.property.get(me.info.target, "ui.style.minHeight"), 10);
             if (object_region.left < target_region.left + (target_region.width / 2)) {
@@ -80,8 +80,8 @@ screens.ui.resize = function UIResize(me, { core }) {
             } else {
                 target_region.height = event.clientY - target_region.top;
             }
-            me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
-            var window = me.widget.window.get(me.info.target);
+            ui.rect.setAbsoluteRegion(me.info.target, target_region);
+            var window = widget.window.get(me.info.target);
             core.property.set(window, "resize");
         }
     };
@@ -95,11 +95,11 @@ screens.ui.resize = function UIResize(me, { core }) {
                 "resize": null,
                 "transition": false
             });
-            var window = me.widget.window.get(me.info.target);
+            var window = widget.window.get(me.info.target);
             core.property.set(window, "ui.property.broadcast", {
                 "update": null
             });
-            var parent = me.widget.window.parent(me.info.target);
+            var parent = widget.window.parent(me.info.target);
             core.property.set(parent, "ui.property.broadcast", {
                 "update": null
             });
@@ -135,10 +135,10 @@ screens.ui.resize = function UIResize(me, { core }) {
         }
     };
     me.centerWidget = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.container, "ui.style.overflow", "hidden");
-        var region = me.ui.rect.absoluteRegion(object);
-        var target_region = me.ui.rect.absoluteRegion(window.var.container);
+        var region = ui.rect.absoluteRegion(object);
+        var target_region = ui.rect.absoluteRegion(window.var.container);
         var size = target_region.width > target_region.height ? target_region.height : target_region.width;
         core.property.set(object, {
             "ui.style.top": ((target_region.height - size) / 2) + "px",

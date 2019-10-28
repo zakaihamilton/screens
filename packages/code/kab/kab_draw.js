@@ -3,7 +3,7 @@
  @component KabDraw
  */
 
-screens.kab.draw = function KabDraw(me, { core }) {
+screens.kab.draw = function KabDraw(me, { core, kab }) {
     me.options = {
         circleMultiplier: 2.5,
         animation: true
@@ -50,14 +50,14 @@ screens.kab.draw = function KabDraw(me, { core }) {
         for (var form of list) {
             var css = [];
             var styles = [];
-            var phase = me.kab.form.get(form, "phase");
+            var phase = kab.form.get(form, "phase");
             var hasPhase = typeof phase !== "undefined";
             if (hasPhase) {
-                var index = me.kab.form.index(form);
+                var index = kab.form.index(form);
                 var depth = index;
-                var restriction = me.kab.form.get(form, "restriction");
-                var direct = me.kab.form.get(form, "direct");
-                var reflect = me.kab.form.get(form, "reflect");
+                var restriction = kab.form.get(form, "restriction");
+                var direct = kab.form.get(form, "direct");
+                var reflect = kab.form.get(form, "reflect");
                 var phaseName = me.phase[phase].name;
                 var term = me.phase[phase].phase;
                 if (options.animation) {
@@ -98,11 +98,11 @@ screens.kab.draw = function KabDraw(me, { core }) {
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
                 var text = await core.property.get(object, options.termMethod, term);
-                var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
+                var borderColor = ui.color.get("--phase-" + phaseName + "-border");
                 if (!phase) {
                     borderColor = "darkgray";
                 }
-                var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
+                var backgroundColor = ui.color.get("--phase-" + phaseName + "-background");
                 styles.push("z-index:" + depth);
                 styles.push("animation-delay: " + index + "s");
                 styles.push("transform: translateZ(" + (depth * 30) + "px)");

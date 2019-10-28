@@ -4,7 +4,7 @@
  @prerequisites npm install pcap2
  */
 
-screens.service.netmonitor = function ServiceNetMonitor(me, { core }) {
+screens.service.netmonitor = function ServiceNetMonitor(me, { core, manager }) {
     me.setup = async function () {
         me.device = null;
         me.packets = [];
@@ -47,7 +47,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me, { core }) {
                     packets = await me.combinePackets(packets);
                     me.log("combined into " + packets.length + " packets");
                 }
-                await me.manager.packet.push(packets);
+                await manager.packet.push(packets);
                 me.log("sent " + packets.length + " packets to server");
                 me.packets = [];
             }, parseInt(me.config.delay));

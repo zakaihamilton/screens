@@ -3,7 +3,7 @@
     @component CoreJson
 */
 
-screens.core.json = function CoreJson(me, { core }) {
+screens.core.json = function CoreJson(me, { core, storage }) {
     me.init = function () {
         if (me.platform === "server") {
             me.request = require("request");
@@ -46,7 +46,7 @@ screens.core.json = function CoreJson(me, { core }) {
             path = path.substring(1);
         }
         if (!core.util.isOnline()) {
-            json = await me.storage.local.db.get(me.id, path);
+            json = await storage.local.db.get(me.id, path);
             if (json) {
                 return json;
             }
@@ -66,7 +66,7 @@ screens.core.json = function CoreJson(me, { core }) {
         if (buffer) {
             json = JSON.parse(buffer);
         }
-        await me.storage.local.db.set(me.id, path, json);
+        await storage.local.db.set(me.id, path, json);
         return json;
     };
     me.compare = function (source, target) {

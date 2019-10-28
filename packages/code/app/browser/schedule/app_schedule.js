@@ -3,28 +3,28 @@
  @component AppSchedule
  */
 
-screens.app.schedule = function AppSchedule(me, { core, app }) {
+screens.app.schedule = function AppSchedule(me, { core, app, ui }) {
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.groupListData = app.player.groups;
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         await me.prepare(me.singleton);
         return me.singleton;
     };
     me.prepare = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "app", me);
         core.property.set(window.var.container, "ui.style.overflow", "hidden");
         window.currentDate = new Date();
-        me.ui.options.load(me, window, {
+        ui.options.load(me, window, {
             "viewType": "Week",
             "firstDay": "Saturday",
             group: ""
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "viewType": me.refresh,
             "firstDay": me.refresh,
             "group": me.refresh
@@ -35,7 +35,7 @@ screens.app.schedule = function AppSchedule(me, { core, app }) {
         me.refresh(object);
     };
     me.refresh = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window.var.schedule, "options", window.options);
         core.property.set(window.var.schedule, "current", window.currentDate);
@@ -46,17 +46,17 @@ screens.app.schedule = function AppSchedule(me, { core, app }) {
         core.app.launch.apply(null, event.launch);
     };
     me.previous = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.currentDate = core.property.get(window.var.schedule, "previousDate");
         me.refresh(object);
     };
     me.next = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.currentDate = core.property.get(window.var.schedule, "nextDate");
         me.refresh(object);
     };
     me.today = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.currentDate = new Date();
         me.refresh(object);
     };
@@ -69,7 +69,7 @@ screens.app.schedule = function AppSchedule(me, { core, app }) {
                 group: "group",
                 itemMethod: "app.schedule.group"
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.resize = function (object) {

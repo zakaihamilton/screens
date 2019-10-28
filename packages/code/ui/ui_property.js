@@ -3,7 +3,7 @@
  @component UIProperty
  */
 
-screens.ui.property = function UIProperty(me, { core }) {
+screens.ui.property = function UIProperty(me, { core, ui, widget }) {
     me.init = function () {
         me.afterQueue = [];
         me.afterQueueTimer = null;
@@ -58,14 +58,14 @@ screens.ui.property = function UIProperty(me, { core }) {
             for (let key in properties) {
                 core.property.set(object, key, properties[key]);
             }
-            var childList = me.ui.node.childList(object);
+            var childList = ui.node.childList(object);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
                     if (!child.component) {
                         continue;
                     }
-                    if (child.component === me.widget.window.id) {
+                    if (child.component === widget.window.id) {
                         continue;
                     }
                     if (child.getAttribute("noBroadcast")) {
@@ -81,8 +81,8 @@ screens.ui.property = function UIProperty(me, { core }) {
     };
     me.bubble = {
         set: function (object, properties) {
-            var window = me.widget.window.get(object);
-            var parent = me.widget.window.parent(window);
+            var window = widget.window.get(object);
+            var parent = widget.window.parent(window);
             if (parent) {
                 me.broadcast.set(parent, properties);
                 me.bubble.set(parent, properties);

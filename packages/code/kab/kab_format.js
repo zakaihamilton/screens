@@ -3,7 +3,7 @@
  @component KabFormat
  */
 
-screens.kab.format = function KabFormat(me, { core }) {
+screens.kab.format = function KabFormat(me, { core, kab }) {
     me.process = function (wordsString, dict) {
         if (dict) {
             dict.map(function (item) {
@@ -135,7 +135,7 @@ screens.kab.format = function KabFormat(me, { core }) {
                 if (next === ")" || next === "]") {
                     var addStyles = session.options.addStyles;
                     session.options.addStyles = false;
-                    duplicate = me.kab.text.parseSingle(session, instance, duplicate, instance.depth + 1);
+                    duplicate = kab.text.parseSingle(session, instance, duplicate, instance.depth + 1);
                     duplicate = duplicate.replace(/“/g, "");
                     duplicate = duplicate.replace(/-/g, " ");
                     duplicate = duplicate.replace(/”/g, "");

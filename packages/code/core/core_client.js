@@ -15,9 +15,15 @@ screens.core.client = function CoreClient(me, { core, user }) {
         for (let id in methods) {
             let args = methods[id];
             let method = args[0];
-            var access = await user.access.isAPIAllowed(method, userId);
-            if (access) {
-                results[id] = await me.core.message.send.apply(this, args);
+            try {
+                var access = await user.access.isAPIAllowed(method, userId);
+                if (access) {
+                    results[id] = await core.message.send.apply(this, args);
+                }
+            }
+            catch (err) {
+                me.log_error("id: " + id + " error: " + err);
+                throw err;
             }
         }
         return results;

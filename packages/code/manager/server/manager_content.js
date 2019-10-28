@@ -3,7 +3,7 @@
  @component ManagerContent
  */
 
-screens.manager.content = function ManagerContent(me, { db }) {
+screens.manager.content = function ManagerContent(me, { db, user }) {
     me.cache = {};
     me.lists = async function (userId) {
         if (!userId) {
@@ -34,7 +34,7 @@ screens.manager.content = function ManagerContent(me, { db }) {
             userId = this.userId;
         }
         let lists = await me.lists(userId);
-        let apps = await me.user.access.appList(userId);
+        let apps = await user.access.appList(userId);
         for (let listName in lists) {
             let list = lists[listName];
             let filter = item => item.package === "app" && apps.includes(item.component);
@@ -95,7 +95,7 @@ screens.manager.content = function ManagerContent(me, { db }) {
         data = Object.assign({}, data);
         var info = await me.load(componentId, title, private, userId);
         var result = false;
-        if (!info || !info.locked || info.owner === userId || me.user.access.admin(userName)) {
+        if (!info || !info.locked || info.owner === userId || user.access.admin(userName)) {
             result = await db.shared.content.use(query, data);
         }
         return result;
@@ -115,7 +115,7 @@ screens.manager.content = function ManagerContent(me, { db }) {
         var info = await me.load(componentId, title, private, userId);
         var result = false;
         if (info) {
-            if (!info.locked || info.owner === userId || me.user.access.admin(userName)) {
+            if (!info.locked || info.owner === userId || user.access.admin(userName)) {
                 result = await db.shared.content.remove(query);
             }
         }

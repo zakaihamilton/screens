@@ -3,7 +3,7 @@
  @component AppKeyboard
  */
 
-screens.app.keyboard = function AppKeyboard(me, { core }) {
+screens.app.keyboard = function AppKeyboard(me, { core, ui, widget, kab }) {
     me.launch = function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             if (core.property.get(me.singleton, "temp")) {
@@ -14,11 +14,11 @@ screens.app.keyboard = function AppKeyboard(me, { core }) {
             core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         return me.singleton;
     };
     me.click = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var input = window.var.input;
         var letter = core.property.get(object, "ui.basic.text");
         if (letter === "⌫") {
@@ -33,7 +33,7 @@ screens.app.keyboard = function AppKeyboard(me, { core }) {
     };
     me.buttons = function () {
         var values = [];
-        var letters = "⌫" + Object.keys(me.kab.letters.numerologyTable).join("") + " " + "|";
+        var letters = "⌫" + Object.keys(kab.letters.numerologyTable).join("") + " " + "|";
         var info = {
             sources: [
                 {
@@ -44,7 +44,7 @@ screens.app.keyboard = function AppKeyboard(me, { core }) {
             endingLetters: "both",
             language: "english"
         };
-        me.kab.letters.letters(info => {
+        kab.letters.letters(info => {
             var method = "app.keyboard.click";
             if (info.text === " ") {
                 info.text = "Space";
@@ -54,12 +54,12 @@ screens.app.keyboard = function AppKeyboard(me, { core }) {
         return values;
     };
     me.initOptions = function (object) {
-        var window = me.widget.window.get(object);
-        me.ui.options.load(me, window, {
+        var window = widget.window.get(object);
+        ui.options.load(me, window, {
             fontSize: "1em"
         });
         window.options.fontSize = "1em";
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
                 core.property.set(window.var.buttons, "ui.style.fontSize", value);
             }

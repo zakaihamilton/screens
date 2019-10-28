@@ -3,7 +3,7 @@
  @component MediaVoice
  */
 
-screens.media.voice = function MediaVoice(me, { core }) {
+screens.media.voice = function MediaVoice(me, { core, kab }) {
     me.init = function () {
         me.synth = window.speechSynthesis;
         me.utterances = [];
@@ -241,7 +241,7 @@ screens.media.voice = function MediaVoice(me, { core }) {
             let result = text.match(replacement);
             if (result && result.length > 1) {
                 result[1] = result[1].split("").map(char => {
-                    return me.kab.letters.pronunciationTable["hebrew"][char];
+                    return kab.letters.pronunciationTable["hebrew"][char];
                 }).join("\n");
                 text = text.replace(replacement, result[1] + "\n");
             }

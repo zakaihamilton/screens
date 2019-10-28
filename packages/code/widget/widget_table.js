@@ -3,7 +3,7 @@
  @component WidgetTable
  */
 
-screens.widget.table = function WidgetTable(me, { core }) {
+screens.widget.table = function WidgetTable(me, { core, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "table"
@@ -35,11 +35,11 @@ screens.widget.table = function WidgetTable(me, { core }) {
     };
     me.dataByRows = {
         set: function (object, data) {
-            me.ui.node.removeChildren(object);
+            ui.node.removeChildren(object);
             if (data) {
                 var firstRowHeader = core.property.get(object, "firstRowHeader");
                 data.map(function (row, index) {
-                    me.ui.element.create({
+                    ui.element.create({
                         "ui.element.component": "widget.table.row",
                         "ui.basic.elements": row.map(function (item) {
                             var properties = Object.assign({}, item);

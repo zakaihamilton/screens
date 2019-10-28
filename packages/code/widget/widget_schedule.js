@@ -3,7 +3,7 @@
  @component WidgetSchedule
  */
 
-screens.widget.schedule = function WidgetSchedule(me, { core }) {
+screens.widget.schedule = function WidgetSchedule(me, { core, manager }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -138,7 +138,7 @@ screens.widget.schedule = function WidgetSchedule(me, { core }) {
             start,
             end
         };
-        var events = await me.manager.schedule.events(query);
+        var events = await manager.schedule.events(query);
         events = events.sort((a, b) => a.name.localeCompare(b.name));
         object.schedule_events = events;
         return events;
@@ -179,18 +179,18 @@ screens.widget.schedule = function WidgetSchedule(me, { core }) {
             monthCount = 11;
         }
         object.var.grid.scrollTop = 0;
-        var positions = me.ui.scroll.positions.get(object);
-        var region = me.ui.rect.absoluteRegion(object);
+        var positions = ui.scroll.positions.get(object);
+        var region = ui.rect.absoluteRegion(object);
         for (let month = 0; month < monthCount; month++) {
-            html += me.ui.html.item({
+            html += ui.html.item({
                 classes: ["widget-schedule-month-grid", type]
             }, () => {
-                return me.ui.html.item({
+                return ui.html.item({
                     classes: ["widget-schedule-month-grid", type]
                 }, () => {
                     var html = "";
                     for (let week = 0; week < weekCount; week++) {
-                        html += me.ui.html.item({
+                        html += ui.html.item({
                             classes: ["widget-schedule-week-grid", type],
                             styles: { width: region.width + "px", height: region.height + "px" }
                         }, () => {
@@ -232,14 +232,14 @@ screens.widget.schedule = function WidgetSchedule(me, { core }) {
                                         var dateAsString = me.formatDate(item.date);
                                         attributes.onclick = "screens.ui.clipboard.copy('" + dateAsString + "')";
                                     }
-                                    html += me.ui.html.item({ classes, styles, attributes, value: item.value });
+                                    html += ui.html.item({ classes, styles, attributes, value: item.value });
                                 }
                             });
                             for (let weekday = 0; weekday < weekdayCount; weekday++) {
                                 let dayDate = new Date(currentDate);
                                 dayDate.setMonth(currentDate.getMonth() + month);
                                 dayDate.setDate(currentDate.getDate() + (week * 7) + weekday);
-                                html += me.ui.html.item({
+                                html += ui.html.item({
                                     classes: ["widget-schedule-events-grid", type],
                                     styles: { "grid-column": (weekday + 1) }
                                 }, () => {
@@ -270,21 +270,21 @@ screens.widget.schedule = function WidgetSchedule(me, { core }) {
                                         for (let name in matches) {
                                             const events = matches[name];
                                             let classes = ["widget-schedule-event", type];
-                                            html += me.ui.html.item({ classes }, () => {
+                                            html += ui.html.item({ classes }, () => {
                                                 let html = "";
                                                 const user = core.string.title(events[0].user);
                                                 let classes = ["widget-schedule-event-name", type];
                                                 var label = "<b>" + user + "</b><br>" + name.split(" - ").join("<br>");
-                                                html += me.ui.html.item({ classes, value: label });
+                                                html += ui.html.item({ classes, value: label });
                                                 classes = ["widget-schedule-apps", type];
-                                                html += me.ui.html.item({ classes }, () => {
+                                                html += ui.html.item({ classes }, () => {
                                                     var html = "";
                                                     for (let event of matches[name]) {
                                                         let classes = ["widget-schedule-app", type];
                                                         let attributes = {
                                                             "onclick": "screens.widget.schedule.click(this," + event.eventIndex + ")"
                                                         };
-                                                        html += me.ui.html.item({ classes, attributes, value: event.app });
+                                                        html += ui.html.item({ classes, attributes, value: event.app });
                                                     }
                                                     return html;
                                                 });
@@ -303,29 +303,29 @@ screens.widget.schedule = function WidgetSchedule(me, { core }) {
             });
         }
         core.property.set(object.var.grid, "ui.basic.html", html);
-        me.ui.scroll.positions.set(object, positions);
+        ui.scroll.positions.set(object, positions);
     };
     me.click = function (object, index) {
-        var widget = me.ui.node.container(object, me.id);
+        var widget = ui.node.container(object, me.id);
         if (widget.schedule_methods.event) {
             var event = widget.schedule_events[index];
             core.property.set(widget, widget.schedule_methods.event, event);
         }
     };
     me.previous = function (object) {
-        var widget = me.ui.node.container(object, me.id);
+        var widget = ui.node.container(object, me.id);
         if (widget.schedule_methods.previous) {
             core.property.set(widget, widget.schedule_methods.previous);
         }
     };
     me.next = function (object) {
-        var widget = me.ui.node.container(object, me.id);
+        var widget = ui.node.container(object, me.id);
         if (widget.schedule_methods.next) {
             core.property.set(widget, widget.schedule_methods.next);
         }
     };
     me.today = function (object) {
-        var widget = me.ui.node.container(object, me.id);
+        var widget = ui.node.container(object, me.id);
         if (widget.schedule_methods.next) {
             core.property.set(widget, widget.schedule_methods.today);
         }

@@ -3,7 +3,7 @@
  @component AppLogin
  */
 
-screens.app.login = function AppLogin(me, { core }) {
+screens.app.login = function AppLogin(me, { core, ui }) {
     me.init = function () {
         core.listener.register(me.signin, core.login.id);
     };
@@ -12,7 +12,7 @@ screens.app.login = function AppLogin(me, { core }) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         me.autoLogin = args.length ? args[0] : false;
         me.signin();
         return me.singleton;

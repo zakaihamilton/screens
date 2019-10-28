@@ -3,7 +3,7 @@
  @component StorageDB
  */
 
-screens.storage.db = function StorageDB(me, { core }) {
+screens.storage.db = function StorageDB(me, { core, db }) {
     me.init = async function () {
         me.mongodb = require("mongodb");
         me.clusterHandle = null;
@@ -208,7 +208,7 @@ screens.storage.db = function StorageDB(me, { core }) {
             }
             const items = await cursor.toArray();
             if (params && params.project && params.project.user) {
-                const users = await me.db.shared.user.list();
+                const users = await db.shared.user.list();
                 for (const item of items) {
                     const user = users.find(user => user.user === item.user);
                     item.user = user ? user.name.split("@")[0] : "Unknown";
@@ -266,7 +266,7 @@ screens.storage.db = function StorageDB(me, { core }) {
             if (!location.timer) {
                 location.timer = setTimeout(async () => {
                     location.timer = null;
-                    await me.db.events.msg.send(location.componentId + ".emptyCache");
+                    await db.events.msg.send(location.componentId + ".emptyCache");
                 }, 5000);
             }
         }

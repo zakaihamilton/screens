@@ -3,7 +3,7 @@
  @component AppTranscribe
  */
 
-screens.app.transcribe = function AppTranscribe(me, { core }) {
+screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget }) {
     me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;
@@ -11,27 +11,27 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.groups = await me.media.file.groups();
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.groups = await media.file.groups();
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         me.singleton.args = args;
         return me.singleton;
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window.get(object);
-            me.ui.options.load(me, window, {
+            var window = widget.window.get(object);
+            ui.options.load(me, window, {
                 groupName: "American",
                 sessionName: "",
                 border: true,
                 editMode: false
             });
-            me.ui.options.toggleSet(me, null, {
+            ui.options.toggleSet(me, null, {
                 "editMode": me.updateTable,
                 "border": me.updateTable
             });
-            me.ui.options.choiceSet(me, null, {
+            ui.options.choiceSet(me, null, {
                 "fontSize": (object, value) => {
-                    var window = me.widget.window.get(object);
+                    var window = widget.window.get(object);
                     core.property.set(window.var.transcribe, "ui.style.fontSize", value);
                     me.updateTable(window);
                     core.property.notify(window, "update");
@@ -42,9 +42,9 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         }
     };
     me.refresh = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
-        me.groups = await me.media.file.groups(true);
+        me.groups = await media.file.groups(true);
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
     };
@@ -57,12 +57,12 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
                 group: "group",
                 itemMethod: "app.transcribe.groupName"
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.sessionMenuList = {
         get: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
@@ -77,16 +77,16 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
                     "Duration": "durationText"
                 }
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.session = {
         get: function (object, name) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             return window.options.sessionName === name;
         },
         set: async function (object, name) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var sessions = me.groups.find(group => groupName === group.name).sessions;
             if (sessions.length) {
@@ -96,7 +96,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
             }
             if (name) {
                 core.property.set(window, "name", name);
-                me.ui.options.save(me, window, { sessionName: name });
+                ui.options.save(me, window, { sessionName: name });
             }
             else {
                 core.property.set(window, "name", "");
@@ -106,7 +106,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         }
     };
     me.updateSessions = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
@@ -118,19 +118,19 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         }
     };
     me.loadTranscription = async function (object) {
-        var window = me.widget.window.get(object);
-        var { local } = await me.media.file.paths(window.options.groupName, window.options.sessionName);
+        var window = widget.window.get(object);
+        var { local } = await media.file.paths(window.options.groupName, window.options.sessionName);
         var transcription = await me.media.speech.load(local);
         window.transcribe_text = transcription;
         me.updateTable(window);
     };
     me.saveTranscription = async function (object) {
-        var window = me.widget.window.get(object);
-        var { local } = await me.media.file.paths(window.options.groupName, window.options.sessionName);
+        var window = widget.window.get(object);
+        var { local } = await media.file.paths(window.options.groupName, window.options.sessionName);
         await me.media.speech.save(local, window.transcribe_text);
     };
     me.updateTable = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.transcribe, {
             "ui.style.fontSize": window.options.fontSize,
             "ui.class.edit-mode": window.options.editMode
@@ -146,13 +146,13 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         core.property.notify(window, "update");
     };
     me.clear = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "name", "");
         window.transcribe_text = "";
         me.reload(window);
     };
     me.importData = function (object, text, title, options) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "widget.window.name", title);
         window.transcribe_text = text;
         if (!options) {
@@ -162,11 +162,11 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         me.reload(window);
     };
     me.exportData = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         return [window.transcribe_text, window.transcribe_options];
     };
     me.store = function (object, lineIndex) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var transcribe_text = window.transcribe_text;
         var lines = transcribe_text.split("\n");
         var line = lines[lineIndex];
@@ -176,7 +176,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
     };
     me.html = function (object) {
         let html = "";
-        let window = me.widget.window.get(object);
+        let window = widget.window.get(object);
         let editMode = window.options.editMode;
         var transcribe_text = window.transcribe_text;
         if (!transcribe_text) {
@@ -194,12 +194,12 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
             if (window.options.border) {
                 baseClasses.push("border");
             }
-            html += me.ui.html.item({
+            html += ui.html.item({
                 classes: ["app-transcribe-item", ...baseClasses],
                 attributes: { timestamp, lineIndex }
             }, () => {
                 let html = "";
-                html += me.ui.html.item({
+                html += ui.html.item({
                     tag: "div",
                     classes: ["app-transcribe-timestamp", ...baseClasses],
                     attributes: { timestamp, onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
@@ -207,19 +207,19 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
                 });
                 if (editMode) {
                     var method = "screens.app.transcribe.store(this," + lineIndex + ")";
-                    html += me.ui.html.item({
+                    html += ui.html.item({
                         tag: "input",
                         classes: ["app-transcribe-value", "input", ...baseClasses],
                         attributes: { type: "search", value: text, onsearch: method, oninput: method }
                     });
-                    html += me.ui.html.item({
+                    html += ui.html.item({
                         tag: "div",
                         classes: ["app-transcribe-speech", ...baseClasses],
                         attributes: { onclick: "screens.app.transcribe.toggleSpeech(this)" }
                     });
                 }
                 else {
-                    html += me.ui.html.item({
+                    html += ui.html.item({
                         tag: "div",
                         classes: ["app-transcribe-value", ...baseClasses],
                         attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
@@ -232,20 +232,20 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         return html;
     };
     me.toggleSpeech = function (object) {
-        var window = me.widget.window.get(object);
-        var input = me.ui.node.findByTag(object.parentNode, "input");
-        core.property.object.create(me.widget.input, input);
-        var result = me.ui.speech.toggle(input);
+        var window = widget.window.get(object);
+        var input = ui.node.findByTag(object.parentNode, "input");
+        core.property.object.create(widget.input, input);
+        var result = ui.speech.toggle(input);
         core.property.set(object, "ui.class.speechActive", result);
-        me.ui.node.iterate(window, (element) => {
+        ui.node.iterate(window, (element) => {
             if (element !== object && element !== input) {
-                me.ui.speech.stop(element);
+                ui.speech.stop(element);
                 core.property.set(element, "ui.class.speechActive", false);
             }
         });
     };
     me.reload = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var args = window.args;
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
@@ -260,7 +260,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         }
     };
     me.goto = async function (object, timestamp) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var [, hour, min, sec] = timestamp.split(/(\d+):(\d+):(\d+)/);
         var duration = (parseInt(hour) * 3600) + (parseInt(min) * 60) + parseInt(sec);
         var groupName = window.options.groupName;
@@ -272,7 +272,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         }
     };
     me.inView = function (object, parent) {
-        var region = me.ui.rect.relativeRegion(object, parent);
+        var region = ui.rect.relativeRegion(object, parent);
         var inView = true;
         if (parent.scrollTop > region.top) {
             inView = false;
@@ -311,7 +311,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
                 if (item.method) {
                     method = item.method;
                 }
-                me.widget.player.controls[method].apply(null, args);
+                widget.player.controls[method].apply(null, args);
             }
         }
     };
@@ -319,7 +319,7 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
         var window = me.singleton;
         var player = core.app.singleton("player");
         if (player && player.var.player) {
-            var time = me.widget.player.controls.time(player.var.player);
+            var time = widget.player.controls.time(player.var.player);
             var duration = parseInt(time / 10) * 10;
             var scroll = false;
             if (window.duration !== duration) {
@@ -327,13 +327,13 @@ screens.app.transcribe = function AppTranscribe(me, { core }) {
                 scroll = true;
             }
             var name = core.string.formatDuration(duration);
-            me.ui.node.iterate(window, (element) => {
+            ui.node.iterate(window, (element) => {
                 var match = element.getAttribute("timestamp") === name;
                 core.property.set(element, "ui.class.now", match);
                 if (match && scroll) {
                     var inView = me.inView(element, window.var.container);
                     if (!inView) {
-                        me.ui.scroll.toWidget(element, window.var.container, 10);
+                        ui.scroll.toWidget(element, window.var.container, 10);
                     }
                 }
             });

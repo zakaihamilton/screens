@@ -102,7 +102,7 @@ screens.kab.letters = function KabLetters(me) {
     };
     me.source = {
         set: function (object, value) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             window.kab_info = Object.assign({}, value);
             var sources = window.kab_info.sources;
             for (var source of sources) {
@@ -207,7 +207,7 @@ screens.kab.letters = function KabLetters(me) {
     me.text = {
         get: function (object) {
             var values = [];
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             me.letters(info => {
                 values.push([
                     info.row,
@@ -223,7 +223,7 @@ screens.kab.letters = function KabLetters(me) {
     };
     me.numerology = function (object) {
         var values = [];
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         me.letters(info => {
             values.push([info.row, info.column, info.number]);
         }, window.kab_info);
@@ -231,7 +231,7 @@ screens.kab.letters = function KabLetters(me) {
     };
     me.pronunciation = function (object) {
         var values = [];
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         me.letters(info => {
             values.push([info.row, info.column, info.pronunciation]);
         }, window.kab_info);

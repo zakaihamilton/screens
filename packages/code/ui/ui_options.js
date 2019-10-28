@@ -3,7 +3,7 @@
  @component UIOptions
  */
 
-screens.ui.options = function UIOptions(me, { core }) {
+screens.ui.options = function UIOptions(me, { core, storage }) {
     me.getStorage = function (component, object) {
         var storage = "local";
         if (object && object.storageName) {
@@ -24,11 +24,11 @@ screens.ui.options = function UIOptions(me, { core }) {
     };
     me.storageKey = function (component, object) {
         var storageKey = component.id + ".options";
-        var validKey = me.storage.local.validKey(storageKey);
+        var validKey = storage.local.validKey(storageKey);
         return validKey;
     };
     me.load = function (component, object, defaults) {
-        var value = me.storage.local.get(me.storageKey(component, object));
+        var value = storage.local.get(me.storageKey(component, object));
         var options = component.options;
         if (object) {
             options = object.options;
@@ -56,7 +56,7 @@ screens.ui.options = function UIOptions(me, { core }) {
         else {
             component.options = allOptions;
         }
-        me.storage.local.set(me.storageKey(component, object), JSON.stringify(allOptions));
+        storage.local.set(me.storageKey(component, object), JSON.stringify(allOptions));
     };
     me.toggleSet = function (component, toTargetCallback, key, callback) {
         if (typeof key === "object") {
@@ -104,7 +104,7 @@ screens.ui.options = function UIOptions(me, { core }) {
                     core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
-                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
+                    storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
@@ -155,7 +155,7 @@ screens.ui.options = function UIOptions(me, { core }) {
                     core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
-                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
+                    storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
@@ -209,7 +209,7 @@ screens.ui.options = function UIOptions(me, { core }) {
                     core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
-                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
+                    storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
