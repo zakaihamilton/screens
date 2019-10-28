@@ -4,7 +4,7 @@
  */
 
 screens.ui.options = function UIOptions(me, { core, storage }) {
-    me.getStorage = function (component, object) {
+    me.getStorageType = function (component, object) {
         var storage = "local";
         if (object && object.storageName) {
             storage = object.storageName;
@@ -94,7 +94,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                         object = toTargetCallback(object);
                     }
                 }
-                var storage = me.getStorage(component, object);
+                var storageType = me.getStorageType(component, object);
                 var options = component.options;
                 if (object && object.options) {
                     options = object.options;
@@ -103,7 +103,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                 if (callback) {
                     core.message.send(callback, object, options[key], key, options);
                 }
-                if (storage) {
+                if (storageType) {
                     storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
@@ -145,7 +145,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                         object = toTargetCallback(object);
                     }
                 }
-                var storage = me.getStorage(component, object);
+                var storageType = me.getStorageType(component, object);
                 var options = component.options;
                 if (object && object.options) {
                     options = object.options;
@@ -154,7 +154,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                 if (callback) {
                     core.message.send(callback, object, options[key], key, options);
                 }
-                if (storage) {
+                if (storageType) {
                     storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
@@ -196,7 +196,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                         object = toTargetCallback(object);
                     }
                 }
-                var storage = me.getStorage(component, object);
+                var storageType = me.getStorageType(component, object);
                 var options = component.options;
                 if (object && object.options) {
                     options = object.options;
@@ -208,7 +208,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                 if (callback) {
                     core.message.send(callback, object, options[key], key, options);
                 }
-                if (storage) {
+                if (storageType) {
                     storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }

@@ -3,7 +3,7 @@
  @component WidgetWindow
  */
 
-screens.widget.window = function WidgetWindow(me, { core, ui }) {
+screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
     me.init = function () {
         me.element = {
             dependencies: {

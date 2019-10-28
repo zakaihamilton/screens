@@ -15,9 +15,9 @@ screens.core.method = function CoreMethod(me, { core }) {
             keys.push("upper");
             var list = [];
             components.map(component => {
-                let properties = Object.keys(me.browse(component));
+                let properties = Object.keys(screens.browse(component));
                 properties = properties.filter(property => !keys.includes(property));
-                properties = properties.filter(property => typeof me.browse(component + "." + property) === "function");
+                properties = properties.filter(property => typeof screens.browse(component + "." + property) === "function");
                 properties = properties.filter(property => (component + "." + property).toLowerCase().includes(text));
                 if (!properties.length) {
                     if (!component.toLowerCase().includes(text)) {

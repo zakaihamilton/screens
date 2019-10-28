@@ -168,7 +168,7 @@ screens.storage.data = function StorageData(me, { core }) {
                 continue;
             }
             var targetId = "db." + collection + "." + target;
-            var targetComponent = me.browse(targetId);
+            var targetComponent = screens.browse(targetId);
             if (!targetComponent) {
                 throw targetId + " not found in db package";
             }
