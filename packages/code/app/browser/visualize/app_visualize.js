@@ -3,7 +3,7 @@
  @component AppVisualize
  */
 
-screens.app.visualize = function AppVisualize(me, { core, ui }) {
+screens.app.visualize = function AppVisualize(me, { core, ui, widget }) {
     me.init = async function () {
         await ui.transform.implement(me);
         await ui.content.implement(me);
@@ -291,8 +291,7 @@ screens.app.visualize = function AppVisualize(me, { core, ui }) {
     };
     me.touchMove = function (object, event) {
         var window = widget.window.get(object);
-        var widget = window.var.terms;
-        var target_region = ui.rect.relativeRegion(widget);
+        var target_region = ui.rect.relativeRegion(object);
         var left = event.clientX - target_region.left + widget.scrollLeft;
         var top = event.clientY - target_region.top + widget.scrollTop;
         window.termPos = {

@@ -637,7 +637,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
     };
 };
 
-screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui }) {
+screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui, lib }) {
     me.init = function () {
         me.definitionCounter = 0;
         me.associatedCounter = 0;
@@ -687,7 +687,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui })
         var counter = ++me.definitionCounter;
         let field = ui.node.findByName(widget.var.popup, "definition");
         core.property.set(field, "ui.basic.html", "");
-        var definition = await me.lib.dictionary.definition(term.text);
+        var definition = await lib.dictionary.definition(term.text);
         var text = "";
         if (definition) {
             if (definition.google) {

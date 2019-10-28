@@ -3,7 +3,7 @@
  @component UIWindowKey
  */
 
-screens.ui.windowkey = function UIWindowKey(me, { core }) {
+screens.ui.windowkey = function UIWindowKey(me, { core, widget }) {
     me.lookup = {
         get: function (object, value, property) {
             if (property.endsWith("-")) {

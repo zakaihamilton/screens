@@ -3,7 +3,7 @@
  @component MediaFile
  */
 
-screens.media.file = function MediaFile(me, { core, storage, media, db }) {
+screens.media.file = function MediaFile(me, { core, storage, media, db, manager }) {
     me.resolutions = ["800x600", "1024x768"];
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
@@ -187,9 +187,9 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
             for (var file of files) {
                 if (file.extension === "m4a") {
                     try {
-                        if (!me.media.speech.exists(file.local)) {
+                        if (!media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);
-                            await me.media.speech.transcribe(file.local);
+                            await media.speech.transcribe(file.local);
                             var info = await manager.download.clean(me.tempDir, "flac");
                             me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                         }

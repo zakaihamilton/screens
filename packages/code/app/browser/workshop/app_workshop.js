@@ -3,7 +3,7 @@
  @component AppWorkshop
  */
 
-screens.app.workshop = function AppWorkshop(me, { core, ui }) {
+screens.app.workshop = function AppWorkshop(me, { core, ui, widget, lib }) {
     me.init = async function () {
         await ui.shared.implement(me);
     };
@@ -52,7 +52,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui }) {
     };
     me.refresh = async function (object) {
         var window = widget.window.get(object);
-        var names = await me.lib.zoom.participants(window.options.shuffle, window.options.test);
+        var names = await lib.zoom.participants(window.options.shuffle, window.options.test);
         if (window.options.filter) {
             names = names.filter(name => !name.toLowerCase().includes("listen"));
         }

@@ -3,7 +3,7 @@
  @component WidgetRichEditor
  */
 
-screens.widget.richeditor = function WidgetRichEditor(me, { core }) {
+screens.widget.richeditor = function WidgetRichEditor(me, { core, widget, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

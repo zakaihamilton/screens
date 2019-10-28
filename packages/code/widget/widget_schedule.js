@@ -3,7 +3,7 @@
  @component WidgetSchedule
  */
 
-screens.widget.schedule = function WidgetSchedule(me, { core, manager }) {
+screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",

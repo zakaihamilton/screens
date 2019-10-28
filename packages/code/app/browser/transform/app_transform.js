@@ -3,7 +3,7 @@
  @component AppTransform
  */
 
-screens.app.transform = function AppTransform(me, { core, ui }) {
+screens.app.transform = function AppTransform(me, { core, ui, widget }) {
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);

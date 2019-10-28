@@ -3,7 +3,7 @@
  @component UIMove
  */
 
-screens.ui.move = function UIMove(me, { core }) {
+screens.ui.move = function UIMove(me, { core, ui, widget }) {
     me.snapSensitivity = 75;
     me.enabled = {
         get: function (object) {

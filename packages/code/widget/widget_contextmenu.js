@@ -3,7 +3,7 @@
  @component WidgetContextMenu
  */
 
-screens.widget.contextmenu = function WidgetContextMenu(me, { core }) {
+screens.widget.contextmenu = function WidgetContextMenu(me, { core, widget, ui }) {
     me.resizable = {
         get: function (object) {
             var window = widget.window.get(object);

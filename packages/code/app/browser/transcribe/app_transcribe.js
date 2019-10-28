@@ -120,14 +120,14 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
     me.loadTranscription = async function (object) {
         var window = widget.window.get(object);
         var { local } = await media.file.paths(window.options.groupName, window.options.sessionName);
-        var transcription = await me.media.speech.load(local);
+        var transcription = await media.speech.load(local);
         window.transcribe_text = transcription;
         me.updateTable(window);
     };
     me.saveTranscription = async function (object) {
         var window = widget.window.get(object);
         var { local } = await media.file.paths(window.options.groupName, window.options.sessionName);
-        await me.media.speech.save(local, window.transcribe_text);
+        await media.speech.save(local, window.transcribe_text);
     };
     me.updateTable = function (object) {
         var window = widget.window.get(object);

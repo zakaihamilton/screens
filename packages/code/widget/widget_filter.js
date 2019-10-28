@@ -3,7 +3,7 @@
  @component WidgetFilter
  */
 
-screens.widget.filter = function WidgetFilter(me, { core }) {
+screens.widget.filter = function WidgetFilter(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["line"]
