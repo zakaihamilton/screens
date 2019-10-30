@@ -14,7 +14,13 @@ screens.media.ffmpeg = function MediaFFMpeg(me) {
             let percent = 0;
             var instance = me.ffmpeg(source);
             for (var key in options) {
-                instance[key](options[key]);
+                const param = options[key];
+                if (typeof param === "undefined") {
+                    instance[key]();
+                }
+                else {
+                    instance[key](param);
+                }
             }
             instance.on("error", function (err) {
                 me.log("An error occurred: " + err.message);
