@@ -3,22 +3,22 @@
  @component AppPrism
  */
 
-screens.app.prism = function AppPrism(me, { core }) {
+screens.app.prism = function AppPrism(me, { core, ui, widget, kab }) {
     me.init = async function () {
-        await me.ui.transform.implement(me);
+        await ui.transform.implement(me);
     };
     me.launch = function (args) {
         if (!args) {
             args = [""];
         }
-        var window = me.ui.element.create(me.json, "workspace", "self");
+        var window = ui.element.create(me.json, "workspace", "self");
         return window;
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var options = me.transform.options();
-            me.ui.options.load(me, window, Object.assign({
+            ui.options.load(me, window, Object.assign({
                 doTranslation: false,
                 doExplanation: true,
                 prioritizeExplanation: true,
@@ -34,11 +34,11 @@ screens.app.prism = function AppPrism(me, { core }) {
                 animation: true,
                 autoRotate: false
             }, options.load));
-            me.ui.options.toggleSet(me, null, Object.assign({
+            ui.options.toggleSet(me, null, Object.assign({
                 "animation": me.reload,
                 "autoRotate": me.update
             }, options.toggle));
-            me.ui.options.choiceSet(me, null, Object.assign({
+            ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
                     core.property.set(window.var.viewer, "ui.style.fontSize", value);
                     core.property.notify(window, "reload");
@@ -50,7 +50,7 @@ screens.app.prism = function AppPrism(me, { core }) {
         }
     };
     me.update = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var autoRotate = window.options.autoRotate;
         var viewer = window.var.viewer;
         if (autoRotate) {
@@ -69,11 +69,11 @@ screens.app.prism = function AppPrism(me, { core }) {
         }
     };
     me.reload = async function (object) {
-        var window = me.widget.window.get(object);
-        var root = me.kab.form.root();
-        var list = me.kab.draw.list(root, []);
+        var window = widget.window.get(object);
+        var root = kab.form.root();
+        var list = kab.draw.list(root, []);
         window.options.termMethod = "app.prism.transform.term";
-        var html = await me.kab.draw.html(window, list, window.options);
+        var html = await kab.draw.html(window, list, window.options);
         window.var.viewer.rotateDirection = false;
         core.property.set(window.var.viewer, "ui.basic.html", html);
         core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
@@ -81,12 +81,12 @@ screens.app.prism = function AppPrism(me, { core }) {
         core.property.notify(window, "update");
     };
     me.resetRotation = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         me.rotate(window, 0);
     };
     me.rotateEvent = function (object, event) {
-        var target_region = me.ui.rect.absoluteRegion(object);
-        if (event.type === me.ui.touch.eventNames["down"]) {
+        var target_region = ui.rect.absoluteRegion(object);
+        if (event.type === ui.touch.eventNames["down"]) {
             core.property.set(object, {
                 "ui.touch.move": "app.prism.rotateEvent",
                 "ui.touch.up": "app.prism.rotateEvent"
@@ -95,7 +95,7 @@ screens.app.prism = function AppPrism(me, { core }) {
             object.rotateMode = false;
             object.rotateStartAngle = object.rotateAngle;
         }
-        else if (event.type === me.ui.touch.eventNames["move"]) {
+        else if (event.type === ui.touch.eventNames["move"]) {
             if (!object.rotateMode && event.clientX > object.rotateLeft - 10 && event.clientX < object.rotateLeft + 10) {
                 return;
             }
@@ -106,7 +106,7 @@ screens.app.prism = function AppPrism(me, { core }) {
             }
             me.rotate(object, angle);
         }
-        else if (event.type === me.ui.touch.eventNames["up"]) {
+        else if (event.type === ui.touch.eventNames["up"]) {
             object.rotateMode = false;
             core.property.set(object, {
                 "ui.touch.move": null,
@@ -115,7 +115,7 @@ screens.app.prism = function AppPrism(me, { core }) {
         }
     };
     me.rotate = function (object, angle) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var x = 0, y = 100, z = 0;
         angle = core.util.range(angle, -70, 70);
         window.var.viewer.rotateAngle = angle;
@@ -124,9 +124,9 @@ screens.app.prism = function AppPrism(me, { core }) {
         });
     };
     me.resize = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.container, "ui.style.overflow", "hidden");
-        var target_region = me.ui.rect.absoluteRegion(window.var.container);
+        var target_region = ui.rect.absoluteRegion(window.var.container);
         var size = target_region.width > target_region.height ? target_region.height : target_region.width;
         core.property.set(window.var.viewer, {
             "ui.style.top": ((target_region.height - size) / 2) + "px",

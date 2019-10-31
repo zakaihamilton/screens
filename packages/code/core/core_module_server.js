@@ -3,7 +3,7 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me, { core }) {
+screens.core.module = function CoreModule(me, { core, storage, db }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
@@ -294,13 +294,13 @@ screens.core.module = function CoreModule(me, { core }) {
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
-                    me.db.events.msg.send(me.id + ".emptyCache");
-                    me.storage.local.empty();
+                    db.events.msg.send(me.id + ".emptyCache");
+                    storage.local.empty();
                     info.body = "Local Cache Empty";
                     return;
                 }
                 if (info.url.startsWith("/upgrade")) {
-                    me.db.events.msg.send(me.id + ".emptyCache");
+                    db.events.msg.send(me.id + ".emptyCache");
                     await core.server.upgrade();
                     info.body = "Upgrade complete";
                     return;

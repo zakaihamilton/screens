@@ -3,7 +3,7 @@
  @component LibZoom
  */
 
-screens.lib.zoom = function LibZoom(me, { core }) {
+screens.lib.zoom = function LibZoom(me, { core, db }) {
     me.init = async function () {
         me.request = require("request");
         me.shuffleSeed = require("shuffle-seed");
@@ -74,12 +74,12 @@ screens.lib.zoom = function LibZoom(me, { core }) {
     };
     me.receive = async function (info) {
         if (info.method === "POST" && info.url == "/zoom") {
-            me.db.events.participants.push(JSON.parse(info.body));
+            db.events.participants.push(JSON.parse(info.body));
         }
     };
     me.participants = async function (shuffle = false, test = false) {
         var users = {};
-        var events = await me.db.events.participants.list();
+        var events = await db.events.participants.list();
         var uuid = "";
         for (var event of events) {
             if (event.event === "meeting_started") {

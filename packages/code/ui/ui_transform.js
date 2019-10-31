@@ -3,7 +3,7 @@
  @component UITransform
  */
 
-screens.ui.transform = function UITransform(me, { core }) {
+screens.ui.transform = function UITransform(me, { core, widget, kab }) {
     me.transform = {
         menu: function () {
             var prefix = me.id + ".";
@@ -191,7 +191,7 @@ screens.ui.transform = function UITransform(me, { core }) {
             };
         },
         term: async function (object, text) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             window.options.clickCallback = "screens.widget.transform.popup.open";
             var language = window.options.language.toLowerCase();
             if (language === "auto") {
@@ -204,7 +204,7 @@ screens.ui.transform = function UITransform(me, { core }) {
             var options = Object.assign({}, window.options);
             options.ignorePrefix = true;
             var result = await core.util.map(array, async (text) => {
-                var info = await me.kab.text.parse(language, text, options);
+                var info = await kab.text.parse(language, text, options);
                 if (!window.termData) {
                     window.termData = { terms: {} };
                 }

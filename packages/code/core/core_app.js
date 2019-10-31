@@ -3,7 +3,7 @@
  @component CoreApp
  */
 
-screens.core.app = function CoreApp(me, { core, ui, app }) {
+screens.core.app = function CoreApp(me, { core, app }) {
     me.init = async function () {
         core.listener.register(me.sendReady, core.login.id);
     };
@@ -11,7 +11,7 @@ screens.core.app = function CoreApp(me, { core, ui, app }) {
         let methods = {};
         for (var name of screens.components) {
             await core.util.performance(name + ".ready", async () => {
-                let component = me.browse(name);
+                let component = screens.browse(name);
                 if (component.remote) {
                     return;
                 }
@@ -23,7 +23,7 @@ screens.core.app = function CoreApp(me, { core, ui, app }) {
                 }
             });
         }
-        let results = await me.core.client.send(methods);
+        let results = await core.client.send(methods);
         for (let method in results) {
             await core.message.send(method, results[method]);
         }

@@ -3,7 +3,7 @@
  @component StartupApp
  */
 
-screens.startup.app = function StartupApp(me, { core }) {
+screens.startup.app = function StartupApp(me, { core, ui }) {
     me.firstTime = true;
     me.init = function () {
         core.listener.register(me.start, core.login.id);
@@ -12,14 +12,14 @@ screens.startup.app = function StartupApp(me, { core }) {
         });
     };
     me.startup = async function () {
-        me.ui.element.create([
+        ui.element.create([
             {
                 "ui.element.component": "widget.desktop",
                 "ui.basic.var": "desktop"
             }
         ]);
         try {
-            var progress = me.ui.modal.launch("progress", {
+            var progress = ui.modal.launch("progress", {
                 "title": "Loading",
                 "delay": "1000"
             });

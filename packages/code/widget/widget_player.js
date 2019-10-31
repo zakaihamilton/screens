@@ -3,7 +3,7 @@
  @component WidgetPlayer
  */
 
-screens.widget.player = function WidgetPlayer(me, { core }) {
+screens.widget.player = function WidgetPlayer(me, { core, ui, widget }) {
     me.showError = function (e) {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
@@ -24,39 +24,39 @@ screens.widget.player = function WidgetPlayer(me, { core }) {
         }
     };
     me.duration = function (object) {
-        var widget = me.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.mainWidget(object);
+        var player = mainWidget.var.player;
         return player.duration;
     };
     me.path = function (object) {
-        var widget = me.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.mainWidget(object);
+        var player = mainWidget.var.player;
         return decodeURI(player.src);
     };
     me.mainWidget = function (object) {
-        var widget = me.ui.node.container(object, [
-            me.widget.player.audio.id,
-            me.widget.player.video.id
+        var container = ui.node.container(object, [
+            widget.player.audio.id,
+            widget.player.video.id
         ]);
-        return widget;
+        return container;
     };
     me.type = {
         get: function (object) {
-            var widget = me.mainWidget(object);
-            return widget.type;
+            var mainWidget = me.mainWidget(object);
+            return mainWidget.type;
         },
         set: function (object, type) {
-            var widget = me.mainWidget(object);
-            widget.type = type;
+            var mainWidget = me.mainWidget(object);
+            mainWidget.type = type;
         }
     };
     me.resize = function (object) {
-        var widget = me.mainWidget(object);
-        var background = widget.var.controls.var.progress;
-        if (widget.wavesurfer) {
-            widget.wavesurfer.setHeight(background.offsetHeight);
+        var mainWidget = me.mainWidget(object);
+        var background = mainWidget.var.controls.var.progress;
+        if (mainWidget.wavesurfer) {
+            mainWidget.wavesurfer.setHeight(background.offsetHeight);
         }
-        core.property.set(widget, "update");
+        core.property.set(mainWidget, "update");
     };
 };
 
@@ -116,7 +116,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me, { core }) {
     };
 };
 
-screens.widget.player.video = function WidgetPlayerVideo(me, { core }) {
+screens.widget.player.video = function WidgetPlayerVideo(me, { core, ui, widget }) {
     me.init = function () {
         core.property.link("ui.style.display", "update", false);
     };
@@ -154,17 +154,17 @@ screens.widget.player.video = function WidgetPlayerVideo(me, { core }) {
         }
     };
     me.update = function (object) {
-        var window = me.widget.window.get(object);
-        var widget = me.upper.mainWidget(object);
-        var windowRegion = me.ui.rect.absoluteRegion(window);
-        var playerRegion = me.ui.rect.relativeRegion(widget, window);
-        var controlsRegion = me.ui.rect.relativeRegion(widget.var.controls, window);
+        var window = widget.window.get(object);
+        var mainWidget = me.upper.mainWidget(object);
+        var windowRegion = ui.rect.absoluteRegion(window);
+        var playerRegion = ui.rect.relativeRegion(mainWidget, window);
+        var controlsRegion = ui.rect.relativeRegion(mainWidget.var.controls, window);
         var widthText = "";
         var heightText = "";
         var percent = (((windowRegion.height - playerRegion.top - controlsRegion.height) / windowRegion.height) * 100);
         heightText = parseInt(percent) + "%";
-        core.property.set(widget.var.player, "ui.style.width", widthText);
-        core.property.set(widget.var.player, "ui.style.height", heightText);
+        core.property.set(mainWidget.var.player, "ui.style.width", widthText);
+        core.property.set(mainWidget.var.player, "ui.style.height", heightText);
     };
     me.source = {
         get: function (object) {
@@ -187,7 +187,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me, { core }) {
     };
 };
 
-screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
+screens.widget.player.controls = function WidgetPlayerControls(me, { core, media, db, widget }) {
     me.element = {
         properties: {
             "ui.basic.var": "controls",
@@ -320,7 +320,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
             ]
         },
         draw: function (object) {
-            var widget = me.upper.mainWidget(object);
+            var mainWidget = me.upper.mainWidget(object);
             var background = object.var.controls.var.progress.var.background;
             var plugins = [];
             if (!core.device.isMobile()) {
@@ -346,44 +346,44 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
                 };
                 plugins.push(plugin);
             }
-            widget.wavesurfer = WaveSurfer.create({
+            mainWidget.wavesurfer = WaveSurfer.create({
                 container: background,
                 waveColor: "#669966",
                 progressColor: "#669966",
                 backend: "MediaElement",
                 plugins
             });
-            widget.wavesurfer.on("waveform-ready", () => {
-                me.updatePeaks(widget);
+            mainWidget.wavesurfer.on("waveform-ready", () => {
+                me.updatePeaks(mainWidget);
             });
         }
     };
     me.isPlaying = function (object) {
-        var widget = me.upper.mainWidget(object);
-        return !(widget.var.player.paused || widget.var.player.ended);
+        var mainWidget = me.upper.mainWidget(object);
+        return !(mainWidget.var.player.paused || mainWidget.var.player.ended);
     };
     me.play = function (object) {
-        var widget = me.upper.mainWidget(object);
-        if (widget.var.player.paused || widget.var.player.ended) {
+        var mainWidget = me.upper.mainWidget(object);
+        if (mainWidget.var.player.paused || mainWidget.var.player.ended) {
             try {
-                widget.var.player.play();
+                mainWidget.var.player.play();
             }
             catch (err) {
                 alert(err);
             }
         }
         else {
-            widget.var.player.pause();
+            mainWidget.var.player.pause();
         }
-        me.updateButtons(widget.var.player);
-        me.updatePlayer(widget.var.player);
+        me.updateButtons(mainWidget.var.player);
+        me.updatePlayer(mainWidget.var.player);
     };
     me.stop = function (object) {
-        var widget = me.upper.mainWidget(object);
-        widget.var.player.pause();
-        widget.var.player.currentTime = 0;
-        me.updateProgress(widget);
-        me.updateButtons(widget);
+        var mainWidget = me.upper.mainWidget(object);
+        mainWidget.var.player.pause();
+        mainWidget.var.player.currentTime = 0;
+        me.updateProgress(mainWidget);
+        me.updateButtons(mainWidget);
         me.updatePlayer(object);
     };
     me.update = function (object) {
@@ -395,19 +395,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         me.updatePeaks(object);
     };
     me.updatePlayer = function (object) {
-        var widget = me.upper.mainWidget(object);
-        core.property.set(widget, "update");
+        var mainWidget = me.upper.mainWidget(object);
+        core.property.set(mainWidget, "update");
     };
     me.updateFullscreen = function (object) {
-        var window = me.widget.window.get(object);
-        var widget = me.upper.mainWidget(object);
+        var window = widget.window.get(object);
+        var mainWidget = me.upper.mainWidget(object);
         var fullscreen = core.property.get(window, "fullscreen");
-        core.property.set(widget, "ui.class.fullscreen", fullscreen);
+        core.property.set(mainWidget, "ui.class.fullscreen", fullscreen);
     };
     me.updateLink = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var controls = widget.var.controls;
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var controls = mainWidget.var.controls;
+        var player = mainWidget.var.player;
         core.property.set(controls.var.download, "ui.attribute.href", player.src);
     };
     me.formatTime = function (currentTime) {
@@ -419,10 +419,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         return current_time;
     };
     me.updateProgress = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var controls = widget.var.controls;
+        var mainWidget = me.upper.mainWidget(object);
+        var controls = mainWidget.var.controls;
         var progress = controls.var.progress;
-        var player = widget.var.player;
+        var player = mainWidget.var.player;
         var percentage = 0;
         if (player.duration) {
             percentage = (100 / player.duration) * player.currentTime;
@@ -439,9 +439,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         core.property.set(progress, "label", label);
     };
     me.updateButtons = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var controls = widget.var.controls;
-        var showPause = !widget.var.player.paused && !widget.var.player.ended;
+        var mainWidget = me.upper.mainWidget(object);
+        var controls = mainWidget.var.controls;
+        var showPause = !mainWidget.var.player.paused && !mainWidget.var.player.ended;
         core.property.set(controls.var.play, "ui.class.pause", showPause);
     };
     me.seekStart = function (object, event) {
@@ -472,8 +472,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         object.over = false;
     };
     me.seekEvent = function (object, event) {
-        var widget = me.upper.mainWidget(object);
-        var controls = widget.var.controls;
+        var mainWidget = me.upper.mainWidget(object);
+        var controls = mainWidget.var.controls;
         var percent = 0;
         if (event.offsetX >= 0 && controls.var.progress.clientWidth) {
             percent = event.offsetX / controls.var.progress.clientWidth;
@@ -484,46 +484,46 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         if (percent > 1) {
             percent = 1;
         }
-        widget.var.player.currentTime = parseInt(percent * widget.var.player.duration);
+        mainWidget.var.player.currentTime = parseInt(percent * mainWidget.var.player.duration);
         me.updateProgress(object);
         me.updatePlayer(object);
         event.stopPropagation();
     };
     me.rewind = function (object, seconds) {
-        var widget = me.upper.mainWidget(object);
+        var mainWidget = me.upper.mainWidget(object);
         if (typeof seconds !== "number") {
-            seconds = widget.jumpTime;
+            seconds = mainWidget.jumpTime;
             if (!seconds) {
                 seconds = 10;
             }
         }
-        widget.var.player.currentTime -= parseInt(seconds);
+        mainWidget.var.player.currentTime -= parseInt(seconds);
         me.update(object);
     };
     me.forward = function (object, seconds) {
-        var widget = me.upper.mainWidget(object);
+        var mainWidget = me.upper.mainWidget(object);
         if (typeof seconds !== "number") {
-            seconds = widget.jumpTime;
+            seconds = mainWidget.jumpTime;
             if (!seconds) {
                 seconds = 10;
             }
         }
-        widget.var.player.currentTime += parseInt(seconds);
+        mainWidget.var.player.currentTime += parseInt(seconds);
         me.update(object);
     };
     me.seek = function (object, time) {
-        var widget = me.upper.mainWidget(object);
-        widget.var.player.currentTime = parseInt(time);
+        var mainWidget = me.upper.mainWidget(object);
+        mainWidget.var.player.currentTime = parseInt(time);
         me.update(object);
     };
     me.time = function (object) {
-        var widget = me.upper.mainWidget(object);
-        return widget.var.player.currentTime;
+        var mainWidget = me.upper.mainWidget(object);
+        return mainWidget.var.player.currentTime;
     };
     me.fullscreen = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
-        if (widget.type === "video") {
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
+        if (mainWidget.type === "video") {
             if (player.requestFullscreen) {
                 player.requestFullscreen();
             }
@@ -551,75 +551,75 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
         }
     };
     me.previous = async function (object) {
-        var widget = me.upper.mainWidget(object);
-        core.property.set(widget, "previous");
+        var mainWidget = me.upper.mainWidget(object);
+        core.property.set(mainWidget, "previous");
     };
     me.next = async function (object) {
-        var widget = me.upper.mainWidget(object);
-        core.property.set(widget, "next");
+        var mainWidget = me.upper.mainWidget(object);
+        core.property.set(mainWidget, "next");
     };
     me.speedName = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
         var rate = player.playbackRate;
-        var speeds = Object.values(me.media.voice.speeds);
+        var speeds = Object.values(media.voice.speeds);
         var index = speeds.indexOf(rate);
         var name = null;
         if (index !== -1) {
-            var names = Object.keys(me.media.voice.speeds);
+            var names = Object.keys(media.voice.speeds);
             name = names[index];
         }
         return name;
     };
     me.speed = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
         return player.playbackRate;
     };
     me.setSpeed = function (object, speed) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
         player.defaultPlaybackRate = player.playbackRate = speed;
     };
     me.setJumpTime = function (object, jumpTime) {
-        var widget = me.upper.mainWidget(object);
-        widget.jumpTime = jumpTime;
+        var mainWidget = me.upper.mainWidget(object);
+        mainWidget.jumpTime = jumpTime;
     };
     me.speedUp = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
         var rate = player.playbackRate;
-        var speeds = Object.values(me.media.voice.speeds);
+        var speeds = Object.values(media.voice.speeds);
         var index = speeds.indexOf(rate);
         if (index !== speeds.length - 1) {
             index++;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
-            var name = Object.keys(me.media.voice.speeds)[index];
+            var name = Object.keys(media.voice.speeds)[index];
             var message = "Speeding up playback to " + name;
-            message += " (x" + me.media.voice.speeds[name] + ")";
-            me.widget.toast.show("widget.player.speed", message);
+            message += " (x" + media.voice.speeds[name] + ")";
+            mainWidget.toast.show("widget.player.speed", message);
         }
     };
     me.speedDown = function (object) {
-        var widget = me.upper.mainWidget(object);
-        var player = widget.var.player;
+        var mainWidget = me.upper.mainWidget(object);
+        var player = mainWidget.var.player;
         var rate = player.playbackRate;
-        var speeds = Object.values(me.media.voice.speeds);
+        var speeds = Object.values(media.voice.speeds);
         var index = speeds.indexOf(rate);
         if (index) {
             index--;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
-            var name = Object.keys(me.media.voice.speeds)[index];
+            var name = Object.keys(media.voice.speeds)[index];
             var message = "Slowing down playback to " + name;
-            message += " (x" + me.media.voice.speeds[name] + ")";
-            me.widget.toast.show("widget.player.speed", message);
+            message += " (x" + media.voice.speeds[name] + ")";
+            mainWidget.toast.show("widget.player.speed", message);
         }
     };
     me.setIconSize = function (object, iconSize) {
-        var widget = me.upper.mainWidget(object);
-        var controls = widget.var.controls;
+        var mainWidget = me.upper.mainWidget(object);
+        var controls = mainWidget.var.controls;
         iconSize = iconSize.toLowerCase();
         var sizes = ["small", "normal", "large"];
         sizes.map(size => {
@@ -637,60 +637,60 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core }) {
             "ui.class.normal": isNormal,
             "ui.class.large": isLarge
         });
-        me.update(widget);
+        me.update(mainWidget);
     };
     me.enablePeaks = function (object, flag) {
-        var widget = me.upper.mainWidget(object);
-        var background = widget.var.controls.var.progress.var.background;
-        widget.enablePeaks = flag;
+        var mainWidget = me.upper.mainWidget(object);
+        var background = mainWidget.var.controls.var.progress.var.background;
+        mainWidget.enablePeaks = flag;
         core.property.set(background, "ui.basic.show", flag);
     };
     me.loadPeaks = function (object) {
-        var widget = me.upper.mainWidget(object);
-        if (!widget.src) {
+        var mainWidget = me.upper.mainWidget(object);
+        if (!mainWidget.src) {
             return;
         }
         setTimeout(() => {
-            me.update(widget);
+            me.update(mainWidget);
         }, 500);
         var peaks = null;
-        if (widget.item) {
-            peaks = widget.item.peaks;
+        if (mainWidget.item) {
+            peaks = mainWidget.item.peaks;
         }
         if (peaks || !core.device.isMobile()) {
-            var currentTime = widget.var.player.currentTime;
-            widget.wavesurfer.load(widget.var.player, peaks);
-            widget.var.player.currentTime = currentTime;
+            var currentTime = mainWidget.var.player.currentTime;
+            mainWidget.wavesurfer.load(mainWidget.var.player, peaks);
+            mainWidget.var.player.currentTime = currentTime;
         }
     };
     me.updatePeaks = async function (object) {
-        var widget = me.upper.mainWidget(object);
+        var mainWidget = me.upper.mainWidget(object);
         var item = null;
-        if (widget.src) {
-            var name = core.path.fileName(decodeURIComponent(widget.src));
-            if (!widget.item) {
-                item = await me.db.cache.metadata.find({ name });
+        if (mainWidget.src) {
+            var name = core.path.fileName(decodeURIComponent(mainWidget.src));
+            if (!mainWidget.item) {
+                item = await db.cache.metadata.find({ name });
                 if (!item) {
                     item = {};
                 }
-                widget.item = item;
-                me.loadPeaks(widget);
+                mainWidget.item = item;
+                me.loadPeaks(mainWidget);
             }
-            var background = widget.var.controls.var.progress;
-            if (widget.wavesurfer) {
-                widget.wavesurfer.setHeight(background.offsetHeight);
-                if (widget.item && !widget.item.peaks) {
-                    var peaks = JSON.parse(widget.wavesurfer.exportPCM(1024, 1000, true, 0));
+            var background = mainWidget.var.controls.var.progress;
+            if (mainWidget.wavesurfer) {
+                mainWidget.wavesurfer.setHeight(background.offsetHeight);
+                if (mainWidget.item && !mainWidget.item.peaks) {
+                    var peaks = JSON.parse(mainWidget.wavesurfer.exportPCM(1024, 1000, true, 0));
                     if (peaks && peaks.length) {
-                        widget.item.peaks = peaks;
-                        await me.db.cache.metadata.use({ name }, widget.item);
+                        mainWidget.item.peaks = peaks;
+                        await db.cache.metadata.use({ name }, mainWidget.item);
                     }
                 }
             }
         }
-        else if (widget.wavesurfer) {
-            widget.wavesurfer.empty();
-            widget.item = null;
+        else if (mainWidget.wavesurfer) {
+            mainWidget.wavesurfer.empty();
+            mainWidget.item = null;
         }
     };
 };

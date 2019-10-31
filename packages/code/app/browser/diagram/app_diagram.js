@@ -9,7 +9,7 @@ screens.app.diagram = function AppDiagram(me, { core, ui, widget }) {
             "core.property.object.path": null,
             "core.property.object.diagramData": null
         });
-        await me.ui.transform.implement(me);
+        await ui.transform.implement(me);
     };
     me.launch = function (args) {
         if (!args) {
@@ -37,16 +37,16 @@ screens.app.diagram = function AppDiagram(me, { core, ui, widget }) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var options = me.transform.options();
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
-                me.ui.options.load(me, window, Object.assign({
+                ui.options.load(me, window, Object.assign({
                     viewType: "Layers"
                 }, options.load));
             }
-            me.ui.options.toggleSet(me, null, Object.assign({}, options.toggle));
-            me.ui.options.choiceSet(me, null, Object.assign({
+            ui.options.toggleSet(me, null, Object.assign({}, options.toggle));
+            ui.options.choiceSet(me, null, Object.assign({
                 "viewType": me.reload,
                 "fontSize": (object, value) => {
                     core.property.set(window.var.viewer, "ui.style.fontSize", value);

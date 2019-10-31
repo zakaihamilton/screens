@@ -3,11 +3,11 @@
  @component UIElement
  */
 
-screens.ui.element = function UIElement(me, { core }) {
+screens.ui.element = function UIElement(me, { core, ui }) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = me.components.map(function (component_name) {
+        var matches = screens.components.map(function (component_name) {
             if (!(component_name.includes("widget."))) {
                 return null;
             }
@@ -20,8 +20,8 @@ screens.ui.element = function UIElement(me, { core }) {
                 if (depends.parent) {
                     if (parent) {
                         var match = false;
-                        for (var depend_index = 0; depend_index < depends.parent.length; depend_index++) {
-                            if (me.ui.node.container(parent, depends.parent[depend_index])) {
+                        for (let depend_index = 0; depend_index < depends.parent.length; depend_index++) {
+                            if (ui.node.container(parent, depends.parent[depend_index])) {
                                 match = true;
                             }
                         }
@@ -34,7 +34,7 @@ screens.ui.element = function UIElement(me, { core }) {
                     }
                 }
                 if (depends.properties && properties) {
-                    for (var depend_index = 0; depend_index < depends.properties.length; depend_index++) {
+                    for (let depend_index = 0; depend_index < depends.properties.length; depend_index++) {
                         if (!(depends.properties[depend_index] in properties)) {
                             return null;
                         }

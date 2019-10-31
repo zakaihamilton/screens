@@ -3,7 +3,7 @@
  @component ManagerFile
  */
 
-screens.manager.file = function ManagerFile(me, { core }) {
+screens.manager.file = function ManagerFile(me, { core, storage }) {
     me.init = function () {
         core.mutex.enable(me.id, true);
     };
@@ -19,7 +19,7 @@ screens.manager.file = function ManagerFile(me, { core }) {
             exists = core.file.exists(to);
             if (!exists) {
                 try {
-                    await me.storage.dropbox.downloadFile(from, to);
+                    await storage.dropbox.downloadFile(from, to);
                 }
                 catch (err) {
                     me.log("Failed to download file: " + from + " err: " + JSON.stringify(err));
@@ -41,7 +41,7 @@ screens.manager.file = function ManagerFile(me, { core }) {
         var unlock = await core.mutex.lock(me.id);
         me.log("uploading file: " + from + " to: " + to);
         try {
-            await me.storage.dropbox.uploadFile(from, to);
+            await storage.dropbox.uploadFile(from, to);
         }
         catch (err) {
             me.log("Failed to upload file: " + from + " err: " + JSON.stringify(err));

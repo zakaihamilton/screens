@@ -128,7 +128,7 @@ screens.core.util = function CoreUtil(me, { core, storage }) {
     };
     me.copyUrl = function (appName, args, local) {
         var url = me.url(appName, args, local);
-        me.ui.clipboard.copy(url);
+        ui.clipboard.copy(url);
     };
     me.random = function () {
         return parseInt(Math.random() * Math.pow(2, 32)).toString(16);
@@ -186,7 +186,7 @@ screens.core.util = function CoreUtil(me, { core, storage }) {
         module.exports = handle;
     };
     me.reload = async function () {
-        me.ui.modal.launch("progress", {
+        ui.modal.launch("progress", {
             "title": "Restarting"
         });
         let cacheNames = await caches.keys();

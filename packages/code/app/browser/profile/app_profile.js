@@ -3,24 +3,24 @@
  @component AppProfile
  */
 
-screens.app.profile = function AppProfile(me, { core }) {
+screens.app.profile = function AppProfile(me, { core, ui, user, widget }) {
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
+        me.userListAvailable = await user.access.isAPIAllowed("user.profile.list");
         if (me.userListAvailable) {
-            me.userList = await me.user.profile.list();
+            me.userList = await user.profile.list();
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self", null);
+        me.singleton = ui.element.create(me.json, "workspace", "self", null);
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window.get(object);
-        me.ui.options.load(me, window, {
+        var window = widget.window.get(object);
+        ui.options.load(me, window, {
             userName: ""
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "userName": me.updateUser
         });
     };
@@ -71,7 +71,7 @@ screens.app.profile = function AppProfile(me, { core }) {
                 listMethod: me.sortUserList,
                 itemMethod: "app.profile.userName"
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.userId = async function (object, name) {
@@ -86,10 +86,10 @@ screens.app.profile = function AppProfile(me, { core }) {
         return userId;
     };
     me.updateUser = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var bindings = me.bindings(object);
         var userId = await me.userId(object, window.options.userName);
-        var profile = await me.user.profile.get(userId);
+        var profile = await user.profile.get(userId);
         if (!profile) {
             profile = {};
         }
@@ -105,7 +105,7 @@ screens.app.profile = function AppProfile(me, { core }) {
         me.update(object);
     };
     me.save = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var bindings = me.bindings(object);
         var profile = me.data;
         if (!profile) {
@@ -117,9 +117,9 @@ screens.app.profile = function AppProfile(me, { core }) {
         var button = document.getElementById("app.profile.save");
         core.property.set(button, "ui.class.is_loading", true);
         var userId = await me.userId(object, window.options.userName);
-        await me.user.profile.set(profile, userId);
+        await user.profile.set(profile, userId);
         core.property.set(button, "ui.class.is_loading", false);
-        me.data = await me.user.profile.get(userId);
+        me.data = await user.profile.get(userId);
     };
     me.update = function () {
         var tier = document.getElementById("app.profile.tier");

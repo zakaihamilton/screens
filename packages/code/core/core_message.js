@@ -265,7 +265,7 @@ screens.core.message.worker = function CoreMessageWorker(me, { core }) {
 screens.core.message.service_worker = function CoreMessageServiceWorker(me, { core }) {
     me.init = async function () {
         if (me.platform === "service_worker") {
-            await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
+            await screens.import("/node_modules/promise-worker/dist/promise-worker.register.js");
             me.register();
             core.event.register(null, self, "activate", me.activate);
         }

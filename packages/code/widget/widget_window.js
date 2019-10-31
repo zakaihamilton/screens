@@ -3,7 +3,7 @@
  @component WidgetWindow
  */
 
-screens.widget.window = function WidgetWindow(me, { core, ui }) {
+screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
     me.init = function () {
         me.element = {
             dependencies: {
@@ -365,8 +365,8 @@ screens.widget.window = function WidgetWindow(me, { core, ui }) {
     me.updateParentChild = function (parent, child) {
         me.update_title(parent);
         me.update_title(child);
-        me.widget.menu.updateTheme(child);
-        me.widget.menu.updateTheme(parent);
+        widget.menu.updateTheme(child);
+        widget.menu.updateTheme(parent);
         var isChild = parent && parent.child_window === child;
         var property = isChild ? "ui.class.add" : "ui.class.remove";
         var properties = {};
@@ -1049,7 +1049,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui }) {
         }
     };
     me.tasks = function () {
-        var windows = ui.node.members(ui.element.workspace(), me.widget.window.id);
+        var windows = ui.node.members(ui.element.workspace(), widget.window.id);
         var items = windows.reverse().map((window) => {
             var label = core.property.get(window, "label");
             if (label === "Task List" || label === "Launcher") {
@@ -1060,8 +1060,8 @@ screens.widget.window = function WidgetWindow(me, { core, ui }) {
         return items;
     };
     me.exportMenuList = function (object, method) {
-        var window = me.widget.window.mainWindow(object);
-        var tasks = me.widget.window.tasks();
+        var window = widget.window.mainWindow(object);
+        var tasks = widget.window.tasks();
         var items = tasks.filter(task => {
             return core.property.get(task.window, "importData");
         }).map(task => {

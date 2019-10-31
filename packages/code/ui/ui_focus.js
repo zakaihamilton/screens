@@ -3,11 +3,11 @@
  @component UIFocus
  */
 
-screens.ui.focus = function UIFocus(me, { core }) {
+screens.ui.focus = function UIFocus(me, { core, ui, widget }) {
     me.focus_window = null;
     me.extend = {
         set: function (object) {
-            object.addEventListener(me.ui.touch.eventNames.down, function (e) {
+            object.addEventListener(ui.touch.eventNames.down, function (e) {
                 var branch = me.find_branch(object, e.clientX, e.clientY);
                 if (branch) {
                     core.property.set(branch, "ui.focus.active", true);
@@ -27,14 +27,14 @@ screens.ui.focus = function UIFocus(me, { core }) {
     };
     me.find_branch = function (object, x, y) {
         /* Find the lowest matching element on position */
-        var childList = me.ui.node.childList(object);
+        var childList = ui.node.childList(object);
         for (var index = childList.length - 1; index >= 0; index--) {
             var node = childList[index];
             if (!node.component) {
                 continue;
             }
-            var rect = me.ui.rect.absoluteRegion(node);
-            var in_rect = me.ui.rect.inRegion(rect, x, y);
+            var rect = ui.rect.absoluteRegion(node);
+            var in_rect = ui.rect.inRegion(rect, x, y);
             if (in_rect) {
                 var branch = me.find_branch(node, x, y);
                 if (branch) {
@@ -53,7 +53,7 @@ screens.ui.focus = function UIFocus(me, { core }) {
             core.property.set(from, "ui.property.broadcast", {
                 "blur": from
             });
-            from = me.widget.window.parent(from);
+            from = widget.window.parent(from);
         }
     };
     me.activate = function (from, to) {
@@ -65,9 +65,9 @@ screens.ui.focus = function UIFocus(me, { core }) {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);
-            var parent = me.widget.window.parent(from);
+            var parent = widget.window.parent(from);
             if (parent && core.property.get(parent, "embed")) {
-                parent = me.widget.window.parent(parent);
+                parent = widget.window.parent(parent);
             }
             if (parent) {
                 parent.focus_window = from;
@@ -76,7 +76,7 @@ screens.ui.focus = function UIFocus(me, { core }) {
         }
     };
     me.updateOrder = function (parent, object = null, order = - 1) {
-        var childList = me.ui.node.childList(parent);
+        var childList = ui.node.childList(parent);
         if (object) {
             if (order === -1) {
                 order = childList.length - 1;
@@ -106,11 +106,11 @@ screens.ui.focus = function UIFocus(me, { core }) {
     };
     me.common = function (source, target) {
         if (!source || !target) {
-            return me.ui.element.root;
+            return ui.element.root;
         }
         var common = null, focusable = null;
-        var sources = me.ui.node.path(source);
-        var targets = me.ui.node.path(target);
+        var sources = ui.node.path(source);
+        var targets = ui.node.path(target);
         var length = sources.length > targets.length ? targets.length : sources.length;
         for (var index = 0; index < length; index++) {
             if (sources[index] === targets[index]) {
@@ -127,16 +127,16 @@ screens.ui.focus = function UIFocus(me, { core }) {
     };
     me.active = {
         get: function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             return me.is_active(window);
         },
         set: function (object, value) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var is_active = me.is_active(window);
             if (!is_active && value) {
                 me.focus(window);
             } else if (is_active && !value) {
-                var parent = me.widget.window.parent(object);
+                var parent = widget.window.parent(object);
                 if (parent) {
                     me.focus(parent);
                 }
@@ -163,7 +163,7 @@ screens.ui.focus = function UIFocus(me, { core }) {
             return;
         }
         if (core.property.get(window, "embed")) {
-            window = me.widget.window.parent(window);
+            window = widget.window.parent(window);
         }
         /* Find bottom window to focus on */
         window = me.findLeaf(window);

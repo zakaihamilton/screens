@@ -3,7 +3,7 @@
  @component UIData
  */
 
-screens.ui.data = function UIData(me, { core }) {
+screens.ui.data = function UIData(me, { core, ui }) {
     me.default = {
         get: function (object) {
             return object.data_default;
@@ -106,7 +106,7 @@ screens.ui.data = function UIData(me, { core }) {
                 let data_value = values[data_key_index];
                 if (typeof data_value !== "undefined") {
                     if (data_key === "properties") {
-                        properties = me.ui.element.combine(properties, data_value);
+                        properties = ui.element.combine(properties, data_value);
                     }
                     else if (data_key === "ui.data.items") {
                         var subElements = [];
@@ -118,7 +118,7 @@ screens.ui.data = function UIData(me, { core }) {
                     }
                 }
             }
-            properties = me.ui.element.combine(object.data_default, properties);
+            properties = ui.element.combine(object.data_default, properties);
             elements.push(properties);
         }
     };

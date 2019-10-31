@@ -3,7 +3,7 @@
  @component WidgetContainer
  */
 
-screens.widget.container = function WidgetContainer(me, { core }) {
+screens.widget.container = function WidgetContainer(me, { core, widget, ui }) {
     me.element = {
         properties: {
             "ui.class.class": "root",
@@ -12,9 +12,9 @@ screens.widget.container = function WidgetContainer(me, { core }) {
     };
     me.isChild = function (container) {
         var isChild = false;
-        var window = me.widget.window.get(container);
+        var window = widget.window.get(container);
         if (window && window.var.container === container) {
-            var parent = me.widget.window.parent(window);
+            var parent = widget.window.parent(window);
             if (!parent && window.child_window) {
                 isChild = true;
             }
@@ -23,14 +23,14 @@ screens.widget.container = function WidgetContainer(me, { core }) {
     };
     me.empty = {
         set: function (object) {
-            me.ui.node.empty(object);
+            ui.node.empty(object);
             core.property.notify(object, "update");
         }
     };
     me.scroll = function (object) {
-        var container = me.ui.node.container(object, me.widget.container.id);
+        var container = ui.node.container(object, widget.container.id);
         if (container) {
-            if (!me.widget.container.isChild(container)) {
+            if (!widget.container.isChild(container)) {
                 core.property.set(container, "ui.scroll.scrolled");
             }
         }

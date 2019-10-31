@@ -3,7 +3,7 @@
  @component UserAccess
  */
 
-screens.user.access = function UserAccess(me, { core }) {
+screens.user.access = function UserAccess(me, { core, storage }) {
     me.init = function () {
         core.property.link("core.socket.access", "user.access.access", true);
     };
@@ -34,7 +34,7 @@ screens.user.access = function UserAccess(me, { core }) {
         if (!user || typeof user !== "string") {
             user = this.userName;
         }
-        var isMatch = me.admins.includes(user);
+        var isMatch = screens.admins && screens.admins.includes(user);
         me.log("admin: " + user + " = " + isMatch);
         return isMatch;
     };
@@ -47,7 +47,7 @@ screens.user.access = function UserAccess(me, { core }) {
         }
         var result = me.users[user];
         if (!result) {
-            result = me.users[user] = await me.storage.data.load(me.id, user);
+            result = me.users[user] = await storage.data.load(me.id, user);
         }
         return result;
     };
@@ -59,7 +59,7 @@ screens.user.access = function UserAccess(me, { core }) {
             me.users = {};
         }
         me.users[user] = access;
-        await me.storage.data.save(access, me.id, user);
+        await storage.data.save(access, me.id, user);
     };
     me.checkAccessList = function (list, path) {
         var result = false;
@@ -95,8 +95,8 @@ screens.user.access = function UserAccess(me, { core }) {
             result = me.checkAccessList(access.api, path);
             userName = access.name;
         }
-        if (!result && me.api) {
-            result = me.checkAccessList(me.api, path);
+        if (!result && screens.api) {
+            result = me.checkAccessList(screens.api, path);
         }
         if (!result) {
             me.log("api " + path + " denied on user: " + userName);
@@ -112,8 +112,8 @@ screens.user.access = function UserAccess(me, { core }) {
         if (access) {
             list.push(...access.apps);
         }
-        if (me.api) {
-            list.push(...me.apps);
+        if (screens.api) {
+            list.push(...screens.apps);
         }
         list = Array.from(new Set(list));
         return list;

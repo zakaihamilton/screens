@@ -3,7 +3,7 @@
  @component DbEvents
  */
 
-screens.db.events = function DbEvents(me) {
+screens.db.events = function DbEvents() {
     return "server";
 };
 
@@ -77,7 +77,7 @@ screens.db.events.msg = function DbEventsMsg(me, { core, storage, db }) {
     me.options = { capped: true, size: 128000, max: 1000 };
     me.handleNextMsg = async function () {
         let ip = await core.server.ip();
-        if (!me.storage.db.supported()) {
+        if (!storage.db.supported()) {
             return;
         }
         if (me.busy) {

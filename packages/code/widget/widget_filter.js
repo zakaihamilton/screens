@@ -3,7 +3,7 @@
  @component WidgetFilter
  */
 
-screens.widget.filter = function WidgetFilter(me, { core }) {
+screens.widget.filter = function WidgetFilter(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["line"]
@@ -35,7 +35,7 @@ screens.widget.filter = function WidgetFilter(me, { core }) {
         }
     };
     me.execute = async function (object) {
-        var widget = me.ui.node.container(object, me.id);
+        var widget = ui.node.container(object, me.id);
         if (!widget) {
             return;
         }

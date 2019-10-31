@@ -3,7 +3,7 @@
  @component KabCommentary
  */
 
-screens.kab.commentary = function KabCommentary(me, { core, db }) {
+screens.kab.commentary = function KabCommentary(me, { core, db, kab }) {
     me.query = function (options) {
         var query = {};
         var userName = options.commentaryUser;
@@ -33,7 +33,7 @@ screens.kab.commentary = function KabCommentary(me, { core, db }) {
             html += await me.commentary(session, commentaries, "post");
             return html;
         }
-        let html = me.ui.html.item({
+        let html = ui.html.item({
             tag: "section"
         }, () => {
             let html = "";
@@ -86,7 +86,7 @@ screens.kab.commentary = function KabCommentary(me, { core, db }) {
             let html = "";
             html += "<p>";
             if (session.options.commentaryLabel) {
-                html += me.ui.html.item({
+                html += ui.html.item({
                     tag: "span",
                     classes: ["kab-term-commentary-label"],
                     value: (userName === "all" ? commentary.name : "Commentary") + ": "
@@ -95,14 +95,14 @@ screens.kab.commentary = function KabCommentary(me, { core, db }) {
             let text = commentary[field].split("\n").join("<br/>");
             html += "\n" + text;
             if (session.options.commentarySeparator) {
-                html += me.ui.html.item({
+                html += ui.html.item({
                     tag: "hr",
                     classes: ["kab-term-commentary-separator"]
                 });
             }
             html += "</p>";
             if (session.options.showHighlights) {
-                html = await me.kab.highlight.line(session, null, html);
+                html = await kab.highlight.line(session, null, html);
             }
             line += html;
         }
@@ -113,8 +113,8 @@ screens.kab.commentary = function KabCommentary(me, { core, db }) {
         var html = "";
         for (let commentary of commentaries) {
             if (session.options.commentaryEdit) {
-                let source = me.kab.text.clean(session.line);
-                html += me.ui.html.item({
+                let source = kab.text.clean(session.line);
+                html += ui.html.item({
                     tag: "textarea",
                     classes: ["kab-term-commentary-edit"],
                     attributes: {

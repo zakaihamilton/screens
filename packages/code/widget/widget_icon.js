@@ -3,7 +3,7 @@
  @component WidgetIcon
  */
 
-screens.widget.icon = function WidgetIcon(me, { core }) {
+screens.widget.icon = function WidgetIcon(me, { core, ui }) {
     me.init = function () {
         me.element = {
             dependencies: {
@@ -30,7 +30,7 @@ screens.widget.icon = function WidgetIcon(me, { core }) {
             return object.var.icon.src;
         },
         set: function (object, value) {
-            object.var.icon.src = me.ui.image.get(value);
+            object.var.icon.src = ui.image.get(value);
         }
     };
     me.type = {

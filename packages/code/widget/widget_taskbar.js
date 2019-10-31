@@ -3,26 +3,26 @@
  @component WidgetTaskBar
  */
 
-screens.widget.taskbar = function WidgetTaskBar(me, { core }) {
+screens.widget.taskbar = function WidgetTaskBar(me, { core, ui, widget }) {
     me.init = function () {
         me.element = {
             properties: me.json
         };
         core.property.set(me, "core.network.online", () => {
-            me.widget.toast.show(me.id, "Online");
+            widget.toast.show(me.id, "Online");
         });
         core.property.set(me, "core.network.offline", () => {
-            me.widget.toast.show(me.id, "Offline");
+            widget.toast.show(me.id, "Offline");
         });
     };
     me.tasks = function (object) {
-        var window = me.widget.window.get(object);
-        var parent = me.widget.window.parent(window);
+        var window = widget.window.get(object);
+        var parent = widget.window.parent(window);
         var isPopup = core.property.get(window, "popup");
         if (parent || isPopup) {
             return;
         }
-        parent = me.ui.element.bar();
+        parent = ui.element.bar();
         if (!parent || !parent.var) {
             return;
         }
@@ -34,7 +34,7 @@ screens.widget.taskbar = function WidgetTaskBar(me, { core }) {
             let item = me.shortcut(object, name);
             items.push(item);
         }
-        me.ui.element.create(items, object);
+        ui.element.create(items, object);
     };
     me.shortcut = function (object, name) {
         var method = method = "core.app." + name;
@@ -46,7 +46,7 @@ screens.widget.taskbar = function WidgetTaskBar(me, { core }) {
         let title = core.string.title(label);
         let image = label;
         let onclick = function (object) {
-            me.core.property.set(object, method);
+            core.property.set(object, method);
             if (method !== "widget.taskbar.toggleShortcuts") {
                 me.expandShortcuts(object, false);
             }
@@ -74,23 +74,23 @@ screens.widget.taskbar = function WidgetTaskBar(me, { core }) {
         me.toggleShortcuts(object);
     };
     me.expandShortcuts = function (object, expand) {
-        var taskbar = me.ui.node.container(object, me.id);
+        var taskbar = ui.node.container(object, me.id);
         var shortcuts = taskbar.var.shortcuts;
         core.property.set(shortcuts, "ui.class.collapse", !expand);
         var isCollapsed = core.property.get(shortcuts, "ui.class.collapse");
         var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
-        var image = me.ui.node.findByTag(shortcuts.var.toggleShortcuts, "img");
+        var image = ui.node.findByTag(shortcuts.var.toggleShortcuts, "img");
         core.property.set(image, "ui.basic.src", name);
     };
     me.toggleShortcuts = function (object) {
-        var taskbar = me.ui.node.container(object, me.id);
+        var taskbar = ui.node.container(object, me.id);
         var isCollapsed = core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
         me.expandShortcuts(object, isCollapsed);
     };
     return "browser";
 };
 
-screens.widget.taskbar.task = function WidgetTaskbarTask(me, { core }) {
+screens.widget.taskbar.task = function WidgetTaskbarTask(me, { core, widget }) {
     me.init = function () {
         me.element = {
             redirect: {
@@ -119,9 +119,9 @@ screens.widget.taskbar.task = function WidgetTaskbarTask(me, { core }) {
         };
     };
     me.click = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "showInBackground", false);
-        me.widget.window.toggleVisibility(window);
+        widget.window.toggleVisibility(window);
     };
     me.icon = {
         get: function (object) {

@@ -6,8 +6,8 @@
 screens.ui.arrange = function UIArrange(me, { core }) {
     me.cascade = {
         set: function (object) {
-            var window = me.widget.window.mainWindow(object);
-            var parent = me.widget.window.parent(window);
+            var window = widget.window.mainWindow(object);
+            var parent = widget.window.parent(window);
             if (parent) {
                 window = parent;
             }
@@ -18,7 +18,7 @@ screens.ui.arrange = function UIArrange(me, { core }) {
             var left = 0, top = 0, numWindows = windows.length;
             for (let child of windows) {
                 me.reposition(child, function (region) {
-                    var label_region = me.ui.rect.relativeRegion(child.var.label, child);
+                    var label_region = ui.rect.relativeRegion(child.var.label, child);
                     region.left = left;
                     region.top = top;
                     region.width -= label_region.bottom * numWindows;
@@ -30,19 +30,19 @@ screens.ui.arrange = function UIArrange(me, { core }) {
         }
     };
     me.reposition = function (object, callback) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "unmaximize");
-        var parent = me.widget.window.parent(window);
+        var parent = widget.window.parent(window);
         var container = null;
         if (parent) {
             container = parent.var.container;
         } else {
-            container = me.ui.element.workspace();
+            container = ui.element.workspace();
         }
-        var parent_region = me.ui.rect.relativeRegion(container);
+        var parent_region = ui.rect.relativeRegion(container);
         var isFixed = core.property.get(window, "fixed");
         callback(parent_region);
-        me.ui.rect.setRelativeRegion(window, parent_region, container, isFixed);
+        ui.rect.setRelativeRegion(window, parent_region, container, isFixed);
         core.property.set(window, "ui.property.broadcast", {
             "update": null
         });
@@ -140,8 +140,8 @@ screens.ui.arrange = function UIArrange(me, { core }) {
         });
     };
     me.tileHorizontally = function (object) {
-        var window = me.widget.window.mainWindow(object);
-        var parent = me.widget.window.parent(window);
+        var window = widget.window.mainWindow(object);
+        var parent = widget.window.parent(window);
         if (parent) {
             window = parent;
         }
@@ -161,8 +161,8 @@ screens.ui.arrange = function UIArrange(me, { core }) {
         }
     };
     me.tileVertically = function (object) {
-        var window = me.widget.window.mainWindow(object);
-        var parent = me.widget.window.parent(window);
+        var window = widget.window.mainWindow(object);
+        var parent = widget.window.parent(window);
         if (parent) {
             window = parent;
         }
@@ -185,7 +185,7 @@ screens.ui.arrange = function UIArrange(me, { core }) {
 
     };
     me.center = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         me.reposition(window, function (parent_region) {
             parent_region.width /= 1.5;
             parent_region.height /= 1.5;

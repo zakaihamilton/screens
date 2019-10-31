@@ -99,7 +99,7 @@ screens.db.shared.message = function DbSharedContent(me, { core, storage }) {
             me.push(data);
         }
         else {
-            var users = me.db.shared.user.list();
+            var users = db.shared.user.list();
             for (let user of users) {
                 data.user = user.user;
                 me.push(data);

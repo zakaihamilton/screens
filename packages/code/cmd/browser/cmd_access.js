@@ -3,20 +3,20 @@
     @component CmdAccess
 */
 
-screens.cmd.access = function CmdAccess(me, { core }) {
+screens.cmd.access = function CmdAccess(me, { core, user }) {
     me.cmd = async function (terminal, args) {
         var appName = args[1] || "";
         var toggle = args[2] || "";
         var userName = args[3] || "";
         core.property.set(terminal, "print", "Application: " + appName);
-        var userList = await me.user.verify.list();
+        var userList = await user.verify.list();
         var userIndex = 1;
         for (var userItem of userList) {
             if (userName && userItem.name !== userName) {
                 continue;
             }
             core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email + " - " + userItem.user);
-            var access = await me.user.access.get(userItem.user);
+            var access = await user.access.get(userItem.user);
             var modified = false;
             if (!access || !access.name) {
                 access = {};
@@ -47,7 +47,7 @@ screens.cmd.access = function CmdAccess(me, { core }) {
             if (modified) {
                 access.name = userItem.name;
                 access.email = userItem.email;
-                await me.user.access.set(access, userItem.user);
+                await user.access.set(access, userItem.user);
                 core.property.set(terminal, "insert", " - Changed");
             }
             userIndex++;

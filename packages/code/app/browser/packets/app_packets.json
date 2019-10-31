@@ -210,6 +210,7 @@
                     }
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.bandwidthRate"
                     }
@@ -219,6 +220,7 @@
                     "select": "label"
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.bandwidthBurst"
                     }
@@ -228,6 +230,7 @@
                     "select": "label"
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.bandwidthLatency"
                     }
@@ -240,6 +243,7 @@
                     }
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.packetLoss"
                     }
@@ -249,6 +253,7 @@
                     "select": "label"
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.packetDelay"
                     }
@@ -261,6 +266,7 @@
                     }
                 },
                 {
+                    "text": "",
                     "options": {
                         "edit": "app.packets.toggleInterval"
                     }

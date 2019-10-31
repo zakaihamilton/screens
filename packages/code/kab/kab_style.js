@@ -3,7 +3,7 @@
  @component KabStyle
  */
 
-screens.kab.style = function KabStyle(me, { core }) {
+screens.kab.style = function KabStyle(me, { core, kab, ui }) {
     me.process = function (session, instance, replacement, expansion) {
         var nightModeClass = session.options.nightMode ? "night-mode" : "";
         var styles = instance.item.style;
@@ -102,7 +102,7 @@ screens.kab.style = function KabStyle(me, { core }) {
             if (tooltip) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
-            var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
+            var diagram = kab.diagram.matchingDiagram(session, instance.target);
             if (diagram) {
                 if (!session.diagrams) {
                     session.diagrams = [];
@@ -146,7 +146,7 @@ screens.kab.style = function KabStyle(me, { core }) {
         let matches = text.match(/[ֿ\u0590-\u05FF]+/g);
         if (matches) {
             Array.from(new Set(matches)).map(match => {
-                text = me.ui.html.surround(text, match, "<span style='font-family: ShlomoStam;'>", "</span>");
+                text = ui.html.surround(text, match, "<span style='font-family: ShlomoStam;'>", "</span>");
             });
         }
         return text;

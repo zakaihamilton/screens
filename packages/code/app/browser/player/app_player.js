@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-screens.app.player = function AppPlayer(me, { core, media, ui }) {
+screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, db }) {
     me.init = async function () {
         await ui.content.implement(me);
         me.content.search = me.search;
@@ -39,7 +39,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         return me.singleton;
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         ui.options.load(me, window, {
             groupName: "American",
             sessionName: "",
@@ -72,18 +72,18 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         window.resolve();
     };
     me.setArgs = function (object, args) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.args = args;
     };
     me.updateSize = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var iconSize = window.options.iconSize;
         [window.var.audioPlayer, window.var.videoPlayer].map(player => {
-            me.widget.player.controls.setIconSize(player, iconSize);
+            widget.player.controls.setIconSize(player, iconSize);
         });
     };
     me.reload = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var args = window.args;
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
@@ -108,7 +108,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
             await me.updateSession(object, sessionName);
         }
         if (args && args[2] && window.var.player) {
-            me.widget.player.controls.seek(window.var.player, args[2]);
+            widget.player.controls.seek(window.var.player, args[2]);
             if (window.options.autoPlay && !core.property.get(window.var.player, "widget.player.controls.isPlaying")) {
                 core.property.set(window.var.player, "widget.player.controls.play");
             }
@@ -123,12 +123,12 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
                 group: "group",
                 itemMethod: "app.player.groupName"
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.sessionMenuList = {
         get: function (object, property) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
@@ -159,11 +159,11 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
                     min: 100
                 }
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
     me.hasMetadata = function (object, property) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var list = me.groups.find(group => groupName === group.name).sessions;
         list = list.filter(session => session.extension === "m4a");
@@ -172,13 +172,13 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         return list.length;
     };
     me.refresh = async function (object, type) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window, "app.player.format", "Audio");
         let update = {};
         update[type] = true;
         me.groups = await media.file.groups(update);
-        me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
+        me.metadataList = await db.shared.metadata.list({ user: "$userId" });
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
     };
@@ -186,7 +186,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         await media.file.convertListing();
     };
     me.updateSession = async function (object, name) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var audioFound = false, videoFound = false;
         var groupName = window.options.groupName.toLowerCase();
         var sessions = me.groups.find(group => groupName === group.name).sessions;
@@ -226,7 +226,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
     };
     me.session = {
         get: function (object, name) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             return window.options.sessionName === name;
         },
         set: async function (object, name) {
@@ -235,7 +235,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         }
     };
     me.updateSessions = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
@@ -249,7 +249,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         }
     };
     me.updatePlayer = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
         var showAudioPlayer = groupName && sessionName && window.options.format === "Audio";
@@ -300,12 +300,12 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
         if ((!source || source === target) && time) {
-            me.widget.player.controls.seek(player, time);
+            widget.player.controls.seek(player, time);
         }
         if (window.options.autoPlay) {
             core.property.set(player, "widget.player.controls.play");
         }
-        me.widget.toast.show(me.id, sessionName + (resolution ? " - " + resolution : ""));
+        widget.toast.show(me.id, sessionName + (resolution ? " - " + resolution : ""));
     };
     me.work = {
         set: function (object, value) {
@@ -344,12 +344,12 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
             try {
                 for (var file of event.files) {
                     var paths = await media.file.paths(window.options.groupName, file.name);
-                    await me.storage.upload.file(file, paths.local, (index, count) => {
+                    await storage.upload.file(file, paths.local, (index, count) => {
                         var data = { label: paths.local, max: count, value: index };
                         core.property.set(progress, "modal.progress.specific", data);
                     });
                     core.property.set(progress, "modal.progress.specific", null);
-                    await me.storage.dropbox.uploadFile(paths.local, paths.remote, (offset, size) => {
+                    await storage.dropbox.uploadFile(paths.local, paths.remote, (offset, size) => {
                         var data = { label: paths.remote, max: size, value: offset };
                         core.property.set(progress, "modal.progress.specific", data);
                     });
@@ -373,7 +373,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
             group: "resolutions",
             itemMethod: "app.player.resolution"
         };
-        return me.widget.menu.collect(object, info);
+        return widget.menu.collect(object, info);
     };
     me.speeds = function (object) {
         var list = [];
@@ -392,7 +392,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
                 "Speed": "speed"
             }
         };
-        return me.widget.menu.collect(object, info);
+        return widget.menu.collect(object, info);
     };
     me.jumpTimes = function () {
         var stepList = media.voice.jumpTimes;
@@ -418,9 +418,9 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         var jumpTime = window.options.jumpTime;
         var waveForm = window.options.waveForm;
         [window.var.audioPlayer, window.var.videoPlayer].map(player => {
-            me.widget.player.controls.setSpeed(player, speed);
-            me.widget.player.controls.setJumpTime(player, jumpTime);
-            me.widget.player.controls.enablePeaks(player, waveForm);
+            widget.player.controls.setSpeed(player, speed);
+            widget.player.controls.setJumpTime(player, jumpTime);
+            widget.player.controls.enablePeaks(player, waveForm);
         });
     };
     me.resize = function (object) {
@@ -434,16 +434,16 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         if (!window) {
             return;
         }
-        var duration = me.widget.player.duration(object);
+        var duration = widget.player.duration(object);
         if (window.var.player) {
-            var speedName = me.widget.player.controls.speedName(window.var.player);
+            var speedName = widget.player.controls.speedName(window.var.player);
             if (speedName !== window.options.speed) {
                 core.property.set(window, "app.player.speed", speedName);
             }
-            var time = me.widget.player.controls.time(window.var.player);
+            var time = widget.player.controls.time(window.var.player);
             core.property.set(window, "app.player.time", time);
         }
-        var path = me.widget.player.path(object);
+        var path = widget.player.path(object);
         if (duration) {
             var groupName = window.options.groupName.toLowerCase();
             var sessions = me.groups.find(group => groupName === group.name).sessions;
@@ -455,23 +455,23 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
     };
     me.url = function () {
         var window = me.singleton;
-        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        var time = window.var.player ? widget.player.controls.time(window.var.player) : null;
         return core.util.url("player", [window.options.groupName, window.options.sessionName, time], true);
     };
     me.timestampLabel = function () {
         var window = me.singleton;
-        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
-        var label = window.options.sessionName + " - " + me.widget.player.controls.formatTime(time);
+        var time = window.var.player ? widget.player.controls.time(window.var.player) : null;
+        var label = window.options.sessionName + " - " + widget.player.controls.formatTime(time);
         return label;
     };
     me.copyLocalUrl = function () {
         var window = me.singleton;
-        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        var time = window.var.player ? widget.player.controls.time(window.var.player) : null;
         core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time], true);
     };
     me.copyRemoteUrl = function () {
         var window = me.singleton;
-        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        var time = window.var.player ? widget.player.controls.time(window.var.player) : null;
         core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time]);
     };
     me.copyName = function () {
@@ -490,8 +490,8 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
                     metadata = {};
                 }
                 metadata[property] = !metadata[property];
-                await me.db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
-                me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
+                await db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
+                me.metadataList = await db.shared.metadata.list({ user: "$userId" });
             }
         };
     }
@@ -518,7 +518,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
     };
     me.latestSession = {
         get: async function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
@@ -528,7 +528,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
             return "<b>Latest:</b>\t" + list[0].session;
         },
         set: async function (object) {
-            var window = me.widget.window.get(object);
+            var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
@@ -540,7 +540,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         }
     };
     me.nextSession = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var list = me.groups.find(group => groupName === group.name).sessions;
         list = list.filter(session => session.extension === "m4a");
@@ -552,7 +552,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         core.property.notify(object, "app.player.updatePlayer");
     };
     me.previousSession = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var list = me.groups.find(group => groupName === group.name).sessions;
         list = list.filter(session => session.extension === "m4a");
@@ -582,11 +582,11 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
         }
     };
     me.currentGroupName = function (object) {
-        var window = me.widget.window.get(object);
-        return me.core.string.title(window.options.groupName);
+        var window = widget.window.get(object);
+        return core.string.title(window.options.groupName);
     };
     me.currentSessionDate = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         let sessionName = window.options.sessionName;
         let [date] = sessionName.split(/(\d{4}-\d{2}-\d{2})\s(.+)/g).slice(1);
         return date;
@@ -598,7 +598,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui }) {
                 options: { "state": "select" },
                 group: "group"
             };
-            return me.widget.menu.collect(object, info);
+            return widget.menu.collect(object, info);
         }
     };
 };

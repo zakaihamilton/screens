@@ -9,25 +9,25 @@ screens.app.logger = function AppLogger(me, { core, ui }) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         me.singleton.isEnabled = false;
         return me.singleton;
     };
     me.init = function () {
-        me.ui.options.load(me, null, {
+        ui.options.load(me, null, {
             "source": "Browser",
             "filter": "",
             "format": true,
             "autoRefresh": false
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             "autoRefresh": "app.logger.refresh",
             "format": "app.logger.refresh"
         });
-        me.ui.options.choiceSet(me, null, {
+        ui.options.choiceSet(me, null, {
             "source": "app.logger.refresh"
         });
-        me.ui.options.listSet(me, null, {
+        ui.options.listSet(me, null, {
             "filter": "app.logger.refresh"
         });
     };
@@ -45,11 +45,20 @@ screens.app.logger = function AppLogger(me, { core, ui }) {
     };
     me.parseTextToMessage = function (text) {
         let message = me.parseTextToHeader(text);
-        message = me.parseObjectText(message);
+        if (message) {
+            message = me.parseObjectText(message);
+        }
+        else {
+            message = text;
+        }
         return message;
     };
     me.parseTextToHeader = function (message) {
-        let [, ip, date, platform, component, text] = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
+        const result = message.match(/(.*) - (.*) log \[([^-]*)-\s([^\]]*)\]\s?(.*)/);
+        if (!result) {
+            return null;
+        }
+        let [, ip, date, platform, component, text] = result;
         ip = ip.split(".").map(str => core.string.padNumber(str, 3)).join(".");
         return {
             ip,
@@ -70,14 +79,17 @@ screens.app.logger = function AppLogger(me, { core, ui }) {
         let filtered = [];
         for (let index = messages.length - 1; index >= 0; index--) {
             let message = messages[index];
-            let filter = msg => msg.prefix === message.prefix &&
+            let filter = msg => typeof msg === "string" || (msg.prefix === message.prefix &&
                 msg.suffix === message.suffix &&
                 msg.ip === message.ip &&
                 msg.platform === msg.platform &&
-                msg.component === msg.component;
+                msg.component === msg.component);
             let some = filtered.some(filter);
             let count = messages.filter(filter).length;
-            if (!some) {
+            if (typeof message === "string") {
+                filtered.unshift(message);
+            }
+            else if (!some) {
                 filtered.unshift(Object.assign({}, message, {
                     count
                 }));
@@ -86,6 +98,9 @@ screens.app.logger = function AppLogger(me, { core, ui }) {
         return filtered;
     };
     me.parseHtml = function (message) {
+        if (typeof message === "string") {
+            return message;
+        }
         let html = "<article class=\"message\">";
         html += "<div class=\"message-header\">";
         html += `<p>${message.ip}</p><p>${message.date}</p><p>${message.platform.trim()}</p><p>${message.component}</p>`;

@@ -3,7 +3,7 @@
  @component MediaFile
  */
 
-screens.media.file = function MediaFile(me, { core, storage, media, db }) {
+screens.media.file = function MediaFile(me, { core, storage, media, db, manager }) {
     me.resolutions = ["800x600", "1024x768"];
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
@@ -39,12 +39,12 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
         return paths;
     };
     me.download = async function (groupName, path) {
-        var target = await me.manager.file.download(me.rootPath + "/" + groupName + "/" + path,
+        var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + path,
             me.cachePath + "/" + path);
         return target;
     };
     me.groups = async function (update = false) {
-        var files = await me.db.cache.file.listing(me.rootPath, update);
+        var files = await db.cache.file.listing(me.rootPath, update);
         for (let file of files) {
             file.path = me.rootPath + "/" + file.name;
             var sessions = await me.listing(file, update);
@@ -80,7 +80,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
     };
     me.listing = async function (parent, update = false) {
         let argList = [];
-        var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
+        var files = await db.cache.file.listing(parent.path, update, async (file) => {
             let result = false;
             file.group = parent.name;
             file.session = core.path.fileName(file.name);
@@ -93,7 +93,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
 
             if (!await storage.aws.exists(awsPath)) {
                 me.log("Downloading file: " + file.local + ", size: " + file.size);
-                await me.manager.file.download(file.remote, file.local);
+                await manager.file.download(file.remote, file.local);
                 deleteFile = true;
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
                 await storage.aws.uploadFile(file.local, awsPath);
@@ -133,6 +133,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
                         resolutions.push(resolution);
                     }
                 }
+                argList.push(["media.file.screenshot", file.group, file.session]);
                 if ((!file.resolutions && resolutions.length) || file.resolutions.length !== resolutions.length) {
                     file.resolutions = resolutions;
                     result = true;
@@ -187,10 +188,10 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
             for (var file of files) {
                 if (file.extension === "m4a") {
                     try {
-                        if (!me.media.speech.exists(file.local)) {
+                        if (!media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);
-                            await me.media.speech.transcribe(file.local);
-                            var info = await me.manager.download.clean(me.tempDir, "flac");
+                            await media.speech.transcribe(file.local);
+                            var info = await manager.download.clean(me.tempDir, "flac");
                             me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                         }
                     }
@@ -211,6 +212,90 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
         var records = await db.shared.stream.list({ group, session: name });
         var users = records.map(record => record.user);
         return users;
+    };
+    me.screenshot = async function (group, session) {
+        let result = false;
+        try {
+            const from_ext = ".mp4", to_ext = ".png";
+            var remote = me.awsBucket + "/" + group + "/" + session + from_ext;
+            var local = me.cachePath + "/" + session + from_ext;
+            var local_convert = me.cachePath + "/" + session + to_ext;
+            var remote_convert = me.awsBucket + "/" + group + "/" + session + to_ext;
+            if (await storage.aws.exists(remote_convert)) {
+                me.log("already converted: " + remote_convert);
+                return false;
+            }
+            if (!await core.file.exists(local_convert)) {
+                if (!await core.file.exists(local)) {
+                    await db.events.state.set(me.id, session, "download", {
+                        from: remote,
+                        to: local
+                    });
+                    me.log("downloading: " + remote + " to: " + local);
+                    await storage.aws.downloadFile(remote, local);
+                }
+                me.log("converting: " + local + " to: " + local_convert);
+                await db.events.state.set(me.id, session, "screenshot", {
+                    from: remote,
+                    to: local_convert
+                });
+                try {
+                    await media.ffmpeg.convert(local, local_convert, {
+                        seek: "0:05"
+                    }, async (percent) => {
+                        await db.events.state.set(me.id, session, "screenshot", {
+                            from: local,
+                            to: local_convert,
+                            percent
+                        });
+                    });
+                }
+                catch (err) {
+                    if (!await core.file.exists(local_convert)) {
+                        me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
+                        await db.events.state.set(me.id, session, "error", {
+                            error: err
+                        });
+                        try {
+                            await core.file.delete(local);
+                            await core.file.delete(local_convert);
+                        }
+                        // eslint-disable-next-line no-empty
+                        catch (err) {
+
+                        }
+                    }
+                }
+            }
+            me.log("uploading: " + local_convert + " to: " + remote_convert);
+            await db.events.state.set(me.id, session, "upload", {
+                from: local_convert,
+                to: remote_convert
+            });
+            await storage.aws.uploadFile(local_convert, remote_convert);
+            me.log("deleting: " + local_convert);
+            await core.file.delete(local_convert);
+            me.log("deleting: " + local);
+            await core.file.delete(local);
+            me.log("finished screenshot: " + session);
+            await db.events.state.set(me.id, session);
+            result = true;
+        }
+        catch (err) {
+            me.log_error("Cannot convert session: " + session + " in group: " + group + " error: " + err);
+            await db.events.state.set(me.id, session, "error", {
+                error: err
+            });
+            try {
+                await core.file.delete(local);
+                await core.file.delete(local_convert);
+            }
+            // eslint-disable-next-line no-empty
+            catch (err) {
+
+            }
+        }
+        return result;
     };
     me.convertItem = async function (resolution, group, session) {
         let result = false;
@@ -284,6 +369,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
             for (resolution of me.resolutions) {
                 await me.convertListing(resolution);
             }
+            await me.convertListing("screenshot");
             return;
         }
         var groups = await me.groups();
@@ -292,11 +378,20 @@ screens.media.file = function MediaFile(me, { core, storage, media, db }) {
             var list = group.sessions.filter(session => session.extension === "mp4");
             me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
             await Promise.all(list.map(async item => {
-                var remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
-                if (await storage.aws.exists(remote_convert)) {
-                    return;
+                if (resolution === "screenshot") {
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + ".png";
+                    if (await storage.aws.exists(remote_convert)) {
+                        return;
+                    }
+                    argList.push(["media.file.screenshot", group.name, item.session]);
                 }
-                argList.push(["media.file.convertItem", resolution, group.name, item.session]);
+                else {
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    if (await storage.aws.exists(remote_convert)) {
+                        return;
+                    }
+                    argList.push(["media.file.convertItem", resolution, group.name, item.session]);
+                }
             }));
         }
         await db.events.msg.sendParallel(argList);

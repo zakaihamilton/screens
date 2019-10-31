@@ -47,7 +47,16 @@ screens.core.login = function CoreLogin(me, { core, storage }) {
                         resolve();
                     }
                     catch (error) {
-                        var err = "Cannot initialize google authenticiation: " + JSON.stringify(error);
+                        var err = "Cannot initialize google authenticiation: ";
+                        if (typeof error === "string") {
+                            err += error;
+                        }
+                        else if (error.message) {
+                            err += error.message + " stack: " + error.stack;
+                        }
+                        else {
+                            err += JSON.stringify(error);
+                        }
                         me.log_error(err);
                         if (me.info.login) {
                             resolve();

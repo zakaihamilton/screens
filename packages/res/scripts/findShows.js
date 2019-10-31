@@ -1,14 +1,14 @@
 var me = me, object = object, packages = packages;
 
 async function run() {
-    const { core }) {
+    var { core, widget } = packages;
     let shows = [];
     let catalogs = await core.json.get("http://localhost:8085/curationchoreographer/staticdata/catalogs");
     for (let catalog of catalogs) {
         if (!catalog.catalogKey) {
             continue;
         }
-        me.widget.toast.show("findShows", catalog.catalogKey);
+        widget.toast.show("findShows", catalog.catalogKey);
         let categories = await core.json.get("http://localhost:8085/curationchoreographer/categorytree?catalogKey=" + catalog.catalogKey);
         let iterate = async (parent) => {
             for (let child of parent.children) {

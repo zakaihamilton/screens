@@ -39,9 +39,9 @@ screens.ui.drag = function UIDrag(me, { core }) {
             core.event.register(null, object, "drag", value);
         }
     };
-}
+};
 
-screens.ui.drag.icon = function UIDragIcon(me, { core }) {
+screens.ui.drag.icon = function UIDragIcon(me, { core, ui }) {
     me.source = null;
     me.target = null;
     me.element = {
@@ -75,8 +75,8 @@ screens.ui.drag.icon = function UIDragIcon(me, { core }) {
                 return;
             }
             if (target.drag_element) {
-                var rect = me.ui.rect.absoluteRegion(target.drag_element);
-                var in_rect = me.ui.rect.inRegion(rect, event.clientX, event.clientY);
+                var rect = ui.rect.absoluteRegion(target.drag_element);
+                var in_rect = ui.rect.inRegion(rect, event.clientX, event.clientY);
                 if (!in_rect) {
                     if (event.preventDefault) {
                         event.preventDefault();
@@ -85,7 +85,7 @@ screens.ui.drag.icon = function UIDragIcon(me, { core }) {
                 }
             }
             me.source = target;
-            var source_rect = me.ui.rect.absoluteRegion(target);
+            var source_rect = ui.rect.absoluteRegion(target);
             me.drag_offset = { x: event.clientX - source_rect.left, y: event.clientY - source_rect.top };
             event.dataTransfer.effectAllowed = "move";
             event.dataTransfer.dropEffect = "move";
@@ -131,7 +131,7 @@ screens.ui.drag.icon = function UIDragIcon(me, { core }) {
                     event.stopPropagation();
                 }
                 if (me.source.style.position !== "absolute") {
-                    me.ui.node.shift(me.source, target);
+                    ui.node.shift(me.source, target);
                 }
             }
             return false;
@@ -156,10 +156,10 @@ screens.ui.drag.icon = function UIDragIcon(me, { core }) {
                 if (event.clientX && event.clientY) {
                     me.drag_pos = { x: event.clientX, y: event.clientY };
                 }
-                var region = me.ui.rect.relativeRegion(me.source);
+                var region = ui.rect.relativeRegion(me.source);
                 region.left = me.drag_pos.x - me.drag_offset.x;
                 region.top = me.drag_pos.y - me.drag_offset.y;
-                me.ui.rect.setRelativeRegion(me.source, region);
+                ui.rect.setRelativeRegion(me.source, region);
             }
         }
     };

@@ -3,7 +3,7 @@
  @component WidgetTree
  */
 
-screens.widget.tree = function WidgetTree(me, { core }) {
+screens.widget.tree = function WidgetTree(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "widget.tree.collapse"]
@@ -23,7 +23,7 @@ screens.widget.tree = function WidgetTree(me, { core }) {
     };
     me.clear = {
         set: function (object, value) {
-            me.ui.node.empty(object.var.container);
+            ui.node.empty(object.var.container);
         }
     };
     me.collapse = {
@@ -36,7 +36,7 @@ screens.widget.tree = function WidgetTree(me, { core }) {
     };
     me.elements = {
         get: function (object) {
-            return me.ui.node.childList(object.var.container);
+            return ui.node.childList(object.var.container);
         },
         set: function (object, value) {
             if (value) {
@@ -60,7 +60,7 @@ screens.widget.tree = function WidgetTree(me, { core }) {
     };
 };
 
-screens.widget.tree.dropdown = function WidgetDropDownList(me) {
+screens.widget.tree.dropdown = function WidgetDropDownList(me, { ui }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
@@ -110,8 +110,8 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.ui.rect.absoluteRegion(object.parentNode);
-            object.var.tree = me.ui.element.create({
+            var region = ui.rect.absoluteRegion(object.parentNode);
+            object.var.tree = ui.element.create({
                 "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -195,7 +195,7 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
     };
     me.selection = {
         set: function (object, value) {
-            var childList = me.ui.node.childList(object.var.container);
+            var childList = ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -286,18 +286,18 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.elements = {
         get: function (object) {
-            return me.ui.node.childList(object.var.list);
+            return ui.node.childList(object.var.list);
         },
         set: function (object, value) {
             if (value) {
                 if (!object.var.list) {
-                    object.var.list = me.ui.element.create({
+                    object.var.list = ui.element.create({
                         "ui.element.component": "widget.tree.list",
                         "ui.basic.var": "list"
                     }, object, object.context);
                 }
                 core.property.set(object.var.icon, "ui.class.add", "parent");
-                me.ui.element.create(value, object.var.list, object.context);
+                ui.element.create(value, object.var.list, object.context);
                 core.property.set(object, "update");
             }
         }
@@ -310,7 +310,7 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.select = {
         set: function (object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = ui.node.container(object, widget.container.id);
             if (container.selected) {
                 core.property.set(container.selected, "ui.property.broadcast", {
                     "ui.class.remove": "selected"
@@ -323,13 +323,13 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
             core.property.set(object.var.list, "ui.property.broadcast", {
                 "ui.class.remove": "selected"
             });
-            var popup = me.ui.node.container(object, "widget.tree.popup");
+            var popup = ui.node.container(object, "widget.tree.popup");
             core.property.set(popup, "select", object);
         }
     };
     me.click = {
         set: function (object) {
-            var item = me.ui.node.container(object, me.id);
+            var item = ui.node.container(object, me.id);
             core.property.set(item, "select");
         }
     };
@@ -343,11 +343,11 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.update = {
         set: function (object) {
-            var item = me.ui.node.container(object, me.id);
+            var item = ui.node.container(object, me.id);
             if (item) {
                 core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
             }
-            core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
+            core.property.notify(ui.node.container(object, widget.container.id), "update");
         }
     };
     me.state = {

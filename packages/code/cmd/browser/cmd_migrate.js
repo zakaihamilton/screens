@@ -11,11 +11,11 @@ screens.cmd.migrate = function CmdMigrate(me, { core, manager }) {
             core.property.set(terminal, "print", "migrate: input output");
             return;
         }
-        var inputList = await me.manager.content.list(input);
+        var inputList = await manager.content.list(input);
         var count = 0;
         if (inputList) {
             for (var item of inputList) {
-                var data = await me.manager.content.load(input, item.title);
+                var data = await manager.content.load(input, item.title);
                 manager.content.save(output, item.title, data);
                 count++;
             }

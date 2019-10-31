@@ -3,7 +3,7 @@
  @component UIBasic
  */
 
-screens.ui.basic = function UIBasic(me, { core }) {
+screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
     me.tag = {
         get: function (object) {
             return object.tagName.toLowerCase();
@@ -22,7 +22,7 @@ screens.ui.basic = function UIBasic(me, { core }) {
             return object.src;
         },
         set: function (object, value) {
-            object.src = me.ui.image.get(value);
+            object.src = ui.image.get(value);
         }
     };
     me.ref = {
@@ -101,7 +101,7 @@ screens.ui.basic = function UIBasic(me, { core }) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.ui.element.create(value, object, object.context);
+                ui.element.create(value, object, object.context);
             }
         }
     };
@@ -149,7 +149,7 @@ screens.ui.basic = function UIBasic(me, { core }) {
             }
             else {
                 object.innerHTML = value;
-                me.ui.theme.updateElements(object.parentNode);
+                ui.theme.updateElements(object.parentNode);
             }
         }
     };
@@ -188,7 +188,7 @@ screens.ui.basic = function UIBasic(me, { core }) {
             if (!value) {
                 value = object;
             }
-            object.window = me.widget.window.get(value);
+            object.window = widget.window.get(value);
         }
     };
     me.target = {
@@ -220,7 +220,7 @@ screens.ui.basic = function UIBasic(me, { core }) {
                 text = core.property.get(object, "ui.basic.text");
             }
             core.property.set(object, "storage.local.store", text);
-            core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
+            core.property.notify(ui.node.container(object, widget.container.id), "update");
         }
     };
     me.metadata = {

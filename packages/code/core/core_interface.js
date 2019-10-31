@@ -3,7 +3,7 @@
  @component CoreInterface
  */
 
-screens.core.interface = function CoreInterface(me, { core }) {
+screens.core.interface = function CoreInterface(me, { core, storage }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.interface.receive", true);
         core.mutex.enable(me.id, true);
@@ -55,7 +55,7 @@ screens.core.interface = function CoreInterface(me, { core }) {
         var body = me.toTypeFormat([method, ...params]);
         var result = null;
         if (!core.util.isOnline()) {
-            result = await me.storage.local.db.get(me.id, body);
+            result = await storage.local.db.get(me.id, body);
             return result;
         }
         var info = {
@@ -73,7 +73,7 @@ screens.core.interface = function CoreInterface(me, { core }) {
         if (result[0]) {
             throw result[0];
         }
-        await me.storage.local.db.set(me.id, body, result[1]);
+        await storage.local.db.set(me.id, body, result[1]);
         return result[1];
     };
 };

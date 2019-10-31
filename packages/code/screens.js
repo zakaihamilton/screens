@@ -30,7 +30,12 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
         return [];
     }
-    var component_obj = Object.assign({}, screens, { id });
+    var component_obj = Object.assign({
+        log: screens.log,
+        log_error: screens.log_error,
+        log_warning: screens.log_warning,
+        platform: screens.platform
+    }, { id });
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
         component_obj.upper = screens[package_name][component_name];

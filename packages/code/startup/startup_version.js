@@ -3,7 +3,7 @@
  @component StartupVersion
  */
 
-screens.startup.version = function StartupVersion(me, { core }) {
+screens.startup.version = function StartupVersion(me, { core, storage }) {
     me.init = function () {
         core.broadcast.register(me, {
             prepare: "startup.version.prepare"
@@ -26,9 +26,9 @@ screens.startup.version = function StartupVersion(me, { core }) {
         }
         else if (me.platform === "browser") {
             let config = await core.util.config();
-            let version = me.storage.local.get(me.id);
+            let version = storage.local.get(me.id);
             if (version && config.version && version !== config.version) {
-                me.storage.local.set(me.id, config.version);
+                storage.local.set(me.id, config.version);
                 await core.util.reload();
             }
         }

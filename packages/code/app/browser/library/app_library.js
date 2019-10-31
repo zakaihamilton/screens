@@ -3,7 +3,7 @@
  @component AppLibrary
  */
 
-screens.app.library = function AppLibrary(me, { core }) {
+screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
     me.init = async function () {
         core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
@@ -22,25 +22,25 @@ screens.app.library = function AppLibrary(me, { core }) {
             }
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
+        me.singleton = ui.element.create(me.json, "workspace", "self", params);
     };
     me.refresh = async function (object) {
-        var window = me.widget.window.get(object);
-        me.tagList = await me.db.library.tagList();
+        var window = widget.window.get(object);
+        me.tagList = await db.library.tagList();
         window.names = null;
     };
     me.setTags = function (tags) {
         me.tagList = tags;
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window.get(object);
-        me.ui.options.load(me, window, {
+        var window = widget.window.get(object);
+        ui.options.load(me, window, {
             editMode: false,
             structuredMode: false,
             tagMode: false,
             combineResults: false
         });
-        me.ui.options.toggleSet(me, null, {
+        ui.options.toggleSet(me, null, {
             "editMode": me.updateEditMode,
             "structuredMode": me.updateEditMode,
             "tagMode": me.reSearch,
@@ -56,7 +56,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         me.updateText(object);
     };
     me.updateMode = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var showResults = window.showResults;
         var editMode = window.options.editMode && (!showResults || !window.searchText);
         var structuredMode = window.options.structuredMode;
@@ -73,7 +73,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         return search;
     };
     me.insertTag = function (object, nameKey, nameValue) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var search = core.property.get(window.var.search, "ui.basic.text");
         var insert = true;
         if (search) {
@@ -157,7 +157,7 @@ screens.app.library = function AppLibrary(me, { core }) {
                             select: letters[letter].map(value => {
                                 return {
                                     ref: value,
-                                    text: me.core.string.title(value),
+                                    text: core.string.title(value),
                                     select: () => {
                                         me.insertTag(object, key, value);
                                     },
@@ -176,7 +176,7 @@ screens.app.library = function AppLibrary(me, { core }) {
                     subItems = values.sort().map(value => {
                         return {
                             ref: value,
-                            text: me.core.string.title(value),
+                            text: core.string.title(value),
                             select: () => {
                                 me.insertTag(object, key, value);
                             },
@@ -188,7 +188,7 @@ screens.app.library = function AppLibrary(me, { core }) {
                 }
                 menuItems.push({
                     key,
-                    text: me.core.string.title(key),
+                    text: core.string.title(key),
                     select: subItems,
                     options: {
                         separator: isFirst
@@ -212,12 +212,12 @@ screens.app.library = function AppLibrary(me, { core }) {
         }, 2000);
     };
     me.clear = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.search, "ui.basic.text", "");
         me.reset(object);
     };
     me.reset = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.editor, "text", "");
         core.property.set(window.var.transform, "text", "");
         core.property.set(window.var.transform, "transform");
@@ -226,12 +226,12 @@ screens.app.library = function AppLibrary(me, { core }) {
         window.searchText = "";
     };
     me.reSearch = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.searchText = "";
         me.search(object);
     };
     me.search = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var tagMode = window.options.tagMode;
         var search = core.property.get(window.var.search, "ui.basic.text");
         search = me.cleanSearchText(search);
@@ -249,7 +249,7 @@ screens.app.library = function AppLibrary(me, { core }) {
             core.property.set(window.var.resultsSpinner, "text", "Loading");
             core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             try {
-                records = await me.db.library.find(search);
+                records = await db.library.find(search);
             }
             catch (err) {
                 me.log_error("Failed to search for: " + search + " err: " + JSON.stringify(err));
@@ -273,7 +273,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         }
     };
     me.updateText = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var records = me.parseRecordsFromText(window);
         me.updateTextFromRecords(object, records);
     };
@@ -290,7 +290,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         return json;
     };
     me.updateTextFromRecords = function (object, records) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         if (!Array.isArray(records)) {
             records = me.toRecordArray(records);
         }
@@ -391,7 +391,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         }
     };
     me.parseRecordsFromText = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = core.property.get(window.var.editor, "text");
         var records = {};
         var array = [];
@@ -488,18 +488,18 @@ screens.app.library = function AppLibrary(me, { core }) {
         return dict;
     };
     me.updateRecord = async function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var tagMode = window.options.tagMode;
         var records = me.parseRecordsFromText(window);
         if (records.content && !tagMode) {
-            records.content = await me.db.library.content.store(records.content);
+            records.content = await db.library.content.store(records.content);
             records.ids = records.content.map(item => item._id);
         }
         if (records.tags) {
             for (var index = 0; index < records.tags.length; index++) {
                 records.tags[index] = me.addExtra(records.tags[index], records.content[index]);
             }
-            records.tags = await me.db.library.tags.store(records.tags);
+            records.tags = await db.library.tags.store(records.tags);
             records.ids = records.tags.map(item => item._id);
         }
         me.updateTextFromRecords(window, records);
@@ -508,12 +508,12 @@ screens.app.library = function AppLibrary(me, { core }) {
     me.deleteRecord = async function (object) {
         var records = me.parseRecordsFromText(object);
         if (records.ids && records.ids.length) {
-            await me.db.library.tags.remove({ _id: records.ids[0] });
-            await me.db.library.content.remove({ _id: records.ids[0] });
+            await db.library.tags.remove({ _id: records.ids[0] });
+            await db.library.content.remove({ _id: records.ids[0] });
         }
     };
     me.process = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = core.property.get(window.var.editor, "text");
         var prevLine = "";
         var isTag = false;
@@ -552,19 +552,19 @@ screens.app.library = function AppLibrary(me, { core }) {
         me.updateText(object);
     };
     me.gotoArticle = async function (object, tags, spinner = true) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         if (spinner) {
             core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         }
         if (!Array.isArray(tags)) {
-            var content = await me.db.library.findContentById(tags._id);
+            var content = await db.library.findContentById(tags._id);
         }
         var records = [];
         if (Array.isArray(tags)) {
             records = tags.map(async (record, index) => {
                 if (window.options.combineResults) {
-                    var content = await me.db.library.findContentById(record._id);
+                    var content = await db.library.findContentById(record._id);
                     if (index !== tags.length - 1) {
                         content.text += "\n<br>\n";
                     }
@@ -587,17 +587,17 @@ screens.app.library = function AppLibrary(me, { core }) {
         }
     };
     me.showResults = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.showResults = true;
         me.updateMode(window);
     };
     me.exportText = function (object, target) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var text = core.property.get(window.var.transform, "text");
         core.property.set(target, "importData", text);
     };
     me.updateResults = function (object, results) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         window.showResults = true;
         me.updateMode(window);
         var noSearch = false;
@@ -610,7 +610,7 @@ screens.app.library = function AppLibrary(me, { core }) {
                 me.gotoArticle(object, info.item);
             }, 250);
         };
-        var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
+        var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== "user" && name !== "_id").map(name => {
             return { name: name, title: core.string.title(name), type: "text" };
         });
         $(window.var.resultsGrid).jsGrid("clearFilter");
@@ -629,7 +629,7 @@ screens.app.library = function AppLibrary(me, { core }) {
             autoload: true,
             rowClick: gotoArticle,
             onRefreshed: () => {
-                me.ui.theme.updateElements(window.var.resultsGrid);
+                ui.theme.updateElements(window.var.resultsGrid);
             },
             controller: {
                 data: results,
@@ -661,7 +661,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         });
     };
     me.copyUrl = function (object) {
-        var window = me.widget.window.get(object);
+        var window = widget.window.get(object);
         var search = core.property.get(window.var.search, "ui.basic.text");
         core.util.copyUrl("library", [search]);
     };
@@ -669,7 +669,7 @@ screens.app.library = function AppLibrary(me, { core }) {
         search: async function (text) {
             var tagList = me.tagList;
             if (!tagList) {
-                tagList = me.tagList = await me.db.library.tagList();
+                tagList = me.tagList = await db.library.tagList();
             }
             else if (tagList.then) {
                 tagList = me.tagList = await tagList;

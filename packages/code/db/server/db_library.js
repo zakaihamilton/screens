@@ -3,7 +3,7 @@
  @component DbLibrary
  */
 
-screens.db.library = function DbLibrary(me, { core, storage }) {
+screens.db.library = function DbLibrary(me, { core, storage, db }) {
     me.findContentById = function (id) {
         return me.content.findById(id);
     };
@@ -71,8 +71,8 @@ screens.db.library = function DbLibrary(me, { core, storage }) {
             me.log("returning " + results.length + " results (reduced from " + prevLength + " )");
             return results;
         }
-        var tags = me.db.library.query.tags(text);
-        var filter = me.db.library.query.filter(text);
+        var tags = db.library.query.tags(text);
+        var filter = db.library.query.filter(text);
         var query = {};
         var params = {};
         var result = [];
@@ -87,7 +87,7 @@ screens.db.library = function DbLibrary(me, { core, storage }) {
         }
         me.log("query: " + storage.db.queryAsString(query) + " tags: " + storage.db.queryAsString(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
-            tagList.push(...await me.db.library.tags.list(tags));
+            tagList.push(...await db.library.tags.list(tags));
         }
         if (tagList.length) {
             me.log("found " + tagList.length + " matching tags");
@@ -108,11 +108,11 @@ screens.db.library = function DbLibrary(me, { core, storage }) {
         var list = [];
         if (doQuery) {
             if (filter === "*") {
-                result = await me.db.library.tags.list(query, params);
+                result = await db.library.tags.list(query, params);
             }
             else {
-                list = await me.db.library.content.list(query, params);
-                result = await me.db.library.tags.findByIds(list.map(item => item._id));
+                list = await db.library.content.list(query, params);
+                result = await db.library.tags.findByIds(list.map(item => item._id));
                 if (result) {
                     result.sort((a, b) => {
                         let score_a = list.find(item => item._id === a._id).score;
