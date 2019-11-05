@@ -3,7 +3,7 @@
  @component CoreUtil
  */
 
-screens.core.util = function CoreUtil(me, { core, storage }) {
+screens.core.util = function CoreUtil(me, { core, storage, ui }) {
     me.init = async function () {
         if (me.platform === "browser") {
             me.info = await storage.local.db.get(me.id, "info");
@@ -192,7 +192,6 @@ screens.core.util = function CoreUtil(me, { core, storage }) {
         let cacheNames = await caches.keys();
         await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
         await core.message.service_worker.unregister();
-        await core.message.service_worker.register();
         location.reload(true);
     };
 };
