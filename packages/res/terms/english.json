@@ -238,7 +238,8 @@
             "Het [sin] is male": "Het2 [sin] is male",
             "to shed": "to __shed",
             "I heard on ": "I heard on __",
-            "now shed": "now __shed"
+            "now shed": "now __shed",
+            "the Neshama": "the Neshama2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
