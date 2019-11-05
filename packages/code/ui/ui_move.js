@@ -4,7 +4,7 @@
  */
 
 screens.ui.move = function UIMove(me, { core, ui, widget }) {
-    me.snapSensitivity = 75;
+    me.snapSensitivity = 5;
     me.enabled = {
         get: function (object) {
             return object.move_enabled;
