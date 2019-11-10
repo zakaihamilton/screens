@@ -61,7 +61,7 @@
         "DE"
     ],
     "replace": {
-        "spelling": {
+        "fixes": {
             "Hakaaof": "Hakaa of",
             "onionskins": "onion skins",
             "Agolon": "Agol on",
@@ -239,7 +239,9 @@
             "to shed": "to __shed",
             "I heard on ": "I heard on __",
             "now shed": "now __shed",
-            "the Neshama": "the Neshama2"
+            "the Neshama": "the Neshama2",
+            "came from the north": "came from the __north",
+            "brightness round": "Noga round"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -1174,7 +1176,8 @@
                 "Ruach",
                 "Neshama"
             ],
-            "term": "NRN"
+            "term": "NRN",
+            "abridged": "Normal Level of Internal Power"
         },
         {
             "expansion": [
@@ -6342,7 +6345,69 @@
         },
         {
             "term": "Noga shell",
-            "explanation": "Human Perception"
+            "explanation": "Human Perception",
+            "hebrew": "קליפת נוגה",
+            "transliterated": "Klipat Noga",
+            "translation": "Brightness Shell",
+            "style": {
+                "category": "Shells",
+                "phase": "one"
+            }
+        },
+        {
+            "term": "Noga",
+            "hebrew": "נוגה",
+            "translation": "Brightness",
+            "explanation": "Human Perception",
+            "transliterated": "Noga",
+            "style": {
+                "category": "Shells",
+                "phase": "one"
+            }
+        },
+        {
+            "term": "HASHMAL",
+            "hebrew": "חשמל",
+            "translation": "Electricity",
+            "explanation": "Internal Power",
+            "transliterated": "Hashmal",
+            "style": {
+                "category": "Shells",
+                "phase": "root"
+            }
+        },
+        {
+            "term": "Stormy Wind",
+            "hebrew": "רוח סערה",
+            "transliterated": "Ruach Se’ara",
+            "translation": "Stormy Wind",
+            "explanation": "Blame on Others",
+            "style": {
+                "category": "Shells",
+                "phase": "four"
+            }
+        },
+        {
+            "term": "Great Cloud",
+            "hebrew": "ענן גדול",
+            "transliterated": "Anan Gadol",
+            "translation": "Great Cloud",
+            "explanation": "Self Righteousness",
+            "style": {
+                "category": "Shells",
+                "phase": "three"
+            }
+        },
+        {
+            "term": "Blazing Fire",
+            "hebrew": "אש מתלקחת",
+            "transliterated": "Esh Mitlakachat",
+            "translation": "Blazing Fire",
+            "explanation": "Self-Blame",
+            "style": {
+                "category": "Shells",
+                "phase": "two"
+            }
         },
         {
             "term": "Arvut",
