@@ -241,7 +241,8 @@
             "now shed": "now __shed",
             "the Neshama": "the Neshama2",
             "came from the north": "came from the __north",
-            "brightness round": "Noga round"
+            "brightness round": "Noga round",
+            "Kabbalah and Hitlabshut": "Kabbalah2 and Hitlabshut"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -1100,6 +1101,22 @@
             },
             "term": "Neshama2",
             "hebrew": "נשמה"
+        },
+        {
+            "term": "Behinat Hamshacha",
+            "translation": "Attraction",
+            "hebrew": "בחינת המשכה"
+        },
+        {
+            "term": "Kabbalah2",
+            "source": "Kabbalah",
+            "hebrew": "קבלה",
+            "translation": "Reception"
+        },
+        {
+            "term": "Behinat Kabbalah",
+            "translation": "Reception",
+            "hebrew": "בחינת קבלה"
         },
         {
             "translation": "Expression",
@@ -3503,7 +3520,6 @@
         },
         {
             "translation": "Shells",
-            "explanation": "Superficial Attitudes",
             "term": "Klipot",
             "hebrew": "קליפות"
         },
