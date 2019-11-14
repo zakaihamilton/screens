@@ -242,7 +242,8 @@
             "the Neshama": "the Neshama2",
             "came from the north": "came from the __north",
             "brightness round": "Noga round",
-            "Kabbalah and Hitlabshut": "Kabbalah2 and Hitlabshut"
+            "Kabbalah and Hitlabshut": "Kabbalah2 and Hitlabshut",
+            "YsarmEl": "Yashar El"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -634,6 +635,11 @@
             "term": "Behinat Shoresh",
             "hebrew": "בחינת שורש",
             "explanation": "Nature"
+        },
+        {
+            "term": "Yashar El",
+            "translation": "Straight to the Creator",
+            "hebrew": "ישר-אל"
         },
         {
             "translation": "Phase One",
@@ -3517,6 +3523,11 @@
             "translation": "Shell",
             "term": "Klipa",
             "hebrew": "קליפה"
+        },
+        {
+            "term": "Li Rosh",
+            "translation": "the head is mine",
+            "hebrew": "לי ראש"
         },
         {
             "translation": "Shells",

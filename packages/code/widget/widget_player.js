@@ -598,7 +598,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
             var name = Object.keys(media.voice.speeds)[index];
             var message = "Speeding up playback to " + name;
             message += " (x" + media.voice.speeds[name] + ")";
-            mainWidget.toast.show("widget.player.speed", message);
+            widget.toast.show("widget.player.speed", message);
         }
     };
     me.speedDown = function (object) {
@@ -614,7 +614,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
             var name = Object.keys(media.voice.speeds)[index];
             var message = "Slowing down playback to " + name;
             message += " (x" + media.voice.speeds[name] + ")";
-            mainWidget.toast.show("widget.player.speed", message);
+            widget.toast.show("widget.player.speed", message);
         }
     };
     me.setIconSize = function (object, iconSize) {
