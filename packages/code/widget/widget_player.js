@@ -52,10 +52,6 @@ screens.widget.player = function WidgetPlayer(me, { core, ui, widget }) {
     };
     me.resize = function (object) {
         var mainWidget = me.mainWidget(object);
-        var background = mainWidget.var.controls.var.progress;
-        if (mainWidget.wavesurfer) {
-            mainWidget.wavesurfer.setHeight(background.offsetHeight);
-        }
         core.property.set(mainWidget, "update");
     };
 };
@@ -318,44 +314,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
                     "ui.attribute.title": "Next Session"
                 }
             ]
-        },
-        draw: function (object) {
-            var mainWidget = me.upper.mainWidget(object);
-            var background = object.var.controls.var.progress.var.background;
-            var plugins = [];
-            if (!core.device.isMobile()) {
-                let plugin = WaveSurfer.cursor.create({
-                    showTime: true,
-                    opacity: 1,
-                    customShowTimeStyle: {
-                        "background-color": "var(--chrome-background)",
-                        color: "var(--chrome-color)",
-                        padding: "0.2em",
-                        "margin-left": "0.4em",
-                        "z-index": "1000"
-                    }
-                });
-                plugin.instance.prototype.formatTime = function (cursorTime) {
-                    return [cursorTime].map(function (time) {
-                        return [
-                            ("00" + Math.floor(time % (3600 * 60) / 60 / 60)).slice(-2),
-                            ("00" + Math.floor(time % 3600 / 60)).slice(-2),
-                            ("00" + Math.floor(time % 60)).slice(-2)
-                        ].join(":");
-                    });
-                };
-                plugins.push(plugin);
-            }
-            mainWidget.wavesurfer = WaveSurfer.create({
-                container: background,
-                waveColor: "#669966",
-                progressColor: "#669966",
-                backend: "MediaElement",
-                plugins
-            });
-            mainWidget.wavesurfer.on("waveform-ready", () => {
-                me.updatePeaks(mainWidget);
-            });
         }
     };
     me.isPlaying = function (object) {
@@ -392,7 +350,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
         me.updateLink(object);
         me.updateFullscreen(object);
         me.updatePlayer(object);
-        me.updatePeaks(object);
     };
     me.updatePlayer = function (object) {
         var mainWidget = me.upper.mainWidget(object);
@@ -638,59 +595,5 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
             "ui.class.large": isLarge
         });
         me.update(mainWidget);
-    };
-    me.enablePeaks = function (object, flag) {
-        var mainWidget = me.upper.mainWidget(object);
-        var background = mainWidget.var.controls.var.progress.var.background;
-        mainWidget.enablePeaks = flag;
-        core.property.set(background, "ui.basic.show", flag);
-    };
-    me.loadPeaks = function (object) {
-        var mainWidget = me.upper.mainWidget(object);
-        if (!mainWidget.src) {
-            return;
-        }
-        setTimeout(() => {
-            me.update(mainWidget);
-        }, 500);
-        var peaks = null;
-        if (mainWidget.item) {
-            peaks = mainWidget.item.peaks;
-        }
-        if (peaks || !core.device.isMobile()) {
-            var currentTime = mainWidget.var.player.currentTime;
-            mainWidget.wavesurfer.load(mainWidget.var.player, peaks);
-            mainWidget.var.player.currentTime = currentTime;
-        }
-    };
-    me.updatePeaks = async function (object) {
-        var mainWidget = me.upper.mainWidget(object);
-        var item = null;
-        if (mainWidget.src) {
-            var name = core.path.fileName(decodeURIComponent(mainWidget.src));
-            if (!mainWidget.item) {
-                item = await db.cache.metadata.find({ name });
-                if (!item) {
-                    item = {};
-                }
-                mainWidget.item = item;
-                me.loadPeaks(mainWidget);
-            }
-            var background = mainWidget.var.controls.var.progress;
-            if (mainWidget.wavesurfer) {
-                mainWidget.wavesurfer.setHeight(background.offsetHeight);
-                if (mainWidget.item && !mainWidget.item.peaks) {
-                    var peaks = JSON.parse(mainWidget.wavesurfer.exportPCM(1024, 1000, true, 0));
-                    if (peaks && peaks.length) {
-                        mainWidget.item.peaks = peaks;
-                        await db.cache.metadata.use({ name }, mainWidget.item);
-                    }
-                }
-            }
-        }
-        else if (mainWidget.wavesurfer) {
-            mainWidget.wavesurfer.empty();
-            mainWidget.item = null;
-        }
     };
 };
