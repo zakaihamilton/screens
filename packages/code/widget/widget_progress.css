@@ -64,10 +64,6 @@
     margin: auto auto;
 }
 
-.widget-progress-container:hover div.widget-progress-label:not(.is-mobile) {
-    opacity: 0;
-}
-
 .widget-progress-percent {
     position: absolute;
     margin-left: 3px;
