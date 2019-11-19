@@ -7629,9 +7629,24 @@
             "hebrew": "גלות"
         },
         {
+            "term": "Ge ’ ula",
+            "translation": "Redemption",
+            "hebrew": "גאולה"
+        },
+        {
             "term": "Geula",
             "translation": "Redemption",
             "hebrew": "גאולה"
+        },
+        {
+            "term": "Meod",
+            "translation": "Very",
+            "hebrew": "מאוד"
+        },
+        {
+            "term": "Alupho Shel Olam",
+            "translation": "Champion of the world",
+            "hebrew": "אלופו של עולם"
         },
         {
             "term": "Reshut Ha Rabim",
