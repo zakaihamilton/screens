@@ -243,7 +243,10 @@
             "came from the north": "came from the __north",
             "brightness round": "Noga round",
             "Kabbalah and Hitlabshut": "Kabbalah2 and Hitlabshut",
-            "YsarmEl": "Yashar El"
+            "YsarmEl": "Yashar El",
+            "'ve": "'ve__",
+            "pride": "pride__",
+            "Pride": "Pride__"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -830,6 +833,11 @@
             "translation": "Reflected",
             "term": "Hozer",
             "hebrew": "חוזר"
+        },
+        {
+            "term": "Pain",
+            "hebrew": "כאב",
+            "explanation": "Tension"
         },
         {
             "translation": "Direct Light of Judgement",
