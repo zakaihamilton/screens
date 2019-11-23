@@ -6641,6 +6641,11 @@
             "hebrew": "ליל הכלה"
         },
         {
+            "term": "Demamah",
+            "translation": "Silence",
+            "hebrew": "דממה"
+        },
+        {
             "term": "Regesh Ruchani",
             "translation": "Spiritual Emotion",
             "style": {
