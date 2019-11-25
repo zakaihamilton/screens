@@ -469,6 +469,12 @@
             "hebrew": "פרצוף גלגלתא"
         },
         {
+            "term": "Galgalta ve Eynaim",
+            "hebrew": "גלגלתא ועיניים",
+            "translation": "Skull and Eyes",
+            "abridged": "Machshava"
+        },
+        {
             "translation": "Skull",
             "style": "skull",
             "term": "Galgalta",
