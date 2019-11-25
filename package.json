@@ -38,6 +38,7 @@
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
     "mime": "^2.4.4",
+    "moment-timezone": "^0.5.27",
     "mongodb": "^3.3.3",
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.8.0",
