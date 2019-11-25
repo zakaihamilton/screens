@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component TimeConv
+ @component CoreTimeConverter
  */
 
-screens.core.timeconverter = function CoreTimeConverter(me, { core, storage }) {
+screens.core.timeconverter = function CoreTimeConverter(me, { core }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.timeconverter.receive", true);
         me.http = require("http");
