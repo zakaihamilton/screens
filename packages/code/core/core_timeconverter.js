@@ -12,8 +12,11 @@ screens.core.timeconverter = function CoreTimeConverter(me, { core, storage }) {
     me.receive = async function (info) {
         if (me.platform === "server" && info.method === "GET" && info.url.startsWith("/api/timeconverter")) {
             const { source, target, date, time } = info.query;
-            var result = me.moment.tz(date + " " + time, source).tz(target).format("YY-MM-DD HH:mm");
+            let result = "";
             info["content-type"] = "text/plain";
+            if (source && target && date && time) {
+                result = me.moment.tz(date + " " + time, source).tz(target).format("YY-MM-DD HH:mm");
+            }
             info.body = result;
         }
     };
