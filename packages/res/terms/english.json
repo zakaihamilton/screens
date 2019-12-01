@@ -343,22 +343,6 @@
             "replace": "Histaklut Pnimit"
         },
         {
-            "find": "/: (\\d*\\))",
-            "replace": ":\n$1"
-        },
-        {
-            "find": "/, (\\d*\\))",
-            "replace": ",\n$1"
-        },
-        {
-            "find": "/\\. (\\d*\\))",
-            "replace": ".\n$1"
-        },
-        {
-            "find": "/\\? (\\d+\\))",
-            "replace": "?\n$1"
-        },
-        {
             "find": "/\\((\\d*)\\)",
             "replace": "<b>($1)</b>"
         },
@@ -473,6 +457,47 @@
             "translation": "Ascended in desire",
             "explanation": "Wanted",
             "hebrew": "סליק ברעותא"
+        },
+        {
+            "term": "Petillah",
+            "hebrew": "פתילה",
+            "translation": "Wick"
+        },
+        {
+            "term": "Petaltol",
+            "hebrew": "פתלתל",
+            "translation": "Winding"
+        },
+        {
+            "term": "Pesulah",
+            "hebrew": "פסולה",
+            "translation": "Flawed"
+        },
+        {
+            "term": "Timtum",
+            "hebrew": "טמטום",
+            "translation": "Dumbness"
+        },
+        {
+            "term": "Situm",
+            "hebrew": "סיתום",
+            "translation": "Blocking"
+        },
+        {
+            "term": "Yaarot Hadvash",
+            "hebrew": "יערות הדבש",
+            "translation": "The Honeycombs",
+            "style": {
+                "category": "Book"
+            }
+        },
+        {
+            "term": "RASHAR Hirsh",
+            "hebrew": "רש״ר הירש",
+            "translation": "Samson Raphael Hirsch",
+            "style": {
+                "category": "Author"
+            }
         },
         {
             "term": "Histaklut Dak",
