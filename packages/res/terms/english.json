@@ -3517,6 +3517,7 @@
         {
             "translation": "First Hey",
             "explanation": "Key",
+            "expansion": "Decree",
             "source": "Hey Rishonah",
             "term": "first Hey",
             "hebrew": "ה׳ ראשונה",
@@ -3527,6 +3528,7 @@
         },
         {
             "translation": "Lower Hey",
+            "explanation": "Desire",
             "term": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
@@ -8099,6 +8101,36 @@
                 "phase": "three",
                 "category": "Angels"
             }
+        },
+        {
+            "term": "Homat",
+            "hebrew": "חומת",
+            "translation": "Wall"
+        },
+        {
+            "term": "Techum",
+            "hebrew": "תחום",
+            "translation": "Domain"
+        },
+        {
+            "term": "Teshuva",
+            "hebrew": "תשובה",
+            "translation": "Repentance"
+        },
+        {
+            "term": "Teshuv",
+            "hebrew": "תשוב",
+            "translation": "Return"
+        },
+        {
+            "term": "HaShamaim",
+            "hebrew": "השמים",
+            "translation": "The Heavens"
+        },
+        {
+            "term": "Shamaim",
+            "hebrew": "שמים",
+            "translation": "Heavens"
         },
         {
             "term": "Shina",
