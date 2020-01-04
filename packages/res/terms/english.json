@@ -251,7 +251,9 @@
             "of Av": "of Av__",
             "Av, Tav": "Av__, Tav",
             "Sivan, Tamuz, Av": "Sivan, Tamuz, Av__",
-            "Hochma22": "Hochma2"
+            "Hochma22": "Hochma2",
+            "in the east": "in the east__",
+            "of the east": "of the east__"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
