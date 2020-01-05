@@ -251,7 +251,6 @@
             "of Av": "of Av__",
             "Av, Tav": "Av__, Tav",
             "Sivan, Tamuz, Av": "Sivan, Tamuz, Av__",
-            "Hochma22": "Hochma2",
             "in the east": "in the east__",
             "of the east": "of the east__",
             "Light of Hochma": "Light of Hochma2",
@@ -259,7 +258,14 @@
             "long of Hochma": "long of Hochma2",
             "blocking on the Hochma": "blocking on the Hochma2",
             "absence of Hochma": "absence of Hochma2",
-            "Hochma extends": "Hochma2 extends"
+            "Hochma extends": "Hochma2 extends",
+            "Hochma is missing": "Hochma2 is missing",
+            "Hochma cannot illuminate": "Hochma2 cannot illuminate",
+            "Hochma that is clothed": "Hochma2 that is clothed",
+            "Hassadim or Hochma": "Hassadim or Hochma2",
+            "departure of the GAR of Hochma": "departure of the GAR of Hochma2",
+            "cancels the GAR of Hochma": "cancels the GAR of Hochma2",
+            "Hochma22": "Hochma2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
