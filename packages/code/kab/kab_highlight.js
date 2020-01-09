@@ -4,15 +4,11 @@
  */
 
 screens.kab.highlight = function KabHighlight(me, { core, kab, ui }) {
-    me.highlights = [];
     me.line = async function (session, line) {
         var hash = String(session.hash);
         let source = kab.text.clean(session.line);
         var classes = [];
         var ondblclick = "screens.kab.highlight.toggle(this)";
-        if (me.highlights.includes(hash)) {
-            classes.push("kab-term-highlight");
-        }
         classes.push("kab-term-hover");
         var styles = {
             "user-select": "none"
@@ -43,16 +39,8 @@ screens.kab.highlight = function KabHighlight(me, { core, kab, ui }) {
     };
     me.toggle = async function (element) {
         core.property.set(element, "ui.class.toggle", "kab-term-highlight");
-        var highlight = core.property.get(element, "ui.class.kab-term-highlight");
-        var hash = core.property.get(element, "ui.attribute.#hash");
-        me.highlights = me.highlights.filter(item => item === hash);
-        if (highlight) {
-            me.highlights.push(hash);
-        }
     };
     me.remove = async function (element) {
         core.property.set(element, "ui.class.remove", "kab-term-highlight");
-        var hash = core.property.get(element, "ui.attribute.#hash");
-        me.highlights = me.highlights.filter(item => item === hash);
     };
 };
