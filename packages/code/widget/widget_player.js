@@ -183,7 +183,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me, { core, ui, widget 
     };
 };
 
-screens.widget.player.controls = function WidgetPlayerControls(me, { core, media, db, widget }) {
+screens.widget.player.controls = function WidgetPlayerControls(me, { core, media, widget }) {
     me.element = {
         properties: {
             "ui.basic.var": "controls",

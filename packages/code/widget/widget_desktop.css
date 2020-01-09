@@ -9,7 +9,7 @@
     user-select: none;
     -webkit-user-drag: none;
     touch-action: none;
-    background-color: #2e0150;
+    background-color: var(--desktop);
 }
 
 .widget-desktop-background {
@@ -19,7 +19,7 @@
     -webkit-user-drag: none;
     touch-action: none;
     width: 100%;
-    height: auto;
+    height: 100%;
     vertical-align: middle;
 }
 

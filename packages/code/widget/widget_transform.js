@@ -3,7 +3,7 @@
  @component WidgetTransform
  */
 
-screens.widget.transform = function WidgetTransform(me, { core, ui, media, widget, kab, db }) {
+screens.widget.transform = function WidgetTransform(me, { core, ui, media, widget, kab }) {
     me.init = function () {
         me.element = {
             properties: me.json
@@ -36,10 +36,6 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             speed: "Normal",
             volume: "Normal",
             singleArticle: false,
-            commentaryEdit: false,
-            commentaryLabel: true,
-            commentarySeparator: true,
-            commentaryUser: "",
             showHighlights: true,
             copyHighlights: true,
             exportSource: false,
@@ -72,9 +68,6 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             pipVideo: me.reflow,
             autoPlay: null,
             singleArticle: null,
-            commentaryEdit: me.transform,
-            commentaryLabel: me.transform,
-            commentarySeparator: me.transform,
             showHighlights: me.transform,
             copyHighlights: null,
             exportSource: null,
@@ -93,8 +86,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             voiceHebrew: me.player.changeVoice,
             speed: me.player.updatePlayback,
             volume: me.player.updatePlayback,
-            scrollPos: null,
-            commentaryUser: me.transform
+            scrollPos: null
         });
     };
     me.findWidget = function (object) {
@@ -520,15 +512,6 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             return key;
         }
     };
-    me.commentaryUsers = function (object) {
-        var info = {
-            list: db.shared.commentary.users(),
-            group: "users",
-            itemMethod: "widget.transform.commentaryUser",
-            options: { "state": "select" }
-        };
-        return widget.menu.collect(object, info);
-    };
     me.transformedText = function (object, useFilter, useSource) {
         var transformWidget = me.findWidget(object);
         var list = [];
@@ -718,7 +701,6 @@ screens.widget.transform.popup = function WidgetTransformPopup(me, { core, ui, l
                 let set = associated[type];
                 let options = Object.assign({}, widget.options);
                 options.showHighlights = false;
-                options.commentaryEdit = false;
                 var info = await kab.text.parse(widget.language, set.join(" "), options);
                 if (counter !== me.associatedCounter) {
                     return;
@@ -1090,7 +1072,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, { core, ui,
                     resolve();
                 }
             }
-            let afterBreak = true;
+            let afterBreak = false;
             target.page = null;
             me.prepare(source, layoutContent);
             var pageSize = me.pageSize(layoutContent);

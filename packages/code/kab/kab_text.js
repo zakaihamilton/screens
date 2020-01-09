@@ -3,7 +3,7 @@
  @component KabText
  */
 
-screens.kab.text = function KabText(me, { core, kab, db }) {
+screens.kab.text = function KabText(me, { core, kab }) {
     me.splitWords = function (session, wordsString) {
         wordsString = core.string.parseWords(function (words) {
             if (session.json.options && session.json.options.splitPartial) {
@@ -200,17 +200,6 @@ screens.kab.text = function KabText(me, { core, kab, db }) {
             wordsString = core.message.send("kab.format.process", wordsString, globalJson.pre);
         }
         var lines = wordsString.split("\n");
-        var hashes = lines.map(line => {
-            return me.hash(line);
-        });
-        var request = {};
-        if (options.showHighlights) {
-            request.highlight = kab.highlight.query(options);
-        }
-        if (options.commentaryEdit || options.commentaryUser) {
-            request.commentary = kab.commentary.query(options);
-        }
-        var items = await db.shared.hashResults(request, hashes);
         var languages = {};
         for (let language of ["english", "hebrew"]) {
             let json = await kab.data.load(language);
@@ -243,13 +232,8 @@ screens.kab.text = function KabText(me, { core, kab, db }) {
             if (line === "<br>") {
                 return line;
             }
-            if (items) {
-                if (options.showHighlights) {
-                    line = await kab.highlight.line(session, items.highlight[index], line);
-                }
-                if (options.commentaryEdit || options.commentaryUser) {
-                    line = await kab.commentary.line(session, items.commentary[index], line);
-                }
+            if (options.showHighlights) {
+                line = await kab.highlight.line(session, line);
             }
             if (session.diagrams) {
                 diagrams.push(...session.diagrams);

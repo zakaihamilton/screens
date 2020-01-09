@@ -19,9 +19,8 @@ screens.widget.desktop = function WidgetDesktop(me, { core, ui }) {
                     "ui.class.class": "workspace",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.tag": "img",
+                            "ui.basic.tag": "div",
                             "ui.class.class": "background",
-                            "ui.basic.src": "desktop",
                             "ui.touch.dblclick": "core.app.launcher"
                         },
                         {

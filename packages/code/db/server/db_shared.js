@@ -3,19 +3,7 @@
  @component DbShared
  */
 
-screens.db.shared = function DbShared(me, { db }) {
-    me.hashResults = async function (queries, hashes) {
-        var results = {};
-        for (let key in queries) {
-            results[key] = [];
-            var list = await db.shared[key].list(queries[key]);
-            for (let hash of hashes) {
-                var result = list.filter(item => item.hash === hash);
-                results[key].push(result);
-            }
-        }
-        return results;
-    };
+screens.db.shared = function DbShared() {
     return "server";
 };
 
@@ -58,26 +46,6 @@ screens.db.shared.content = function DbSharedContent(me, { storage }) {
 screens.db.shared.metadata = function DbSharedContent(me, { storage }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
-    return "server";
-};
-
-screens.db.shared.commentary = function DbSharedCommentary(me, { storage }) {
-    me.init = () => storage.db.extension(me);
-    me.cache = {};
-    me.users = async function () {
-        var users = await me.list({}, { project: { name: 1, _id: 0 } });
-        users = users.map(user => user.name);
-        return users;
-    };
-    me.indexes = [
-        {
-            "hash": 1
-        },
-        {
-            "hash": 1,
-            "name": 1
-        }
-    ];
     return "server";
 };
 

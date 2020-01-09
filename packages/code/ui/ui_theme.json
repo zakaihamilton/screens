@@ -1,6 +1,7 @@
 {
     "colors": {
         "normal": {
+            "--desktop": "#018786",
             "--background": "white",
             "--alt-background": "white",
             "--color": "black",
@@ -40,6 +41,7 @@
             "--phase-collective-background-transparent": "rgba(221,160,221,0.75)"
         },
         "night-mode": {
+            "--desktop": "#018786",
             "--background": "#3c3f42",
             "--alt-background": "#45484b",
             "--color": "#e5e5e5",
