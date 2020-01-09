@@ -559,24 +559,6 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         await me.updateSession(object, list[index - 1].session);
         core.property.notify(object, "app.player.updatePlayer");
     };
-    me.cacheStatus = async function (object) {
-        let session = me.audioItem;
-        if (session) {
-            let matches = await core.message.service_worker.getCachedItems(session.session);
-            if (matches && matches.length) {
-                let size = matches[0].size;
-                let percent = (size / session.size) * 100;
-                me.log("session: " + session.session + " is cached " + percent + "%");
-                if (percent >= 100) {
-                    return "Cached";
-                }
-                return percent + "%";
-            }
-            else {
-                return "0%";
-            }
-        }
-    };
     me.currentGroupName = function (object) {
         var window = widget.window.get(object);
         return core.string.title(window.options.groupName);

@@ -338,23 +338,4 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, { co
             });
         }
     };
-    me.getCachedItems = async function (filter) {
-        const cacheNames = await caches.keys();
-        const list = [];
-        for (const name of cacheNames) {
-            const cache = await caches.open(name);
-            for (const request of await cache.keys()) {
-                if (filter) {
-                    let url = decodeURIComponent(request.url);
-                    if (url.includes(filter)) {
-                        let response = await cache.match(request);
-                        let buffer = await response.arrayBuffer();
-                        let size = buffer.byteLength;
-                        list.push({ url, size });
-                    }
-                }
-            }
-        }
-        return list;
-    };
 };

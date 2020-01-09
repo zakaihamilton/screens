@@ -136,8 +136,7 @@
                     "options": {
                         "state": "select",
                         "separator": true,
-                        "enabled": "app.player.hasAudio",
-                        "status": "app.player.cacheStatus"
+                        "enabled": "app.player.hasAudio"
                     }
                 },
                 {
