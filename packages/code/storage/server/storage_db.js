@@ -21,7 +21,6 @@ screens.storage.db = function StorageDB(me, { core, db }) {
             }
         }
         var clusterHandle = null;
-        me.log("waiting to connect to cluster...");
         var unlock = await core.mutex.lock(me.id);
         try {
             clusterHandle = me.clusterHandle;
@@ -30,7 +29,6 @@ screens.storage.db = function StorageDB(me, { core, db }) {
                 return clusterHandle;
             }
             var url = me.keys.url;
-            me.log("connecting to cluster: " + url);
             clusterHandle = await me.mongodb.MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
             me.clusterHandle = clusterHandle;
             me.log("connected to cluster: " + url);
