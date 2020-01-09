@@ -21,7 +21,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
             }
         }
         var clusterHandle = null;
-        me.log("waiting to connect to cluster: " + url);
+        me.log("waiting to connect to cluster...");
         var unlock = await core.mutex.lock(me.id);
         try {
             clusterHandle = me.clusterHandle;
@@ -69,8 +69,8 @@ screens.storage.db = function StorageDB(me, { core, db }) {
                             handle = await db.collection(location.collection);
                         }
                         catch (getError) {
-                            reject(createError);
                             me.clusterHandle = null;
+                            reject(createError);
                         }
                     }
                 }
