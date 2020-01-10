@@ -1477,9 +1477,11 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, { core, ui,
     me.clearPage = function (page) {
         var content = page.var.content;
         var modifiers = me.upper.modifiers(page);
-        Array.from(content.children).map(element => {
-            me.clearWidget(element, modifiers);
-        });
+        if (content) {
+            Array.from(content.children).map(element => {
+                me.clearWidget(element, modifiers);
+            });
+        }
         page.focusElement = null;
     };
     me.markPage = function (page, widgetIndex, textIndex) {
