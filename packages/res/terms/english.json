@@ -946,6 +946,11 @@
             "hebrew": "אור מקיף"
         },
         {
+            "term": "Passim",
+            "hebrew": "פסים",
+            "translation": "Stripes"
+        },
+        {
             "translation": "Inner Light",
             "term": "Ohr Pnimi",
             "hebrew": "אור פנימי"
