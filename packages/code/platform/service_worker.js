@@ -73,20 +73,3 @@ workbox.routing.registerRoute(
         cacheName: "image-cache"
     })
 );
-
-workbox.routing.registerRoute(
-    /.*\.m4a/,
-    new workbox.strategies.CacheFirst({
-        cacheName: 'audio-cache',
-        plugins: [
-            new workbox.cacheableResponse.Plugin({ statuses: [200] }),
-            new workbox.rangeRequests.Plugin(),
-            new workbox.expiration.Plugin({
-                // Cache only 3 files.
-                maxEntries: 3,
-                // Cache for a maximum of a week.
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-            })
-        ],
-    }),
-);
