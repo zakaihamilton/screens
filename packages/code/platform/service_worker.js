@@ -6,9 +6,9 @@ importScripts("/platform/service_worker.js?platform=service_worker");
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.0.0/workbox-sw.js");
 
 var components = [];
-for (var package of screens.packages) {
-    for (var component in screens[package]) {
-        components.push({ package, component });
+for (var the_package of screens.packages) {
+    for (var component in screens[the_package]) {
+        components.push({ package: the_package, component });
     }
 }
 screens.require(components).then(() => screens.core.startup.run());

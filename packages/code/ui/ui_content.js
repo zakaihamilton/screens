@@ -90,9 +90,9 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
             ];
         },
         update: function () {
-            var [package, component] = me.id.split(".");
+            var [the_package, component] = me.id.split(".");
             var lists = ui.content.data.lists;
-            var filter = item => item.package === package && item.component === component;
+            var filter = item => item.package === the_package && item.component === component;
             me.content.publicList = lists.publicList.filter(filter);
             me.content.privateList = lists.privateList.filter(filter);
         },
@@ -104,15 +104,15 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
             var info = me.content.info(window);
             me.content.associated.update(window, info._title);
         },
-        get: async function (item, private) {
+        get: async function (item, isPrivate) {
             var name = item;
             if (typeof item === "object") {
                 name = item.key.name;
             }
-            var fullItem = await manager.content.load(me.id, name, private);
+            var fullItem = await manager.content.load(me.id, name, isPrivate);
             return [fullItem.content, fullItem.title, fullItem.options];
         },
-        import: async function (object, item, private) {
+        import: async function (object, item, isPrivate) {
             var window = widget.window.get(object);
             var title = item;
             if (typeof item !== "string") {
@@ -121,13 +121,13 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                     title = item.title;
                 }
             }
-            var fullItem = await manager.content.load(me.id, title, private);
+            var fullItem = await manager.content.load(me.id, title, isPrivate);
             if (!fullItem) {
                 return;
             }
             var info = me.content.info(window);
             info._title = fullItem.title;
-            info._private = private;
+            info._private = isPrivate;
             info._locked = fullItem.locked;
             info._owner = fullItem.owner;
             await me.content.associated.update(window, fullItem.title);
@@ -177,7 +177,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
             set: async function (object) {
                 var window = widget.window.get(object);
                 var info = me.content.info(window);
-                var private = info._private;
+                var isPrivate = info._private;
                 var [content, options] = me.exportData(window);
                 var date = new Date();
                 var title = "";
@@ -215,10 +215,10 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 ui.modal.launch("question", {
                     "title": "Save Content",
                     "question": "Do you want to <b>save</b> the following <b>" +
-                        (private ? "private" : "public") +
+                        (isPrivate ? "private" : "public") +
                         "</b> content:<br/>" + title + "?"
                 }).then(async () => {
-                    await manager.content.save(me.id, title, data, private);
+                    await manager.content.save(me.id, title, data, isPrivate);
                     await me.content.refresh(object);
                 }).catch(() => {
 
@@ -231,10 +231,10 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 var info = me.content.info(window);
                 if (info) {
                     var locked = info._locked;
-                    var private = info._private;
+                    var isPrivate = info._private;
                     var title = info._title;
                     var access = !info._owner || info._owner === core.util.info.userId || core.util.info.admin;
-                    var exists = manager.content.exists(me.id, title, private);
+                    var exists = manager.content.exists(me.id, title, isPrivate);
                     return !locked && title && access && exists;
                 }
                 return false;
@@ -242,7 +242,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
             set: async function (object) {
                 var window = widget.window.get(object);
                 var info = me.content.info(window);
-                var private = info._private;
+                var isPrivate = info._private;
                 var title = "";
                 if (info._title) {
                     title = info._title;
@@ -257,10 +257,10 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 ui.modal.launch("question", {
                     "title": "Delete Content",
                     "question": "Do you want to <b>delete</b> the following <b>" +
-                        (private ? "private" : "public") +
+                        (isPrivate ? "private" : "public") +
                         "</b> content:<br/>" + title + "?"
                 }).then(async () => {
-                    await manager.content.delete(me.id, title, private);
+                    await manager.content.delete(me.id, title, isPrivate);
                     await me.content.refresh(object);
                 }).catch(() => {
 
@@ -384,7 +384,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 }
                 return list;
             },
-            items: function (object, name, apps, private) {
+            items: function (object, name, apps, isPrivate) {
                 if (!apps) {
                     return [];
                 }
@@ -397,7 +397,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                     list.push([
                         title,
                         (object, appName) => {
-                            core.app.launch(appName.toLowerCase(), name, private);
+                            core.app.launch(appName.toLowerCase(), name, isPrivate);
                         },
                         {
 

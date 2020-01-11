@@ -4,10 +4,19 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
+    "plugins": [
+        "react"
+    ],
     "rules": {
         "indent": [
             "error",
@@ -24,10 +33,13 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
     },
     "globals": {
         "screens": true,
-        "COMPONENT": true
+        "COMPONENT": true,
+        "React": true
     }
 }

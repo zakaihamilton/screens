@@ -141,6 +141,7 @@ screens.core.pack = function CorePack(me, { core }) {
             body += `screens.${info.package}.${info.component} = function (me, ) { return "${info.platform}"; };\n`;
         }
         else {
+            data = core.react.parse(info.path, data);
             body += await me.minify(info.path, data) + "\n";
         }
         return body;

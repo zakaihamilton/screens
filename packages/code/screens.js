@@ -356,14 +356,14 @@ async function screens_requireAll(root, exclude) {
         if (name.endsWith(".js")) {
             var module = path.split(".")[0].replace("packages", "..");
             module = module.replace("classes", "../../classes");
-            var [package, component] = name.split(".")[0].split("_");
+            var [the_package, component] = name.split(".")[0].split("_");
             if (!component) {
                 continue;
             }
-            if (!screens[package]) {
-                screens[package] = {};
+            if (!screens[the_package]) {
+                screens[the_package] = {};
             }
-            components.push({ package, component, module });
+            components.push({ package: the_package, component, module });
         }
     }
     return components;
