@@ -13,7 +13,11 @@ screens.core.react = function CoreReact(me) {
         }
         try {
             text = me.babel.transform(text, {
-                presets: ["@babel/preset-react"],
+                "plugins": [
+                    ["@babel/plugin-transform-react-jsx", {
+                        "pragma": "screens.ui.react.createElement"
+                    }]
+                ]
             }).code;
         }
         catch (err) {
