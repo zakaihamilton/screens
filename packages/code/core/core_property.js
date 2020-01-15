@@ -191,16 +191,13 @@ screens.core.property = function CoreProperty(me, { core }) {
         }
         return { object: object, name: name, value: value };
     };
-    me.link = function (source, target, beforeProperty, object) {
+    me.forwardList = function (object, source) {
         if (!object) {
             object = me;
         }
         if (object && object !== me) {
             if (typeof source === "string") {
                 source = core.property.fullname(object, source);
-            }
-            if (typeof target === "string") {
-                target = core.property.fullname(object, target);
             }
         }
         var forwarding_list = object._forwarding_list;
@@ -213,7 +210,14 @@ screens.core.property = function CoreProperty(me, { core }) {
             source_list = new Map();
             forwarding_list.set(source, source_list);
         }
-        source_list.set(target, beforeProperty);
+        return source_list;
+    };
+    me.link = function (source, target, beforeProperty, object) {
+        const forwardList = me.forwardList(object, source);
+        if (typeof target === "string") {
+            target = core.property.fullname(object, target);
+        }
+        forwardList.set(target, beforeProperty);
     };
     me.notify = function (object, name, value, now = false) {
         if (!object) {

@@ -1,0 +1,32 @@
+.react-tabs {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.react-tabs-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.react-tabs-indicator {
+    height: 0.1em;
+    transition: margin 0.25s, width 0.25s;
+    background-color: var(--phase-four-border);
+}
+
+.react-tabs-item {
+    padding-top: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-weight: bold;
+    border-bottom: 4px solid transparent;
+    opacity: 0.8;
+    transition: opacity 0.25s;
+}
+
+.react-tabs-item.selected {
+    opacity: 1.0;
+}

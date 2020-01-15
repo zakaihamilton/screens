@@ -1,0 +1,21 @@
+{
+    "title": "Sessions",
+    "icon": "sessions",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.react.render": "app.sessions.render"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "@ui.windowkey.app-sessions-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "widget.sessions.resize",
+        "app.sessions.initOptions": null
+    }
+}

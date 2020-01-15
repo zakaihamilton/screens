@@ -1,12 +1,13 @@
 /*
  @author Zakai Hamilton
- @component UIRect
+ @component UIReact
  */
 
-screens.ui.react = function UIProperty(me, { core }) {
+screens.ui.react = function UIReact(me, { core, react }) {
     me.render = async function (object, method) {
         const component = await core.property.get(object, method);
-        ReactDOM.render(component, object);
+        const element = react.util.render(object, component);
+        ReactDOM.render(element, object);
     };
     me.handleClassName = function ({ className, ...props }) {
         if (className) {
