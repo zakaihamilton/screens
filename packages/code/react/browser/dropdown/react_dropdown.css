@@ -42,32 +42,23 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    color: var(--chrome-color);
 }
 
 .react-dropdown-item {
     padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     font-weight: bold;
     display: flex;
     align-items: center;
     border-left: 4px solid transparent;
 }
 
-.react-dropdown-item.current {
-    background-color: var(--background);
-    color: var(--color);
-}
-
 .react-dropdown-item.current:active:hover {
     background-color: var(--highlight-background);
     color: var(--highlight-color);
-}
-
-.react-dropdown-item.popup {
-    background-color: var(--chrome-background);
-    color: var(--chrome-color);
 }
 
 .react-dropdown-item.popup:active:hover {

@@ -1,9 +1,10 @@
 .widget-container-root {
     flex: 1;
-    background: var(--background);
+    background-color: var(--background);
     overflow: auto;
     position: relative;
     display: block;
+    color: var(--color);
 }
 
 .widget-container-root.transparent {
