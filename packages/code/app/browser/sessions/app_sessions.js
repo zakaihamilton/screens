@@ -4,16 +4,16 @@
  */
 
 screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
-    const { Tabs } = react;
+    const { Tabs, Item } = react;
 
     const Main = () => {
         const state = React.useState("american");
-        const tabItems = (me.groups || []).map(group => {
+        const groupItems = (me.groups || []).map(group => {
             const name = core.string.title(group.name);
-            return (<Tabs.Item key={group.name} id={group.name}>{name}</Tabs.Item>);
+            return (<Item key={group.name} id={group.name}>{name}</Item>);
         });
         return (<Tabs state={state}>
-            {tabItems}
+            {groupItems}
         </Tabs>);
     };
     me.launch = async function () {

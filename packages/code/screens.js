@@ -25,6 +25,9 @@ function screens_setup(package_name, component_name, child_name, node) {
         return [];
     }
     const isFunctionalComponent = component_name[0] !== component_name[0].toLowerCase();
+    if (isFunctionalComponent) {
+        return [];
+    }
     if (typeof node !== "function") {
         if (child_name) {
             screens[package_name][component_name][child_name] = node;
@@ -42,9 +45,6 @@ function screens_setup(package_name, component_name, child_name, node) {
         component_obj.upper = screens[package_name][component_name];
     } else {
         screens[package_name][component_name] = component_obj;
-    }
-    if (isFunctionalComponent) {
-        return [];
     }
     var constructor = node;
     var init = null;

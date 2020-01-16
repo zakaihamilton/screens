@@ -30,4 +30,10 @@ screens.react.util = function ReactResize(me, { core, ui }) {
             {component}
         </Context.Provider>);
     };
+    me.withContext = function (component, name, defaultValue = null) {
+        if (!component[name]) {
+            component[name] = React.createContext(defaultValue);
+        }
+        return component[name];
+    };
 };

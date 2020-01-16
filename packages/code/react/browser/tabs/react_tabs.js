@@ -1,4 +1,5 @@
 screens.react.Tabs = ({ state, children }) => {
+    const { Item } = screens.react;
     const childrenRef = React.useRef(null);
     const indicatorRef = React.useRef(null);
     const counter = screens.react.util.useResize();
@@ -35,7 +36,9 @@ screens.react.Tabs = ({ state, children }) => {
 
     return <div className="react-tabs">
         <div ref={childrenRef} className="react-tabs-items">
-            {children}
+            <Item.Component.Provider value={screens.react.Tabs.Item}>
+                {children}
+            </Item.Component.Provider>
         </div>
         <div className="react-tabs-items">
             <div ref={indicatorRef}>
