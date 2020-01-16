@@ -4,7 +4,7 @@
  */
 
 screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
-    const { Tabs, Item } = react;
+    const { DropDown, Tabs, Item } = react;
 
     const Main = () => {
         const state = React.useState("american");
@@ -12,9 +12,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             const name = core.string.title(group.name);
             return (<Item key={group.name} id={group.name}>{name}</Item>);
         });
-        return (<Tabs state={state}>
+        return (<DropDown state={state}>
             {groupItems}
-        </Tabs>);
+        </DropDown>);
     };
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {

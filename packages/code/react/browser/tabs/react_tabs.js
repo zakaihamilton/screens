@@ -9,7 +9,7 @@ screens.react.Tabs = ({ state, children }) => {
     }));
 
     const updateIndicator = (animate) => {
-        const items = Array.from((childrenRef && childrenRef.current.children) || []);
+        const items = Array.from((childrenRef.current && childrenRef.current.children) || []);
         const selected = items.find(el => el.dataset.id === selectedId);
         const first = items[0];
         const last = items.length && items[items.length - 1];
@@ -34,18 +34,20 @@ screens.react.Tabs = ({ state, children }) => {
         updateIndicator(false);
     }, [counter]);
 
-    return <div className="react-tabs">
-        <div ref={childrenRef} className="react-tabs-items">
-            <Item.Component.Provider value={screens.react.Tabs.Item}>
-                {children}
-            </Item.Component.Provider>
-        </div>
-        <div className="react-tabs-items">
-            <div ref={indicatorRef}>
-                <div className="react-tabs-indicator" />
+    return (
+        <div className="react-tabs">
+            <div ref={childrenRef} className="react-tabs-items">
+                <Item.Component.Provider value={screens.react.Tabs.Item}>
+                    {children}
+                </Item.Component.Provider>
             </div>
-        </div>
-    </div >;
+            <div className="react-tabs-items">
+                <div ref={indicatorRef}>
+                    <div className="react-tabs-indicator" />
+                </div>
+            </div>
+        </div >
+    );
 };
 
 screens.react.Tabs.Item = ({ id, state, children }) => {
@@ -55,5 +57,9 @@ screens.react.Tabs.Item = ({ id, state, children }) => {
     };
     const selected = selectedId === id;
     const className = { "react-tabs-item": true, selected };
-    return <div data-id={id} className={className} onClick={onClick}>{children}</div>
+    return (
+        <div data-id={id} className={className} onClick={onClick}>
+            {children}
+        </div>
+    );
 };
