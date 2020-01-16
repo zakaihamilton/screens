@@ -76,19 +76,11 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, children }) =>
         current,
         popup
     };
-    const selectedClassName = {
-        "widget-dropdown-icon": true,
-        selected: selectedId === id,
-        open: isOpen,
-        current,
-        popup
-    };
     if (current && selectedId !== id) {
         return null;
     }
     return (
         <div data-id={id} className={className} onClick={onClick}>
-            <div className={selectedClassName} />
             {children}
         </div>
     );
