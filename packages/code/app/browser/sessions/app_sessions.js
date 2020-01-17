@@ -7,12 +7,13 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     const { DropDown, Tabs, Item } = react;
 
     const Main = () => {
-        const state = React.useState("american");
+        const state = React.useState(["american"]);
         const groupItems = (me.groups || []).map(group => {
             const name = core.string.title(group.name);
             return (<Item key={group.name} id={group.name}>{name}</Item>);
         });
         return (<DropDown state={state}>
+            <Item id="all" multiple={false}>All</Item>
             {groupItems}
         </DropDown>);
     };

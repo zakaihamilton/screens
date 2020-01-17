@@ -3,22 +3,22 @@ screens.react.Tabs = ({ state, children }) => {
     const childrenRef = React.useRef(null);
     const indicatorRef = React.useRef(null);
     const counter = screens.react.util.useResize();
-    const [selectedId] = state || [];
+    const [selected] = state || [];
     children = React.Children.map(children, (child => {
         return React.cloneElement(child, { state });
     }));
 
     const updateIndicator = (animate) => {
         const items = Array.from((childrenRef.current && childrenRef.current.children) || []);
-        const selected = items.find(el => el.dataset.id === selectedId);
-        const first = items[0];
-        const last = items.length && items[items.length - 1];
+        const selectedItem = items.find(el => el.dataset.id === selected);
+        const firstItem = items[0];
+        const lastItem = items.length && items[items.length - 1];
         const indicator = indicatorRef.current;
         let left = 0, width = 0, fullWidth = 0;
-        if (first && last && selected) {
-            left = selected.offsetLeft - first.offsetLeft;
-            width = selected.offsetWidth;
-            fullWidth = (last.offsetLeft + last.offsetWidth) - first.offsetLeft;
+        if (firstItem && lastItem && selectedItem) {
+            left = selectedItem.offsetLeft - firstItem.offsetLeft;
+            width = selectedItem.offsetWidth;
+            fullWidth = (lastItem.offsetLeft + lastItem.offsetWidth) - firstItem.offsetLeft;
         }
         indicator.style.transition = animate ? "" : "none";
         indicator.children[0].style.marginLeft = left + "px";
@@ -28,7 +28,7 @@ screens.react.Tabs = ({ state, children }) => {
 
     React.useEffect(() => {
         updateIndicator(true);
-    }, [selectedId]);
+    }, [selected]);
 
     React.useEffect(() => {
         updateIndicator(false);
@@ -51,12 +51,11 @@ screens.react.Tabs = ({ state, children }) => {
 };
 
 screens.react.Tabs.Item = ({ id, state, children }) => {
-    const [selectedId, setSelectedId] = state || [];
+    const [selected, setSelected] = state || [];
     const onClick = () => {
-        setSelectedId && setSelectedId(id);
+        setSelected && setSelected(id);
     };
-    const selected = selectedId === id;
-    const className = { "react-tabs-item": true, selected };
+    const className = { "react-tabs-item": true, selected: selected === id };
     return (
         <div data-id={id} className={className} onClick={onClick}>
             {children}

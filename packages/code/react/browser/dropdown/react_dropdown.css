@@ -9,6 +9,11 @@
     justify-content: stretch;
 }
 
+.react-dropdown-current:active:hover {
+    background-color: var(--highlight-background);
+    color: var(--highlight-color);
+}
+
 .react-dropdown-modal {
     display: none;
     position: absolute;
@@ -56,16 +61,15 @@
     border-left: 4px solid transparent;
 }
 
-.react-dropdown-item.current:active:hover {
-    background-color: var(--highlight-background);
-    color: var(--highlight-color);
-}
-
 .react-dropdown-item.popup:active:hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
 }
 
 .react-dropdown-item.popup.selected {
+    border-left: 4px solid var(--phase-two-border);
+}
+
+.react-dropdown-item.popup.multiple.selected {
     border-left: 4px solid var(--phase-four-border);
 }
