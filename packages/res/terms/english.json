@@ -946,6 +946,17 @@
             "hebrew": "אור מקיף"
         },
         {
+            "term": "Lev",
+            "translation": "Heart",
+            "hebrew": "לב"
+        },
+        {
+            "term": "Lamed-Bet (32)",
+            "source": "Lamet Bet",
+            "hebrew": "ל״ב",
+            "translation": "32"
+        },
+        {
             "term": "Passim",
             "hebrew": "פסים",
             "translation": "Stripes"
