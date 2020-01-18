@@ -1,0 +1,5 @@
+.react-bar-container {
+    display: flex;
+    background-color: var(--chrome-background);
+    padding: 2px;
+}

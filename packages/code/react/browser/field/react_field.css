@@ -1,0 +1,16 @@
+.react-field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.react-field-label {
+    user-select: none;
+    font-size: 75%;
+    font-weight: bold;
+    padding-left: 0.5em;
+    padding-top: 0.5em;
+}
+
+.react-field-children {
+    display: flex;
+}

@@ -113,7 +113,7 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = tru
         open: isOpen,
         current,
         popup,
-        multiple
+        multiple: isMultiple && multiple
     };
     if (current && index === -1) {
         return null;

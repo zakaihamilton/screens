@@ -59,6 +59,15 @@
     display: flex;
     align-items: center;
     border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+.react-dropdown-item.current {
+    border-bottom: 2px solid var(--phase-two-border);
+}
+
+.react-dropdown-item.current.multiple {
+    border-bottom: 2px solid var(--phase-four-border);
 }
 
 .react-dropdown-item.popup:active:hover {

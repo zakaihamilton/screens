@@ -4,18 +4,27 @@
  */
 
 screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
-    const { DropDown, Tabs, Item } = react;
+    const { DropDown, Tabs, Item, Bar, Field } = react;
 
-    const Main = () => {
+    const AppToolbar = () => {
         const state = React.useState(["american"]);
         const groupItems = (me.groups || []).map(group => {
             const name = core.string.title(group.name);
             return (<Item key={group.name} id={group.name}>{name}</Item>);
         });
-        return (<DropDown state={state}>
-            <Item id="all" multiple={false}>All</Item>
-            {groupItems}
-        </DropDown>);
+        return (
+            <Bar>
+                <Field label="Group:">
+                    <DropDown state={state}>
+                        <Item id="all" multiple={false}>All</Item>
+                        {groupItems}
+                    </DropDown>
+                </Field>
+            </Bar>
+        );
+    };
+    const Main = () => {
+        return <AppToolbar />;
     };
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
