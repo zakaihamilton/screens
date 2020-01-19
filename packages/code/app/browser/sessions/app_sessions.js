@@ -13,7 +13,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         Element,
         Direction,
         Language,
-        Text
+        Text,
+        List
     } = react;
 
     const AppToolbar = ({ languageState, groupState }) => {
@@ -55,6 +56,19 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             </Bar>
         );
     };
+
+
+
+    const AppHub = ({ groupState }) => {
+        const [groups] = groupState;
+        const items = [].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions));
+
+        const names = items.map(item => (<Item key={item.name}>{item.name}</Item>));
+        return (<List>
+            {names}
+        </List>);
+    };
+
     const Main = () => {
         const languageState = React.useState("eng");
         const [language] = languageState;
@@ -69,6 +83,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                 <Language language={language}>
                     <Element className="app-sessions-main">
                         <AppToolbar {...state} />
+                        <AppHub {...state} />
                     </Element>
                 </Language>
             </Direction>

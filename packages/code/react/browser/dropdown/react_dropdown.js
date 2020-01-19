@@ -5,7 +5,7 @@ screens.react.DropDown = ({ state, children }) => {
     const selectedRef = React.useRef(null);
     const open = React.useState(0);
     const [isOpen, setOpen] = open;
-    const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.children[0], true);
+    const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
     children = React.Children.map(children, (child => {
         return React.cloneElement(child, { state, open });
