@@ -4,7 +4,17 @@
  */
 
 screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
-    const { DropDown, Tabs, Item, Bar, Field, Element, Direction } = react;
+    const {
+        DropDown,
+        Tabs,
+        Item,
+        Bar,
+        Field,
+        Element,
+        Direction,
+        Language,
+        Text
+    } = react;
 
     const AppToolbar = ({ languageState, groupState }) => {
         const languageItems = (me.languages || []).map(language => {
@@ -17,14 +27,27 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         });
         return (
             <Bar>
-                <Field label="Language:">
+                <Field label={
+                    <>
+                        <Text language="eng">Language:</Text>
+                        <Text language="heb">שפה:</Text>
+                    </>
+                }>
                     <DropDown state={languageState}>
                         {languageItems}
                     </DropDown>
                 </Field>
-                <Field label="Group:">
+                <Field label={
+                    <>
+                        <Text language="eng">Group:</Text>
+                        <Text language="heb">קבוצה:</Text>
+                    </>
+                }>
                     <DropDown state={groupState}>
-                        <Item id="all" multiple={false}>All</Item>
+                        <Item id="all" multiple={false}>
+                            <Text language="eng">All</Text>
+                            <Text language="heb">הכל</Text>
+                        </Item>
                         {groupItems}
                     </DropDown>
                 </Field>
@@ -41,11 +64,15 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             languageState,
             groupState
         };
-        return <Direction direction={direction}>
-            <Element className="app-sessions-main">
-                <AppToolbar {...state} />
-            </Element>
-        </Direction>;
+        return (
+            <Direction direction={direction}>
+                <Language language={language}>
+                    <Element className="app-sessions-main">
+                        <AppToolbar {...state} />
+                    </Element>
+                </Language>
+            </Direction>
+        );
     };
     me.languages = [
         { id: "eng", name: "English", direction: "ltr" },
