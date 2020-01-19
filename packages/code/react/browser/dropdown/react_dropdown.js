@@ -1,10 +1,11 @@
 screens.react.DropDown = ({ state, children }) => {
-    const { Item } = screens.react;
+    const { Item, Element, Direction } = screens.react;
+    const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
     const selectedRef = React.useRef(null);
     const open = React.useState(0);
     const [isOpen, setOpen] = open;
-    const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.children[0]);
+    const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.children[0], true);
     const counter = screens.react.util.useResize();
     children = React.Children.map(children, (child => {
         return React.cloneElement(child, { state, open });
@@ -17,10 +18,17 @@ screens.react.DropDown = ({ state, children }) => {
     React.useEffect(() => {
         const element = popupRef.current;
         if (element && selectedRect) {
-            popupRef.current.style.left = parseInt(selectedRect.left) + "px";
+            if (direction === "rtl") {
+                popupRef.current.style.left = "";
+                popupRef.current.style.right = parseInt(selectedRect.right) + "px";
+            }
+            else {
+                popupRef.current.style.left = parseInt(selectedRect.left) + "px";
+                popupRef.current.style.right = "";
+            }
             popupRef.current.style.top = parseInt(selectedRect.bottom) + "px";
         }
-    }, [counter, selectedRect && selectedRect.left]);
+    }, [counter, selectedRect && selectedRect.left, selectedRect && selectedRect.right, direction]);
 
     const popupClassName = {
         "react-dropdown-popup": true,
@@ -40,24 +48,25 @@ screens.react.DropDown = ({ state, children }) => {
         return React.cloneElement(child, { popup: true });
     }));
 
-    return (<div className="react-dropdown">
-        <div ref={selectedRef} className="react-dropdown-current" onClick={togglePopup}>
+    return (<Element className="react-dropdown">
+        <Element ref={selectedRef} className="react-dropdown-current" onClick={togglePopup}>
             <Item.Component.Provider value={screens.react.DropDown.Item}>
                 {currentChildren}
             </Item.Component.Provider>
-        </div>
-        <div className={modalClassName} onClick={() => setOpen(false)} />
-        <div ref={popupRef} className={popupClassName}>
-            <div className="react-dropdown-items">
+        </Element>
+        <Element className={modalClassName} onClick={() => setOpen(false)} />
+        <Element ref={popupRef} className={popupClassName}>
+            <Element className="react-dropdown-items">
                 <Item.Component.Provider value={screens.react.DropDown.Item}>
                     {popupChildren}
                 </Item.Component.Provider>
-            </div>
-        </div>
-    </div>);
+            </Element>
+        </Element>
+    </Element>);
 };
 
 screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = true, style, children }) => {
+    const { Element } = screens.react;
     const [selected, setSelected] = state || [];
     const [isOpen, setOpen] = open || [];
     const isMultiple = Array.isArray(selected);
@@ -119,8 +128,8 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = tru
         return null;
     }
     return (
-        <div data-id={id} className={className} style={style} onClick={onClick}>
+        <Element data-id={id} className={className} style={style} onClick={onClick}>
             {children}
-        </div>
+        </Element>
     );
 };

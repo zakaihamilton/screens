@@ -1,5 +1,5 @@
 screens.react.Tabs = ({ state, children }) => {
-    const { Item } = screens.react;
+    const { Item, Element } = screens.react;
     const childrenRef = React.useRef(null);
     const indicatorRef = React.useRef(null);
     const counter = screens.react.util.useResize();
@@ -35,30 +35,31 @@ screens.react.Tabs = ({ state, children }) => {
     }, [counter]);
 
     return (
-        <div className="react-tabs">
-            <div ref={childrenRef} className="react-tabs-items">
+        <Element className="react-tabs">
+            <Element ref={childrenRef} className="react-tabs-items">
                 <Item.Component.Provider value={screens.react.Tabs.Item}>
                     {children}
                 </Item.Component.Provider>
-            </div>
-            <div className="react-tabs-items">
-                <div ref={indicatorRef}>
-                    <div className="react-tabs-indicator" />
-                </div>
-            </div>
-        </div >
+            </Element>
+            <Element className="react-tabs-items">
+                <Element ref={indicatorRef}>
+                    <Element className="react-tabs-indicator" />
+                </Element>
+            </Element>
+        </Element >
     );
 };
 
 screens.react.Tabs.Item = ({ id, state, children }) => {
+    const { Element } = screens.react;
     const [selected, setSelected] = state || [];
     const onClick = () => {
         setSelected && setSelected(id);
     };
     const className = { "react-tabs-item": true, selected: selected === id };
     return (
-        <div data-id={id} className={className} onClick={onClick}>
+        <Element data-id={id} className={className} onClick={onClick}>
             {children}
-        </div>
+        </Element>
     );
 };

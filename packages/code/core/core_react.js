@@ -14,9 +14,7 @@ screens.core.react = function CoreReact(me) {
         try {
             text = me.babel.transform(text, {
                 "plugins": [
-                    ["@babel/plugin-transform-react-jsx", {
-                        "pragma": "screens.ui.react.createElement"
-                    }]
+                    ["@babel/plugin-transform-react-jsx", {}]
                 ]
             }).code;
         }

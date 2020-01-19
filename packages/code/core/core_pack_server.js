@@ -20,11 +20,11 @@ screens.core.pack = function CorePack(me, { core }) {
             await core.file.iterate(root, true, async (path) => {
                 let fileExt = core.path.extension(path);
                 let fileName = core.path.fileName(path);
-                let folderName = path.split("/").slice(-2, -1)[0];
+                let folderNames = path.split("/").slice(0, -1);
                 if (fileExt !== ext) {
                     return;
                 }
-                if (folderExclude && folderExclude.includes(folderName)) {
+                if (folderExclude && folderExclude.some(name => folderNames.includes(name))) {
                     return;
                 }
                 let [package, component, platform] = fileName.split("_");
@@ -40,7 +40,7 @@ screens.core.pack = function CorePack(me, { core }) {
                     }
                 }
                 let info = {
-                    folder: folderName,
+                    folder: folderNames,
                     file: fileName,
                     path,
                     package,

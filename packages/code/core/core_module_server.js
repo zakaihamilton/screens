@@ -60,7 +60,12 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
         }
         if (filePath.startsWith("platform/")) {
             let platform = filePath.split("/").pop().split(".")[0];
-            let code = await core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
+            const folderExclude = ["platform"];
+            if (platform !== "browser") {
+                folderExclude.push("react");
+                folderExclude.push("app");
+            }
+            let code = await core.pack.collect("packages/code", platform, folderExclude, ["js", "json", "html"], true, "utf8");
             return code;
         }
         if (filePath.startsWith("res/")) {

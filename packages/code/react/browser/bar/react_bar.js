@@ -1,7 +1,8 @@
 screens.react.Bar = ({ children }) => {
+    const { Element } = screens.react;
     return (
-        <div className="react-bar-container">
+        <Element className="react-bar-container">
             {children}
-        </div>
+        </Element>
     );
 };

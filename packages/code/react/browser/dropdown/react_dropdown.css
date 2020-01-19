@@ -75,10 +75,18 @@
     color: var(--chrome-highlight-color);
 }
 
-.react-dropdown-item.popup.selected {
+.react-dropdown-item.popup.selected.ltr {
     border-left: 4px solid var(--phase-two-border);
 }
 
-.react-dropdown-item.popup.multiple.selected {
+.react-dropdown-item.popup.selected.rtl {
+    border-right: 4px solid var(--phase-two-border);
+}
+
+.react-dropdown-item.popup.multiple.selected.ltr {
     border-left: 4px solid var(--phase-four-border);
+}
+
+.react-dropdown-item.popup.multiple.selected.rtl {
+    border-right: 4px solid var(--phase-four-border);
 }

@@ -159,7 +159,7 @@ screens.storage.data = function StorageData(me, { core }) {
             return;
         }
         for (var kind of kinds) {
-            var [the_package, component, target, private] = kind.split(".");
+            var [the_package, component, target, isPrivate] = kind.split(".");
             let entities = await me.query(kind);
             if (!entities.length) {
                 continue;
@@ -178,7 +178,7 @@ screens.storage.data = function StorageData(me, { core }) {
                 delete entity.key;
                 entity.package = the_package;
                 entity.component = component;
-                entity.private = private ? private : null;
+                entity.private = isPrivate ? isPrivate : null;
                 await targetComponent.store(entity);
                 migratedKinds[kind]++;
             }
