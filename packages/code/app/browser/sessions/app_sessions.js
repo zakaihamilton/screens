@@ -57,12 +57,16 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         );
     };
 
-
+    const filterSessions = (sessions) => {
+        var name_map = new Map(sessions.map(obj => [obj.name, obj]));
+        var unique_names = [...name_map.values()];
+        return unique_names;
+    };
 
     const AppHub = ({ groupState }) => {
         const [groups] = groupState;
-        const items = [].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions));
-
+        react.util.useSubscribe(groupState);
+        let items = filterSessions([].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions)));
         const names = items.map(item => (<Item key={item.name}>{item.name}</Item>));
         return (<List>
             {names}
@@ -70,10 +74,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     };
 
     const Main = () => {
-        const languageState = React.useState("eng");
+        const groupState = react.util.useState(["american"]);
+        const languageState = react.util.useState("eng");
         const [language] = languageState;
         const direction = me.languages.find(item => item.id === language).direction;
-        const groupState = React.useState(["american"]);
         const state = {
             languageState,
             groupState

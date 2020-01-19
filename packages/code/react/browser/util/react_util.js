@@ -7,6 +7,47 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
     me.init = function () {
         me.Context = React.createContext(null);
     };
+    me.useState = function (value) {
+        const [getter, setter] = React.useState(value);
+        const subscriptions = React.useRef([]);
+        const subscribe = (handler) => {
+            subscriptions.current.push(handler);
+        };
+        const unsubscribe = (handler) => {
+            const index = subscriptions.current.findIndex(callback => callback === handler);
+            if (index !== -1) {
+                subscriptions.current.splice(index, 1);
+            }
+        };
+        const update = (value) => {
+            for (const subscription of subscriptions.current) {
+                const result = subscription(value);
+                if (typeof result !== "undefined") {
+                    value = result;
+                }
+            }
+            setter(value);
+        };
+        return [getter, update, {
+            subscribe,
+            unsubscribe
+        }];
+    };
+    me.useSubscribe = function (state) {
+        const [getter, setter, subscription] = state;
+        const [counter, setCounter] = React.useState(0);
+        React.useEffect(() => {
+            const handler = () => {
+                setCounter(counter => {
+                    return counter + 1;
+                });
+            };
+            subscription.subscribe(handler);
+            return () => {
+                subscription.unsubscribe(handler);
+            };
+        });
+    };
     me.getRect = function (element, withDirection) {
         const direction = React.useContext(react.Direction.Context);
         const object = React.useContext(me.Context);
