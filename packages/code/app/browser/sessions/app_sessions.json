@@ -9,6 +9,7 @@
     },
     "ui.basic.elements": [
         {
+            "ui.class.class": "app.sessions.main",
             "ui.react.render": "app.sessions.render"
         }
     ],

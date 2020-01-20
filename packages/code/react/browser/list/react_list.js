@@ -1,7 +1,10 @@
-screens.react.List = ({ children }) => {
+screens.react.List = ({ children, style }) => {
     const { Item, Element } = screens.react;
+    const className = {
+        "react-list-container": true
+    };
     return (
-        <Element>
+        <Element className={className} style={style}>
             <Item.Component.Provider value={screens.react.List.Item}>
                 {children}
             </Item.Component.Provider>

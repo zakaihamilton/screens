@@ -108,10 +108,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         return (
             <Direction direction={direction}>
                 <Language language={language}>
-                    <Element className="app-sessions-main">
-                        <AppToolbar {...state} />
-                        <AppHub {...state} />
-                    </Element>
+                    <AppToolbar {...state} />
+                    <AppHub {...state} />
                 </Language>
             </Direction>
         );

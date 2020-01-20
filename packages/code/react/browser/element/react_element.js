@@ -1,6 +1,9 @@
-screens.react.Element = React.forwardRef(({ tag = "div", children, ...props }, ref) => {
+screens.react.Element = React.forwardRef(({ tag = "div", children, direction, ...props }, ref) => {
     const { Direction } = screens.react;
-    const direction = React.useContext(Direction.Context);
+    const contextDirection = React.useContext(Direction.Context);
+    if (!direction) {
+        direction = contextDirection;
+    }
     props = props || {};
     let className = props.className || "";
     if (typeof className === "object") {

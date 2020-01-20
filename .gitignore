@@ -10,4 +10,5 @@
 /project
 /centos*
 /*.pem
+/dump
 crash.txt
