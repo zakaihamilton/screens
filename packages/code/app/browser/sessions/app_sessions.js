@@ -222,7 +222,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     me.sessionTokens = function (item) {
         let [year, month, day, name = ""] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+)/g).slice(1);
         const date = [year, month, day].join("-");
-        return { year, month, day, date, name: core.path.fileName(name) };
+        return { year, month, day, date, name: core.path.fileName(name).trim() };
     }
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
