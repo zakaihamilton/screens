@@ -197,7 +197,23 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             sort: (items) => {
                 items = [...items];
                 items.sort((a, b) => {
-                    return a.name.localeCompare(a.name);
+                    return a.name.localeCompare(b.name);
+                });
+                const swimlanes = {};
+                items.map(item => {
+                    const unique = item.name[0];
+                    let swimlane = swimlanes[unique];
+                    if (!swimlane) {
+                        swimlane = swimlanes[unique] = [];
+                    }
+                    swimlane.push(item);
+                });
+                items = Object.keys(swimlanes).map(unique => {
+                    const swimlane = swimlanes[unique];
+                    return {
+                        label: unique,
+                        sessions: swimlane
+                    };
                 });
                 return items;
             }
