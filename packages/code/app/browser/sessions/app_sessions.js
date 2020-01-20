@@ -9,6 +9,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         Tabs,
         Item,
         Bar,
+        Swimlane,
         Field,
         Element,
         Direction,
@@ -74,10 +75,30 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         );
     };
 
-    const filterSessions = (sessions) => {
-        var name_map = new Map(sessions.map(obj => [obj.name, obj]));
-        var unique_names = [...name_map.values()];
-        return unique_names;
+    me.imageUrl = function (groupName, sessionName) {
+        return "https://screens.sfo2.cdn.digitaloceanspaces.com/" + groupName + "/" + encodeURIComponent(sessionName) + ".png";
+    };
+
+    const prepareSessions = (sessions) => {
+        var items = [];
+        sessions.map(session => {
+            let item = items.find(item => item.session === session.session);
+            if (!item) {
+                item = { extensions: [] };
+                items.push(item);
+            }
+            const { extension, ...map } = session;
+            Object.assign(item, { ...item, ...map });
+            item.extensions.push(extension);
+        });
+        items = items.map(item => {
+            const tokens = me.sessionTokens(item);
+            if (item.extensions.includes("mp4")) {
+                item.image = me.imageUrl(item.group, item.session);
+            }
+            return { ...item, ...tokens };
+        });
+        return items;
     };
 
     const AppHub = ({ groupState, sortState }) => {
@@ -85,17 +106,22 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const [sort] = sortState;
         react.util.useSubscribe(groupState);
         react.util.useSubscribe(sortState);
-        let items = filterSessions([].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions)));
-        console.log("sort", sort);
+        let items = prepareSessions([].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions)));
         items = me.sort.find(item => item.id === sort).sort(items);
-        const names = items.map(item => (<Item key={item.name}>{item.name}</Item>));
+        const names = items.map(item => (
+            <Item key={item.name}>
+                <Swimlane label={item.label}>
+                    {item.sessions}
+                </Swimlane>
+            </Item>
+        ));
         return (<List>
             {names}
         </List>);
     };
 
     const Main = () => {
-        const groupState = react.util.useState(["american"]);
+        const groupState = react.util.useState(["yochanan"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
         const [language] = languageState;
@@ -130,9 +156,28 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             sort: (items) => {
                 items = [...items];
                 items.sort((a, b) => {
-                    const aTokens = me.sessionTokens(a);
-                    const bTokens = me.sessionTokens(b);
-                    return bTokens.date.localeCompare(aTokens.date);
+                    return a.date.localeCompare(a.date);
+                });
+                const swimlanes = {};
+                items.map(item => {
+                    const unique = item.year + "-" + item.month;
+                    let swimlane = swimlanes[unique];
+                    if (!swimlane) {
+                        swimlane = swimlanes[unique] = [];
+                    }
+                    swimlane.push(item);
+                });
+                items = Object.keys(swimlanes).map(unique => {
+                    const swimlane = swimlanes[unique];
+                    return {
+                        label: unique,
+                        sessions: swimlane.map(item => (
+                            <Item key={item.name} image={item.image}>
+                                <Element>{item.date}</Element>
+                                <Element>{item.name}</Element>
+                            </Item>
+                        ))
+                    };
                 });
                 return items;
             }
@@ -148,9 +193,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             sort: (items) => {
                 items = [...items];
                 items.sort((a, b) => {
-                    const aTokens = me.sessionTokens(a);
-                    const bTokens = me.sessionTokens(b);
-                    return aTokens.name.localeCompare(bTokens.name);
+                    return a.name.localeCompare(a.name);
                 });
                 return items;
             }
@@ -159,7 +202,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     me.sessionTokens = function (item) {
         let [year, month, day, name = ""] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+)/g).slice(1);
         const date = [year, month, day].join("-");
-        return { year, month, day, date, name };
+        return { year, month, day, date, name: core.path.fileName(name) };
     }
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
