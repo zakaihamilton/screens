@@ -15,7 +15,7 @@ screens.react.Swimlane = ({ label, children }) => {
     );
 };
 
-screens.react.Swimlane.Item = ({ image, children, ...props }) => {
+screens.react.Swimlane.Item = ({ image, children, overlay, ...props }) => {
     const { Element } = screens.react;
     const [isLoading, setLoading] = React.useState(true);
     const hideLoader = () => {
@@ -29,6 +29,7 @@ screens.react.Swimlane.Item = ({ image, children, ...props }) => {
                         {isLoading && <Element className="react-swimlane-item-image-loader" />}
                         <Element tag="img" onLoad={hideLoader} onError={hideLoader} src={image} className="react-swimlane-item-image" style={{ width: "100%" }} />
                     </>}
+                {overlay && <Element tag="img" className="react-swimlane-item-overlay" src={overlay} />}
             </Element>
             <Element className="react-swimlane-item-details">
                 {children}

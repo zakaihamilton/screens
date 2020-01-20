@@ -23,9 +23,16 @@
 .react-swimlane-item-container {
     margin-right: 1em;
     margin-bottom: 1em;
+    padding: 0.2em;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid transparent;
+}
+
+.react-swimlane-item-container:hover {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
 }
 
 .react-swimlane-item-image-bg {
@@ -40,7 +47,11 @@
 .react-swimlane-item-image {
     width: 250px;
     height: 156.250px;
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.react-swimlane-item-overlay {
+    object-fit: contain;
 }
 
 .react-swimlane-item-details {

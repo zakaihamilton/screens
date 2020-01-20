@@ -96,6 +96,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             if (item.extensions.includes("mp4")) {
                 item.image = me.imageUrl(item.group, item.session);
             }
+            else {
+                item.overlay = ui.image.get("mic");
+            }
             return { ...item, ...tokens };
         });
         return items;
@@ -172,7 +175,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     return {
                         label: unique,
                         sessions: swimlane.map(item => (
-                            <Item key={item.session} image={item.image}>
+                            <Item key={item.session} overlay={item.overlay} image={item.image}>
                                 <Element>{item.date}</Element>
                                 <Element>{item.name}</Element>
                             </Item>
