@@ -1,6 +1,16 @@
 .react-list-container {
     flex: 1;
-    overflow: auto;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
 }
