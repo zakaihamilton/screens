@@ -33,6 +33,10 @@
                 },
                 "ui.data.values": [
                     [
+                        "Sessions",
+                        "main"
+                    ],
+                    [
                         "Transform",
                         "tools"
                     ],

@@ -33,8 +33,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             <Bar>
                 <Field label={
                     <>
-                        <Text language="eng">Language:</Text>
-                        <Text language="heb">שפה:</Text>
+                        <Text language="eng">Language</Text>
+                        <Text language="heb">שפה</Text>
                     </>
                 }>
                     <DropDown state={languageState}>
@@ -43,8 +43,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                 </Field>
                 <Field label={
                     <>
-                        <Text language="eng">Sort:</Text>
-                        <Text language="heb">מיון:</Text>
+                        <Text language="eng">Sort</Text>
+                        <Text language="heb">מיון</Text>
                     </>
                 }>
                     <DropDown state={sortState}>
@@ -53,11 +53,16 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                 </Field>
                 <Field label={
                     <>
-                        <Text language="eng">Group:</Text>
-                        <Text language="heb">קבוצה:</Text>
+                        <Text language="eng">Group</Text>
+                        <Text language="heb">קבוצה</Text>
                     </>
                 }>
-                    <DropDown state={groupState}>
+                    <DropDown state={groupState} multiple={
+                        <Item>
+                            <Text language="eng">Multiple</Text>
+                            <Text language="heb">מספר</Text>
+                        </Item>
+                    }>
                         <Item id="all" multiple={false}>
                             <Text language="eng">All</Text>
                             <Text language="heb">הכל</Text>

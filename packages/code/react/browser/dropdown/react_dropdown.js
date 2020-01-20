@@ -1,9 +1,10 @@
-screens.react.DropDown = ({ state, children }) => {
+screens.react.DropDown = ({ state, children, multiple }) => {
     const { Item, Element, Direction } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
     const selectedRef = React.useRef(null);
     const open = React.useState(0);
+    const [selected, setSelected] = state;
     const [isOpen, setOpen] = open;
     const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
@@ -46,9 +47,17 @@ screens.react.DropDown = ({ state, children }) => {
         show: isOpen
     };
 
-    const currentChildren = React.Children.map(children, (child => {
-        return React.cloneElement(child, { current: true });
-    }));
+    let currentChildren = null;
+    if (multiple && selected.length > 1) {
+        currentChildren = React.Children.map(multiple, (child => {
+            return React.cloneElement(child, { state, open, current: true });
+        }));
+    }
+    else {
+        currentChildren = React.Children.map(children, (child => {
+            return React.cloneElement(child, { current: true });
+        }));
+    }
 
     const popupChildren = React.Children.map(children, (child => {
         return React.cloneElement(child, { popup: true });
@@ -84,7 +93,7 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = tru
         index = (selected === id) ? 0 : -1;
     }
     subscription.subscribe(selected => {
-        if (isMultiple && !multiple) {
+        if (isMultiple && !multiple && popup) {
             index = selected.findIndex(el => el === id);
             if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
                 selected.splice(index, 1);
@@ -127,7 +136,7 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = tru
         popup,
         multiple: isMultiple && multiple
     };
-    if (current && index === -1) {
+    if (current && id && index === -1) {
         return null;
     }
     return (
