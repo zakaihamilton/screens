@@ -23,6 +23,8 @@
 .react-swimlane-item-container {
     margin-right: 1em;
     margin-bottom: 1em;
+    width: 260px;
+    overflow: hidden;
     padding: 0.2em;
     display: flex;
     flex-direction: column;
