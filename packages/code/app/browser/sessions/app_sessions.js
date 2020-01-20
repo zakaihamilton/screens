@@ -172,7 +172,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     return {
                         label: unique,
                         sessions: swimlane.map(item => (
-                            <Item key={item.name} image={item.image}>
+                            <Item key={item.session} image={item.image}>
                                 <Element>{item.date}</Element>
                                 <Element>{item.name}</Element>
                             </Item>
