@@ -114,7 +114,13 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const names = items.map(item => (
             <Item key={item.name}>
                 <Swimlane label={item.label}>
-                    {item.sessions}
+                    {item.sessions.map(item => (
+                        <Item key={item.session} overlay={item.overlay} image={item.image}>
+                            {(groups[0] === "all" || groups.length > 1) && <Element>{core.string.title(item.group)}</Element>}
+                            <Element>{item.date}</Element>
+                            <Element>{item.name}</Element>
+                        </Item>
+                    ))}
                 </Swimlane>
             </Item>
         ));
@@ -174,12 +180,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     const swimlane = swimlanes[unique];
                     return {
                         label: unique,
-                        sessions: swimlane.map(item => (
-                            <Item key={item.session} overlay={item.overlay} image={item.image}>
-                                <Element>{item.date}</Element>
-                                <Element>{item.name}</Element>
-                            </Item>
-                        ))
+                        sessions: swimlane
                     };
                 });
                 return items;
