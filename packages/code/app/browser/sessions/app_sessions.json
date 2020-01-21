@@ -13,6 +13,7 @@
             "ui.react.render": "app.sessions.render"
         }
     ],
+    "widget.window.maximize": null,
     "ui.property.after": {
         "storage.local.key": "@ui.windowkey.app-sessions-window",
         "storage.local.restore": "widget.window.store",
