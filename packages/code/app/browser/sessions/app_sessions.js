@@ -80,9 +80,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         <Text language="heb">שנה</Text>
                     </>
                 }>
-                    <Tabs state={yearState}>
+                    <DropDown state={yearState}>
                         {yearItems}
-                    </Tabs>
+                    </DropDown>
                 </Field>
             </Bar>
         );
