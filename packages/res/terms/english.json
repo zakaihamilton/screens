@@ -269,7 +269,8 @@
             "Karha": "Karha__",
             "shed the": "shed__ the",
             "The peh alludes": "The Pey alludes",
-            "samekh": "Samech"
+            "samekh": "Samech",
+            "World Reformers": "World__ Reformers"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -984,6 +985,16 @@
             "translation": "Light",
             "term": "Ohr",
             "hebrew": "אור"
+        },
+        {
+            "term": "Dagim",
+            "translation": "Fish",
+            "hebrew": "דגים"
+        },
+        {
+            "term": "Daagot",
+            "translation": "Worries",
+            "hebrew": "דאגות"
         },
         {
             "translation": "Coarse",
