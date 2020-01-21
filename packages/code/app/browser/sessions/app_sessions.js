@@ -133,8 +133,11 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                 <Swimlane label={item.label}>
                     {item.sessions.map(item => {
                         const title = core.string.title(item.group);
+                        const loadSession = () => {
+                            core.app.launch("player", item.group, item.session);
+                        }
                         return (
-                            <Item key={item.session} overlay={item.overlay} image={item.image}>
+                            <Item key={item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
                                 {(groups[0] === "all" || groups.length > 1) && <Element>{title}</Element>}
                                 <Element>{item.date}</Element>
                                 <Element>{item.name}</Element>
@@ -151,7 +154,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
 
     const Main = () => {
         const yearState = react.util.useState(new Date().getFullYear().toString());
-        const groupState = react.util.useState(["yochanan"]);
+        const groupState = react.util.useState(["all"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
         const [language] = languageState;
@@ -187,7 +190,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             sort: (items) => {
                 items = [...items];
                 items.sort((a, b) => {
-                    return a.date.localeCompare(a.date);
+                    return b.date.localeCompare(a.date);
                 });
                 const swimlanes = {};
                 items.map(item => {
