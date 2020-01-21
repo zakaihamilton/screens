@@ -1,11 +1,17 @@
 .react-swimlane-container {
     display: flex;
     flex-direction: column;
-    margin-left: 1em;
-    margin-right: 1em;
     margin-top: 1em;
     padding-bottom: 1em;
     border-bottom: 1px solid var(--border-color);
+}
+
+.react-swimlane-container.ltr {
+    padding-left: 1em;
+}
+
+.react-swimlane-container.rtl {
+    padding-right: 1em;
 }
 
 .react-swimlane-label {
