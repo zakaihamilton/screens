@@ -17,13 +17,14 @@
 
 .react-swimlane-children {
     display: flex;
-    flex-wrap: wrap;
+    overflow-x: auto;
 }
 
 .react-swimlane-item-container {
     margin-right: 1em;
     margin-bottom: 1em;
-    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
     overflow: hidden;
     padding: 0.2em;
     display: flex;
