@@ -93,6 +93,17 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
         }, []);
         return counter;
     };
+    me.useSize = function (counter) {
+        const ref = React.useRef();
+        const [size, setSize] = React.useState([]);
+        const [width, height] = size;
+        React.useEffect(() => {
+            if (ref.current) {
+                setSize([ref.current.offsetWidth, ref.current.offsetHeight]);
+            }
+        }, [counter]);
+        return [ref, width, height];
+    };
     me.render = function (object, component) {
         const { Context } = me;
         return (<Context.Provider value={object}>

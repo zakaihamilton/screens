@@ -12,7 +12,7 @@
 }
 
 .react-tabs-indicator {
-    height: 0.1em;
+    height: 2px;
     transition: margin 0.25s, width 0.25s;
     background-color: var(--phase-four-border);
 }

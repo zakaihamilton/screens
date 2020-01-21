@@ -18,7 +18,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         List
     } = react;
 
-    const AppToolbar = ({ languageState, sortState, groupState }) => {
+    const AppToolbar = ({ languageState, sortState, groupState, yearState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
@@ -29,6 +29,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const groupItems = (me.groups || []).map(group => {
             const name = core.string.title(group.name);
             return (<Item key={group.name} id={group.name}>{name}</Item>);
+        });
+        const yearItems = (me.years || []).map(year => {
+            return (<Item key={year} id={year}>{year}</Item>);
         });
         return (
             <Bar>
@@ -71,6 +74,16 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         {groupItems}
                     </DropDown>
                 </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Year</Text>
+                        <Text language="heb">שנה</Text>
+                    </>
+                }>
+                    <Tabs state={yearState}>
+                        {yearItems}
+                    </Tabs>
+                </Field>
             </Bar>
         );
     };
@@ -104,32 +117,40 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         return items;
     };
 
-    const AppHub = ({ groupState, sortState }) => {
+    const AppHub = ({ groupState, sortState, yearState }) => {
         const [groups] = groupState;
         const [sort] = sortState;
+        const [year] = yearState;
         react.util.useSubscribe(groupState);
         react.util.useSubscribe(sortState);
-        let items = prepareSessions([].concat.apply([], me.groups.filter(group => groups[0] === "all" || groups.includes(group.name)).map(group => group.sessions)));
+        react.util.useSubscribe(yearState);
+        let items = me.sessions;
+        items = items.filter(item => groups[0] === "all" || groups.includes(item.group));
+        items = items.filter(item => item.year === year);
         items = me.sort.find(item => item.id === sort).sort(items);
-        const names = items.map(item => (
+        items = items.map(item => (
             <Item key={item.name}>
                 <Swimlane label={item.label}>
-                    {item.sessions.map(item => (
-                        <Item key={item.session} overlay={item.overlay} image={item.image}>
-                            {(groups[0] === "all" || groups.length > 1) && <Element>{core.string.title(item.group)}</Element>}
-                            <Element>{item.date}</Element>
-                            <Element>{item.name}</Element>
-                        </Item>
-                    ))}
+                    {item.sessions.map(item => {
+                        const title = core.string.title(item.group);
+                        return (
+                            <Item key={item.session} overlay={item.overlay} image={item.image}>
+                                {(groups[0] === "all" || groups.length > 1) && <Element>{title}</Element>}
+                                <Element>{item.date}</Element>
+                                <Element>{item.name}</Element>
+                            </Item>
+                        );
+                    })}
                 </Swimlane>
             </Item>
         ));
         return (<List>
-            {names}
+            {items}
         </List>);
     };
 
     const Main = () => {
+        const yearState = react.util.useState(new Date().getFullYear().toString());
         const groupState = react.util.useState(["yochanan"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
@@ -138,7 +159,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const state = {
             languageState,
             groupState,
-            sortState
+            sortState,
+            yearState
         };
         return (
             <Direction direction={direction}>
@@ -237,6 +259,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     };
     me.setGroups = function (groups) {
         me.groups = groups;
+        me.sessions = prepareSessions([].concat.apply([], me.groups.map(group => group.sessions)));
+        me.years = Array.from(new Set(me.sessions.map(item => item.year)));
     };
     me.setMetadataList = function (metadataList) {
         me.metadataList = metadataList;
