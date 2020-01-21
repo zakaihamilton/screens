@@ -11,7 +11,8 @@ require("../screens");
 
 screens.admins = [
     "Zakai Hamilton",
-    "Yochanan Mariano Perez"
+    "Yochanan Mariano Perez",
+    "Robben Hixson"
 ];
 
 screens.api = [
