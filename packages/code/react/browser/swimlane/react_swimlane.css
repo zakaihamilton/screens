@@ -39,7 +39,7 @@
     border: 1px solid transparent;
 }
 
-.react-swimlane-item-container:hover {
+.react-swimlane-item-container:active:hover {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
 }
@@ -54,12 +54,14 @@
 }
 
 .react-swimlane-item-image {
+    pointer-events: none;
     width: 250px;
     height: 156.250px;
     object-fit: contain;
 }
 
 .react-swimlane-item-overlay {
+    pointer-events: none;
     object-fit: contain;
 }
 
