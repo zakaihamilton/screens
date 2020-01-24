@@ -81,6 +81,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     </>
                 }>
                     <DropDown state={yearState}>
+                        <Item id="all" multiple={false}>
+                            <Text language="eng">All</Text>
+                            <Text language="heb">הכל</Text>
+                        </Item>
                         {yearItems}
                     </DropDown>
                 </Field>
@@ -118,15 +122,15 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     };
 
     const AppHub = ({ groupState, sortState, yearState }) => {
-        const [groups] = groupState;
+        const [group] = groupState;
         const [sort] = sortState;
         const [year] = yearState;
         react.util.useSubscribe(groupState);
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(yearState);
         let items = me.sessions;
-        items = items.filter(item => groups[0] === "all" || groups.includes(item.group));
-        items = items.filter(item => item.year === year);
+        items = items.filter(item => group[0] === "all" || group.includes(item.group));
+        items = items.filter(item => year[0] === "all" || year.includes(item.year));
         items = me.sort.find(item => item.id === sort).sort(items);
         items = items.map(item => (
             <Item key={item.name}>
@@ -138,7 +142,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         }
                         return (
                             <Item key={item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
-                                {(groups[0] === "all" || groups.length > 1) && <Element>{title}</Element>}
+                                {(group[0] === "all" || group.length > 1) && <Element>{title}</Element>}
                                 <Element>{item.date}</Element>
                                 <Element>{item.name}</Element>
                             </Item>
@@ -147,13 +151,13 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                 </Swimlane>
             </Item>
         ));
-        return (<List>
+        return (<List itemSize={377}>
             {items}
         </List>);
     };
 
     const Main = () => {
-        const yearState = react.util.useState(new Date().getFullYear().toString());
+        const yearState = react.util.useState(["all"]);
         const groupState = react.util.useState(["all"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");

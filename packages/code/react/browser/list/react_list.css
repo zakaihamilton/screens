@@ -1,6 +1,19 @@
 .react-list-container {
     flex: 1;
+    position: relative;
+}
+
+.react-list-container.vertical {
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.react-list-container.horizontal {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.react-list-item {
+    position: absolute;
+    overflow: hidden;
 }

@@ -1,5 +1,5 @@
 screens.react.Swimlane = ({ label, children }) => {
-    const { Element, Item } = screens.react;
+    const { Element, List, Item } = screens.react;
 
     return (
         <Element className="react-swimlane-container">
@@ -7,15 +7,15 @@ screens.react.Swimlane = ({ label, children }) => {
                 {label}
             </Element>
             <Element className="react-swimlane-children">
-                <Item.Component.Provider value={screens.react.Swimlane.Item}>
+                <List horizontal={true} itemSize={265} item={screens.react.Swimlane.Item}>
                     {children}
-                </Item.Component.Provider>
+                </List>
             </Element>
         </Element>
     );
 };
 
-screens.react.Swimlane.Item = ({ image, children, overlay, ...props }) => {
+screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) => {
     const { Element } = screens.react;
     const [isLoading, setLoading] = React.useState(true);
     const [isImageVisible, setImageVisibile] = React.useState(true);
@@ -26,6 +26,9 @@ screens.react.Swimlane.Item = ({ image, children, overlay, ...props }) => {
         setLoading(false);
         setImageVisibile(false);
     };
+    props = props || {};
+    props.style = props.style || {};
+    props.style.left = offset + "px";
     return (
         <Element className="react-swimlane-item-container" {...props}>
             <Element className="react-swimlane-item-image-bg">

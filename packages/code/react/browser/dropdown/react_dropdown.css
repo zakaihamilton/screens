@@ -21,7 +21,7 @@
     top: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: transparent;
+    z-index: 999;
 }
 
 .react-dropdown-modal.show {
@@ -34,6 +34,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    z-index: 1000;
 }
 
 .react-dropdown-popup.show {

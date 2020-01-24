@@ -3,15 +3,9 @@
     flex-direction: column;
     margin-top: 1em;
     padding-bottom: 1em;
+    height: 100%;
+    width: 100%;
     border-bottom: 1px solid var(--border-color);
-}
-
-.react-swimlane-container.ltr {
-    padding-left: 1em;
-}
-
-.react-swimlane-container.rtl {
-    padding-right: 1em;
 }
 
 .react-swimlane-label {
@@ -22,16 +16,17 @@
 }
 
 .react-swimlane-children {
+    flex: 1;
     display: flex;
-    overflow-x: auto;
 }
 
 .react-swimlane-item-container {
     margin-right: 1em;
     margin-bottom: 1em;
-    min-width: 260px;
-    max-width: 260px;
+    width: 260px;
+    height: 280px;
     overflow: hidden;
+    position: absolute;
     padding: 0.2em;
     display: flex;
     flex-direction: column;
