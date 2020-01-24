@@ -23,7 +23,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
         let element = null;
         const itemWidth = horizontal ? itemSize : width;
         const itemHeight = horizontal ? height : itemSize;
-        if (!idx || idx === count - 1 || (offset > position - (itemSize * 2) && offset < position + size + (itemSize * 2))) {
+        if (offset > position - (itemSize * 2) && offset < position + size + (itemSize * 2)) {
             element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize });
         }
         offset += itemSize;
@@ -34,6 +34,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
         <Element ref={ref} className={className} style={style} onScroll={onScroll}>
             <Item.Component.Provider value={item}>
                 {children}
+                <Element className="react-list-end" style={horizontal ? { left: itemSize * count } : { top: itemSize * count }} />
             </Item.Component.Provider>
         </Element>
     );

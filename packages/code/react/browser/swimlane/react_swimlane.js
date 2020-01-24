@@ -17,8 +17,8 @@ screens.react.Swimlane = ({ label, children }) => {
 
 screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) => {
     const { Element } = screens.react;
-    const [isLoading, setLoading] = React.useState(true);
-    const [isImageVisible, setImageVisibile] = React.useState(true);
+    const [isLoading, setLoading] = React.useState(false);
+    const [isImageVisible, setImageVisibile] = React.useState(false);
     const onLoad = () => {
         setLoading(false);
     };
@@ -26,6 +26,15 @@ screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) =
         setLoading(false);
         setImageVisibile(false);
     };
+    React.useEffect(() => {
+        const timerHandle = setTimeout(() => {
+            setLoading(true);
+            setImageVisibile(true);
+        }, 250);
+        return (() => {
+            clearTimeout(timerHandle);
+        })
+    }, []);
     props = props || {};
     props.style = props.style || {};
     props.style.left = offset + "px";

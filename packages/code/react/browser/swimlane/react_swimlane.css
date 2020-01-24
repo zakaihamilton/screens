@@ -8,6 +8,14 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.react-swimlane-container.ltr {
+    padding-left: 1em;
+}
+
+.react-swimlane-container.rtl {
+    padding-right: 1em;
+}
+
 .react-swimlane-label {
     display: flex;
     font-weight: bold;

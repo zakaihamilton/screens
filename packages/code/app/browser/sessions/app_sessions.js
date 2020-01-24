@@ -135,7 +135,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         items = items.map(item => (
             <Item key={item.name}>
                 <Swimlane label={item.label}>
-                    {item.sessions.map(item => {
+                    {item.content.map(item => {
                         const title = core.string.title(item.group);
                         const loadSession = () => {
                             core.app.launch("player", item.group, item.session);
@@ -179,8 +179,18 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         );
     };
     me.languages = [
-        { id: "eng", name: "English", direction: "ltr" },
-        { id: "heb", name: "עברית", direction: "rtl" }
+        {
+            id: "eng",
+            name: "English",
+            direction: "ltr",
+            locale: "en-US"
+        },
+        {
+            id: "heb",
+            name: "עברית",
+            direction: "rtl",
+            locale: "he-IL"
+        }
     ];
     me.sort = [
         {
@@ -201,18 +211,19 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     const unique = item.year + "-" + item.month;
                     let swimlane = swimlanes[unique];
                     if (!swimlane) {
-                        swimlane = swimlanes[unique] = [];
+                        swimlane = swimlanes[unique] = { content: [] };
                     }
-                    swimlane.push(item);
-                });
-                items = Object.keys(swimlanes).map(unique => {
-                    const swimlane = swimlanes[unique];
-                    return {
-                        label: unique,
-                        sessions: swimlane
+                    const handler = language => {
+                        const date = new Date(item.year, item.month - 1, item.day);
+                        const { locale } = me.languages.find(obj => obj.id === language);
+                        const month = date.toLocaleString(locale, { month: 'long' });
+                        return month + " " + item.year;
                     };
+                    swimlane.label = (<Text language={handler} />);
+                    item.month + " " + item.year;
+                    swimlane.content.push(item);
                 });
-                return items;
+                return Object.keys(swimlanes).map(unique => swimlanes[unique]);
             }
         },
         {
@@ -233,18 +244,12 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     const unique = item.name[0];
                     let swimlane = swimlanes[unique];
                     if (!swimlane) {
-                        swimlane = swimlanes[unique] = [];
+                        swimlane = swimlanes[unique] = { content: [] };
                     }
-                    swimlane.push(item);
+                    swimlane.label = item.name[0];
+                    swimlane.content.push(item);
                 });
-                items = Object.keys(swimlanes).map(unique => {
-                    const swimlane = swimlanes[unique];
-                    return {
-                        label: unique,
-                        sessions: swimlane
-                    };
-                });
-                return items;
+                return Object.keys(swimlanes).map(unique => swimlanes[unique]);
             }
         }
     ];
