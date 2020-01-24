@@ -144,7 +144,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                             <Item key={item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
                                 {(group[0] === "all" || group.length > 1) && <Element>{title}</Element>}
                                 <Element>{item.date}</Element>
-                                <Element>{item.name}</Element>
+                                <Element className="app-sessions-label" title={item.name}>{item.name}</Element>
+                                <Element>{item.durationText}</Element>
                             </Item>
                         );
                     })}
@@ -247,6 +248,45 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         swimlane = swimlanes[unique] = { content: [] };
                     }
                     swimlane.label = item.name[0];
+                    swimlane.content.push(item);
+                });
+                return Object.keys(swimlanes).map(unique => swimlanes[unique]);
+            }
+        },
+        {
+            id: "duration",
+            name: (
+                <>
+                    <Text language="eng">Duration</Text>
+                    <Text language="heb">זמן</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return a.duration - b.duration;
+                });
+                const swimlanes = {};
+                items.map(item => {
+                    const unique = parseInt(item.duration / 900);
+                    let swimlane = swimlanes[unique];
+                    if (!swimlane) {
+                        swimlane = swimlanes[unique] = { content: [] };
+                    }
+                    if (!swimlane.label) {
+                        if (item.duration) {
+                            const time = parseInt(item.duration / 900) * 900;
+                            swimlane.label = core.string.formatDuration(time, false, true);
+                        }
+                        else {
+                            swimlane.label = (
+                                <>
+                                    <Text language="eng">Unknown</Text>
+                                    <Text language="heb">לא ידוע</Text>
+                                </>
+                            );
+                        }
+                    }
                     swimlane.content.push(item);
                 });
                 return Object.keys(swimlanes).map(unique => swimlanes[unique]);

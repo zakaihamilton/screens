@@ -221,7 +221,7 @@ screens.core.string = function CoreString(me, { core }) {
         }
         return string;
     };
-    me.formatDuration = function (duration, long = false) {
+    me.formatDuration = function (duration, long = false, noSeconds = false) {
         duration = parseInt(duration);
         var sec = duration % 60;
         var min = parseInt(duration / 60) % 60;
@@ -241,7 +241,10 @@ screens.core.string = function CoreString(me, { core }) {
             formattedString = days + " days" + " + ";
         }
         if (!long) {
-            formattedString = hour + ":" + min + ":" + sec;
+            formattedString = hour + ":" + min;
+            if (!noSeconds) {
+                formattedString = + ":" + sec;
+            }
         }
         else {
             if (hour) {
@@ -250,7 +253,7 @@ screens.core.string = function CoreString(me, { core }) {
             if (min) {
                 formattedString += min + " minutes ";
             }
-            if (sec) {
+            if (sec && !noSeconds) {
                 formattedString += sec + " seconds";
             }
             if (!formattedString) {
