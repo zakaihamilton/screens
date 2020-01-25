@@ -243,7 +243,7 @@ screens.core.string = function CoreString(me, { core }) {
         if (!long) {
             formattedString = hour + ":" + min;
             if (!noSeconds) {
-                formattedString = + ":" + sec;
+                formattedString += ":" + sec;
             }
         }
         else {
