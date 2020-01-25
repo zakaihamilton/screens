@@ -18,9 +18,9 @@
     overflow: hidden;
 }
 
-.react-list-end {
+.react-list-position {
     position: absolute;
     width: 1px;
     height: 1px;
-    background-color: red;
+    background-color: transparent;
 }

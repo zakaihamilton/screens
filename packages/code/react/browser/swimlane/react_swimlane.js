@@ -16,9 +16,10 @@ screens.react.Swimlane = ({ label, children }) => {
 };
 
 screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) => {
-    const { Element } = screens.react;
+    const { Element, Direction } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
+    const direction = React.useContext(Direction.Context);
     const onLoad = () => {
         setLoading(false);
     };
@@ -37,7 +38,12 @@ screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) =
     }, []);
     props = props || {};
     props.style = props.style || {};
-    props.style.left = offset + "px";
+    if (direction === "rtl") {
+        props.style.right = offset + "px";
+    }
+    else {
+        props.style.left = offset + "px";
+    }
     return (
         <Element className="react-swimlane-item-container" {...props}>
             <Element className="react-swimlane-item-image-bg">

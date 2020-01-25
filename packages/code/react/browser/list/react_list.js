@@ -1,6 +1,7 @@
 screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
-    const { Item, Element, util } = screens.react;
+    const { Item, Element, Direction, util } = screens.react;
     const [position, setPosition] = React.useState(0);
+    const direction = React.useContext(Direction.Context);
     const counter = util.useResize();
     const [ref, width, height] = util.useSize(counter);
     const className = {
@@ -8,34 +9,54 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
         "horizontal": horizontal,
         "vertical": !horizontal
     };
+    let count = React.Children.count(children);
+    const length = itemSize * count;
     const onScroll = () => {
         if (horizontal) {
-            setPosition(ref.current.scrollLeft);
+            if (direction === "rtl") {
+                setPosition(ref.current.scrollWidth - ref.current.scrollLeft - width);
+            }
+            else {
+                setPosition(ref.current.scrollLeft);
+            }
         }
         else {
             setPosition(ref.current.scrollTop);
         }
     };
+    React.useEffect(() => {
+        onScroll();
+    }, [ref && ref.current, direction]);
     let offset = 0;
     const size = horizontal ? width : height;
-    count = React.Children.count(children);
-    children = React.Children.map(children, (el, idx) => {
+    children = React.Children.map(children, el => {
         let element = null;
         const itemWidth = horizontal ? itemSize : width;
         const itemHeight = horizontal ? height : itemSize;
-        if (offset > position - (itemSize * 2) && offset < position + size + (itemSize * 2)) {
-            element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize });
+        let visible = offset > position - (itemSize * 2) && offset < position + size + (itemSize * 2);
+        if (visible) {
+            element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, style });
         }
         offset += itemSize;
         return element;
     }).filter(Boolean);
     item = item || screens.react.List.Item;
+    let startStyles = null, endStyles = null;
+    if (horizontal) {
+        startStyles = { left: 0 };
+        endStyles = { left: length };
+    }
+    else {
+        endStyles = { top: length };
+        endStyles = { top: 0 };
+    }
     return (
         <Element ref={ref} className={className} style={style} onScroll={onScroll}>
+            <Element className="react-list-position" style={startStyles} />
             <Item.Component.Provider value={item}>
                 {children}
-                <Element className="react-list-end" style={horizontal ? { left: itemSize * count } : { top: itemSize * count }} />
             </Item.Component.Provider>
+            <Element className="react-list-position" style={endStyles} />
         </Element>
     );
 };
