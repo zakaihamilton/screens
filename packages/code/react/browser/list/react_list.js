@@ -33,7 +33,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
         let element = null;
         const itemWidth = horizontal ? itemSize : width;
         const itemHeight = horizontal ? height : itemSize;
-        let visible = offset > position - (itemSize * 2) && offset < position + size + (itemSize * 2);
+        let visible = offset > position - itemSize && offset < position + size + itemSize;
         if (visible) {
             element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, style });
         }
@@ -43,12 +43,18 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
     item = item || screens.react.List.Item;
     let startStyles = null, endStyles = null;
     if (horizontal) {
-        startStyles = { left: 0 };
-        endStyles = { left: length };
+        if (direction === "rtl") {
+            startStyles = { right: 0 };
+            endStyles = { right: length };
+        }
+        else {
+            startStyles = { left: 0 };
+            endStyles = { left: length };
+        }
     }
     else {
+        startStyles = { top: 0 };
         endStyles = { top: length };
-        endStyles = { top: 0 };
     }
     return (
         <Element ref={ref} className={className} style={style} onScroll={onScroll}>
