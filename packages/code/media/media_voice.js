@@ -89,6 +89,7 @@ screens.media.voice = function MediaVoice(me, { core, kab }) {
             collection = [text];
         }
         collection.map((collectionText, collectionIndex) => {
+            collectionText = me.preProcess(collectionText);
             var groups = me.textSplit(collectionText);
             var processedTexts = groups.map((text) => me.process(text));
             processedTexts.map((text, processedIndex) => {
@@ -151,6 +152,10 @@ screens.media.voice = function MediaVoice(me, { core, kab }) {
         }
         me.replay();
     };
+    me.preProcess = function (text) {
+        text = text.replace(/i\.e\.\ /g, "For Example.. ");
+        return text;
+    }
     me.textSplit = function (text) {
         return text.split(/[.,:;?!\n]/g);
     };
