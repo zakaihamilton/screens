@@ -30,7 +30,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     };
     React.useEffect(() => {
         onScroll();
-    }, [ref && ref.current, direction]);
+    }, [ref && ref.current, direction, counter]);
     let offset = 0, size = 0;
     if (horizontal) {
         size = pixelsToUnit(ref.current, width, unit);
