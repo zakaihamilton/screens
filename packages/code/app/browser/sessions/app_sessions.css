@@ -14,3 +14,8 @@
     text-overflow: ellipsis;
     width: 240px;
 }
+
+.app-sessions-row {
+    display: flex;
+    justify-content: space-between;
+}

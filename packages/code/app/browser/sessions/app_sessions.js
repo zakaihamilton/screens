@@ -143,16 +143,18 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         return (
                             <Item key={item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
                                 {(group[0] === "all" || group.length > 1) && <Element>{title}</Element>}
-                                <Element>{item.date}</Element>
-                                <Element className="app-sessions-label" title={item.name}>{item.name}</Element>
-                                <Element>{item.durationText}</Element>
+                                <Element className="app-sessions-row">
+                                    <Element>{item.date}</Element>
+                                    <Element>{item.durationText}</Element>
+                                </Element>
+                                <Element className="app-sessions-label" direction="auto" title={item.name}>{item.name}</Element>
                             </Item>
                         );
                     })}
                 </Swimlane>
             </Item>
         ));
-        return (<List itemSize={377}>
+        return (<List itemSize={20.625} unit="em">
             {items}
         </List>);
     };

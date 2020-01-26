@@ -271,4 +271,16 @@ screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
         var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
         return (emValue * elementFontSize);
     };
+    me.unitToPixels = function (element, value, unit) {
+        if (element && unit === "em") {
+            value = me.emToPixels(element, value);
+        }
+        return value;
+    }
+    me.pixelsToUnit = function (element, pixelValue, unit) {
+        if (element && unit === "em") {
+            return me.pixelsToEm(element, pixelValue);
+        }
+        return pixelValue;
+    }
 };

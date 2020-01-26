@@ -1,4 +1,5 @@
-screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
+screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px" }) => {
+    const { pixelsToUnit } = screens.ui.basic;
     const { Item, Element, Direction, util } = screens.react;
     const [position, setPosition] = React.useState(0);
     const direction = React.useContext(Direction.Context);
@@ -10,51 +11,64 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
         "vertical": !horizontal
     };
     let count = React.Children.count(children);
-    const length = itemSize * count;
+    const length = pixelsToUnit(ref.current, itemSize * count);
     const onScroll = () => {
+        let position = 0;
         if (horizontal) {
             if (direction === "rtl") {
-                setPosition(ref.current.scrollWidth - ref.current.scrollLeft - width);
+                position = ref.current.scrollWidth - ref.current.scrollLeft - width;
             }
             else {
-                setPosition(ref.current.scrollLeft);
+                position = ref.current.scrollLeft;
             }
         }
         else {
-            setPosition(ref.current.scrollTop);
+            position = ref.current.scrollTop;
         }
+        position = pixelsToUnit(ref.current, position, unit);
+        setPosition(position);
     };
     React.useEffect(() => {
         onScroll();
     }, [ref && ref.current, direction]);
-    let offset = 0;
-    const size = horizontal ? width : height;
-    children = React.Children.map(children, el => {
-        let element = null;
-        const itemWidth = horizontal ? itemSize : width;
-        const itemHeight = horizontal ? height : itemSize;
-        let visible = offset > position - itemSize && offset < position + size + itemSize;
-        if (visible) {
-            element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, style });
-        }
-        offset += itemSize;
-        return element;
-    }).filter(Boolean);
+    let offset = 0, size = 0;
+    if (horizontal) {
+        size = pixelsToUnit(ref.current, width, unit);
+    }
+    else {
+        size = pixelsToUnit(ref.current, height, unit);
+    }
+    if (ref && ref.current) {
+        children = React.Children.map(children, el => {
+            let element = null;
+            const itemWidth = horizontal ? itemSize : pixelsToUnit(ref.current, width, unit);
+            const itemHeight = horizontal ? pixelsToUnit(ref.current, height, unit) : itemSize;
+            let visible = offset > position - itemSize && offset < position + size + itemSize;
+            if (visible) {
+                element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, style, unit });
+            }
+            offset += itemSize;
+            return element;
+        }).filter(Boolean);
+    }
+    else {
+        children = [];
+    }
     item = item || screens.react.List.Item;
     let startStyles = null, endStyles = null;
     if (horizontal) {
         if (direction === "rtl") {
-            startStyles = { right: 0 };
-            endStyles = { right: length };
+            startStyles = { right: "0" + unit };
+            endStyles = { right: length + unit };
         }
         else {
-            startStyles = { left: 0 };
-            endStyles = { left: length };
+            startStyles = { left: "0" + unit };
+            endStyles = { left: length + unit };
         }
     }
     else {
-        startStyles = { top: 0 };
-        endStyles = { top: length };
+        startStyles = { top: "0" + unit };
+        endStyles = { top: length + unit };
     }
     return (
         <Element ref={ref} className={className} style={style} onScroll={onScroll}>
@@ -67,7 +81,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize }) => {
     );
 };
 
-screens.react.List.Item = ({ id, horizontal, offset, width, height, style = {}, children }) => {
+screens.react.List.Item = ({ id, horizontal, offset, width, height, style = {}, children, unit = "px" }) => {
     const { Element } = screens.react;
     const ref = React.useRef(null);
     const className = {
@@ -76,17 +90,17 @@ screens.react.List.Item = ({ id, horizontal, offset, width, height, style = {}, 
     style = { ...style };
     if (typeof offset !== "undefined") {
         if (horizontal) {
-            style.left = offset + "px";
+            style.left = offset + unit;
         }
         else {
-            style.top = offset + "px";
+            style.top = offset + unit;
         }
     }
     if (typeof height !== "undefined") {
-        style.height = height + "px";
+        style.height = height + unit;
     }
     if (typeof width !== "undefined") {
-        style.width = width + "px";
+        style.width = width + unit;
     }
     return (
         <Element ref={ref} data-id={id} className={className} style={style}>

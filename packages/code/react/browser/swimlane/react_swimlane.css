@@ -1,26 +1,18 @@
 .react-swimlane-container {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
+    margin-top: 0.5em;
     padding-bottom: 1em;
     height: 100%;
     width: 100%;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.react-swimlane-container.ltr {
-    padding-left: 1em;
-}
-
-.react-swimlane-container.rtl {
-    padding-right: 1em;
 }
 
 .react-swimlane-label {
     display: flex;
     font-weight: bold;
     font-size: 150%;
-    margin-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .react-swimlane-children {
@@ -29,13 +21,10 @@
 }
 
 .react-swimlane-item-container {
-    margin-right: 1em;
-    margin-bottom: 1em;
-    width: 260px;
-    height: 280px;
+    margin: 0.5em;
+    width: 16em;
     overflow: hidden;
     position: absolute;
-    padding: 0.2em;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -49,8 +38,8 @@
 
 .react-swimlane-item-image-bg {
     background-color: black;
-    width: 250px;
-    height: 156.250px;
+    width: 16em;
+    height: 10em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,8 +47,8 @@
 
 .react-swimlane-item-image {
     pointer-events: none;
-    width: 250px;
-    height: 156.250px;
+    width: 16em;
+    height: 10em;
     object-fit: contain;
 }
 
@@ -72,7 +61,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 6px;
 }
 
 .react-swimlane-item-image-loader, .react-swimlane-item-image-loader:before, .react-swimlane-item-image-loader:after {

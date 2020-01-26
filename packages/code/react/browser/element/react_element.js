@@ -1,11 +1,11 @@
-screens.react.Element = React.forwardRef(({ tag = "div", children, direction, ...props }, ref) => {
+screens.react.Element = React.forwardRef(({ tag = "div", children, direction, className, style, ...props }, ref) => {
     const { Direction } = screens.react;
     const contextDirection = React.useContext(Direction.Context);
     if (!direction) {
         direction = contextDirection;
     }
     props = props || {};
-    let className = props.className || "";
+    className = className || "";
     if (typeof className === "object") {
         if (Array.isArray(className)) {
             className = className.join(" ");
@@ -17,6 +17,9 @@ screens.react.Element = React.forwardRef(({ tag = "div", children, direction, ..
     if (direction) {
         className += " " + direction;
     }
+    if (direction === "auto") {
+        props.dir = direction;
+    }
     const Component = tag;
-    return (<Component ref={ref} {...props} className={className}>{children}</Component>);
+    return (<Component ref={ref} style={style} {...props} className={className}>{children}</Component>);
 });

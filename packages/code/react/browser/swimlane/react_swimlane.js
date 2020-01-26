@@ -7,7 +7,7 @@ screens.react.Swimlane = ({ label, children }) => {
                 {label}
             </Element>
             <Element className="react-swimlane-children">
-                <List horizontal={true} itemSize={265} item={screens.react.Swimlane.Item}>
+                <List horizontal={true} itemSize={17} unit="em" item={screens.react.Swimlane.Item}>
                     {children}
                 </List>
             </Element>
@@ -15,7 +15,7 @@ screens.react.Swimlane = ({ label, children }) => {
     );
 };
 
-screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) => {
+screens.react.Swimlane.Item = ({ image, offset, horizontal, children, itemSize, unit, overlay, ...props }) => {
     const { Element, Direction } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
@@ -39,10 +39,10 @@ screens.react.Swimlane.Item = ({ image, offset, children, overlay, ...props }) =
     props = props || {};
     props.style = props.style || {};
     if (direction === "rtl") {
-        props.style.right = offset + "px";
+        props.style.right = offset + unit;
     }
     else {
-        props.style.left = offset + "px";
+        props.style.left = offset + unit;
     }
     return (
         <Element className="react-swimlane-item-container" {...props}>
