@@ -6623,6 +6623,16 @@
             "hebrew": "לשמה"
         },
         {
+            "term": "Lo Lishmo",
+            "translation": "Not for His Name",
+            "hebrew": "לא לשמו"
+        },
+        {
+            "term": "Lishmo",
+            "translation": "For His Name",
+            "hebrew": "לשמו"
+        },
+        {
             "term": "Baal Shem Tov",
             "style": {
                 "category": "Author"
