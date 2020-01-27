@@ -133,7 +133,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         items = items.filter(item => year[0] === "all" || year.includes(item.year));
         items = me.sort.find(item => item.id === sort).sort(items);
         items = items.map(item => (
-            <Item key={item.name}>
+            <Item key={item.id}>
                 <Swimlane label={item.label}>
                     {item.content.map(item => {
                         const title = core.string.title(item.group);
@@ -141,8 +141,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                             core.app.launch("player", item.group, item.session);
                         }
                         return (
-                            <Item key={item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
-                                {(group[0] === "all" || group.length > 1) && <Element>{title}</Element>}
+                            <Item key={item.group + item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
+                                <Element className="app-sessions-row">
+                                    {(group[0] === "all" || group.length > 1) && <Element key={title}>{title}</Element>}
+                                </Element>
                                 <Element className="app-sessions-row">
                                     <Element>{item.date}</Element>
                                     <Element>{item.durationText}</Element>
@@ -222,8 +224,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                         const month = date.toLocaleString(locale, { month: 'long' });
                         return month + " " + item.year;
                     };
+                    swimlane.id = item.month + " " + item.year;
                     swimlane.label = (<Text language={handler} />);
-                    item.month + " " + item.year;
                     swimlane.content.push(item);
                 });
                 return Object.keys(swimlanes).map(unique => swimlanes[unique]);
@@ -249,6 +251,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     if (!swimlane) {
                         swimlane = swimlanes[unique] = { content: [] };
                     }
+                    swimlane.id = item.name[0];
                     swimlane.label = item.name[0];
                     swimlane.content.push(item);
                 });
@@ -289,6 +292,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                             );
                         }
                     }
+                    swimlane.id = unique;
                     swimlane.content.push(item);
                 });
                 return Object.keys(swimlanes).map(unique => swimlanes[unique]);
