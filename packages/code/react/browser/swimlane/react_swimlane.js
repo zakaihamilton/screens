@@ -15,7 +15,7 @@ screens.react.Swimlane = ({ label, children }) => {
     );
 };
 
-screens.react.Swimlane.Item = ({ image, offset, horizontal, children, itemSize, unit, overlay, ...props }) => {
+screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, itemSize, unit, overlay, ...props }) => {
     const { Element, Direction } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
@@ -31,7 +31,7 @@ screens.react.Swimlane.Item = ({ image, offset, horizontal, children, itemSize, 
         const timerHandle = setTimeout(() => {
             setLoading(true);
             setImageVisibile(true);
-        }, 250);
+        }, 500);
         return (() => {
             clearTimeout(timerHandle);
         })
@@ -46,6 +46,7 @@ screens.react.Swimlane.Item = ({ image, offset, horizontal, children, itemSize, 
     }
     return (
         <Element className="react-swimlane-item-container" {...props}>
+            <Element title={title} className="react-swimlane-item-title">{title}</Element>
             <Element className="react-swimlane-item-image-bg">
                 {image &&
                     <>

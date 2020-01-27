@@ -103,6 +103,22 @@
     left: 1em;
 }
 
+.react-swimlane-item-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    text-align: center;
+    color: var(--chrome-color);
+    background-color: var(--chrome-background);
+    border-bottom: 1px solid var(--chrome-border);
+    font-weight: bold;
+}
+
 @keyframes react-swimlane-item-image-spin {
     0%, 80%, 100% {
         box-shadow: 0 1em 0 -1.3em;

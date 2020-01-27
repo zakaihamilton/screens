@@ -118,6 +118,12 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             }
             return { ...item, ...tokens };
         });
+        items.sort((a, b) => {
+            return b.date.localeCompare(a.date);
+        });
+        items.map((item, index) => {
+            item.index = items.length - index;
+        });
         return items;
     };
 
@@ -136,27 +142,29 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             <Item key={item.id}>
                 <Swimlane label={item.label}>
                     {item.content.map(item => {
-                        const title = core.string.title(item.group);
+                        const group = core.string.title(item.group);
                         const loadSession = () => {
                             core.app.launch("player", item.group, item.session);
                         }
                         return (
-                            <Item key={item.group + item.session} overlay={item.overlay} image={item.image} onClick={loadSession}>
+                            <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
                                 <Element className="app-sessions-row">
-                                    {(group[0] === "all" || group.length > 1) && <Element key={title}>{title}</Element>}
+                                    <Element>#{item.index}</Element>
+                                    {(group[0] === "all" || group.length > 1) && (
+                                        <Element direction="auto" key={group}>{group}</Element>
+                                    )}
                                 </Element>
                                 <Element className="app-sessions-row">
                                     <Element>{item.date}</Element>
                                     <Element>{item.durationText}</Element>
                                 </Element>
-                                <Element className="app-sessions-label" direction="auto" title={item.name}>{item.name}</Element>
                             </Item>
                         );
                     })}
                 </Swimlane>
             </Item>
         ));
-        return (<List itemSize={20.625} unit="em">
+        return (<List itemSize={20.5} unit="em">
             {items}
         </List>);
     };

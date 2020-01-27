@@ -8,13 +8,6 @@
     flex-direction: column;
 }
 
-.app-sessions-label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 15em;
-}
-
 .app-sessions-row {
     display: flex;
     justify-content: space-between;
