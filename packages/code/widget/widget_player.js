@@ -367,6 +367,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
         const fileName = core.path.fileName(me.upper.path(object));
         core.property.set(controls.var.download, "ui.attribute.href", player.src);
         core.property.set(controls.var.download, "ui.attribute.download", fileName);
+        core.property.set(controls.var.download, "ui.attribute.target", "_blank");
     };
     me.formatTime = function (currentTime) {
         var current_hour = parseInt(currentTime / 3600) % 24,
