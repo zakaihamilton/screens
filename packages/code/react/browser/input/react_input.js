@@ -1,4 +1,4 @@
-screens.react.Input = ({ state }) => {
+screens.react.Input = ({ state, ...props }) => {
     const { Element } = screens.react;
     const [text, setText] = state;
 
@@ -6,5 +6,5 @@ screens.react.Input = ({ state }) => {
         setText(event.target.value);
     };
 
-    return (<Element tag="input" value={text} onChange={onChange} className="react-input-edit" />);
+    return (<Element tag="input" direction="auto" value={text} onChange={onChange} className="react-input-edit" {...props} />);
 };
