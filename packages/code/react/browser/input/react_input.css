@@ -1,0 +1,12 @@
+.react-input-edit {
+    margin-left: 18px;
+    padding: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #0f2777;
+    background-color: var(--background);
+    color: var(--color);
+    border-radius: 5px 5px 5px 5px;
+    box-sizing: border-box;
+    font-size: inherit;
+}

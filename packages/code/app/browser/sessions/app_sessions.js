@@ -6,7 +6,6 @@
 screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
     const {
         DropDown,
-        Tabs,
         Item,
         Bar,
         Swimlane,
@@ -15,10 +14,11 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         Direction,
         Language,
         Text,
-        List
+        List,
+        Input
     } = react;
 
-    const AppToolbar = ({ languageState, sortState, groupState, yearState }) => {
+    const AppToolbar = ({ languageState, sortState, groupState, yearState, searchState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
@@ -33,6 +33,11 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const yearItems = (me.years || []).map(year => {
             return (<Item key={year} id={year}>{year}</Item>);
         });
+        const allItem = (<Item id="all" multiple={false}>
+            <Text language="eng">All</Text>
+            <Text language="heb">הכל</Text>
+        </Item>);
+
         return (
             <Bar>
                 <Field label={
@@ -67,10 +72,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                             <Text language="heb">מספר</Text>
                         </Item>
                     }>
-                        <Item id="all" multiple={false}>
-                            <Text language="eng">All</Text>
-                            <Text language="heb">הכל</Text>
-                        </Item>
+                        {allItem}
                         {groupItems}
                     </DropDown>
                 </Field>
@@ -81,12 +83,18 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
                     </>
                 }>
                     <DropDown state={yearState}>
-                        <Item id="all" multiple={false}>
-                            <Text language="eng">All</Text>
-                            <Text language="heb">הכל</Text>
-                        </Item>
+                        {allItem}
                         {yearItems}
                     </DropDown>
+                </Field>
+                <Element style={{ flex: 1 }}></Element>
+                <Field label={
+                    <>
+                        <Text language="eng">Search</Text>
+                        <Text language="heb">חיפוש</Text>
+                    </>
+                }>
+                    <Input state={searchState} />
                 </Field>
             </Bar>
         );
@@ -127,16 +135,23 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         return items;
     };
 
-    const AppHub = ({ groupState, sortState, yearState }) => {
+    const AppHub = ({ groupState, sortState, yearState, searchState }) => {
         const [group] = groupState;
         const [sort] = sortState;
         const [year] = yearState;
+        const [search] = searchState;
         react.util.useSubscribe(groupState);
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(yearState);
+        react.util.useSubscribe(searchState);
         let items = me.sessions;
         items = items.filter(item => group[0] === "all" || group.includes(item.group));
         items = items.filter(item => year[0] === "all" || year.includes(item.year));
+        items = items.filter(item => {
+            return !search ||
+                core.string.caselessInclude(item.date, search) ||
+                core.string.caselessInclude(item.name, search);
+        });
         items = me.sort.find(item => item.id === sort).sort(items);
         items = items.map(item => (
             <Item key={item.id}>
@@ -174,13 +189,15 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const groupState = react.util.useState(["all"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
+        const searchState = react.util.useState("");
         const [language] = languageState;
         const direction = me.languages.find(item => item.id === language).direction;
         const state = {
             languageState,
             groupState,
             sortState,
-            yearState
+            yearState,
+            searchState
         };
         return (
             <Direction direction={direction}>

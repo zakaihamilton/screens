@@ -165,6 +165,15 @@ screens.core.string = function CoreString(me, { core }) {
         URL.revokeObjectURL(url);
         return request.responseText;
     };
+    me.caselessInclude = function (source, target) {
+        if ((source && !target) || (!source && target)) {
+            return false;
+        }
+        if (!source && !target) {
+            return true;
+        }
+        return source.toLowerCase().includes(target.toLowerCase());
+    };
     me.caselessCompare = function (source, target) {
         if ((source && !target) || (!source && target)) {
             return false;

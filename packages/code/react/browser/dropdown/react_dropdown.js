@@ -4,7 +4,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     const popupRef = React.useRef(null);
     const selectedRef = React.useRef(null);
     const open = React.useState(0);
-    const [selected, setSelected] = state;
+    const [selected] = state;
     const [isOpen, setOpen] = open;
     const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
