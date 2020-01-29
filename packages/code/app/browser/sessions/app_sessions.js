@@ -3,7 +3,7 @@
  @component AppSessions
  */
 
-screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
+screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, react }) {
     const {
         DropDown,
         Item,
@@ -135,7 +135,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         return items;
     };
 
-    const AppHub = ({ groupState, sortState, yearState, searchState }) => {
+    const AppHub = ({ groupState, sortState, yearState, searchState, updateState }) => {
         const [group] = groupState;
         const [sort] = sortState;
         const [year] = yearState;
@@ -144,6 +144,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(yearState);
         react.util.useSubscribe(searchState);
+        react.util.useSubscribe(updateState);
         let items = me.sessions;
         items = items.filter(item => group[0] === "all" || group.includes(item.group));
         items = items.filter(item => year[0] === "all" || year.includes(item.year));
@@ -190,14 +191,23 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
         const searchState = react.util.useState("");
+        const updateState = react.util.useState(0);
         const [language] = languageState;
         const direction = me.languages.find(item => item.id === language).direction;
+        React.useEffect(() => {
+            me.loadData();
+        }, []);
+        me.redraw = () => {
+            const [counter, setCounter] = updateState;
+            setCounter(counter + 1);
+        };
         const state = {
             languageState,
             groupState,
             sortState,
             yearState,
-            searchState
+            searchState,
+            updateState
         };
         return (
             <Direction direction={direction}>
@@ -208,6 +218,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
             </Direction>
         );
     };
+    me.groups = [];
+    me.sessions = [];
     me.languages = [
         {
             id: "eng",
@@ -336,17 +348,14 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         }
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
-    me.ready = function (methods) {
-        methods["app.sessions.setGroups"] = ["media.file.groups"];
-        methods["app.sessions.setMetadataList"] = ["db.shared.metadata.list", { user: "$userId" }];
-    };
-    me.setGroups = function (groups) {
-        me.groups = groups;
+    me.loadData = async function () {
+        me.groups = await media.file.groups();
         me.sessions = prepareSessions([].concat.apply([], me.groups.map(group => group.sessions)));
         me.years = Array.from(new Set(me.sessions.map(item => item.year)));
-    };
-    me.setMetadataList = function (metadataList) {
-        me.metadataList = metadataList;
+        me.metadataList = db.shared.metadata.list({ user: "$userId" });
+        if (me.redraw) {
+            me.redraw();
+        }
     };
     me.initOptions = async function (object) {
         var window = widget.window.get(object);
@@ -355,6 +364,12 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, react }) {
         });
         core.property.set(window, "app", me);
         core.property.set(window, "name", "");
+    };
+    me.visibilityChange = function () {
+        const visibilityState = ui.session.visibilityState();
+        if (visibilityState === "visible") {
+            me.loadData();
+        }
     };
     me.render = function (object) {
         return (<Main />);
