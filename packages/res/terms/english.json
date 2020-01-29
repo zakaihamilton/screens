@@ -1729,6 +1729,16 @@
             "hebrew": "אדם קדמון"
         },
         {
+            "term": "Perud",
+            "translation": "Separation",
+            "hebrew": "פרוד"
+        },
+        {
+            "term": "BeHibaram",
+            "translation": "when they were created",
+            "hebrew": "בהבראם"
+        },
+        {
             "translation": "Emanation",
             "explanation": "Control",
             "style": {
