@@ -119,7 +119,10 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
                 callback();
             }, timeout));
         };
-        return [startTimer, stopTimer];
+        const hasTimer = () => {
+            return timer;
+        };
+        return [startTimer, stopTimer, hasTimer];
     };
     me.render = function (object, component) {
         const { Context } = me;

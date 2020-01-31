@@ -5,7 +5,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     const direction = React.useContext(Direction.Context);
     const counter = util.useResize();
     const [ref, width, height] = util.useSize(counter);
-    const [startTimer] = util.useTimer(50);
+    const [startTimer] = util.useTimer(0);
     const className = {
         "react-list-container": true,
         "horizontal": horizontal,
@@ -46,7 +46,8 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
             let element = null;
             const itemWidth = horizontal ? itemSize : pixelsToUnit(ref.current, width, unit);
             const itemHeight = horizontal ? pixelsToUnit(ref.current, height, unit) : itemSize;
-            let visible = offset > position - itemSize && offset < position + size + itemSize;
+            const itemsToShowSize = 2 * itemSize;
+            let visible = offset > position - itemsToShowSize && offset < position + size + itemsToShowSize;
             if (visible) {
                 element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, style, unit });
             }
