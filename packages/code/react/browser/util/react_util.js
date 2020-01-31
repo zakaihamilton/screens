@@ -106,12 +106,20 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
     };
     me.useTimer = function (timeout) {
         const [timer, setTimer] = React.useState(null);
-        const clearIt = timer && clearTimeout.bind(this, timer);
-        const setIt = callback => setTimer(setTimeout(() => {
-            setTimer(null);
-            callback();
-        }, timeout));
-        return [clearIt, setIt];
+        const stopTimer = () => {
+            if (timer) {
+                clearTimeout(timer);
+                setTimer(null);
+            }
+        };
+        const startTimer = callback => {
+            stopTimer();
+            setTimer(setTimeout(() => {
+                setTimer(null);
+                callback();
+            }, timeout));
+        };
+        return [startTimer, stopTimer];
     };
     me.render = function (object, component) {
         const { Context } = me;
