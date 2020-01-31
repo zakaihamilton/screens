@@ -146,12 +146,20 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         react.util.useSubscribe(searchState);
         react.util.useSubscribe(updateState);
         let items = me.sessions;
+        const compare = (item, fields, search) => {
+            if (!search) {
+                return true;
+            }
+            for (const field of fields) {
+                if (core.string.caselessInclude(item[field], search)) {
+                    return true;
+                }
+            }
+        };
         items = items.filter(item => group[0] === "all" || group.includes(item.group));
         items = items.filter(item => year[0] === "all" || year.includes(item.year));
         items = items.filter(item => {
-            return !search ||
-                core.string.caselessInclude(item.date, search) ||
-                core.string.caselessInclude(item.name, search);
+            return compare(item, ["date", "name", "index", "durationText"], search);
         });
         items = me.sort.find(item => item.id === sort).sort(items);
         items = items.map(item => (

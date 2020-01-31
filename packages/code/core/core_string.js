@@ -172,7 +172,7 @@ screens.core.string = function CoreString(me, { core }) {
         if (!source && !target) {
             return true;
         }
-        return source.toLowerCase().includes(target.toLowerCase());
+        return source.toString().toLowerCase().includes(target.toString().toLowerCase());
     };
     me.caselessCompare = function (source, target) {
         if ((source && !target) || (!source && target)) {
