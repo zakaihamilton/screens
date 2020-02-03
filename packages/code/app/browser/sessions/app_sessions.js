@@ -188,7 +188,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                 </Swimlane>
             </Item>
         ));
-        return (<List itemSize={20.5} unit="em">
+        return (<List itemSize={20} unit="em">
             {items}
         </List>);
     };
