@@ -1,10 +1,17 @@
 screens.react.Input = ({ state, ...props }) => {
-    const { Element } = screens.react;
+    const { Element, util } = screens.react;
     const [text, setText] = state;
+    const [currentText, setCurrentText] = React.useState(text);
+    const [startTimer, stopTimer, hasTimer] = util.useTimer(250);
 
     const onChange = event => {
-        setText(event.target.value);
+        const { value } = event.target;
+        startTimer(() => {
+            setText(value);
+        });
+        setCurrentText(value);
     };
 
-    return (<Element tag="input" direction="auto" value={text} onChange={onChange} className="react-input-edit" {...props} />);
+    const value = hasTimer() ? currentText : text;
+    return (<Element tag="input" direction="auto" value={value} onChange={onChange} className="react-input-edit" {...props} />);
 };
