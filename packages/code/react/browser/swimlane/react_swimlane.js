@@ -15,8 +15,8 @@ screens.react.Swimlane = ({ label, children }) => {
     );
 };
 
-screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, itemSize, unit, overlay, ...props }) => {
-    const { Element, Direction } = screens.react;
+screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, itemSize, unit, imageClick, overlay, ...props }) => {
+    const { Element, Direction, util } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
     const direction = React.useContext(Direction.Context);
@@ -44,10 +44,12 @@ screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, ite
     else {
         props.style.left = offset + unit;
     }
+    const titleOverlay = title.split("-").join("\n");
     return (
         <Element className="react-swimlane-item-container" {...props}>
-            <Element title={title} className="react-swimlane-item-title">{title}</Element>
-            <Element className="react-swimlane-item-image-bg">
+            <Element className="react-swimlane-item-title">{title}</Element>
+            <Element className="react-swimlane-item-title-overlay">{titleOverlay}</Element>
+            <Element className="react-swimlane-item-image-bg" onClick={imageClick}>
                 {image &&
                     <>
                         {isLoading && <Element className="react-swimlane-item-image-loader" />}

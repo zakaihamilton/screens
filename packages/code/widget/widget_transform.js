@@ -132,7 +132,6 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             me.log("detected language: " + language);
         }
         transformWidget.options.clickCallback = "screens.widget.transform.popup.open";
-        transformWidget.options.reload = true;
         media.voice.stop();
         var options = Object.assign({}, transformWidget.options, { nightMode: ui.theme.options.nightMode });
         var info = { text, terms: {}, data: null };
