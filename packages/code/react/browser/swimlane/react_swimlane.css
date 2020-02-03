@@ -129,14 +129,14 @@
     width: 100%;
     height: 100%;
     left: 0px;
-    font-size: 1.5em;
+    font-size: 1.2em;
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 0.1em;
     padding-bottom: 0.1em;
     font-weight: bold;
     color: var(--chrome-color);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     align-content: center;
     justify-content: center;
     align-items: center;
@@ -145,6 +145,7 @@
     text-align: center;
     opacity: 0;
     transition: opacity 1s;
+    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
 }
 
 @keyframes react-swimlane-item-image-spin {

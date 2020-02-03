@@ -44,7 +44,7 @@ screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, ite
     else {
         props.style.left = offset + unit;
     }
-    const titleOverlay = title.split("-").join("\n");
+    const titleOverlay = title.split("-").map(text => (<Element>{text}</Element>));
     return (
         <Element className="react-swimlane-item-container" {...props}>
             <Element className="react-swimlane-item-title">{title}</Element>
