@@ -8,16 +8,6 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         await ui.content.implement(me);
         me.content.search = me.search;
     };
-    me.ready = function (methods) {
-        methods["app.player.setGroups"] = ["media.file.groups"];
-        methods["app.player.setMetadataList"] = ["db.shared.metadata.list", { user: "$userId" }];
-    };
-    me.setGroups = function (groups) {
-        me.groups = groups;
-    };
-    me.setMetadataList = function (metadataList) {
-        me.metadataList = metadataList;
-    };
     me.launch = async function (args) {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;
@@ -31,6 +21,9 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         if (args[3]) {
             params.showInBackground = true;
         }
+        const { groups, metadataList } = await media.sessions.list();
+        me.groups = groups;
+        me.metadataList = metadataList;
         await me.content.update();
         me.singleton = ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
@@ -175,8 +168,9 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         core.property.set(window, "app.player.format", "Audio");
         let update = {};
         update[type] = true;
-        me.groups = await media.file.groups(update);
-        me.metadataList = await db.shared.metadata.list({ user: "$userId" });
+        const { groups, metadataList } = await media.sessions.list(update);
+        me.groups = groups;
+        me.metadataList = metadataList;
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
     };
@@ -487,7 +481,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                 }
                 metadata[property] = !metadata[property];
                 await db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
-                me.metadataList = await db.shared.metadata.list({ user: "$userId" });
+                me.metadataList = await media.sessions.updateMetadata();
             }
         };
     }

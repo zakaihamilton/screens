@@ -64,7 +64,7 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db }) {
         var files = [];
         await core.util.performance(folder + (update ? " update" : ""), async () => {
             let updateNew = false, updateExisting = false;
-            if (typeof update === "object") {
+            if (update && typeof update === "object") {
                 updateNew = update.new;
                 updateExisting = update.existing;
             }

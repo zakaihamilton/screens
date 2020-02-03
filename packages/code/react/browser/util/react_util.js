@@ -7,6 +7,13 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
     me.init = function () {
         me.Context = React.createContext(null);
     };
+    me.useData = function (value) {
+        const ref = React.useRef(value);
+        const setter = (value) => {
+            ref.current = value;
+        };
+        return [ref.current, setter];
+    };
     me.useState = function (value) {
         const [getter, setter] = React.useState(value);
         const subscriptions = React.useRef([]);

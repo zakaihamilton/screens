@@ -272,7 +272,10 @@
             "samekh": "Samech",
             "World Reformers": "World__ Reformers",
             "G-d": "God",
-            "Or a": "Or__ a"
+            "Or a": "Or__ a",
+            ". Or": ". Or__",
+            ": Or": ": Or__",
+            "/^Or": "Or__"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -1737,6 +1740,11 @@
             "term": "BeHibaram",
             "translation": "when they were created",
             "hebrew": "בהבראם"
+        },
+        {
+            "term": "Hishtokekut",
+            "translation": "Yearning",
+            "hebrew": "השתוקקות"
         },
         {
             "translation": "Emanation",

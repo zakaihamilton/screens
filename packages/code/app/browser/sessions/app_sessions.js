@@ -356,11 +356,12 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         }
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
-    me.loadData = async function () {
-        me.groups = await media.file.groups();
+    me.loadData = async function (update) {
+        const { groups, metadataList } = await media.sessions.list(update);
+        me.groups = groups;
+        me.metadataList = metadataList;
         me.sessions = prepareSessions([].concat.apply([], me.groups.map(group => group.sessions)));
         me.years = Array.from(new Set(me.sessions.map(item => item.year)));
-        me.metadataList = db.shared.metadata.list({ user: "$userId" });
         if (me.redraw) {
             me.redraw();
         }
@@ -376,7 +377,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
     me.visibilityChange = function () {
         const visibilityState = ui.session.visibilityState();
         if (visibilityState === "visible") {
-            me.loadData();
+            me.loadData(true);
         }
     };
     me.render = function (object) {

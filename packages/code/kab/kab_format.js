@@ -108,7 +108,12 @@ screens.kab.format = function KabFormat(me, { core, kab }) {
                 var groupItems = replacements[groupName];
                 for (var from in groupItems) {
                     var to = groupItems[from];
-                    from = core.string.regex("/" + core.string.escape(from));
+                    if (from.startsWith("/")) {
+                        from = core.string.regex(from);
+                    }
+                    else {
+                        from = core.string.regex("/" + core.string.escape(from));
+                    }
                     wordsString = wordsString.replace(from, to);
                 }
             }
