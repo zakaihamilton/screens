@@ -21,8 +21,8 @@
 }
 
 .react-swimlane-item-container {
-    margin: 0.5em;
-    width: 16em;
+    margin: 0.25em;
+    width: 15em;
     overflow: hidden;
     position: absolute;
     display: flex;
@@ -32,7 +32,7 @@
 }
 
 .react-swimlane-item-container:hover:active {
-    outline: 3px solid rgba(81, 203, 238, 1);
+    outline: 1px solid rgba(81, 203, 238, 1);
 }
 
 .react-swimlane-item-container:hover .react-swimlane-item-title-overlay {
@@ -41,7 +41,7 @@
 
 .react-swimlane-item-image-bg {
     background-color: black;
-    width: 16em;
+    width: 15em;
     height: 10em;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@
 
 .react-swimlane-item-image {
     pointer-events: none;
-    width: 16em;
+    width: 15em;
     height: 10em;
     object-fit: contain;
 }
@@ -129,9 +129,9 @@
     width: 100%;
     height: 100%;
     left: 0px;
-    font-size: 1.2em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    font-size: 1.5em;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
     padding-top: 0.1em;
     padding-bottom: 0.1em;
     font-weight: bold;

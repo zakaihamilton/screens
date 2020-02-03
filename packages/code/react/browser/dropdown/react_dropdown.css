@@ -30,6 +30,8 @@
 
 .react-dropdown-popup {
     display: none;
+    outline: 1px solid var(--chrome-border);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: absolute;
     flex-direction: column;
     align-items: stretch;
@@ -42,7 +44,6 @@
 }
 
 .react-dropdown-items {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: var(--chrome-background);
     display: flex;
     flex-direction: column;
@@ -72,22 +73,15 @@
 }
 
 .react-dropdown-item.popup:active:hover {
-    background-color: var(--chrome-highlight-background);
-    color: var(--chrome-highlight-color);
+    opacity: 0.8;
 }
 
-.react-dropdown-item.popup.selected.ltr {
+.react-dropdown-item.popup.selected {
     border-left: 4px solid var(--phase-two-border);
+    background-color: var(--phase-two-border);
 }
 
-.react-dropdown-item.popup.selected.rtl {
-    border-right: 4px solid var(--phase-two-border);
-}
-
-.react-dropdown-item.popup.multiple.selected.ltr {
+.react-dropdown-item.popup.multiple.selected {
     border-left: 4px solid var(--phase-four-border);
-}
-
-.react-dropdown-item.popup.multiple.selected.rtl {
-    border-right: 4px solid var(--phase-four-border);
+    background-color: var(--phase-four-border);
 }

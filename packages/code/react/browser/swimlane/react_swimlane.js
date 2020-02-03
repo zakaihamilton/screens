@@ -7,7 +7,7 @@ screens.react.Swimlane = ({ label, children }) => {
                 {label}
             </Element>
             <Element className="react-swimlane-children">
-                <List horizontal={true} itemSize={17} unit="em" item={screens.react.Swimlane.Item}>
+                <List horizontal={true} itemSize={15.5} unit="em" item={screens.react.Swimlane.Item}>
                     {children}
                 </List>
             </Element>
