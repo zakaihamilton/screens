@@ -793,6 +793,26 @@
             "hebrew": "עביות א׳"
         },
         {
+            "term": "Ohr HaChaim",
+            "translation": "The Light of Life",
+            "hebrew": "אור החיים"
+        },
+        {
+            "term": " Mala ' achim",
+            "translation": "Angels",
+            "hebrew": "מלאכים"
+        },
+        {
+            "term": "Hevels",
+            "translation": "Vapor",
+            "hebrew": "הבלים"
+        },
+        {
+            "term": "Ichud",
+            "translation": "Unification",
+            "hebrew": "איחוד"
+        },
+        {
             "translation": "Phase Two Coarseness",
             "style": {
                 "phase": "two",
