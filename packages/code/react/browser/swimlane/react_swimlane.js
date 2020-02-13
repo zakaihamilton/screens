@@ -16,7 +16,7 @@ screens.react.Swimlane = ({ label, children }) => {
 };
 
 screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, itemSize, unit, imageClick, overlay, ...props }) => {
-    const { Element, Direction, util } = screens.react;
+    const { Element, Direction } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
     const direction = React.useContext(Direction.Context);
