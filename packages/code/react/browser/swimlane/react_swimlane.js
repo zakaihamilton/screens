@@ -1,5 +1,5 @@
 screens.react.Swimlane = ({ label, children }) => {
-    const { Element, List, Item } = screens.react;
+    const { Element, List } = screens.react;
 
     return (
         <Element className="react-swimlane-container">

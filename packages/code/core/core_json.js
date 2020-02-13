@@ -83,13 +83,15 @@ screens.core.json = function CoreJson(me, { core, storage }) {
             return false;
         }
         else if (Array.isArray(source)) {
-            var equal = true;
-            target.map((item, index) => {
-                var sourceItem = source[index];
-                if (!me.compare(sourceItem, item)) {
-                    equal = false;
-                }
-            });
+            var equal = source.length === target.length;
+            if (equal) {
+                target.map((item, index) => {
+                    var sourceItem = source[index];
+                    if (!me.compare(sourceItem, item)) {
+                        equal = false;
+                    }
+                });
+            }
             return equal;
         }
         else if (typeof source === "object") {

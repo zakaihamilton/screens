@@ -145,49 +145,55 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         react.util.useSubscribe(yearState);
         react.util.useSubscribe(searchState);
         react.util.useSubscribe(updateState);
-        let items = me.sessions;
-        const compare = (item, fields, search) => {
-            if (!search) {
-                return true;
-            }
-            for (const field of fields) {
-                if (core.string.caselessInclude(item[field], search)) {
+        const items = react.util.useData(() => {
+            console.log("data updated");
+            let items = me.sessions;
+            const compare = (item, fields, search) => {
+                if (!search) {
                     return true;
                 }
+                for (const field of fields) {
+                    if (core.string.caselessInclude(item[field], search)) {
+                        return true;
+                    }
+                }
+            };
+            items = items.filter(item => group[0] === "all" || group.includes(item.group));
+            items = items.filter(item => year[0] === "all" || year.includes(item.year));
+            if (search) {
+                items = items.filter(item => {
+                    return compare(item, ["date", "name", "index", "durationText"], search);
+                });
             }
-        };
-        items = items.filter(item => group[0] === "all" || group.includes(item.group));
-        items = items.filter(item => year[0] === "all" || year.includes(item.year));
-        items = items.filter(item => {
-            return compare(item, ["date", "name", "index", "durationText"], search);
-        });
-        items = me.sort.find(item => item.id === sort).sort(items);
-        items = items.map(item => (
-            <Item key={item.id}>
-                <Swimlane label={item.label}>
-                    {item.content.map(item => {
-                        const group = core.string.title(item.group);
-                        const loadSession = () => {
-                            core.app.launch("player", item.group, item.session);
-                        }
-                        return (
-                            <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
-                                <Element className="app-sessions-row">
-                                    <Element>#{item.index}</Element>
-                                    {(group[0] === "all" || group.length > 1) && (
-                                        <Element direction="auto" key={group}>{group}</Element>
-                                    )}
-                                </Element>
-                                <Element className="app-sessions-row">
-                                    <Element>{item.date}</Element>
-                                    <Element>{item.durationText}</Element>
-                                </Element>
-                            </Item>
-                        );
-                    })}
-                </Swimlane>
-            </Item>
-        ));
+            items = me.sort.find(item => item.id === sort).sort(items);
+            items = items.map(item => (
+                <Item key={item.id}>
+                    <Swimlane label={item.label}>
+                        {item.content.map(item => {
+                            const group = core.string.title(item.group);
+                            const loadSession = () => {
+                                core.app.launch("player", item.group, item.session);
+                            }
+                            return (
+                                <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
+                                    <Element className="app-sessions-row">
+                                        <Element>#{item.index}</Element>
+                                        {(group[0] === "all" || group.length > 1) && (
+                                            <Element direction="auto" key={group}>{group}</Element>
+                                        )}
+                                    </Element>
+                                    <Element className="app-sessions-row">
+                                        <Element>{item.date}</Element>
+                                        <Element>{item.durationText}</Element>
+                                    </Element>
+                                </Item>
+                            );
+                        })}
+                    </Swimlane>
+                </Item>
+            ));
+            return items;
+        }, [me.sessions, group, year, search, sort]);
         return (<List itemSize={20} unit="em">
             {items}
         </List>);

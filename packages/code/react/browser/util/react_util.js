@@ -3,7 +3,7 @@
  @component ReactUtil
  */
 
-screens.react.util = function ReactUtil(me, { core, ui, react }) {
+screens.react.util = function ReactUtil(me, { core, react }) {
     me.init = function () {
         me.Context = React.createContext(null);
     };
@@ -129,5 +129,16 @@ screens.react.util = function ReactUtil(me, { core, ui, react }) {
         return (<Context.Provider value={object}>
             {component}
         </Context.Provider>);
+    };
+    me.useData = function (callback, depends = []) {
+        const state = React.useRef({ depends: null, value: undefined });
+        const change = !state.current.depends || state.current.depends.some((item, idx) => {
+            return !core.json.compare(depends[idx], item);
+        });
+        if (change) {
+            const value = callback();
+            state.current = { depends: JSON.parse(JSON.stringify(depends)), value };
+        }
+        return state.current.value;
     };
 };
