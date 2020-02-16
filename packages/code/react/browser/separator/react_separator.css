@@ -1,0 +1,8 @@
+.react-separator {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--chrome-border);
+    pointer-events: none;
+}

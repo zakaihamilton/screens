@@ -9,7 +9,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
     children = React.Children.map(children, (child => {
-        return React.cloneElement(child, { state, open });
+        return React.cloneElement(child, { ...child && typeof child.props.state === "undefined" && { state }, open });
     }));
 
     const updatePosition = () => {
@@ -60,7 +60,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     }
 
     const popupChildren = React.Children.map(children, (child => {
-        return React.cloneElement(child, { popup: true });
+        return React.cloneElement(child, { ...child && typeof child.props.popup === "undefined" && { popup: true } });
     }));
 
     return (<Element className="react-dropdown">
@@ -80,7 +80,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     </Element>);
 };
 
-screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = true, style, children }) => {
+screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, popup, multiple = true, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const [selected, setSelected, subscription] = state || [];
@@ -137,6 +137,9 @@ screens.react.DropDown.Item = ({ id, state, open, current, popup, multiple = tru
         multiple: isMultiple && multiple
     };
     if (current && id && index === -1) {
+        return null;
+    }
+    if (current && hideCurrent) {
         return null;
     }
     return (

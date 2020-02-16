@@ -15,15 +15,20 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         Language,
         Text,
         List,
-        Input
+        Input,
+        Clone,
+        Separator
     } = react;
 
-    const AppToolbar = ({ languageState, sortState, groupState, yearState, searchState }) => {
+    const AppToolbar = ({ languageState, sortState, sortDirectionState, groupState, yearState, searchState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
         });
         const sortItems = (me.sort || []).map(sort => {
+            return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
+        });
+        const sortDirectionItems = (me.sortDirection || []).map(sort => {
             return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
         });
         const groupItems = (me.groups || []).map(group => {
@@ -58,6 +63,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                 }>
                     <DropDown state={sortState}>
                         {sortItems}
+                        <Separator />
+                        <Clone state={sortDirectionState} hideCurrent={true}>
+                            {sortDirectionItems}
+                        </Clone>
                     </DropDown>
                 </Field>
                 <Field label={
@@ -135,9 +144,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         return items;
     };
 
-    const AppHub = ({ groupState, sortState, yearState, searchState, updateState }) => {
+    const AppHub = ({ groupState, sortState, sortDirectionState, yearState, searchState, updateState }) => {
         const [group] = groupState;
         const [sort] = sortState;
+        const [direction] = sortDirectionState;
         const [year] = yearState;
         const [search] = searchState;
         react.util.useSubscribe(groupState);
@@ -166,6 +176,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                 });
             }
             items = me.sort.find(item => item.id === sort).sort(items);
+            if (direction === "asc") {
+                items = items.reverse();
+            }
             items = items.map(item => (
                 <Item key={item.id}>
                     <Swimlane label={item.label}>
@@ -204,6 +217,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         const groupState = react.util.useState(["all"]);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
+        const sortDirectionState = react.util.useState("desc");
         const searchState = react.util.useState("");
         const updateState = react.util.useState(0);
         const [language] = languageState;
@@ -219,6 +233,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
             languageState,
             groupState,
             sortState,
+            sortDirectionState,
             yearState,
             searchState,
             updateState
@@ -246,6 +261,26 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
             name: "עברית",
             direction: "rtl",
             locale: "he-IL"
+        }
+    ];
+    me.sortDirection = [
+        {
+            id: "asc",
+            name: (
+                <>
+                    <Text language="eng">Ascending</Text>
+                    <Text language="heb">עולה</Text>
+                </>
+            )
+        },
+        {
+            id: "desc",
+            name: (
+                <>
+                    <Text language="eng">Descending</Text>
+                    <Text language="heb">יורד</Text>
+                </>
+            )
         }
     ];
     me.sort = [
