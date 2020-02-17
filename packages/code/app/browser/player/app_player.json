@@ -21,7 +21,8 @@
                         },
                         {
                             "text": "Existing",
-                            "select": "app.player.refresh(existing)"
+                            "select": "app.player.refresh(existing)",
+                            "disabled": true
                         },
                         {
                             "text": "Resolutions",
