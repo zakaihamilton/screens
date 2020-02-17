@@ -40,23 +40,18 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     else {
         size = pixelsToUnit(object, height, unit);
     }
-    if (ref) {
-        children = React.Children.map(children, el => {
-            let element = null;
-            const itemWidth = horizontal ? itemSize : pixelsToUnit(object, width, unit);
-            const itemHeight = horizontal ? pixelsToUnit(object, height, unit) : itemSize;
-            const itemsToShowSize = 2 * itemSize;
-            let visible = offset > position - itemsToShowSize && offset < position + size + itemsToShowSize;
-            if (visible) {
-                element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, unit });
-            }
-            offset += itemSize;
-            return element;
-        }).filter(Boolean);
-    }
-    else {
-        children = [];
-    }
+    children = React.Children.map(children, el => {
+        let element = null;
+        const itemWidth = horizontal ? itemSize : pixelsToUnit(object, width, unit);
+        const itemHeight = horizontal ? pixelsToUnit(object, height, unit) : itemSize;
+        const itemsToShowSize = 2 * itemSize;
+        let visible = offset > position - itemsToShowSize && offset < position + size + itemsToShowSize;
+        if (visible) {
+            element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, unit });
+        }
+        offset += itemSize;
+        return element;
+    }).filter(Boolean);
     item = item || screens.react.List.Item;
     let startStyles = null, endStyles = null;
     if (horizontal) {
@@ -84,9 +79,8 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     );
 };
 
-screens.react.List.Item = ({ id, horizontal, offset, width, height, style = {}, children, unit = "px" }) => {
+screens.react.List.Item = ({ horizontal, offset, width, height, style = {}, children, unit = "px" }) => {
     const { Element } = screens.react;
-    const ref = React.useRef(null);
     const className = {
         "react-list-item": true
     };
@@ -106,7 +100,7 @@ screens.react.List.Item = ({ id, horizontal, offset, width, height, style = {}, 
         style.width = width + unit;
     }
     return (
-        <Element ref={ref} data-id={id} className={className} style={style}>
+        <Element className={className} style={style}>
             {children}
         </Element>
     );
