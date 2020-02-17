@@ -130,6 +130,9 @@ screens.react.util = function ReactUtil(me, { core, react }) {
             {component}
         </Context.Provider>);
     };
+    me.useObject = function () {
+        return React.useContext(me.Context);
+    };
     me.useData = function (callback, depends = []) {
         const state = React.useRef({ depends: null, value: undefined });
         const change = !state.current.depends || state.current.depends.some((item, idx) => {

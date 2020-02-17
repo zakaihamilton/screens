@@ -1,6 +1,7 @@
 screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px" }) => {
     const { pixelsToUnit } = screens.ui.basic;
     const { Item, Element, Direction, util } = screens.react;
+    const object = util.useObject();
     const [position, setPosition] = React.useState(0);
     const direction = React.useContext(Direction.Context);
     const counter = util.useResize();
@@ -12,7 +13,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
         "vertical": !horizontal
     };
     let count = React.Children.count(children);
-    const length = pixelsToUnit(ref.current, itemSize * count);
+    const length = pixelsToUnit(object, itemSize * count);
     const onScroll = () => {
         let position = 0;
         if (horizontal) {
@@ -26,7 +27,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
         else {
             position = ref.current.scrollTop;
         }
-        futurePos.current = pixelsToUnit(ref.current, position, unit);
+        futurePos.current = pixelsToUnit(object, position, unit);
         setPosition(futurePos.current);
     };
     React.useEffect(() => {
@@ -34,16 +35,16 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     }, [ref && ref.current, direction, counter]);
     let offset = 0, size = 0;
     if (horizontal) {
-        size = pixelsToUnit(ref.current, width, unit);
+        size = pixelsToUnit(object, width, unit);
     }
     else {
-        size = pixelsToUnit(ref.current, height, unit);
+        size = pixelsToUnit(object, height, unit);
     }
-    if (ref && ref.current) {
+    if (ref) {
         children = React.Children.map(children, el => {
             let element = null;
-            const itemWidth = horizontal ? itemSize : pixelsToUnit(ref.current, width, unit);
-            const itemHeight = horizontal ? pixelsToUnit(ref.current, height, unit) : itemSize;
+            const itemWidth = horizontal ? itemSize : pixelsToUnit(object, width, unit);
+            const itemHeight = horizontal ? pixelsToUnit(object, height, unit) : itemSize;
             const itemsToShowSize = 2 * itemSize;
             let visible = offset > position - itemsToShowSize && offset < position + size + itemsToShowSize;
             if (visible) {
