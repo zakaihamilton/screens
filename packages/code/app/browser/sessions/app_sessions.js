@@ -156,7 +156,6 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         react.util.useSubscribe(searchState);
         react.util.useSubscribe(updateState);
         const items = react.util.useData(() => {
-            console.log("data updated");
             let items = me.sessions;
             const compare = (item, fields, search) => {
                 if (!search) {

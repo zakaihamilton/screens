@@ -6,7 +6,6 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     const direction = React.useContext(Direction.Context);
     const counter = util.useResize();
     const [ref, width, height] = util.useSize(counter);
-    const futurePos = React.useRef(0);
     const className = {
         "react-list-container": true,
         "horizontal": horizontal,
@@ -27,12 +26,12 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
         else {
             position = ref.current.scrollTop;
         }
-        futurePos.current = pixelsToUnit(object, position, unit);
-        setPosition(futurePos.current);
+        position = pixelsToUnit(object, position, unit);
+        setPosition(position);
     };
     React.useEffect(() => {
         onScroll();
-    }, [ref && ref.current, direction, counter]);
+    }, [ref.current, direction, counter]);
     let offset = 0, size = 0;
     if (horizontal) {
         size = pixelsToUnit(object, width, unit);
