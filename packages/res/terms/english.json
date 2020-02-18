@@ -275,7 +275,8 @@
             "Or a": "Or__ a",
             ". Or": ". Or__",
             ": Or": ": Or__",
-            "/^Or": "Or__"
+            "/^Or": "Or__",
+            "Or, ": "Or__, "
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
