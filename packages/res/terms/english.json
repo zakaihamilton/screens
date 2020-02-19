@@ -276,7 +276,8 @@
             ". Or": ". Or__",
             ": Or": ": Or__",
             "/^Or": "Or__",
-            "Or, ": "Or__, "
+            "Or, ": "Or__, ",
+            "Adam and Eve": "Adam__ and Eve"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
