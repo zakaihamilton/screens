@@ -220,6 +220,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
             if (!startupArgs) {
                 startupArgs = "";
             }
+            data = data.replace(/__react__/g, core.util.isSecure() ? "production.min" : "development");
             data = data.replace(/__startup_app__/g, "'" + params.startupApp + "'");
             data = data.replace(/__startup_args__/g, "'" + startupArgs + "'");
             info.body = data;
