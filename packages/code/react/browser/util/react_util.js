@@ -97,7 +97,7 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         const ref = React.useRef();
         const [size, setSize] = React.useState([]);
         const [width, height] = size;
-        React.useEffect(() => {
+        React.useLayoutEffect(() => {
             if (ref.current) {
                 setSize([ref.current.offsetWidth, ref.current.offsetHeight]);
             }
