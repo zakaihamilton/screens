@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "1.5.14",
+  "version": "1.5.15",
   "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
     "@babel/preset-react": "^7.7.4",
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@ffprobe-installer/ffprobe": "^1.0.12",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@google-cloud/datastore": "^2.0.0",
     "@rgrove/parse-xml": "^2.0.0",
     "ace-builds": "^1.4.7",
