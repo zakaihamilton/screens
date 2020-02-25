@@ -191,7 +191,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
         if (!wordsString) {
             wordsString = "";
         }
-        var globalJson = await kab.data.load(language, options.reload);
+        var globalJson = await kab.data.load(language);
         if (!globalJson) {
             return { text: wordsString };
         }
