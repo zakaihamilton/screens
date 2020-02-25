@@ -863,6 +863,11 @@
             "hebrew": "ראש"
         },
         {
+            "term": "Krevut",
+            "translation": "Nearing",
+            "hebrew": "קרבות"
+        },
+        {
             "style": {
                 "category": "location"
             },
@@ -3760,6 +3765,16 @@
         {
             "translation": "King",
             "term": "Melech",
+            "hebrew": "מלך"
+        },
+        {
+            "term": "Melach",
+            "translation": "Salt",
+            "hebrew": "מלח"
+        },
+        {
+            "term": "Melech",
+            "translation": "King",
             "hebrew": "מלך"
         },
         {
