@@ -3612,6 +3612,12 @@
             "hebrew": "הדעת"
         },
         {
+            "translation": "Holinesses",
+            "explanation": "Advancements",
+            "term": "Kedushot",
+            "hebrew": "קדושות"
+        },
+        {
             "translation": "Holiness",
             "explanation": "Advancement",
             "term": "Kedusha",
@@ -6151,9 +6157,19 @@
             "term": "bad"
         },
         {
+            "translation": "Evils",
+            "explanation": "Immaturities",
+            "term": "evils"
+        },
+        {
             "translation": "Evil",
             "explanation": "Immature",
             "term": "evil"
+        },
+        {
+            "term": "Tzoah",
+            "translation": "Feces",
+            "hebrew": "צואה"
         },
         {
             "expansion": [
