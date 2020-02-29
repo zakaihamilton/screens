@@ -277,7 +277,8 @@
             ": Or": ": Or__",
             "/^Or": "Or__",
             "Or, ": "Or__, ",
-            "Adam and Eve": "Adam__ and Eve"
+            "Adam and Eve": "Adam__ and Eve",
+            "Ayin and Aleph": "Eyin and Aleph"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -6160,6 +6161,16 @@
             "translation": "Evils",
             "explanation": "Immaturities",
             "term": "evils"
+        },
+        {
+            "term": "Avid",
+            "translation": "Do",
+            "hebrew": "עביד"
+        },
+        {
+            "term": "Avud",
+            "translation": "Lost",
+            "hebrew": "אבוד"
         },
         {
             "translation": "Evil",
