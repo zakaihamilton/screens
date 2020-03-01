@@ -171,6 +171,7 @@
     width: 1.4em;
     height: 1.4em;
     filter: invert(100%);
+    -webkit-user-drag: none;
 }
 
 .widget-taskbar-task-label {
