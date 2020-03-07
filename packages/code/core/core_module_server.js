@@ -65,7 +65,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                 folderExclude.push("react");
                 folderExclude.push("app");
             }
-            let code = await core.pack.collect("packages/code", platform, folderExclude, ["js", "json", "html"], true, "utf8");
+            let code = await core.pack.collect("packages/code", platform, folderExclude, ["js", "json", "html"], true, "utf8", "react");
             return code;
         }
         if (filePath.startsWith("res/")) {

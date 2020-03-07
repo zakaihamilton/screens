@@ -27,34 +27,32 @@ screens.core.pack = function CorePack(me, { core }) {
                 if (folderExclude && folderExclude.some(name => folderNames.includes(name))) {
                     return;
                 }
-                let [package, component, platform] = fileName.split("_");
-                if (!package || !component) {
+                let [packageName, componentName, platform] = fileName.split("_");
+                if (!packageName || !componentName) {
                     if (!defaultPackage || !defaultComponent) {
                         return;
                     }
-                    if (!package) {
-                        package = defaultPackage;
-                    }
-                    if (!component) {
-                        component = defaultComponent;
+                    if (!componentName) {
+                        componentName = packageName;
+                        packageName = defaultPackage;
                     }
                 }
                 let info = {
                     folder: folderNames,
                     file: fileName,
                     path,
-                    package,
-                    component,
+                    package: packageName,
+                    component: componentName,
                     platform,
                     target,
                     ext,
                     root
                 };
-                if (!packages[package]) {
-                    packages[package] = [];
+                if (!packages[packageName]) {
+                    packages[packageName] = [];
                 }
-                if (!packages[package].includes(component)) {
-                    packages[package].push(component);
+                if (!packages[packageName].includes(componentName)) {
+                    packages[packageName].push(componentName);
                 }
                 list.push(info);
             });
