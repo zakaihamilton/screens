@@ -280,7 +280,8 @@
             "Or, ": "Or__, ",
             "Adam and Eve": "Adam__ and Eve",
             "Ayin and Aleph": "Eyin and Aleph",
-            "Patach in the Ayin": "Patach in the Eyin"
+            "Patach in the Ayin": "Patach in the Eyin",
+            "Hirik in the Ayin": "Hirik2 in the Eyin"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -664,6 +665,21 @@
             },
             "term": "Kli Keter",
             "hebrew": "כלי כתר"
+        },
+        {
+            "term": "Patach",
+            "hebrew": "פתח",
+            "style": {
+                "category": "Punctuation"
+            }
+        },
+        {
+            "term": "Hirik2",
+            "source": "Hirik",
+            "hebrew": "חיריק",
+            "style": {
+                "category": "Punctuation"
+            }
         },
         {
             "translation": "Vessel of Wisdom",
