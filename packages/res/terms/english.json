@@ -279,7 +279,8 @@
             "/^Or": "Or__",
             "Or, ": "Or__, ",
             "Adam and Eve": "Adam__ and Eve",
-            "Ayin and Aleph": "Eyin and Aleph"
+            "Ayin and Aleph": "Eyin and Aleph",
+            "Patach in the Ayin": "Patach in the Eyin"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -908,6 +909,16 @@
             "hebrew": "הזדככות המסך"
         },
         {
+            "term": "Yetzer",
+            "translation": "Inclination",
+            "hebrew": "יצר"
+        },
+        {
+            "term": "Tziur",
+            "translation": "Depiction",
+            "hebrew": "ציור"
+        },
+        {
             "translation": "Navel",
             "style": {
                 "phase": "three",
@@ -1046,6 +1057,11 @@
             "term": "Aviut",
             "hebrew": "עביות",
             "explanation": "Egoism"
+        },
+        {
+            "term": "Zachor",
+            "translation": "Remember",
+            "hebrew": "זכור"
         },
         {
             "translation": "Pure",
