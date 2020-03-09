@@ -674,6 +674,21 @@
             }
         },
         {
+            "term": "MaT",
+            "hebrew": "מת",
+            "translation": "Fallen"
+        },
+        {
+            "term": "Tzach",
+            "hebrew": "צח",
+            "translation": "Pure"
+        },
+        {
+            "term": "Adir",
+            "translation": "Great",
+            "hebrew": "אדיר"
+        },
+        {
             "term": "Hirik2",
             "source": "Hirik",
             "hebrew": "חיריק",
