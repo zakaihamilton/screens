@@ -4264,6 +4264,18 @@
             "hebrew": "עיבור"
         },
         {
+            "prefix": "the",
+            "translation": "First Conception",
+            "term": "Ibur Aleph",
+            "hebrew": "עיבור א׳"
+        },
+        {
+            "prefix": "the",
+            "translation": "Second Conception",
+            "term": "Ibur Bet",
+            "hebrew": "עיבור ב׳"
+        },
+        {
             "translation": "Suckling",
             "term": "Yenika",
             "hebrew": "יניקה"
