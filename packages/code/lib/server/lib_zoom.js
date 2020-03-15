@@ -82,6 +82,9 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
         var events = await db.events.participants.list();
         var uuid = "";
         for (var event of events) {
+            if (event.payload.meeting && event.payload.meeting.id !== me.meetingId) {
+                continue;
+            }
             if (event.event === "meeting_started") {
                 uuid = event.payload.meeting.uuid;
                 users = {};
