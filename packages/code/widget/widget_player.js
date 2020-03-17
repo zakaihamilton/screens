@@ -99,8 +99,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me, { core }) {
                 return;
             }
             if (path) {
-                var extension = core.path.extension(path);
-                core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
+                core.property.set(object.var.source, "ui.attribute.type", "audio/mp4");
             }
             core.property.set(object.var.source, "ui.attribute.src", path);
             object.var.player.src = path;
@@ -170,9 +169,8 @@ screens.widget.player.video = function WidgetPlayerVideo(me, { core, ui, widget 
             if ((!object.src && !path) || object.src === path) {
                 return;
             }
-            var extension = core.path.extension(path);
             core.property.set(object.var.source, "ui.attribute.src", path);
-            core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
+            core.property.set(object.var.source, "ui.attribute.type", "video/mp4");
             object.var.player.src = path;
             object.src = path;
             object.var.player.load();
