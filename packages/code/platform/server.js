@@ -58,8 +58,7 @@ screens.apps = [
     "prism",
     "table",
     "notes",
-    "links",
-    "visualize"
+    "links"
 ];
 
 screens.requireAll(["packages/code"], ["platform", "app", "react"]).then(async components => {

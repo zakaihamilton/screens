@@ -69,10 +69,6 @@
                         "other"
                     ],
                     [
-                        "Packets",
-                        "other"
-                    ],
-                    [
                         "Zoom",
                         "main"
                     ],
@@ -106,10 +102,6 @@
                     ],
                     [
                         "Transcribe",
-                        "tools"
-                    ],
-                    [
-                        "Visualize",
                         "tools"
                     ]
                 ]

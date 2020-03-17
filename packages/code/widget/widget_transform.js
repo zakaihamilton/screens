@@ -576,28 +576,6 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         }
         core.property.set(target, "importData", text);
     };
-    me.visualize = function (object) {
-        var transformWidget = me.findWidget(object);
-        var window = widget.window.get(transformWidget);
-        var currentPage = widget.transform.layout.currentPage(transformWidget.var.layout);
-        var terms = [];
-        ui.node.iterate(currentPage, (element) => {
-            var term = core.property.get(element, "ui.attribute.kab-term");
-            if (term) {
-                terms.push(term);
-            }
-        });
-        terms = Array.from(new Set(terms));
-        terms = terms.map(term => {
-            return [term];
-        });
-        var fullscreen = core.property.get(window, "fullscreen");
-        var params = {
-            terms,
-            fullscreen
-        };
-        core.app.launch("visualize", params);
-    };
     me.removeHighlights = function (object) {
         var transformWidget = me.findWidget(object);
         ui.node.iterate(transformWidget.var.layout, (element) => {
