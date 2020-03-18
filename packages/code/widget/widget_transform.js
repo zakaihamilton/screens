@@ -296,7 +296,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
     me.diagramList = {
         get: function (object) {
             var transformWidget = me.findWidget(object);
-            var diagrams = transformWidget.termData.diagrams;
+            var diagrams = transformWidget.termData && transformWidget.termData.diagrams;
             if (!diagrams) {
                 diagrams = [];
             }

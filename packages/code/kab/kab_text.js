@@ -37,8 +37,13 @@ screens.kab.text = function KabText(me, { core, kab }) {
         if (!wordStyle) {
             wordStyle = "whole";
         }
-        wordsString = wordsString.replace(/<[/]?script[^>]*>/g, "");
-        wordsString = wordsString.replace(/<[/]?iframe[^>]*>/g, "");
+        try {
+            wordsString = wordsString.replace(/<[/]?script[^>]*>/g, "");
+            wordsString = wordsString.replace(/<[/]?iframe[^>]*>/g, "");
+        }
+        catch (err) {
+            console.error(err);
+        }
         if (session.options.abridged) {
             wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
             wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
