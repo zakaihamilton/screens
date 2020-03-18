@@ -303,7 +303,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             diagrams = diagrams.map(name => {
                 return { title: core.string.title(name), name };
             });
-            if (transformWidget.termData.diagrams && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
+            if (transformWidget.termData && transformWidget.termData.diagrams && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", name: "table_of_phases", params: me.tableOfPhasesParams(transformWidget) });
             }
             var items = diagrams.map(function (item) {
