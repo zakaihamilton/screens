@@ -57,7 +57,6 @@ screens.apps = [
     "tasks",
     "prism",
     "table",
-    "notes",
     "links"
 ];
 

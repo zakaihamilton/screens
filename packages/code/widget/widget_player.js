@@ -282,16 +282,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.basic.var": "timestamp",
-                    "ui.class.class": [
-                        "button",
-                        "timestamp"
-                    ],
-                    "ui.touch.click": "timestamp",
-                    "ui.attribute.title": "Timestamp"
-                },
-                {
-                    "ui.basic.tag": "div",
                     "ui.basic.var": "previous",
                     "ui.class.class": [
                         "button",
@@ -492,19 +482,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
         }
         else {
             core.property.set(object, "widget.window.fullscreen");
-        }
-    };
-    me.timestamp = async function (object) {
-        var url = core.property.get(object, core.property.get(object, "widget.window.method", "url"));
-        var label = core.property.get(object, core.property.get(object, "widget.window.method", "timestampLabel"));
-        var notes = await core.app.launch("notes");
-        if (notes) {
-            core.property.set(notes, "ui.property.after", {
-                "app.notes.insertLink": {
-                    label,
-                    url
-                }
-            });
         }
     };
     me.previous = async function (object) {
