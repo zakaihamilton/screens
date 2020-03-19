@@ -35,6 +35,14 @@
     direction: rtl;
 }
 
+.widget-transform-output.ltr {
+    direction: ltr;
+}
+
+.widget-transform-output.rtl {
+    direction: rtl;
+}
+
 .widget-transform-layout {
     position: absolute;
     left: 0px;
@@ -55,6 +63,14 @@
 }
 
 .widget-transform-layout.hebrew {
+    direction: rtl;
+}
+
+.widget-transform-layout.ltr {
+    direction: rtl;
+}
+
+.widget-transform-layout.rtl {
     direction: rtl;
 }
 
@@ -160,6 +176,14 @@
 }
 
 .widget-transform-widget.hebrew {
+    direction: rtl;
+}
+
+.widget-transform-widget.ltr {
+    direction: ltr;
+}
+
+.widget-transform-widget.rtl {
     direction: rtl;
 }
 

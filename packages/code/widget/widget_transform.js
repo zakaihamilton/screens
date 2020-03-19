@@ -12,6 +12,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
     me.initOptions = function (object) {
         var transformWidget = me.findWidget(object);
         transformWidget.language = null;
+        transformWidget.direction = null;
         ui.options.load(me, transformWidget, {
             doTranslation: false,
             doExplanation: true,
@@ -26,6 +27,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             snap: true,
             columns: true,
             language: "Auto",
+            direction: "",
             fontSize: "18px",
             scrollPos: 0,
             phaseNumbers: true,
@@ -76,6 +78,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         });
         ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
+            direction: me.transform,
             fontSize: (object, value) => {
                 var transformWidget = me.findWidget(object);
                 core.property.set([transformWidget.var.layout], "ui.style.fontSize", value);
@@ -121,7 +124,8 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         transformWidget.inTransform = true;
         core.property.set(transformWidget.var.spinner, "text", "Transform");
         core.property.set(transformWidget, "ui.work.state", true);
-        var language = transformWidget.options.language.toLowerCase();
+        let direction = transformWidget.options.direction.toLowerCase();
+        let language = transformWidget.options.language.toLowerCase();
         if (language === "auto") {
             if (text && text.startsWith("<")) {
                 language = "none";
@@ -148,8 +152,13 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         if (transformWidget.language) {
             core.property.set(transformWidget.var.layout, "ui.class.remove", transformWidget.language);
         }
+        if (transformWidget.direction) {
+            core.property.set(transformWidget.var.layout, "ui.class.remove", transformWidget.direction);
+        }
         core.property.set(transformWidget.var.layout, "ui.class.add", language);
+        core.property.set(transformWidget.var.layout, "ui.class.add", direction);
         transformWidget.language = language;
+        transformWidget.direction = direction;
         core.property.set(transformWidget.var.output, "ui.basic.html", text);
         if (text) {
             transformWidget.termData = { terms, data, diagrams };
@@ -213,7 +222,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         if (!transformWidget) {
             return [];
         }
-        var modifiers = [transformWidget.language];
+        var modifiers = [transformWidget.language, transformWidget.direction];
         if (transformWidget.options.pipVideo) {
             modifiers.push("pipVideo");
         }
@@ -263,6 +272,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             scrollPos: transformWidget.options.scrollPos,
             playEnabled: transformWidget.options.voiceEnglish !== "None" || transformWidget.options.voiceHebrew !== "None",
             language: transformWidget.options.language,
+            direction: transformWidget.options.direction,
             showParagraphIndex: transformWidget.options.showParagraphIndex
         };
         media.voice.stop();
@@ -833,6 +843,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, { core, ui,
                 speed: transformWidget.options.speed,
                 volume: transformWidget.options.volume,
                 language: transformWidget.language,
+                direction: transformWidget.direction,
                 voices: {
                     english: transformWidget.options.voiceEnglish,
                     hebrew: transformWidget.options.voiceHebrew,
@@ -874,7 +885,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, { core, ui,
         }
     };
     me.voices = function () {
-        var languages = ["english", "hebrew"];
+        var gs = ["english", "hebrew"];
         var menu = languages.map(language => {
             let title = core.string.title(language);
             let voiceList = media.voice.voices(language);

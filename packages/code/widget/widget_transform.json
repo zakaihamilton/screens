@@ -230,6 +230,36 @@
                             ]
                         },
                         {
+                            "text": "Direction",
+                            "select": [
+                                {
+                                    "text": "Auto",
+                                    "select": "widget.transform.direction",
+                                    "options": {
+                                        "state": "select",
+                                        "value": ""
+                                    }
+                                },
+                                {
+                                    "text": "Left to Right",
+                                    "select": "widget.transform.direction",
+                                    "options": {
+                                        "state": "select",
+                                        "value": "ltr",
+                                        "separator": true
+                                    }
+                                },
+                                {
+                                    "text": "Right to Left",
+                                    "select": "widget.transform.direction",
+                                    "options": {
+                                        "state": "select",
+                                        "value": "rtl"
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "text": "Translation",
                             "select": "widget.transform.doTranslation",
                             "options": {
