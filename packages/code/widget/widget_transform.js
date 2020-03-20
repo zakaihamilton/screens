@@ -139,7 +139,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
         media.voice.stop();
         var options = Object.assign({}, transformWidget.options, { nightMode: ui.theme.options.nightMode });
         var info = { text, terms: {}, data: null };
-        if (language !== "none") {
+        if (language && language !== "none") {
             info = await kab.text.parse(language, text, options);
         }
         if (!info) {
@@ -885,7 +885,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, { core, ui,
         }
     };
     me.voices = function () {
-        var gs = ["english", "hebrew"];
+        var languages = ["english", "hebrew"];
         var menu = languages.map(language => {
             let title = core.string.title(language);
             let voiceList = media.voice.voices(language);

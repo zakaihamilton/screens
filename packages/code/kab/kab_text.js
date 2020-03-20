@@ -270,6 +270,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
         var match = false;
         var modify = me.modify;
         var parseSingle = me.parseSingle;
+        var term = instance.term;
         var expansion = instance.item.expansion;
         var abridged = instance.item.abridged;
         var translation = instance.item.translation;
@@ -337,7 +338,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
             match = true;
         } else if (translation || explanation) {
             if (translation) {
-                if (!instance.item.fixed && translation !== instance.target) {
+                if (!instance.item.fixed && translation !== instance.target && term.toLowerCase() !== translation.toLowerCase()) {
                     translation = parseSingle(session, instance, translation, true);
                 }
             }
