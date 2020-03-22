@@ -1112,6 +1112,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, { core, ui,
                     if (options.showParagraphIndex && sourceWidget.tagName && sourceWidget.innerText && sourceWidget.tagName.toLowerCase() === "p") {
                         sourceWidget.setAttribute("index", target.index++);
                     }
+                    else {
+                        sourceWidget.setAttribute("index", "");
+                    }
                     if (sourceWidget.style && sourceWidget.style.order) {
                         location.insertBefore(sourceWidget, me.widgetByOrder(location, sourceWidget.style.order));
                     } else {
