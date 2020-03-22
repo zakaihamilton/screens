@@ -1401,6 +1401,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me, { core, ui,
         return null;
     };
     me.pageText = function (page, modifyCallback) {
+        if (!page) {
+            return [];
+        }
         var content = page.var.content;
         var array = Array.from(content.children).map(el => {
             if (el.getAttribute("hidden")) {
