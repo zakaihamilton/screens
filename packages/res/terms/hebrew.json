@@ -67,8 +67,8 @@
             "replace": "$1\n"
         },
         {
-            "match": "/[^.?!:;,\\\"'”]$",
-            "prefix": "<h4 style=\"text-align:center\">",
+            "match": "/[^.?!;:,\\\"'”…\\”)]$",
+            "prefix": "<h4>",
             "suffix": "</h4>"
         },
         {
