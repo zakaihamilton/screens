@@ -264,13 +264,15 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             transformWidget.var.layout.style.margin = "20px 40px";
         }
         var columnCount = transformWidget.options.columns ? 2 : 1;
+        const playEnabled = (transformWidget.language === "english" && transformWidget.options.voiceEnglish !== "None") ||
+            (transformWidget.language === "hebrew" && transformWidget.options.voiceHebrew !== "None");
         var reflowOptions = {
             usePages: transformWidget.options.pages,
             columnCount: columnCount,
             columnWidth: "400px",
             scrollWidget: visibleWidget,
             scrollPos: transformWidget.options.scrollPos,
-            playEnabled: transformWidget.options.voiceEnglish !== "None" || transformWidget.options.voiceHebrew !== "None",
+            playEnabled,
             language: transformWidget.options.language,
             direction: transformWidget.options.direction,
             showParagraphIndex: transformWidget.options.showParagraphIndex
@@ -725,10 +727,11 @@ screens.widget.transform.player = function WidgetTransformPlayer(me, { core, ui,
         }
         var isPlaying = media.voice.isPlaying(currentPage);
         var isPaused = media.voice.isPaused(currentPage);
-        var playWillEnable = transformWidget.options.voiceEnglish !== "None" || transformWidget.options.voiceHebrew !== "None";
+        const playWillEnable = (transformWidget.language === "english" && transformWidget.options.voiceEnglish !== "None") ||
+            (transformWidget.language === "hebrew" && transformWidget.options.voiceHebrew !== "None");
         var playEnabled = widget.transform.layout.options(transformWidget.var.layout).playEnabled;
         if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
-            me.reflow(object);
+            widget.transform.reflow(object);
             return;
         }
         if (isPlaying && !isPaused) {
