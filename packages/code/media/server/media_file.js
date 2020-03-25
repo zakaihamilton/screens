@@ -4,7 +4,7 @@
  */
 
 screens.media.file = function MediaFile(me, { core, storage, media, db, manager }) {
-    me.resolutions = ["800x600", "1024x768"];
+    me.resolutions = ["640x480", "800x600", "1024x768"];
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.awsBucket = "screens";
