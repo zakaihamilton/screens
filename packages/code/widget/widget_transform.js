@@ -115,6 +115,9 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             transformWidget.transformText = value;
         }
     };
+    me.clean = function (string) {
+        return string.replace(/<[/]?[^>]+>/g, "").trim();
+    };
     me.transform = async function (object) {
         var transformWidget = me.findWidget(object);
         widget.transform.layout.clear(transformWidget.var.layout);
@@ -131,7 +134,7 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
                 language = "none";
             }
             else {
-                language = core.string.language(text);
+                language = core.string.language(me.clean(text));
             }
             me.log("detected language: " + language);
         }
