@@ -681,7 +681,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                         continue;
                     }
                     var value = item[key];
-                    value = value.replace(/\d+/g, (x) => core.string.padNumber(x, 3));
+                    value = value.replace(/^\d+/g, (x) => core.string.padNumber(x, 3));
                     if (key.toLowerCase().includes(text) || value.toLowerCase().includes(text)) {
                         if (!tags[key]) {
                             tags[key] = new Set();
@@ -698,7 +698,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                         search = "\"" + search + "\"";
                     }
                     let args = ["core.app.launch", "library", search];
-                    return { title: core.string.title(title), args };
+                    return { title, args };
                 });
                 members = members.sort((a, b) => a.title.localeCompare(b.title));
                 collections.push({ title: core.string.title(key), members });
