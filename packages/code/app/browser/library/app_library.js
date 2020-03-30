@@ -681,7 +681,6 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                         continue;
                     }
                     var value = item[key];
-                    value = value.replace(/^\d+/g, (x) => core.string.padNumber(x, 3));
                     if (key.toLowerCase().includes(text) || value.toLowerCase().includes(text)) {
                         if (!tags[key]) {
                             tags[key] = new Set();
@@ -692,8 +691,11 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
             }
             let collections = [];
             for (let key in tags) {
-                let members = Array.from(tags[key]).map(title => {
-                    let search = key + ":" + title;
+                let members = Array.from(tags[key]).map(text => {
+                    const title = text.replace(/\d+/g, (match, offset) => {
+                        return core.string.padNumber(match, 3)
+                    });
+                    let search = key + ":" + text;
                     if (search.includes(" ")) {
                         search = "\"" + search + "\"";
                     }
@@ -701,7 +703,8 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                     return { title, args };
                 });
                 members = members.sort((a, b) => a.title.localeCompare(b.title));
-                collections.push({ title: core.string.title(key), members });
+                let title = core.string.title(key);
+                collections.push({ title, members });
             }
             return collections;
         }
