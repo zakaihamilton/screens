@@ -98,9 +98,6 @@ screens.widget.player.audio = function WidgetPlayerAudio(me, { core }) {
             if ((!object.src && !path) || object.src === path) {
                 return;
             }
-            if (path) {
-                core.property.set(object.var.source, "ui.attribute.type", "audio/mp4");
-            }
             core.property.set(object.var.source, "ui.attribute.src", path);
             object.var.player.src = path;
             object.src = path;
@@ -170,7 +167,6 @@ screens.widget.player.video = function WidgetPlayerVideo(me, { core, ui, widget 
                 return;
             }
             core.property.set(object.var.source, "ui.attribute.src", path);
-            core.property.set(object.var.source, "ui.attribute.type", "video/mp4");
             object.var.player.src = path;
             object.src = path;
             object.var.player.load();
@@ -431,7 +427,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
         if (percent > 1) {
             percent = 1;
         }
-        mainWidget.var.player.currentTime = parseInt(percent * mainWidget.var.player.duration);
+        if (!Number.isNaN(mainWidget.var.player.duration)) {
+            mainWidget.var.player.currentTime = parseInt(percent * mainWidget.var.player.duration);
+        }
         me.updateProgress(object);
         me.updatePlayer(object);
         event.stopPropagation();
