@@ -15,7 +15,7 @@ screens.cmd.convert = function CmdConvert(me, { core, media }) {
         var resolution = args[3];
         try {
             await media.ffmpeg.convert(source, target, {
-                size: resolution
+                ...resolution && { size: resolution }
             });
             core.property.set(terminal, "print", "successfully converted file");
         }
