@@ -97,8 +97,14 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                 await manager.file.download(file.remote, file.local);
                 deleteFile = true;
                 if (file.local.endsWith(".m4a")) {
-                    uploadSourcePath = file.local + ".tmp.m4a";
-                    await media.ffmpeg.convert(file.local, uploadSourcePath, {});
+                    uploadSourcePath = file.session + "_tmp.m4a";
+                    try {
+                        await media.ffmpeg.convert(file.local, uploadSourcePath, {});
+                    }
+                    catch (err) {
+                        me.log_error("Cannot convert: " + file.local + " error: " + err);
+                        uploadSourcePath = file.local;
+                    }
                 }
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
                 await storage.aws.uploadFile(uploadSourcePath, awsPath);
