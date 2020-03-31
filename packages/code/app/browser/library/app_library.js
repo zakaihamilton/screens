@@ -692,9 +692,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
             let collections = [];
             for (let key in tags) {
                 let members = Array.from(tags[key]).map(text => {
-                    const title = text.replace(/\d+/g, (match, offset) => {
-                        return core.string.padNumber(match, 3)
-                    });
+                    const title = text.replace(/\d+/g, match => core.string.padNumber(match, 3));
                     let search = key + ":" + text;
                     if (search.includes(" ")) {
                         search = "\"" + search + "\"";

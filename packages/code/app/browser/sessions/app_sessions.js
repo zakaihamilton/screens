@@ -417,7 +417,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
     me.visibilityChange = function () {
         const visibilityState = ui.session.visibilityState();
         if (visibilityState === "visible") {
-            me.loadData(true);
+            me.loadData();
         }
     };
     me.render = function (object) {
