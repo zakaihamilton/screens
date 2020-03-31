@@ -92,12 +92,20 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             let deleteFile = false;
 
             if (!await storage.aws.exists(awsPath)) {
+                let uploadSourcePath = file.local;
                 me.log("Downloading file: " + file.local + ", size: " + file.size);
                 await manager.file.download(file.remote, file.local);
                 deleteFile = true;
+                if (file.local.endsWith(".m4a")) {
+                    uploadSourcePath = file.local + ".tmp.m4a";
+                    await media.ffmpeg.convert(file.local, uploadSourcePath, {});
+                }
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await storage.aws.uploadFile(file.local, awsPath);
+                await storage.aws.uploadFile(uploadSourcePath, awsPath);
                 me.log("Finished uploading file: " + file.local);
+                if (uploadSourcePath !== file.local) {
+                    await core.file.delete(uploadSourcePath);
+                }
             }
             if (file.local.endsWith(".m4a")) {
                 if (!file.duration || !file.durationText) {
@@ -129,7 +137,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                         resolutions.push(resolution);
                     }
                     else {
-                        argList.push(["media.file.convertItem", resolution, file.group, file.session]);
+                        argList.push(["media.file.convertItem", file.group, file.session, resolution]);
                         resolutions.push(resolution);
                     }
                 }
@@ -297,7 +305,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         }
         return result;
     };
-    me.convertItem = async function (resolution, group, session) {
+    me.convertItem = async function (group, session, resolution) {
         let result = false;
         try {
             var extension = ".mp4";
@@ -390,7 +398,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                     if (await storage.aws.exists(remote_convert)) {
                         return;
                     }
-                    argList.push(["media.file.convertItem", resolution, group.name, item.session]);
+                    argList.push(["media.file.convertItem", group.name, item.session, resolution]);
                 }
             }));
         }
