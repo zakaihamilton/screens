@@ -34,10 +34,8 @@
                     "select": "app.library.editMode",
                     "options": {
                         "state": "select",
+                        "visible": "admin",
                         "separator": true
-                    },
-                    "properties": {
-                        "ui.basic.display": "admin"
                     }
                 },
                 {
