@@ -211,6 +211,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
             if (!data) {
                 me.log("building html, useCache: " + useCache + " filePath: " + filePath);
                 data = await me.loadTextFile(filePath);
+                data = data.replace(/__react__/g, core.util.isSecure() ? "production.min" : "development");
                 data = await me.buildHtml(data, params, info);
                 if (useCache) {
                     me.cache[filePath] = data;
@@ -220,7 +221,6 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
             if (!startupArgs) {
                 startupArgs = "";
             }
-            data = data.replace(/__react__/g, core.util.isSecure() ? "production.min" : "development");
             data = data.replace(/__startup_app__/g, "'" + params.startupApp + "'");
             data = data.replace(/__startup_args__/g, "'" + startupArgs + "'");
             info.body = data;
