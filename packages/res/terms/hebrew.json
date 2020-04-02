@@ -1,6 +1,5 @@
 {
     "options": {
-        "wordStyle": "suffix",
         "keepExpandedSource": true
     },
     "replace": {
