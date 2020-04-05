@@ -290,13 +290,16 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                     me.handleMeta(info);
                     return;
                 }
-                if (info.url.startsWith("/custom/")) {
+                if (info.url.startsWith("/custom")) {
                     return;
                 }
                 if (info.url.startsWith("/api")) {
                     return;
                 }
                 if (info.url.startsWith("/interface")) {
+                    return;
+                }
+                if (info.url.startsWith("/commands") || info.url.startsWith("/ext")) {
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
