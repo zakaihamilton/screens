@@ -283,7 +283,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
         me.cache = {};
     };
     me.receive = async function (info) {
-        const ignorePrefixes = ["/custom", "/api", "/interface", "/commands", "/ext", "/lib", "/solr", "/mouse"];
+        const ignorePrefixes = ["custom", "api", "interface", "commands", "ext", "lib", "solr", "mouse"];
         if (me.platform === "server") {
             if (info.method === "GET") {
                 var params = {};
@@ -291,7 +291,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                     me.handleMeta(info);
                     return;
                 }
-                if (ignorePrefixes.find(prefix => info.url.startsWith(prefix))) {
+                if (ignorePrefixes.find(prefix => info.url.startsWith("/" + prefix + "/"))) {
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
