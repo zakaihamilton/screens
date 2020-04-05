@@ -283,7 +283,8 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
         me.cache = {};
     };
     me.receive = async function (info) {
-        const ignorePrefixes = ["custom", "api", "interface", "commands", "ext", "lib", "solr", "mouse"];
+        const rejectPrefixes = ["commands", "ext", "lib", "solr", "mouse"];
+        const customPrefixes = ["custom", "api", "interface"];
         if (me.platform === "server") {
             if (info.method === "GET") {
                 var params = {};
@@ -291,7 +292,13 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                     me.handleMeta(info);
                     return;
                 }
-                if (ignorePrefixes.find(prefix => info.url.startsWith("/" + prefix + "/"))) {
+                if (customPrefixes.find(prefix => info.url.startsWith("/" + prefix + "/"))) {
+                    return;
+                }
+                if (rejectPrefixes.find(prefix => info.url.startsWith("/" + prefix + "/"))) {
+                    info.custom = true;
+                    info.response.writeHead(403);
+                    info.response.end();
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
