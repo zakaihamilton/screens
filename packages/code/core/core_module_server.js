@@ -283,7 +283,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
         me.cache = {};
     };
     me.receive = async function (info) {
-        const ignorePrefixes = ["/custom", "/api", "/interface", "/commands", "/ext", "/lib", "/solr"];
+        const ignorePrefixes = ["/custom", "/api", "/interface", "/commands", "/ext", "/lib", "/solr", "/mouse"];
         if (me.platform === "server") {
             if (info.method === "GET") {
                 var params = {};
