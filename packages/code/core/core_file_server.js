@@ -322,20 +322,18 @@ screens.core.file.alias = function CoreFileAlias(me) {
         if (!path) {
             return null;
         }
-        var parts = path.split("/");
-        var partialPath = "";
-        var result = path;
-        for (var part of parts) {
-            if (partialPath) {
-                partialPath += "/";
-            }
-            partialPath += part;
-            var target = me.aliases[partialPath];
+        let result = "";
+        path.split("/").forEach(token => {
+            var target = me.aliases[token];
             if (target) {
                 result = target;
-                break;
+                return;
             }
-        }
+            if (result) {
+                result += "/";
+            }
+            result += token;
+        });
         return result;
     };
     return "server";

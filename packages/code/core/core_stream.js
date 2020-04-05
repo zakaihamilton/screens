@@ -3,14 +3,20 @@
  @component CoreStream
  */
 
-screens.core.stream = function CoreStream(me) {
+screens.core.stream = function CoreStream(me, { core }) {
     me.init = function () {
         if (screens.platform === "server" || screens.platform === "service") {
             me.fs = require("fs");
         }
     };
     me.serve = function (headers, response, path, contentType) {
-        var stat = me.fs.statSync(path);
+        path = core.file.path(path);
+        try {
+            var stat = me.fs.statSync(path);
+        }
+        catch (err) {
+            throw err;
+        }
         var total = headers.total;
         var range = headers.range;
         var partial = false;
