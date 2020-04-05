@@ -299,7 +299,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                 if (info.url.startsWith("/interface")) {
                     return;
                 }
-                if (info.url.startsWith("/commands") || info.url.startsWith("/ext")) {
+                if (info.url.startsWith("/commands") || info.url.startsWith("/ext") || info.url.startsWith("/lib")) {
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
