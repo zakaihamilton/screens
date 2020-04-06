@@ -17,7 +17,7 @@
     "ui.property.after": {
         "storage.local.key": "@ui.windowkey.app-sessions-window",
         "storage.local.restore": "widget.window.store",
-        "ui.resize.event": "widget.sessions.resize",
+        "ui.resize.event": "app.sessions.resize",
         "ui.session.visibilityChange": "app.sessions.visibilityChange",
         "app.sessions.initOptions": null
     }
