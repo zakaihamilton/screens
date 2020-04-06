@@ -283,7 +283,7 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
         me.cache = {};
     };
     me.receive = async function (info) {
-        const rejectPrefixes = ["commands", "ext", "lib", "solr", "mouse"];
+        const rejectPrefixes = ["commands", "ext", "lib", "solr", "mouse", "layer", "vendor", "cgi-bin", "mode", "behaviour"];
         const customPrefixes = ["custom", "api", "interface"];
         if (me.platform === "server") {
             if (info.method === "GET") {
