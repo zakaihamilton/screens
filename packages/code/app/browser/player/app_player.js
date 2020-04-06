@@ -267,11 +267,13 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         var time = window.options.time;
         let resolution = window.options.resolution;
         if (resolution === "Auto") {
-            if (core.device.isMobile()) {
-                resolution = "800x600";
+            if (me.videoItem && me.videoItem.resolutions) {
+                resolution = ["640x480", "800x600", "1024x768"].find(res => {
+                    return me.videoItem.resolutions.includes(res);
+                });
             }
             else {
-                resolution = "1024x768";
+                resolution = "";
             }
         }
         if (resolution === "Original") {
