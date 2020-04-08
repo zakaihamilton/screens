@@ -281,7 +281,8 @@
             "Adam and Eve": "Adam__ and Eve",
             "Ayin and Aleph": "Eyin and Aleph",
             "Patach in the Ayin": "Patach in the Eyin",
-            "Hirik in the Ayin": "Hirik2 in the Eyin"
+            "Hirik in the Ayin": "Hirik2 in the Eyin",
+            "you’ve": "you’__ve"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -4054,6 +4055,16 @@
             },
             "term": "Ofanim",
             "hebrew": "אופנים"
+        },
+        {
+            "term": "Maavir",
+            "hebrew": "מעביר",
+            "translation": "Transfers"
+        },
+        {
+            "term": "Kushiot",
+            "hebrew": "קושיות",
+            "translation": "Questions"
         },
         {
             "translation": "Wheel",
