@@ -1751,6 +1751,21 @@
             "hebrew": "קו ימין"
         },
         {
+            "term": "Kalah",
+            "hebrew": "כלה",
+            "translation": "Bride"
+        },
+        {
+            "term": "Halacha",
+            "hebrew": "הלכה",
+            "translation": "Religious Law"
+        },
+        {
+            "term": "Sah",
+            "hebrew": "שח",
+            "translation": "Speaking"
+        },
+        {
             "term": "Soneh",
             "hebrew": "שונא",
             "translation": "Hate"
