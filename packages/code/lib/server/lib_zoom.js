@@ -101,16 +101,14 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
     me.participants = async function () {
         var users = [];
         const events = await db.events.participants.list();
-        let uuid = "";
         let index = 0;
         for (const event of events) {
             const meetingId = String(event.payload.meeting && event.payload.meeting.id);
             if (!meetingId) {
                 continue;
             }
-            if (event.event === "meeting_started") {
-                uuid = event.payload.meeting.uuid;
-                users.forEach(user => {
+            if (event.event === "meeting_started" || event.event === "meeting_ended") {
+                users.filter(user => user.meetingId === meetingId).forEach(user => {
                     user.current = false;
                     user.count = 0;
                 });
@@ -122,13 +120,14 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
                 }
                 let user = users.find(user => user.user_id === String(participant.user_id) || user.user_name === participant.user_name);
                 if (!user) {
-                    user = { count: 0, index: index++, current: true, meetingId, ...participant };
+                    user = { count: 0, index: -1, current: true, meetingId, ...participant };
                     users.push(user);
                 }
                 if (event.event === "participant_joined") {
                     user = Object.assign(user, participant);
                     user.user_id = String(user.user_id) || user.user_name;
                     user.count++;
+                    user.index = index++;
                     user.current = true;
                 }
                 if (event.event === "participant_left") {
