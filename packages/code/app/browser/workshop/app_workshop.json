@@ -1,83 +1,24 @@
 {
     "title": "Workshop",
-    "ui.property.style": {
-        "left": "50px",
-        "top": "50px",
-        "width": "600px",
-        "height": "600px"
-    },
-    "maximize": true,
     "icon": "workshop",
-    "widget.menu.items": [
-        {
-            "text": "Workshop",
-            "select": [
-                {
-                    "text": "Refresh",
-                    "select": "app.workshop.refresh"
-                },
-                {
-                    "text": "Auto Refresh",
-                    "select": "app.workshop.autoRefresh",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Shuffle",
-                    "select": "app.workshop.shuffle",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Filter",
-                    "select": "app.workshop.filter",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Test",
-                    "select": "app.workshop.test",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Broadcast",
-                    "select": "app.workshop.broadcast",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "This Device",
-                    "select": "app.workshop.userName",
-                    "options": {
-                        "separator": true,
-                        "state": "select",
-                        "value": ""
-                    }
-                },
-                {
-                    "text": "Users",
-                    "select": "header"
-                },
-                "app.workshop.shared.userMenuList"
-            ]
-        }
-    ],
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
     "ui.basic.elements": [
         {
-            "ui.element.component": "widget.wheel",
-            "ui.basic.var": "users"
+            "ui.class.class": "app.workshop.main",
+            "ui.react.render": "app.workshop.render"
         }
     ],
+    "widget.window.maximize": null,
     "ui.property.after": {
-        "storage.local.key": "app-workshop-window",
-        "storage.local.restore": "widget.window.store"
+        "storage.local.key": "@ui.windowkey.app-workshop-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "app.workshop.resize",
+        "ui.session.visibilityChange": "app.workshop.visibilityChange",
+        "app.workshop.initOptions": null
     }
 }
