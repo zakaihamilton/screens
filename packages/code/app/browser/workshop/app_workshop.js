@@ -319,6 +319,21 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 items = items.filter(item => item.current);
                 return items;
             }
+        },
+        {
+            id: "can_speak",
+            name: (
+                <>
+                    <Text language="eng">Can Speak</Text>
+                    <Text language="heb">יכולים לדבר</Text>
+                </>
+            ),
+            filter: (items) => {
+                items = items.filter(item => {
+                    return !(["listening", "work"].find(term => item.user_name.toLowerCase().includes(term)));
+                });
+                return items;
+            }
         }
     ];
     me.launch = async function () {
