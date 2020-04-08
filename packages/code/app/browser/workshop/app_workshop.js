@@ -100,7 +100,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             select = null;
         }
         return (<Element className={{ "app-workshop-participant": true, active: active && !disabled, disabled }} onClick={select}>
-            <Element className="app-workshop-participant-name">{user_name}</Element>
+            <Element title={user_name} className="app-workshop-participant-name">{user_name}</Element>
         </Element>);
     };
 
@@ -144,7 +144,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
 
     const Main = () => {
         const firstMeetingId = me.meetings && me.meetings.length && me.meetings[0].id;
-        const delayState = react.util.useState(0);
+        const delayState = react.util.useState(3000);
         const meetingState = react.util.useState(firstMeetingId);
         const participantState = react.util.useState(0);
         const languageState = react.util.useState("eng");
@@ -175,6 +175,11 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 }
             };
         }, [delay]);
+        React.useEffect(() => {
+            if (!meetingId) {
+                setMeetingId(firstMeetingId);
+            }
+        }, [firstMeetingId]);
         me.redraw = () => {
             const [counter, setCounter] = updateState;
             if (!meetingId) {
