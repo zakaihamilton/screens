@@ -38,9 +38,10 @@
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
     outline: 1px solid rgba(81, 203, 238, 1);
+    background-color: var(--chrome-background);
 }
 
-.app-workshop-participant-name {
+.app-workshop-participant-long-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -53,4 +54,16 @@
     color: var(--chrome-color);
     background-color: var(--chrome-background);
     border-bottom: 1px solid var(--chrome-border);
+}
+
+.app-workshop-participant-short-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 1em;
+    margin: 0.1em;
+    width: 100%;
+    font-size: 200%;
+    text-align: center;
+    color: var(--color);
 }

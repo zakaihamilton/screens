@@ -13,12 +13,12 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         Direction,
         Language,
         Text,
-        List,
+        Input,
         Clone,
         Separator
     } = react;
 
-    const AppToolbar = ({ meetingState, languageState, filterState, sortState, sortDirectionState }) => {
+    const AppToolbar = ({ meetingState, languageState, filterState, sortState, searchState, sortDirectionState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
@@ -90,6 +90,15 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                         {meetingItems}
                     </DropDown>
                 </Field>
+                <Element style={{ flex: 1 }}></Element>
+                <Field label={
+                    <>
+                        <Text language="eng">Search</Text>
+                        <Text language="heb">חיפוש</Text>
+                    </>
+                }>
+                    <Input size="12" type="Search" state={searchState} />
+                </Field>
             </Bar>
         );
     };
@@ -100,21 +109,24 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             select = null;
         }
         return (<Element className={{ "app-workshop-participant": true, active: active && !disabled, disabled }} onClick={select}>
-            <Element title={user_name} className="app-workshop-participant-name">{user_name}</Element>
+            <Element title={user_name} className="app-workshop-participant-long-name">{user_name}</Element>
+            <Element className="app-workshop-participant-short-name">{user_name.split(/[ \@]/)[0]}</Element>
         </Element>);
     };
 
-    const AppHub = ({ meetingState, participantState, filterState, sortState, sortDirectionState, updateState, users }) => {
+    const AppHub = ({ meetingState, participantState, filterState, sortState, searchState, sortDirectionState, updateState, users }) => {
         const [meeting] = meetingState;
         const [participant, setParticipant] = participantState;
         const [sort] = sortState;
         const [filter] = filterState;
+        const [search] = searchState;
         const [direction] = sortDirectionState;
         react.util.useSubscribe(meetingState);
         react.util.useSubscribe(participantState);
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(updateState);
         react.util.useSubscribe(filterState);
+        react.util.useSubscribe(searchState);
         const items = react.util.useData(() => {
             let items = me.participants;
             items = items.filter(item => item.meetingId === meeting);
@@ -124,6 +136,9 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 }
             });
             items = me.sort.find(item => item.id === sort).sort(items);
+            if (search) {
+                items = items.filter(item => item.user_name.includes(search));
+            }
             if (direction === "asc") {
                 items = items.reverse();
             }
@@ -152,6 +167,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const filterState = react.util.useState(["current"]);
         const sortDirectionState = react.util.useState("desc");
         const updateState = react.util.useState(0);
+        const searchState = react.util.useState("");
         const [meetingId, setMeetingId] = meetingState;
         const [language] = languageState;
         const [delay] = delayState;
@@ -195,7 +211,8 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             filterState,
             sortDirectionState,
             updateState,
-            delayState
+            delayState,
+            searchState
         };
         return (
             <Direction direction={direction}>
