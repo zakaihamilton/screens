@@ -77,58 +77,63 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
             db.events.participants.push(JSON.parse(info.body));
         }
     };
-    me.participants = async function (shuffle = false, test = false) {
-        var users = {};
+    me.meetings = async function () {
+        const topics = {};
         var events = await db.events.participants.list();
-        var uuid = "";
-        for (var event of events) {
-            if (event.payload.meeting && String(event.payload.meeting.id) !== me.meetingId) {
+        for (const event of events) {
+            if (!event.payload.meeting) {
+                continue;
+            }
+            const { id, topic } = event.payload.meeting;
+            if (!id) {
+                continue;
+            }
+            topics[id] = topic;
+        }
+        const meetings = Object.keys(topics).map(id => {
+            return {
+                id: String(id),
+                name: topics[id]
+            };
+        });
+        return meetings;
+    };
+    me.participants = async function () {
+        var users = [];
+        const events = await db.events.participants.list();
+        let uuid = "";
+        let index = 0;
+        for (const event of events) {
+            const meetingId = String(event.payload.meeting && event.payload.meeting.id);
+            if (!meetingId) {
                 continue;
             }
             if (event.event === "meeting_started") {
                 uuid = event.payload.meeting.uuid;
-                users = {};
-            }
-            if (event.event === "meeting_ended") {
-                users = {};
             }
             if (event.event === "participant_joined" || event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
                 if (!participant.user_name) {
                     continue;
                 }
-                let id = participant.user_name.trim().toLowerCase();
-                let info = users[id];
+                let user = users.find(user => user.user_id === String(participant.user_id) || user.user_name === participant.user_name);
+                if (!user) {
+                    user = { count: 0, index: index++, meetingId, ...participant };
+                    users.push(user);
+                }
                 if (event.event === "participant_joined") {
-                    if (!info) {
-                        info = users[id] = { count: 0 };
-                    }
-                    info.name = participant.user_name.trim();
-                    info.count++;
+                    user = Object.assign(user, participant);
+                    user.user_id = String(user.user_id) || user.user_name;
+                    user.count++;
                 }
                 if (event.event === "participant_left") {
-                    if (info && info.count > 0) {
-                        info.count--;
-                    }
+                    user = Object.assign(user, participant);
+                    user.user_id = String(user.user_id) || user.user_name;
+                    user.count--;
                 }
             }
         }
-        var names = Object.values(users).filter(user => user.count).map(user => user.name);
-        if (test) {
-            if (!me.randomNames) {
-                me.randomNames = [];
-                let randomMax = me.chance.integer({ min: 8, max: 16 });
-                for (let randomIndex = 0; randomIndex < randomMax; randomIndex++) {
-                    me.randomNames.push(me.chance.name());
-                }
-            }
-            names = me.randomNames;
-        }
-        names = names.filter(Boolean).sort();
-        if (shuffle && me.shuffleSeed) {
-            names = me.shuffle(names, uuid);
-        }
-        return names;
+        return users;
     };
     me.shuffle = function (names, seed) {
         var result = [];

@@ -16,9 +16,11 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         me.tempDir = me.os.tmpdir();
         core.file.makeDir(me.cachePath);
         core.mutex.enable(me.id, true);
-        core.broadcast.register(me, {
-            startup: "media.file.groups"
-        });
+        if (!core.http.localhost) {
+            core.broadcast.register(me, {
+                startup: "media.file.groups"
+            });
+        }
     };
     me.info = function (path) {
         return new Promise(resolve => {

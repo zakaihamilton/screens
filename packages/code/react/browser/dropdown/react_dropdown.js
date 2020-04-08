@@ -80,7 +80,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     </Element>);
 };
 
-screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, popup, multiple = true, style, children }) => {
+screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, hideInList, popup, multiple = true, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const [selected, setSelected, subscription] = state || [];
@@ -136,10 +136,13 @@ screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, popup, m
         popup,
         multiple: isMultiple && multiple
     };
-    if (current && id && index === -1) {
+    if (current && index === -1) {
         return null;
     }
     if (current && hideCurrent) {
+        return null;
+    }
+    if (!current && hideInList) {
         return null;
     }
     return (

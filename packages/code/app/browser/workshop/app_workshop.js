@@ -3,107 +3,285 @@
  @component AppWorkshop
  */
 
-screens.app.workshop = function AppWorkshop(me, { core, ui, widget, lib }) {
-    me.init = async function () {
-        await ui.shared.implement(me);
+screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, react }) {
+    const {
+        DropDown,
+        Item,
+        Bar,
+        Field,
+        Element,
+        Direction,
+        Language,
+        Text,
+        List,
+        Clone,
+        Separator
+    } = react;
+
+    const AppToolbar = ({ meetingState, languageState, sortState, sortDirectionState }) => {
+        const languageItems = (me.languages || []).map(language => {
+            const name = core.string.title(language.name);
+            return (<Item key={language.id} id={language.id}>{name}</Item>);
+        });
+        const sortItems = (me.sort || []).map(sort => {
+            return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
+        });
+        const sortDirectionItems = (me.sortDirection || []).map(sort => {
+            return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
+        });
+        const meetingItems = (me.meetings || []).map(meeting => {
+            return (<Item key={meeting.name} id={meeting.id}>{meeting.name}</Item>);
+        });
+        return (
+            <Bar>
+                <Field label={
+                    <>
+                        <Text language="eng">Language</Text>
+                        <Text language="heb">שפה</Text>
+                    </>
+                }>
+                    <DropDown state={languageState}>
+                        {languageItems}
+                    </DropDown>
+                </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Sort</Text>
+                        <Text language="heb">מיון</Text>
+                    </>
+                }>
+                    <DropDown state={sortState}>
+                        {sortItems}
+                        <Separator />
+                        <Clone state={sortDirectionState} hideCurrent={true}>
+                            {sortDirectionItems}
+                        </Clone>
+                    </DropDown>
+                </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Meeting</Text>
+                        <Text language="heb">פגישה</Text>
+                    </>
+                }>
+                    <DropDown state={meetingState}>
+                        <Item id={0} hideInList={true}>
+                            <Text language="eng">None</Text>
+                            <Text language="heb">בלי</Text>
+                        </Item>
+                        {meetingItems}
+                    </DropDown>
+                </Field>
+            </Bar>
+        );
     };
+
+    const Participant = ({ user_name, count, active, select }) => {
+        const disabled = count <= 0;
+        if (disabled) {
+            select = null;
+        }
+        return (<Element className={{ "app-workshop-participant": true, active: active && !disabled, disabled }} onClick={select}>
+            <Element className="app-workshop-participant-name">{user_name}</Element>
+        </Element>);
+    };
+
+    const AppHub = ({ meetingState, participantState, sortState, sortDirectionState, updateState, users }) => {
+        const [meeting] = meetingState;
+        const [participant, setParticipant] = participantState;
+        const [sort] = sortState;
+        const [direction] = sortDirectionState;
+        react.util.useSubscribe(meetingState);
+        react.util.useSubscribe(participantState);
+        react.util.useSubscribe(sortState);
+        react.util.useSubscribe(updateState);
+        const items = react.util.useData(() => {
+            let items = me.participants;
+            items = items.filter(item => item.meetingId === meeting);
+            items = me.sort.find(item => item.id === sort).sort(items);
+            if (direction === "asc") {
+                items = items.reverse();
+            }
+            items = items.map(item => {
+                const selectParticipant = () => {
+                    setParticipant(item.user_id);
+                }
+                return (
+                    <Participant key={item.user_id} {...item} active={participant === item.user_id} select={selectParticipant} />
+                );
+            });
+            return items;
+        }, [users, meeting, sort]);
+        return (<Element className="app-workshop-participants">
+            {items}
+        </Element>);
+    };
+
+    const Main = () => {
+        const firstMeetingId = me.meetings && me.meetings.length && me.meetings[0].id;
+        const delayState = react.util.useState(0);
+        const meetingState = react.util.useState(firstMeetingId);
+        const participantState = react.util.useState(0);
+        const languageState = react.util.useState("eng");
+        const sortState = react.util.useState("date");
+        const sortDirectionState = react.util.useState("desc");
+        const updateState = react.util.useState(0);
+        const [meetingId, setMeetingId] = meetingState;
+        const [language] = languageState;
+        const [delay] = delayState;
+        const direction = me.languages.find(item => item.id === language).direction;
+        React.useEffect(() => {
+            if (delay) {
+                me.timerHandle = setInterval(me.loadParticipants, delay);
+            }
+            else if (me.timerHandle) {
+                clearInterval(me.timerHandle);
+                me.timerHandle = null;
+            }
+            me.loadMeetings();
+            if (!meetingId) {
+                setMeetingId(firstMeetingId);
+            }
+            return () => {
+                if (me.timerHandle) {
+                    clearInterval(me.timerHandle);
+                    me.timerHandle = null;
+                }
+            };
+        }, [delay]);
+        me.redraw = () => {
+            const [counter, setCounter] = updateState;
+            if (!meetingId) {
+                setMeetingId(firstMeetingId);
+            }
+            setCounter(counter + 1);
+        };
+        const state = {
+            meetingState,
+            participantState,
+            languageState,
+            sortState,
+            sortDirectionState,
+            updateState,
+            delayState
+        };
+        return (
+            <Direction direction={direction}>
+                <Language language={language}>
+                    <AppToolbar {...state} />
+                    <AppHub {...state} />
+                </Language>
+            </Direction>
+        );
+    };
+    me.meetings = [];
+    me.participants = [];
+    me.languages = [
+        {
+            id: "eng",
+            name: "English",
+            direction: "ltr",
+            locale: "en-US"
+        },
+        {
+            id: "heb",
+            name: "עברית",
+            direction: "rtl",
+            locale: "he-IL"
+        }
+    ];
+    me.sortDirection = [
+        {
+            id: "asc",
+            name: (
+                <>
+                    <Text language="eng">Ascending</Text>
+                    <Text language="heb">עולה</Text>
+                </>
+            )
+        },
+        {
+            id: "desc",
+            name: (
+                <>
+                    <Text language="eng">Descending</Text>
+                    <Text language="heb">יורד</Text>
+                </>
+            )
+        }
+    ];
+    me.sort = [
+        {
+            id: "date",
+            name: (
+                <>
+                    <Text language="eng">Date</Text>
+                    <Text language="heb">תאריך</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return b.index - a.index;
+                });
+                return items;
+            }
+        },
+        {
+            id: "name",
+            name: (
+                <>
+                    <Text language="eng">Name</Text>
+                    <Text language="heb">שם</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return a.user_name.localeCompare(b.user_name);
+                });
+                return items;
+            }
+        }
+    ];
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.singleton = ui.element.create(me.json, "workspace", "self");
-        await me.prepare(me.singleton);
-        return me.singleton;
     };
-    me.prepare = async function (object) {
+    me.loadMeetings = async function () {
+        me.meetings = await lib.zoom.meetings();
+        me.participants = await lib.zoom.participants();
+        if (me.redraw) {
+            me.redraw();
+        }
+    };
+    me.loadParticipants = async function () {
+        me.participants = await lib.zoom.participants();
+        if (me.redraw) {
+            me.redraw();
+        }
+    };
+    me.initOptions = async function (object) {
         var window = widget.window.get(object);
-        core.property.set(window, "app", me);
-        core.property.set(window.var.users, {
-            "navigate": "app.workshop.navigate",
-            "options": {
-                spreaderInTitle: "Workshop",
-                spreaderOutTitle: "Workshop",
-                spreaderRadius: 100,
-                titleFont: "100 1em Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif",
-                spreaderTitleFont: "100 2em Impact, Charcoal, sans-serif"
-            }
-        });
         ui.options.load(me, window, {
-            autoRefresh: true,
-            shuffle: true,
-            filter: false,
-            test: false,
-            broadcast: false,
-            userName: ""
+            room: ""
         });
-        ui.options.choiceSet(me, null, {
-            "userName": me.updateUser
-        });
-        ui.options.toggleSet(me, null, {
-            "autoRefresh": me.refresh,
-            "shuffle": me.refresh,
-            "filter": me.refresh,
-            "test": me.refresh,
-            "broadcast": me.refresh
-        });
-        window.isBroadcast = true;
-        await me.refresh(window);
+        core.property.set(window, "app", me);
+        core.property.set(window, "name", "");
     };
-    me.refresh = async function (object) {
-        var window = widget.window.get(object);
-        var names = await lib.zoom.participants(window.options.shuffle, window.options.test);
-        if (window.options.filter) {
-            names = names.filter(name => !name.toLowerCase().includes("listen"));
+    me.visibilityChange = function () {
+        const visibilityState = ui.session.visibilityState();
+        if (visibilityState === "visible") {
+            me.loadMeetings();
         }
-        core.property.set(window, "name", names.length + " Participants");
-        var currentNames = core.property.get(window.var.users, "items");
-        if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
-            core.property.set(window.var.users, {
-                "items": names,
-                "redraw": null
-            });
-        }
-        me.shared.refresh();
-        me.updateUser(window);
-        if (window.options.autoRefresh) {
-            clearTimeout(window.intervalHandle);
-            window.intervalHandle = setTimeout(() => {
-                requestAnimationFrame(() => {
-                    me.refresh(object);
-                });
-            }, 5000);
-        }
+    };
+    me.render = function (object) {
+        return (<Main />);
     };
     me.resize = function (object) {
-        var window = widget.window.get(object);
-        ui.resize.centerWidget(window.var.users);
-    };
-    me.updateUser = async function (object) {
-        var window = widget.window.get(object);
-        var content = await me.shared.content(object);
-        var readonly = true;
-        if (content === undefined) {
-            content = { name: window.navigate_name };
-            readonly = false;
-        }
-        core.property.set(window.var.users, "readonly", readonly);
-        if (content.name) {
-            core.property.set(window.var.users, "user", content.name);
-        }
-        if (!window.options.broadcast) {
-            if (window.isBroadcast) {
-                me.shared.update();
-            }
-            window.isBroadcast = false;
-        }
-    };
-    me.navigate = function (object, name) {
-        var window = widget.window.get(object);
-        window.navigate_name = name;
-        if (window.options.broadcast) {
-            window.isBroadcast = true;
-            me.shared.update({ name: window.navigate_name });
-        }
+
     };
 };
