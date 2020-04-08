@@ -1751,6 +1751,11 @@
             "hebrew": "קו ימין"
         },
         {
+            "term": "Soneh",
+            "hebrew": "שונא",
+            "translation": "Hate"
+        },
+        {
             "translation": "Middle Line",
             "source": "Kav Emtsaey",
             "term": "middle line",
