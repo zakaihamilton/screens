@@ -33,7 +33,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             return (<Item key={filter.id} id={filter.id}>{filter.name}</Item>);
         });
         const meetingItems = (me.meetings || []).map(meeting => {
-            return (<Item key={meeting.name} id={meeting.id}>{meeting.name}</Item>);
+            return (<Item key={meeting.name} id={meeting.id}>{meeting.name.split(" ")[0]}</Item>);
         });
         const noneItem = (<Item id="none" multiple={false}>
             <Text language="eng">None</Text>
