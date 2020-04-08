@@ -18,7 +18,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         Separator
     } = react;
 
-    const AppToolbar = ({ meetingState, languageState, sortState, sortDirectionState }) => {
+    const AppToolbar = ({ meetingState, languageState, filterState, sortState, sortDirectionState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
@@ -29,9 +29,16 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const sortDirectionItems = (me.sortDirection || []).map(sort => {
             return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
         });
+        const filterItems = (me.filters || []).map(filter => {
+            return (<Item key={filter.id} id={filter.id}>{filter.name}</Item>);
+        });
         const meetingItems = (me.meetings || []).map(meeting => {
             return (<Item key={meeting.name} id={meeting.id}>{meeting.name}</Item>);
         });
+        const noneItem = (<Item id="none" multiple={false}>
+            <Text language="eng">None</Text>
+            <Text language="heb">אין</Text>
+        </Item>);
         return (
             <Bar>
                 <Field label={
@@ -56,6 +63,17 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                         <Clone state={sortDirectionState} hideCurrent={true}>
                             {sortDirectionItems}
                         </Clone>
+                    </DropDown>
+                </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Filter</Text>
+                        <Text language="heb">סינון</Text>
+                    </>
+                }>
+                    <DropDown state={filterState}>
+                        {noneItem}
+                        {filterItems}
                     </DropDown>
                 </Field>
                 <Field label={
@@ -86,18 +104,25 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         </Element>);
     };
 
-    const AppHub = ({ meetingState, participantState, sortState, sortDirectionState, updateState, users }) => {
+    const AppHub = ({ meetingState, participantState, filterState, sortState, sortDirectionState, updateState, users }) => {
         const [meeting] = meetingState;
         const [participant, setParticipant] = participantState;
         const [sort] = sortState;
+        const [filter] = filterState;
         const [direction] = sortDirectionState;
         react.util.useSubscribe(meetingState);
         react.util.useSubscribe(participantState);
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(updateState);
+        react.util.useSubscribe(filterState);
         const items = react.util.useData(() => {
             let items = me.participants;
             items = items.filter(item => item.meetingId === meeting);
+            me.filters.forEach(filterItem => {
+                if (filter.includes(filterItem.id)) {
+                    items = filterItem.filter(items);
+                }
+            });
             items = me.sort.find(item => item.id === sort).sort(items);
             if (direction === "asc") {
                 items = items.reverse();
@@ -111,7 +136,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 );
             });
             return items;
-        }, [users, meeting, sort]);
+        }, [users, meeting, sort, filter]);
         return (<Element className="app-workshop-participants">
             {items}
         </Element>);
@@ -124,6 +149,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const participantState = react.util.useState(0);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
+        const filterState = react.util.useState(["current"]);
         const sortDirectionState = react.util.useState("desc");
         const updateState = react.util.useState(0);
         const [meetingId, setMeetingId] = meetingState;
@@ -161,6 +187,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             participantState,
             languageState,
             sortState,
+            filterState,
             sortDirectionState,
             updateState,
             delayState
@@ -240,6 +267,34 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 items.sort((a, b) => {
                     return a.user_name.localeCompare(b.user_name);
                 });
+                return items;
+            }
+        }
+    ];
+    me.filters = [
+        {
+            id: "available",
+            name: (
+                <>
+                    <Text language="eng">Available</Text>
+                    <Text language="heb">זמינים</Text>
+                </>
+            ),
+            filter: (items) => {
+                items = items.filter(item => item.count > 0);
+                return items;
+            }
+        },
+        {
+            id: "current",
+            name: (
+                <>
+                    <Text language="eng">Current Meeting</Text>
+                    <Text language="heb">פגישה נוכחית</Text>
+                </>
+            ),
+            filter: (items) => {
+                items = items.filter(item => item.current);
                 return items;
             }
         }
