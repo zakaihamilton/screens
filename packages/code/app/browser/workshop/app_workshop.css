@@ -28,6 +28,10 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.app-workshop-participant:hover {
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
 .app-workshop-participant.disabled {
     border: 1px solid lightgray;
     opacity: 0.5;

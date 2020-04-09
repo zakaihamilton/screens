@@ -164,7 +164,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const participantState = react.util.useState(0);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
-        const filterState = react.util.useState(["current"]);
+        const filterState = react.util.useState(["meeting"]);
         const sortDirectionState = react.util.useState("desc");
         const updateState = react.util.useState(0);
         const searchState = react.util.useState("");
@@ -173,12 +173,12 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const [delay] = delayState;
         const direction = me.languages.find(item => item.id === language).direction;
         React.useEffect(() => {
-            if (delay) {
-                me.timerHandle = setInterval(me.loadParticipants, delay);
-            }
-            else if (me.timerHandle) {
+            if (me.timerHandle) {
                 clearInterval(me.timerHandle);
                 me.timerHandle = null;
+            }
+            if (delay) {
+                me.timerHandle = setInterval(me.loadParticipants, delay);
             }
             me.loadMeetings();
             if (!meetingId) {
@@ -308,11 +308,11 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             }
         },
         {
-            id: "current",
+            id: "meeting",
             name: (
                 <>
-                    <Text language="eng">Current Meeting</Text>
-                    <Text language="heb">פגישה נוכחית</Text>
+                    <Text language="eng">Meeting</Text>
+                    <Text language="heb">פגישה</Text>
                 </>
             ),
             filter: (items) => {
@@ -321,11 +321,11 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             }
         },
         {
-            id: "available",
+            id: "speak",
             name: (
                 <>
-                    <Text language="eng">Available</Text>
-                    <Text language="heb">זמין</Text>
+                    <Text language="eng">Can Speak</Text>
+                    <Text language="heb">יכול לדבר</Text>
                 </>
             ),
             filter: (items) => {
