@@ -159,6 +159,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
 
     const Main = () => {
         const firstMeetingId = me.meetings && me.meetings.length && me.meetings[0].id;
+        const [isOpen, setOpen] = react.util.useState(true);
         const delayState = react.util.useState(5000);
         const meetingState = react.util.useState(firstMeetingId);
         const participantState = react.util.useState(0);
@@ -177,7 +178,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 clearInterval(me.timerHandle);
                 me.timerHandle = null;
             }
-            if (delay) {
+            if (isOpen && delay) {
                 me.timerHandle = setInterval(me.loadParticipants, delay);
             }
             me.loadMeetings();
@@ -190,7 +191,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                     me.timerHandle = null;
                 }
             };
-        }, [delay]);
+        }, [delay, isOpen]);
         React.useEffect(() => {
             if (!meetingId) {
                 setMeetingId(firstMeetingId);
@@ -203,6 +204,9 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             }
             setCounter(counter + 1);
         };
+        me.close = () => {
+            setOpen(false);
+        };
         const state = {
             meetingState,
             participantState,
@@ -214,6 +218,9 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             delayState,
             searchState
         };
+        if (!isOpen) {
+            return null;
+        }
         return (
             <Direction direction={direction}>
                 <Language language={language}>
