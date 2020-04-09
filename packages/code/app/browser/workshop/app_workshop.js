@@ -159,7 +159,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
 
     const Main = () => {
         const firstMeetingId = me.meetings && me.meetings.length && me.meetings[0].id;
-        const delayState = react.util.useState(3000);
+        const delayState = react.util.useState(5000);
         const meetingState = react.util.useState(firstMeetingId);
         const participantState = react.util.useState(0);
         const languageState = react.util.useState("eng");
