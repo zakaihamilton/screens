@@ -137,7 +137,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             });
             items = me.sort.find(item => item.id === sort).sort(items);
             if (search) {
-                items = items.filter(item => item.user_name.includes(search));
+                items = items.filter(item => item.user_name.toLowerCase().includes(search.toLowerCase()));
             }
             if (direction === "asc") {
                 items = items.reverse();
@@ -151,7 +151,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 );
             });
             return items;
-        }, [users, meeting, sort, filter]);
+        }, [users, meeting, sort, filter, search]);
         return (<Element className="app-workshop-participants">
             {items}
         </Element>);
@@ -295,11 +295,11 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
     ];
     me.filters = [
         {
-            id: "available",
+            id: "online",
             name: (
                 <>
-                    <Text language="eng">Available</Text>
-                    <Text language="heb">זמינים</Text>
+                    <Text language="eng">Online</Text>
+                    <Text language="heb">אונליין</Text>
                 </>
             ),
             filter: (items) => {
@@ -321,11 +321,11 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             }
         },
         {
-            id: "can_speak",
+            id: "available",
             name: (
                 <>
-                    <Text language="eng">Can Speak</Text>
-                    <Text language="heb">יכולים לדבר</Text>
+                    <Text language="eng">Available</Text>
+                    <Text language="heb">זמין</Text>
                 </>
             ),
             filter: (items) => {
