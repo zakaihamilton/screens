@@ -205,6 +205,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             setCounter(counter + 1);
         };
         me.close = () => {
+            me.singleton = null;
             setOpen(false);
         };
         const state = {
@@ -373,7 +374,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
     };
     me.visibilityChange = function () {
         const visibilityState = ui.session.visibilityState();
-        if (visibilityState === "visible") {
+        if (me.singleton && visibilityState === "visible") {
             me.loadMeetings();
         }
     };
