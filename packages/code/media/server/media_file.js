@@ -412,5 +412,42 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         }
         await db.events.msg.sendParallel(argList);
     };
+    me.convertListingQuery = async function (resolution) {
+        if (!resolution) {
+            for (resolution of me.resolutions) {
+                await me.convertListingQuery(resolution);
+            }
+            await me.convertListingQuery("screenshot");
+            return;
+        }
+        var groups = await me.groups();
+        var argList = [];
+        for (let group of groups) {
+            let count = 0;
+            var list = group.sessions.filter(session => session.extension === "mp4");
+            me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
+            await Promise.all(list.map(async item => {
+                if (resolution === "screenshot") {
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + ".png";
+                    if (await storage.aws.exists(remote_convert)) {
+                        return;
+                    }
+                    argList.push(["media.file.screenshot", group.name, item.session]);
+                    count++;
+                }
+                else {
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    if (await storage.aws.exists(remote_convert)) {
+                        return;
+                    }
+                    argList.push(["media.file.convertItem", group.name, item.session, resolution]);
+                    count++;
+                }
+            }));
+            me.log("Convert listing count for group: " + group.name + " is: " + count + " items out of " + list.length + " items");
+        }
+        me.log("Total number of items to convert: " + argList.length);
+        return argList;
+    };
     return "server";
 };
