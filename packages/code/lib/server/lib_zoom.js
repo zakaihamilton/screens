@@ -107,7 +107,7 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
             if (!meetingId) {
                 continue;
             }
-            if (event.event === "meeting_started" || event.event === "meeting_ended") {
+            if (event.event === "meeting_started") {
                 users.filter(user => user.meetingId === meetingId).forEach(user => {
                     user.current = false;
                     user.count = 0;
@@ -118,21 +118,19 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
                 if (!participant.user_name) {
                     continue;
                 }
-                let user = users.find(user => user.user_id === String(participant.user_id) || user.user_name === participant.user_name);
+                const user_id = String(participant.user_id || participant.user_name);
+                let user = users.find(user => user.user_id === user_id);
                 if (!user) {
-                    user = { count: 0, index: -1, current: true, meetingId, ...participant };
+                    user = { count: 0, index: -1, current: true, meetingId, ...participant, user_id };
                     users.push(user);
                 }
                 if (event.event === "participant_joined") {
-                    user = Object.assign(user, participant);
-                    user.user_id = String(user.user_id) || user.user_name;
+                    user = Object.assign(user, participant, { user_id, current: true });
                     user.count++;
                     user.index = index++;
-                    user.current = true;
                 }
                 if (event.event === "participant_left") {
-                    user = Object.assign(user, participant);
-                    user.user_id = String(user.user_id) || user.user_name;
+                    user = Object.assign(user, participant, { user_id });
                     user.count--;
                 }
             }
