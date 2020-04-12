@@ -85,7 +85,7 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
                 if (event.payload.meeting && String(event.payload.meeting.id) !== meetingId) {
                     continue;
                 }
-                if (event.event === "meeting_started") {
+                if (event.event === "meeting_started" || event.event === "meeting_ended") {
                     users.forEach(user => {
                         user.current = false;
                         user.count = 0;

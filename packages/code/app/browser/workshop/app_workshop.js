@@ -121,6 +121,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const [filter] = filterState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
+        const [counter] = updateState;
         react.util.useSubscribe(meetingState);
         react.util.useSubscribe(currentUserState);
         react.util.useSubscribe(sortState);
@@ -152,7 +153,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                     <User key={user.user_id} {...user} active={currentUserId === user.user_id} select={selectUser} />
                 );
             });
-        }, [currentUserId, meeting, sort, filter, search]);
+        }, [currentUserId, counter, meeting, sort, filter, search]);
         return (<Element className="app-workshop-users">
             {users}
         </Element>);
