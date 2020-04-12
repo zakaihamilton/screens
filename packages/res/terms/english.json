@@ -1751,6 +1751,15 @@
             "hebrew": "קו ימין"
         },
         {
+            "term": "FWWD",
+            "expansion": [
+                "Fire",
+                "Water",
+                "Wind",
+                "Dust"
+            ]
+        },
+        {
             "term": "Kalah",
             "hebrew": "כלה",
             "translation": "Bride"
