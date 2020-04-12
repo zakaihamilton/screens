@@ -78,6 +78,43 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
         }
     };
     me.meetings = async function () {
+        const getUsers = (events, meetingId) => {
+            const users = [];
+            let index = 0;
+            for (const event of events) {
+                if (event.payload.meeting && String(event.payload.meeting.id) !== meetingId) {
+                    continue;
+                }
+                if (event.event === "meeting_started") {
+                    users.forEach(user => {
+                        user.current = false;
+                        user.count = 0;
+                    });
+                }
+                if (event.event === "participant_joined" || event.event === "participant_left") {
+                    let participant = event.payload.meeting.participant;
+                    if (!participant.user_name) {
+                        continue;
+                    }
+                    const user_id = String(participant.user_id || participant.user_name);
+                    let user = users.find(user => user.user_id === user_id);
+                    if (!user) {
+                        user = { count: 0, index: -1, current: true, ...participant, user_id };
+                        users.push(user);
+                    }
+                    if (event.event === "participant_joined") {
+                        user = Object.assign(user, participant, { user_id, current: true });
+                        user.count++;
+                        user.index = index++;
+                    }
+                    if (event.event === "participant_left") {
+                        user = Object.assign(user, participant, { user_id });
+                        user.count--;
+                    }
+                }
+            }
+            return users;
+        };
         const topics = {};
         var events = await db.events.participants.list();
         for (const event of events) {
@@ -88,54 +125,16 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
             if (!id) {
                 continue;
             }
-            topics[id] = topic;
+            topics[String(id)] = topic;
         }
         const meetings = Object.keys(topics).map(id => {
             return {
-                id: String(id),
-                name: topics[id]
+                id,
+                name: topics[id],
+                users: getUsers(events, id)
             };
         });
         return meetings;
-    };
-    me.participants = async function () {
-        var users = [];
-        const events = await db.events.participants.list();
-        let index = 0;
-        for (const event of events) {
-            const meetingId = String(event.payload.meeting && event.payload.meeting.id);
-            if (!meetingId || meetingId === "0") {
-                continue;
-            }
-            if (event.event === "meeting_started") {
-                users.filter(user => user.meetingId === meetingId).forEach(user => {
-                    user.current = false;
-                    user.count = 0;
-                });
-            }
-            if (event.event === "participant_joined" || event.event === "participant_left") {
-                let participant = event.payload.meeting.participant;
-                if (!participant.user_name) {
-                    continue;
-                }
-                const user_id = String(participant.user_id || participant.user_name);
-                let user = users.find(user => user.user_id === user_id);
-                if (!user) {
-                    user = { count: 0, index: -1, current: true, meetingId, ...participant, user_id };
-                    users.push(user);
-                }
-                if (event.event === "participant_joined") {
-                    user = Object.assign(user, participant, { user_id, current: true });
-                    user.count++;
-                    user.index = index++;
-                }
-                if (event.event === "participant_left") {
-                    user = Object.assign(user, participant, { user_id });
-                    user.count--;
-                }
-            }
-        }
-        return users;
     };
     me.shuffle = function (names, seed) {
         var result = [];

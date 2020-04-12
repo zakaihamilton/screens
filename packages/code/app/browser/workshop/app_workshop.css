@@ -8,13 +8,13 @@
     flex-direction: column;
 }
 
-.app-workshop-participants {
+.app-workshop-users {
     display: flex;
     flex-wrap: wrap;
     overflow-y: auto;
 }
 
-.app-workshop-participant {
+.app-workshop-user {
     display: flex;
     min-width: 10em;
     min-height: 10em;
@@ -28,16 +28,16 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.app-workshop-participant:hover {
+.app-workshop-user:hover {
     border: 1px solid rgba(81, 203, 238, 1);
 }
 
-.app-workshop-participant.disabled {
+.app-workshop-user.disabled {
     border: 1px solid lightgray;
     opacity: 0.5;
 }
 
-.app-workshop-participant.active {
+.app-workshop-user.active {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
@@ -45,7 +45,7 @@
     background-color: var(--chrome-background);
 }
 
-.app-workshop-participant-long-name {
+.app-workshop-user-long-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -60,7 +60,7 @@
     border-bottom: 1px solid var(--chrome-border);
 }
 
-.app-workshop-participant-short-name {
+.app-workshop-user-short-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

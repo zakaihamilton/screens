@@ -103,57 +103,58 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         );
     };
 
-    const Participant = ({ user_name, count, active, select }) => {
+    const User = ({ user_name, count, active, select }) => {
         const disabled = count <= 0;
         if (disabled) {
             select = null;
         }
-        return (<Element className={{ "app-workshop-participant": true, active: active && !disabled, disabled }} onClick={select}>
-            <Element title={user_name} className="app-workshop-participant-long-name">{user_name}</Element>
-            <Element className="app-workshop-participant-short-name">{user_name.split(/[ \@]/)[0]}</Element>
+        return (<Element className={{ "app-workshop-user": true, active: active && !disabled, disabled }} onClick={select}>
+            <Element title={user_name} className="app-workshop-user-long-name">{user_name}</Element>
+            <Element className="app-workshop-user-short-name">{user_name.split(/[ \@]/)[0]}</Element>
         </Element>);
     };
 
-    const AppHub = ({ meetingState, participantState, filterState, sortState, searchState, sortDirectionState, updateState, users }) => {
+    const AppHub = ({ meetingState, currentUserState, filterState, sortState, searchState, sortDirectionState, updateState }) => {
         const [meeting] = meetingState;
-        const [participant, setParticipant] = participantState;
+        const [currentUserId, setCurrentUserId] = currentUserState;
         const [sort] = sortState;
         const [filter] = filterState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
         react.util.useSubscribe(meetingState);
-        react.util.useSubscribe(participantState);
+        react.util.useSubscribe(currentUserState);
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(updateState);
         react.util.useSubscribe(filterState);
         react.util.useSubscribe(searchState);
-        const items = react.util.useData(() => {
-            let items = me.participants;
-            items = items.filter(item => item.meetingId === meeting);
+        const users = react.util.useData(() => {
+            if (!meeting) {
+                return;
+            }
+            let { users } = me.meetings.find(item => item.id === meeting);
             me.filters.forEach(filterItem => {
                 if (filter.includes(filterItem.id)) {
-                    items = filterItem.filter(items);
+                    users = filterItem.filter(users);
                 }
             });
-            items = me.sort.find(item => item.id === sort).sort(items);
+            users = me.sort.find(item => item.id === sort).sort(users);
             if (search) {
-                items = items.filter(item => item.user_name.toLowerCase().includes(search.toLowerCase()));
+                users = users.filter(user => user.user_name.toLowerCase().includes(search.toLowerCase()));
             }
             if (direction === "asc") {
-                items = items.reverse();
+                users = users.reverse();
             }
-            items = items.map(item => {
-                const selectParticipant = () => {
-                    setParticipant(participant !== item.user_id && item.user_id);
+            return users.map(user => {
+                const selectUser = () => {
+                    setCurrentUserId(currentUserId !== user.user_id && user.user_id);
                 }
                 return (
-                    <Participant key={item.user_id} {...item} active={participant === item.user_id} select={selectParticipant} />
+                    <User key={user.user_id} {...user} active={currentUserId === user.user_id} select={selectUser} />
                 );
             });
-            return items;
-        }, [users, meeting, sort, filter, search]);
-        return (<Element className="app-workshop-participants">
-            {items}
+        }, [currentUserId, meeting, sort, filter, search]);
+        return (<Element className="app-workshop-users">
+            {users}
         </Element>);
     };
 
@@ -162,7 +163,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const [isOpen, setOpen] = react.util.useState(true);
         const delayState = react.util.useState(5000);
         const meetingState = react.util.useState(firstMeetingId);
-        const participantState = react.util.useState(0);
+        const currentUserState = react.util.useState(0);
         const languageState = react.util.useState("eng");
         const sortState = react.util.useState("date");
         const filterState = react.util.useState(["meeting"]);
@@ -179,7 +180,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 me.timerHandle = null;
             }
             if (isOpen && delay) {
-                me.timerHandle = setInterval(me.loadParticipants, delay);
+                me.timerHandle = setInterval(me.loadMeetings, delay);
             }
             me.loadMeetings();
             if (!meetingId) {
@@ -210,7 +211,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         };
         const state = {
             meetingState,
-            participantState,
+            currentUserState,
             languageState,
             sortState,
             filterState,
@@ -232,7 +233,6 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         );
     };
     me.meetings = [];
-    me.participants = [];
     me.languages = [
         {
             id: "eng",
@@ -353,13 +353,6 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
     };
     me.loadMeetings = async function () {
         me.meetings = await lib.zoom.meetings();
-        me.participants = await lib.zoom.participants();
-        if (me.redraw) {
-            me.redraw();
-        }
-    };
-    me.loadParticipants = async function () {
-        me.participants = await lib.zoom.participants();
         if (me.redraw) {
             me.redraw();
         }

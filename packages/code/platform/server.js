@@ -39,7 +39,7 @@ screens.api = [
     "db.cache",
     "media.file",
     "lib.zoom.meetingInfo",
-    "lib.zoom.participants"
+    "lib.zoom.meetings"
 ];
 
 screens.apps = [
