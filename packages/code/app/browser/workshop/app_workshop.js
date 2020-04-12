@@ -144,7 +144,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             }
             items = items.map(item => {
                 const selectParticipant = () => {
-                    setParticipant(item.user_id);
+                    setParticipant(participant !== item.user_id && item.user_id);
                 }
                 return (
                     <Participant key={item.user_id} {...item} active={participant === item.user_id} select={selectParticipant} />

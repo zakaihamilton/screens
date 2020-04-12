@@ -104,7 +104,7 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
         let index = 0;
         for (const event of events) {
             const meetingId = String(event.payload.meeting && event.payload.meeting.id);
-            if (!meetingId) {
+            if (!meetingId || meetingId === "0") {
                 continue;
             }
             if (event.event === "meeting_started") {
