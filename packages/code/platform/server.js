@@ -63,7 +63,6 @@ screens.apps = [
 screens.requireAll(["packages/code"], ["platform", "app", "react"]).then(async components => {
     await screens.require(components);
     screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
-    screens.core.file.alias.set("eve.js", "external/eve.min.js");
     screens.core.file.alias.set("webfonts", "node_modules/@fortawesome/fontawesome-free/webfonts");
     screens.core.startup.run();
 });
