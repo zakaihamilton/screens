@@ -103,7 +103,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         );
     };
 
-    const User = ({ user_name, count, active, select }) => {
+    const User = ({ user_name, count, active, select, index }) => {
         const disabled = count <= 0;
         if (disabled) {
             select = null;
@@ -111,6 +111,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         return (<Element className={{ "app-workshop-user": true, active: active && !disabled, disabled }} onClick={select}>
             <Element title={user_name} className="app-workshop-user-long-name">{user_name}</Element>
             <Element className="app-workshop-user-short-name">{user_name.split(/[ \@]/)[0]}</Element>
+            <Element className="app-workshop-user-index">{index}</Element>
         </Element>);
     };
 
@@ -138,22 +139,22 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                     users = filterItem.filter(users);
                 }
             });
-            users = me.sort.find(item => item.id === sort).sort(users);
+            users = me.sort.find(item => item.id === sort).sort(users, meeting);
             if (search) {
                 users = users.filter(user => user.user_name.toLowerCase().includes(search.toLowerCase()));
             }
             if (direction === "asc") {
                 users = users.reverse();
             }
-            return users.map(user => {
+            return users.map((user, index) => {
                 const selectUser = () => {
                     setCurrentUserId(currentUserId !== user.user_id && user.user_id);
                 }
                 return (
-                    <User key={user.user_id} {...user} active={currentUserId === user.user_id} select={selectUser} />
+                    <User key={user.user_id} {...user} index={index} active={currentUserId === user.user_id} select={selectUser} />
                 );
             });
-        }, [currentUserId, counter, meeting, sort, filter, search]);
+        }, [currentUserId, counter, meeting, sort, filter, direction, search]);
         return (<Element className="app-workshop-users">
             {users}
         </Element>);
@@ -297,6 +298,27 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                 items = [...items];
                 items.sort((a, b) => {
                     return a.user_name.localeCompare(b.user_name);
+                });
+                return items;
+            }
+        },
+        {
+            id: "shuffle",
+            name: (
+                <>
+                    <Text language="eng">Shuffle</Text>
+                    <Text language="heb">ערבוב</Text>
+                </>
+            ),
+            sort: (items, meeting) => {
+                items = [...items];
+                const meetingHash = parseInt(core.string.hash(meeting));
+                let hashId = function (userId) {
+                    const idHash = parseInt(core.string.hash(userId));
+                    return meetingHash * idHash;
+                };
+                items.sort((a, b) => {
+                    return hashId(a.user_id) - hashId(b.user_id);
                 });
                 return items;
             }

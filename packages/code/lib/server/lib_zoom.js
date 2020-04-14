@@ -6,8 +6,6 @@
 screens.lib.zoom = function LibZoom(me, { core, db }) {
     me.init = async function () {
         me.request = require("request");
-        me.shuffleSeed = require("shuffle-seed");
-        me.chance = require("chance").Chance();
         var keys = await core.private.keys("zoom");
         me.meetingId = keys.meetingId;
         me._meetingInfo = null;
@@ -135,34 +133,6 @@ screens.lib.zoom = function LibZoom(me, { core, db }) {
             };
         });
         return meetings;
-    };
-    me.shuffle = function (names, seed) {
-        var result = [];
-        let letters = core.string.charArray("a", "z");
-        letters.push(...core.string.charArray("א", "ת"));
-        letters = me.shuffleSeed.shuffle(letters, seed);
-        let mapping = {};
-        for (let name of names) {
-            let firstLetter = name[0].toLowerCase();
-            if (!letters.includes(firstLetter)) {
-                firstLetter = "other";
-            }
-            let list = mapping[firstLetter];
-            if (!list) {
-                list = mapping[firstLetter] = [];
-            }
-            list.push(name);
-        }
-        for (let letter of letters) {
-            let list = mapping[letter];
-            if (list) {
-                result.push(...list);
-            }
-        }
-        if (mapping.other) {
-            result.push(...mapping.other);
-        }
-        return result;
     };
     return "server";
 };
