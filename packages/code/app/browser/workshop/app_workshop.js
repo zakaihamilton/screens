@@ -111,7 +111,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         return (<Element className={{ "app-workshop-user": true, active: active && !disabled, disabled }} onClick={select}>
             <Element title={user_name} className="app-workshop-user-long-name">{user_name}</Element>
             <Element className="app-workshop-user-short-name">{user_name.split(/[ \@]/)[0]}</Element>
-            <Element className="app-workshop-user-index">{index}</Element>
+            <Element className="app-workshop-user-index">{index + 1}</Element>
         </Element>);
     };
 
