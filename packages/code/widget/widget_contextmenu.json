@@ -49,6 +49,14 @@
         }
     ],
     [
+        "Invert Direction",
+        "widget.window.direction",
+        {
+            "visible": "widget.contextmenu.notEmbed",
+            "state": "select"
+        }
+    ],
+    [
         "Screenshot",
         "ui.screenshot.capture",
         {

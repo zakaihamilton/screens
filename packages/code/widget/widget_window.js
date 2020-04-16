@@ -784,6 +784,35 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             });
         }
     };
+    me.direction = {
+        get: function (object) {
+            var window = me.get(object);
+            var direction = core.property.get(window, "ui.class.contains", "direction");
+            return direction;
+        },
+        set: function (object, value) {
+            var window = me.get(object);
+            var direction = core.property.get(window, "ui.class.contains", "direction");
+            var list = [];
+            while (window) {
+                list.push(window);
+                if (window.child_window) {
+                    list.push(window.child_window);
+                }
+                window = me.parent(window);
+            }
+            if (!window) {
+                var workspace = ui.element.workspace();
+                list.push(workspace);
+            }
+            list = list.filter(function (item, pos, self) {
+                return self.indexOf(item) === pos;
+            });
+            core.property.set(list, "ui.property.broadcast", {
+                "ui.class.direction": !direction
+            });
+        }
+    };
     me.region = {
         get: function (object) {
             var window = me.get(object);

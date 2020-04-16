@@ -10,3 +10,7 @@
 .widget-container-root.transparent {
     background: none;
 }
+
+.widget-container-root.direction {
+    direction: rtl;
+}
