@@ -1601,7 +1601,8 @@
                 "Hod",
                 "Yesod"
             ],
-            "term": "TNHY"
+            "term": "TNHY",
+            "abridged": "Hitzoniut"
         },
         {
             "expansion": [
@@ -4156,6 +4157,7 @@
             "hebrew": "גמטריה"
         },
         {
+            "prefix": "the",
             "translation": "Externality",
             "term": "Hitzoniut",
             "hebrew": "חיצוניות"
@@ -5337,6 +5339,7 @@
             "translation": "The Unknown Head",
             "source": "Reisha de lo Etyada",
             "term": "Reisha lo Etyada",
+            "abridged": "Atik",
             "hebrew": "רישא דלא אתידע"
         },
         {
