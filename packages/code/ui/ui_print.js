@@ -9,9 +9,9 @@ screens.ui.print = function UIPrint(me) {
     me.copy = async function (text) {
         var a = window.open('', '', '');
         a.document.write('<html>');
-        a.document.write('<body>');
-        a.document.write(text.split("\n").join("<br>"));
-        a.document.write('</body></html>');
+        a.document.write('<body><p>');
+        a.document.write(text.split("\n").join("</p><p>"));
+        a.document.write('</p></body></html>');
         a.document.close();
         a.print();
     };
