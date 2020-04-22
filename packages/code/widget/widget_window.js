@@ -1111,6 +1111,12 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
                 core.property.set(window, method, ui.clipboard);
             }
         });
+        items.push({
+            text: "Print",
+            select: () => {
+                core.property.set(window, method, ui.print);
+            }
+        });
         if (navigator.share) {
             items.push({
                 text: "Share",
