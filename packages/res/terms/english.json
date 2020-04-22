@@ -5331,6 +5331,11 @@
             "hebrew": "אתידע"
         },
         {
+            "term": "Sulam",
+            "hebrew": "סולם",
+            "translation": "Ladder"
+        },
+        {
             "translation": "Head",
             "term": "Reisha",
             "hebrew": "רישא"
