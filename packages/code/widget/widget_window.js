@@ -1104,27 +1104,8 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
                 }
             ];
         });
+        items.push(...core.broadcast.send("exportMenu", window, method));
         items = items.filter(Boolean);
-        items.push({
-            text: "Clipboard",
-            select: () => {
-                core.property.set(window, method, ui.clipboard);
-            }
-        });
-        items.push({
-            text: "Print",
-            select: () => {
-                core.property.set(window, method, ui.print);
-            }
-        });
-        if (navigator.share) {
-            items.push({
-                text: "Share",
-                select: () => {
-                    core.property.set(window, method, ui.share);
-                }
-            });
-        }
         if (!items.length) {
             return null;
         }

@@ -51,7 +51,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
                         console.error(err);
                         process.exit(1);
                     }
-                    await core.broadcast.send("shutdown");
+                    await Promise.all(core.broadcast.send("shutdown"));
                     console.log("Components shutdown");
                     process.exit(0);
                 });

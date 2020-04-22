@@ -3,7 +3,7 @@
  @component UIClipboard
  */
 
-screens.ui.clipboard = function UIClipboard(me) {
+screens.ui.clipboard = function UIClipboard(me, { core, ui }) {
     me.permissionStatus = null;
     me.init = async function () {
         try {
@@ -18,10 +18,21 @@ screens.ui.clipboard = function UIClipboard(me) {
                     me.permissionStatus = permissionStatus;
                 };
             }
+            core.broadcast.register(me, {
+                exportMenu: "ui.clipboard.exportMenu"
+            });
         }
         catch (err) {
             me.log("Clipboard not supported: " + err.message || err);
         }
+    };
+    me.exportMenu = function (window, method) {
+        return {
+            text: "Clipboard",
+            select: () => {
+                core.property.set(window, method, ui.clipboard);
+            }
+        };
     };
     me.isSupported = function () {
         return navigator.clipboard && me.permissionStatus === "granted";

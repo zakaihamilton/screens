@@ -3,8 +3,19 @@
  @component UIPrint
  */
 
-screens.ui.print = function UIPrint(me) {
+screens.ui.print = function UIPrint(me, { core, ui }) {
     me.init = async function () {
+        core.broadcast.register(me, {
+            exportMenu: "ui.print.exportMenu"
+        });
+    };
+    me.exportMenu = function (window, method) {
+        return {
+            text: "Print",
+            select: () => {
+                core.property.set(window, method, ui.print);
+            }
+        };
     };
     me.copy = async function (text) {
         var a = window.open('', '', '');

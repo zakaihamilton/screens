@@ -9,7 +9,7 @@ screens.core.startup = function CoreStartup(me, { core }) {
         params: null
     };
     me.run = async function () {
-        await core.broadcast.send("prepare");
-        await core.broadcast.send("startup");
+        await Promise.all(core.broadcast.send("prepare"));
+        await Promise.all(core.broadcast.send("startup"));
     };
 };
