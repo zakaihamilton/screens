@@ -285,7 +285,14 @@
             "Ayin and Aleph": "Eyin and Aleph",
             "Patach in the Ayin": "Patach in the Eyin",
             "Hirik in the Ayin": "Hirik2 in the Eyin",
-            "you’ve": "you’__ve"
+            "you’ve": "you’__ve",
+            "Malkhut": "Malchut",
+            "malkhut": "Malchut",
+            "Elohim": "Elokim",
+            "Chasadim": "Hassadim",
+            "chasadim": "hassadim",
+            "Anokhi": "Anochi",
+            "OVeR": "Over2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -980,6 +987,11 @@
             "hebrew": "פנים בפנים"
         },
         {
+            "term": "Malchut d ’ Kedushah",
+            "translation": "Kingdom of Holiness",
+            "hebrew": "מלכות דקדושה"
+        },
+        {
             "translation": "Upper Light",
             "term": "Ohr Elyon",
             "hebrew": "אור עליון"
@@ -1351,6 +1363,12 @@
             },
             "term": "Yechida",
             "hebrew": "יחידה"
+        },
+        {
+            "term": "YHVH",
+            "expansion": [
+                "Yod - Hey Vav - Hey"
+            ]
         },
         {
             "expansion": [
@@ -2986,7 +3004,7 @@
                 "phase": "root"
             },
             "translation": "Mercies",
-            "explanation": "Alignment",
+            "explanation": "Alignments",
             "term": "Hassadim",
             "hebrew": "חסדים"
         },
@@ -3635,12 +3653,17 @@
             "hebrew": "אין"
         },
         {
+            "term": "Elohekha",
+            "translation": "Your Lord",
+            "hebrew": "אלוקיך"
+        },
+        {
             "term": "Yod - Hey Vav - Hey",
             "style": {
                 "category": "Holy Name",
                 "phase": "three"
             },
-            "explanation": "Intention",
+            "translation": "God",
             "hebrew": "י-ה-ו-ה"
         },
         {
@@ -6720,7 +6743,7 @@
         },
         {
             "term": "Anochi",
-            "translation": "I",
+            "translation": "I am",
             "hebrew": "אנכי"
         },
         {
@@ -7182,7 +7205,8 @@
             "hebrew": "מזוזות"
         },
         {
-            "term": "Egypt",
+            "term": "Mitzrayim",
+            "translation": "Egypt",
             "style": {
                 "category": "Location",
                 "hebrew": "מצרים"
@@ -7265,6 +7289,21 @@
             "transliterated": "Yosef",
             "hebrew": "יוסף",
             "defaultTerm": true
+        },
+        {
+            "term": "Aveyrah",
+            "hebrew": "עברה",
+            "translation": "Transgression"
+        },
+        {
+            "term": "Ayver",
+            "translation": "Side",
+            "hebrew": "עבר"
+        },
+        {
+            "term": "Davar",
+            "translation": "Thing",
+            "hebrew": "דבר"
         },
         {
             "term": "David",
@@ -7672,7 +7711,7 @@
         },
         {
             "term": "Elokim",
-            "translation": "God",
+            "translation": "Lord",
             "hebrew": "אלהים",
             "style": {
                 "category": "Holy Name",
@@ -7773,6 +7812,12 @@
             "translation": "New Year",
             "explanation": "Jewish New Year",
             "hebrew": "ראש השנה"
+        },
+        {
+            "term": "Over2",
+            "source": "Over",
+            "translation": "Crosses",
+            "hebrew": "עובר"
         },
         {
             "term": "Passover",
@@ -8419,9 +8464,24 @@
             "translation": "Repentance"
         },
         {
+            "term": "Talmid Chakham",
+            "translation": "Torah Scholar",
+            "hebrew": "תלמיד חכם"
+        },
+        {
             "term": "Teshuv",
             "hebrew": "תשוב",
             "translation": "Return"
+        },
+        {
+            "term": "D ’ varim",
+            "hebrew": "דברים",
+            "translation": "Words"
+        },
+        {
+            "term": "DaBoR",
+            "translation": "Spokesman",
+            "hebrew": "דבור"
         },
         {
             "term": "HaShamaim",
