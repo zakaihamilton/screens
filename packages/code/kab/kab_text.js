@@ -46,7 +46,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
         }
         if (session.options.abridged) {
             wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
-            //wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
+            wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
         }
         wordsString = core.string.parseWords(function (words) {
             var wasPrefix = false;
