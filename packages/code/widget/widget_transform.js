@@ -19,6 +19,8 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             prioritizeExplanation: true,
             addStyles: true,
             abridged: true,
+            brackets: true,
+            parentheses: true,
             keepSource: false,
             category: true,
             headings: true,
@@ -54,6 +56,8 @@ screens.widget.transform = function WidgetTransform(me, { core, ui, media, widge
             phaseNumbers: me.transform,
             keepSource: me.transform,
             abridged: me.transform,
+            parentheses: me.transform,
+            brackets: me.transform,
             pages: me.reflow,
             snap: (object) => {
                 var transformWidget = me.findWidget(object);

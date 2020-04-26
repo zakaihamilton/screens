@@ -44,8 +44,10 @@ screens.kab.text = function KabText(me, { core, kab }) {
         catch (err) {
             console.error(err);
         }
-        if (session.options.abridged) {
+        if (!session.options.parentheses) {
             wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
+        }
+        if (!session.options.brackets) {
             wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
         }
         wordsString = core.string.parseWords(function (words) {

@@ -24,6 +24,8 @@ screens.app.prism = function AppPrism(me, { core, ui, widget, kab }) {
                 prioritizeExplanation: true,
                 addStyles: true,
                 abridged: true,
+                brackets: true,
+                parentheses: true,
                 keepSource: false,
                 category: true,
                 headings: true,

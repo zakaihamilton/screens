@@ -282,6 +282,28 @@
                             }
                         },
                         {
+                            "text": "Show",
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                {
+                                    "text": "Parentheses",
+                                    "select": "widget.transform.parentheses",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Brackets",
+                                    "select": "widget.transform.brackets",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "text": "Explanation",
                             "select": "widget.transform.doExplanation",
                             "options": {

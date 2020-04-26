@@ -39,6 +39,28 @@ screens.ui.transform = function UITransform(me, { core, widget, kab }) {
                             }
                         },
                         {
+                            "text": "Show",
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                {
+                                    "text": "Parentheses",
+                                    "select": prefix + "parentheses",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Brackets",
+                                    "select": prefix + "brackets",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "text": "Explanation",
                             "select": prefix + "doExplanation",
                             "options": {
@@ -163,6 +185,8 @@ screens.ui.transform = function UITransform(me, { core, widget, kab }) {
                     prioritizeExplanation: true,
                     addStyles: true,
                     abridged: true,
+                    brackets: true,
+                    parentheses: true,
                     keepSource: false,
                     category: true,
                     headings: true,
@@ -179,6 +203,8 @@ screens.ui.transform = function UITransform(me, { core, widget, kab }) {
                     "phaseNumbers": prefix + "reload",
                     "keepSource": prefix + "reload",
                     "abridged": prefix + "reload",
+                    "brackets": prefix + "reload",
+                    "parentheses": prefix + "reload",
                     "pages": prefix + "reload",
                     "columns": prefix + "reload",
                     "category": prefix + "reload",
