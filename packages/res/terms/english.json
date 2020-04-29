@@ -286,13 +286,12 @@
             "Patach in the Ayin": "Patach in the Eyin",
             "Hirik in the Ayin": "Hirik2 in the Eyin",
             "you’ve": "you’__ve",
-            "Malkhut": "Malchut",
-            "malkhut": "Malchut",
             "Elohim": "Elokim",
             "Chasadim": "Hassadim",
             "chasadim": "hassadim",
             "Anokhi": "Anochi",
-            "OVeR": "Over2"
+            "OVeR": "Over2",
+            "Ehyeh": "EKYEH"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -305,6 +304,7 @@
             "Avraham": "Abraham",
             "Yitzhak": "Isaac",
             "Yaakov": "Jacob",
+            "YaAKoV": "Jacob",
             "Yosef": "Joseph"
         },
         "tags": {
@@ -527,6 +527,11 @@
             "term": "Situm",
             "hebrew": "סיתום",
             "translation": "Blocking"
+        },
+        {
+            "term": "melekh",
+            "hebrew": "מלך",
+            "translation": "King"
         },
         {
             "term": "Mateshet",
@@ -1077,6 +1082,16 @@
             "translation": "Light of Mercy",
             "term": "Ohr Hassadim",
             "hebrew": "אור חסדים"
+        },
+        {
+            "term": "Malkhut",
+            "hebrew": "מלכות",
+            "translation": "Kingship"
+        },
+        {
+            "term": "Chokhmah",
+            "hebrew": "חכמה",
+            "translation": "Wisdom"
         },
         {
             "translation": "Light",
@@ -4565,6 +4580,11 @@
             "hebrew": "ישר"
         },
         {
+            "term": "ChiuT",
+            "hebrew": "חיות",
+            "translation": "life"
+        },
+        {
             "translation": "Inverse",
             "term": "Hofchiut",
             "hebrew": "הפכיות"
@@ -6119,6 +6139,11 @@
             "hebrew": "ח"
         },
         {
+            "source": "Chet [ח]",
+            "term": "Chet",
+            "hebrew": "ח"
+        },
+        {
             "source": "Tet [ט]",
             "term": "Tet",
             "hebrew": "ט"
@@ -7299,6 +7324,81 @@
             "term": "Ayver",
             "translation": "Side",
             "hebrew": "עבר"
+        },
+        {
+            "term": "Ashrei T ’ mimei Darekh",
+            "translation": "Happy are those whose way is perfect",
+            "hebrew": "אשרי תמימי דרך"
+        },
+        {
+            "term": "CheiN",
+            "translation": "Grace",
+            "hebrew": "חן"
+        },
+        {
+            "term": "Ashrei",
+            "translation": "Happy",
+            "hebrew": "אשרי"
+        },
+        {
+            "term": "ChaNani",
+            "hebrew": "חנני",
+            "translation": "granted me grace"
+        },
+        {
+            "term": "yaChNkha",
+            "hebrew": "יחנך",
+            "translation": "grant you grace"
+        },
+        {
+            "term": "sephinta",
+            "hebrew": "ספינתא",
+            "translation": "ship"
+        },
+        {
+            "term": "Ehyeh asher Ehyeh",
+            "hebrew": "אהיה אשר אהיה",
+            "translation": "I will be what I will be"
+        },
+        {
+            "term": "shor",
+            "hebrew": "שור",
+            "translation": "oxen"
+        },
+        {
+            "term": "Nachat",
+            "hebrew": "נחת",
+            "translation": "gratification"
+        },
+        {
+            "term": "hiTVita TaV",
+            "hebrew": "הטבעת תו",
+            "translation": "inscribe a mark"
+        },
+        {
+            "term": "b ’ nachat",
+            "hebrew": "בנחת",
+            "translation": "gently"
+        },
+        {
+            "term": "yaALat chein",
+            "translation": "graceful gazelle",
+            "hebrew": "יעלת חן"
+        },
+        {
+            "term": "maALah chein",
+            "translation": "bestows grace",
+            "hebrew": "מעלה חן"
+        },
+        {
+            "term": "reishit",
+            "translation": "beginning",
+            "hebrew": "ראשית"
+        },
+        {
+            "term": "YaAKVeiny",
+            "translation": "he obstructed me",
+            "hebrew": "יעקבני"
         },
         {
             "term": "Eitin",
