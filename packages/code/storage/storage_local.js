@@ -109,9 +109,7 @@ screens.storage.local.db = function StorageLocalDb(me, { core }) {
         var access = {
             "get": "readonly",
             "put": "readwrite",
-            "delete": "readwrite",
-            "clear": "readwrite",
-            "count": "readonly"
+            "delete": "readwrite"
         };
         var dbHandle = await me.database(collection, storeName);
         var transaction = dbHandle.transaction(storeName, access[methodName]);
@@ -137,11 +135,5 @@ screens.storage.local.db = function StorageLocalDb(me, { core }) {
         else {
             return me.method(collection, "put", value, key);
         }
-    };
-    me.clear = function (collection) {
-        return me.method(collection, "clear");
-    };
-    me.length = function (collection) {
-        return me.method(collection, "count");
     };
 };
