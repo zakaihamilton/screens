@@ -191,6 +191,19 @@ screens.core.file = function CoreFile(me, { core }) {
             });
         });
     };
+    me.timestamp = function (path) {
+        path = me.path(path);
+        return new Promise((resolve, reject) => {
+            me.fs.stat(path, function (err, stats) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(stats.mtimeMs);
+                }
+            });
+        });
+    };
     me.exists = function (path) {
         path = me.path(path);
         return me.fs.existsSync(path);

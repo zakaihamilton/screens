@@ -11,7 +11,7 @@ screens.storage.fs = function StorageFS(me, { core, storage }) {
         else {
             me.driver = storage.fs.local;
         }
-        const keys = ["read", "write", "list", "delete", "type"];
+        const keys = ["read", "write", "list", "delete", "type", "timestamp"];
         const methods = {};
         keys.forEach(key => {
             me[key] = (path, ...args) => {
@@ -69,6 +69,11 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
         }
         return "";
     };
+    me.timestamp = async function (path) {
+        if (core.file.exists(path)) {
+            return await core.file.timestamp(path);
+        }
+    }
 };
 
 screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
@@ -96,7 +101,8 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             if (!folderInfo) {
                 folderInfo = {
                     type: "folder",
-                    items: []
+                    items: [],
+                    timestamp: Date.now()
                 };
             }
             const name = path.split("/").pop();
@@ -107,6 +113,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             };
         }
         info.size = data ? data.length : 0;
+        info.timestamp = Date.now();
         await me.setInfo(path, info);
         await storage.local.db.set(me.id, "data:" + path, data);
     };
@@ -135,6 +142,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         const folderInfo = await me.info(folderPath);
         if (folderInfo) {
             folderInfo.items = folderInfo.items.filter(item => item !== name);
+            folderPath.timestamp = Date.now();
             await me.setInfo(folderPath, folderInfo);
         }
         await storage.local.db.set(me.id, "info:" + path);
@@ -149,5 +157,13 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             type = info.type;
         }
         return type;
+    };
+    me.type = async function (path) {
+        let timestamp = null;
+        const info = await me.info(path);
+        if (info) {
+            timestamp = info.timestamp;
+        }
+        return timestamp;
     };
 }
