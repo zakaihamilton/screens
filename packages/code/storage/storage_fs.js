@@ -98,7 +98,13 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         if (!info) {
             let folderPath = core.path.folderPath(path);
             let folderInfo = await me.info(folderPath);
-            if (!folderInfo) {
+            if (folderInfo) {
+                const type = await me.type(folderPath);
+                if (type !== "folder") {
+                    throw "Invalid folder: " + folderPath;
+                }
+            }
+            else {
                 folderInfo = {
                     type: "folder",
                     items: [],
@@ -158,7 +164,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         }
         return type;
     };
-    me.type = async function (path) {
+    me.timestamp = async function (path) {
         let timestamp = null;
         const info = await me.info(path);
         if (info) {
