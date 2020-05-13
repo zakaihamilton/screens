@@ -3,8 +3,6 @@
  @component StorageFS
  */
 
-import { EMR } from "aws-sdk";
-
 screens.storage.fs = function StorageFS(me, { core, storage }) {
     me.init = async function () {
         if (me.platform === "server") {
@@ -17,31 +15,35 @@ screens.storage.fs = function StorageFS(me, { core, storage }) {
         const methods = {};
         keys.forEach(key => {
             me[key] = (path, ...args) => {
-                if (!path) {
-                    throw "Invalid path";
-                }
-                if (path[path.length - 1 === '/']) {
-                    path = path.substring(0, -1);
-                }
+                path = me.fixPath(path);
                 return me.driver[key](path, ...args);
             }
             methods[key] = "storage.fs." + key;
         });
         core.broadcast.register(me, methods);
     };
+    me.fixPath = function (path) {
+        if (!path) {
+            throw "Invalid path";
+        }
+        if (path[path.length - 1 === '/']) {
+            path = path.substring(0, -1);
+        }
+        return path;
+    }
 };
 
 screens.storage.fs.server = function StorageFSServer(me, { core }) {
     me.read = async function (path) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "file") {
             return await core.file.readFile(path);
         }
     };
     me.write = async function (path, data) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "file") {
-            return await core.file.writeFile(path, data);
+            await core.file.writeFile(path, data);
         }
         else {
             throw "Cannot write since object is a folder, path:" + path;
@@ -49,7 +51,7 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
     };
     me.list = async function (path) {
         let items = [];
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "folder") {
             items = await core.file.readDir(path);
         }
@@ -57,7 +59,7 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
     };
     me.delete = async function (path) {
         if (core.file.exists(path)) {
-            return await core.file.delete(path);
+            await core.file.delete(path);
         }
     };
     me.type = async function (path) {
@@ -70,11 +72,6 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
 };
 
 screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
-    me.folderPath = function (path) {
-        const parts = path.split("/");
-        parts.pop();
-        return parts.join("/");
-    };
     me.info = async function (path) {
         return storage.local.db.get(me.id, "info:" + path);
     };
@@ -82,20 +79,20 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         await storage.local.db.set(me.id, "info:" + path, info);
     };
     me.read = async function (path) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "file") {
             return await storage.local.db.get(me.id, "data:" + path);
         }
     };
     me.write = async function (path, data) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "folder") {
             throw "Cannot write since object is a folder, path:" + path;
         }
         let info = await me.info(path);
         if (!info) {
-            const folderPath = me.folderPath(path);
-            const folderInfo = await me.info(folderPath);
+            let folderPath = core.path.folderPath(path);
+            let folderInfo = await me.info(folderPath);
             if (!folderInfo) {
                 folderInfo = {
                     type: "folder",
@@ -111,10 +108,10 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         }
         info.size = data ? data.length : 0;
         await me.setInfo(path, info);
-        return await storage.local.db.set(me.id, "data:" + path, data);
+        await storage.local.db.set(me.id, "data:" + path, data);
     };
     me.list = async function (path) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (type === "folder") {
             const info = await me.info(path);
             const { items } = info;
@@ -123,7 +120,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         return [];
     };
     me.delete = async function (path) {
-        const type = me.type(path);
+        const type = await me.type(path);
         if (!type) {
             return;
         }
@@ -134,7 +131,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             }
         }
         const name = path.split("/").pop();
-        const folderPath = me.folderPath(path);
+        const folderPath = core.path.folderPath(path);
         const folderInfo = await me.info(folderPath);
         if (folderInfo) {
             folderInfo.items = folderInfo.items.filter(item => item !== name);
