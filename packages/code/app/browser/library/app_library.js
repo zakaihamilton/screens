@@ -508,8 +508,10 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
     me.deleteRecord = async function (object) {
         var records = me.parseRecordsFromText(object);
         if (records.ids && records.ids.length) {
-            await db.library.tags.remove({ _id: records.ids[0] });
-            await db.library.content.remove({ _id: records.ids[0] });
+            for (var index = 0; index < records.ids.length; index++) {
+                await db.library.tags.remove({ _id: records.ids[index] });
+                await db.library.content.remove({ _id: records.ids[index] });
+            }
         }
     };
     me.process = function (object) {
