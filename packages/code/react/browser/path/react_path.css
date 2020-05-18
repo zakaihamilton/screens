@@ -17,8 +17,6 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
 }
 
 .react-path-select:active:hover {
@@ -29,11 +27,8 @@
 .react-path-separator {
     padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-weight: bold;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
     display: flex;
     align-items: center;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
 }
