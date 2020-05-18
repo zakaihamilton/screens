@@ -99,6 +99,10 @@
                     [
                         "Transcribe",
                         "tools"
+                    ],
+                    [
+                        "Storage",
+                        "tools"
                     ]
                 ]
             }

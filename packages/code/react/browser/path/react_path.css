@@ -1,0 +1,39 @@
+.react-path {
+    display: flex;
+    flex-direction: column;
+}
+
+.react-path-items {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.react-path-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+.react-path-select:active:hover {
+    background-color: var(--highlight-background);
+    color: var(--highlight-color);
+}
+
+.react-path-separator {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}

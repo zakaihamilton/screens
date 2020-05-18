@@ -1,0 +1,24 @@
+{
+    "title": "Storage",
+    "icon": "storage",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.class.class": "app.storage.main",
+            "ui.react.render": "app.storage.render"
+        }
+    ],
+    "widget.window.maximize": null,
+    "ui.property.after": {
+        "storage.local.key": "@ui.windowkey.app-storage-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "app.storage.resize",
+        "ui.session.visibilityChange": "app.storage.visibilityChange",
+        "app.storage.initOptions": null
+    }
+}

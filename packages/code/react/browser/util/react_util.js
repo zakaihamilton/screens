@@ -7,8 +7,7 @@ screens.react.util = function ReactUtil(me, { core, react }) {
     me.init = function () {
         me.Context = React.createContext(null);
     };
-    me.useState = function (value) {
-        const [getter, setter] = React.useState(value);
+    me.makeState = function ([getter, setter]) {
         const subscriptions = React.useRef([]);
         const subscribe = (handler) => {
             subscriptions.current.push(handler);
@@ -32,6 +31,10 @@ screens.react.util = function ReactUtil(me, { core, react }) {
             subscribe,
             unsubscribe
         }];
+    };
+    me.useState = function (value) {
+        const state = React.useState(value);
+        return me.makeState(state);
     };
     me.useSubscribe = function (state) {
         const [getter, setter, subscription] = state;

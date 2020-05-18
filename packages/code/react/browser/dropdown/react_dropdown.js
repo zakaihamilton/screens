@@ -50,7 +50,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     let currentChildren = null;
     if (multiple && selected.length > 1) {
         currentChildren = React.Children.map(multiple, (child => {
-            return React.cloneElement(child, { state, open, current: true });
+            return React.cloneElement(child, { state, open, current: true, display: true });
         }));
     }
     else {
@@ -80,7 +80,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     </Element>);
 };
 
-screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, hideInList, popup, multiple = true, style, children }) => {
+screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const [selected, setSelected, subscription] = state || [];
@@ -136,7 +136,7 @@ screens.react.DropDown.Item = ({ id, state, open, current, hideCurrent, hideInLi
         popup,
         multiple: isMultiple && multiple
     };
-    if (current && index === -1) {
+    if (current && index === -1 && !display) {
         return null;
     }
     if (current && hideCurrent) {
