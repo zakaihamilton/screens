@@ -134,7 +134,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }, [counter, path, sort, direction, search]);
         return (<Element className="app-items">
             {items}
-            {me.path}
         </Element>);
     };
 
