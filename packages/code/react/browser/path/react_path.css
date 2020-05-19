@@ -17,6 +17,11 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    border-bottom: 2px solid transparent;
+}
+
+.react-path-select {
+    border-bottom: 2px solid var(--phase-one-border);
 }
 
 .react-path-select:active:hover {

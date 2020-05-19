@@ -1,4 +1,4 @@
-.app_storage-main {
+.app-storage-main {
     left: 0px;
     top: 0px;
     width: 100%;
@@ -8,36 +8,37 @@
     flex-direction: column;
 }
 
-.app_storage-users {
+.app-storage-content {
+    display: flex;
+}
+
+.app-storage-items {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     overflow-y: auto;
 }
 
-.app_storage-user {
+.app-storage-item {
     display: flex;
-    min-width: 10em;
-    min-height: 10em;
-    max-width: 10em;
-    max-height: 10em;
+    align-items: flex-start;
     overflow: hidden;
     margin: 0.5em;
-    flex: 0;
     border: 1px solid lightblue;
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.app_storage-user:hover {
+.app-storage-item:hover {
     border: 1px solid rgba(81, 203, 238, 1);
 }
 
-.app_storage-user.disabled {
+.app-storage-item.disabled {
     border: 1px solid lightgray;
     opacity: 0.5;
 }
 
-.app_storage-user.active {
+.app-storage-item.active {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
@@ -45,34 +46,21 @@
     background-color: var(--chrome-background);
 }
 
-.app_storage-user-long-name {
+.app-storage-item-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 0.1em;
     padding-bottom: 0.1em;
     text-align: center;
-    color: var(--chrome-color);
-    background-color: var(--chrome-background);
-    border-bottom: 1px solid var(--chrome-border);
-}
-
-.app_storage-user-short-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-top: 1em;
-    margin: 0.1em;
-    width: 100%;
-    font-size: 200%;
-    text-align: center;
     color: var(--color);
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
 }
 
-.app_storage-user-index {
+.app-storage-user-index {
     display: flex;
     align-items: flex-end;
     margin: 0.1em;

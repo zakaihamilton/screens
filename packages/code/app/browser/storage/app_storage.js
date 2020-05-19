@@ -97,10 +97,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (disabled) {
             select = null;
         }
-        return (<Element className={{ "app-item": true, active: active && !disabled, disabled }} onClick={select}>
-            <Element title={name} className="app-item-long-name">{name}</Element>
-            <Element className="app-item-short-name">{name.split(/[ \@]/)[0]}</Element>
-            <Element className="app-item-index">{index + 1}</Element>
+        return (<Element className={{ "app-storage-item": true, active: active && !disabled, disabled }} onClick={select}>
+            <Element title={name} className="app-storage-item-name">{name}</Element>
         </Element>);
     };
 
@@ -114,7 +112,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(updateState);
         react.util.useSubscribe(searchState);
-        const items = react.util.useData(() => {
+        const children = react.util.useData(() => {
             let items = me.items || [];
             items = me.sort.find(item => item.id === sort).sort(items);
             if (search) {
@@ -132,8 +130,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 );
             });
         }, [counter, path, sort, direction, search]);
-        return (<Element className="app-items">
-            {items}
+        return (<Element className="app-storage-items">
+            {children}
         </Element>);
     };
 
@@ -147,7 +145,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const searchState = react.util.useState("");
         const pathState = react.util.makeState([me.path.split("/").filter(Boolean), value => {
             me.path = value.join("/");
-            me.redraw();
+            if (!me.path) {
+                me.path = "/";
+            }
+            me.loadItems();
         }]);
         const [language] = languageState;
         const [delay] = delayState;
@@ -238,16 +239,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.path = "/hello/work";
+        me.path = "/";
+        await me.loadItems();
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.loadItems = async function () {
-        let items = await storage.fs.list(me.path);
-        me.items = items.map(name => {
-            return {
-                name
-            };
-        });
+        me.items = await storage.fs.list(me.path);
         if (me.redraw) {
             me.redraw();
         }

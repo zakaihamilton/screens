@@ -11,7 +11,7 @@ screens.storage.fs = function StorageFS(me, { core, storage }) {
         else {
             me.driver = storage.fs.local;
         }
-        const keys = ["read", "write", "list", "delete", "type", "timestamp"];
+        const keys = ["read", "write", "list", "delete", "type", "timestamp", "createFolder"];
         const methods = {};
         keys.forEach(key => {
             me[key] = (path, ...args) => {
@@ -54,6 +54,13 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
         const type = await me.type(path);
         if (type === "folder") {
             items = await core.file.readDir(path);
+            items = items.map(name => {
+                const id = path + "/" + name;
+                return { name, id, path: id };
+            })
+            for (const item of items) {
+                item.type = await me.type(item.path);
+            }
         }
         return items;
     };
@@ -73,7 +80,10 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
         if (core.file.exists(path)) {
             return await core.file.timestamp(path);
         }
-    }
+    };
+    me.createFolder = async function (path) {
+        await core.file.makeDir(path);
+    };
 };
 
 screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
@@ -112,7 +122,8 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
                 };
             }
             const name = path.split("/").pop();
-            folderInfo.items.push(name);
+            folderInfo.timestamp = Date.now();
+            folderInfo.items.push({ name, type: "file" });
             await me.setInfo(folderPath, folderInfo);
             info = {
                 type: "file"
@@ -172,4 +183,42 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         }
         return timestamp;
     };
+    me.createFolder = async function (path) {
+        const names = path.split("/");
+        for (const index = 0; index < count; index++) {
+            const subPath = path.slice(0, index);
+            const type = await me.type(subPath);
+            if (type === "file") {
+                throw "Cannot create folder since object is a file, path:" + path;
+            }
+            if (type) {
+                continue;
+            }
+            let folderPath = core.path.folderPath(subPath);
+            let folderInfo = await me.info(folderPath);
+            if (folderInfo) {
+                const type = await me.type(folderPath);
+                if (type !== "folder") {
+                    throw "Invalid folder: " + folderPath;
+                }
+            }
+            else {
+                folderInfo = {
+                    type: "folder",
+                    items: [],
+                    timestamp: Date.now()
+                };
+            }
+            const name = names[index];
+            folderInfo.timestamp = Date.now();
+            folderInfo.items.push({ name, type: "folder" });
+            await me.setInfo(folderPath, folderInfo);
+            const itemInfo = {
+                type: "folder",
+                items: [],
+                timestamp: Date.now()
+            };
+            await me.setInfo(subPath, itemInfo);
+        }
+    }
 }
