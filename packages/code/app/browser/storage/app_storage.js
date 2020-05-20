@@ -94,25 +94,31 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const RootItem = ({ children, name }) => {
+        const createFolder = async () => {
+            let path = me.path;
+            if (path) {
+                path += "/";
+            }
+            path += "New Folder";
+            await storage.fs.createFolder("/" + path);
+            await me.loadItems();
+        };
         return (
             <Element className="app-storage-root">
-                <Element className={{ "app-storage-item": true, active: false }}>
-                    <Menu>
-                        <Item>Create Folder...</Item>
+                <Element className={{ "app-storage-item": true, active: false, root: true }}>
+                    <Menu label={
+                        <Element className="app-storage-item-name">{name}</Element>
+                    }>
+                        <Item onClick={createFolder}>Create Folder...</Item>
                     </Menu>
-                    <Element className="app-storage-item-name">{name}</Element>
                 </Element>
                 <Element className="app-storage-children">
                     {children}
                 </Element>
             </Element >);
     };
-    const FolderItem = ({ name, count, active, select }) => {
-        const disabled = count <= 0;
-        if (disabled) {
-            select = null;
-        }
-        return (<Element className={{ "app-storage-item": true, active: active && !disabled, disabled }} onClick={select}>
+    const FolderItem = ({ name, select }) => {
+        return (<Element className={{ "app-storage-item": true, active: true }} onClick={select}>
             <Element title={name} className="app-storage-item-name">{name}</Element>
         </Element>);
     };
@@ -145,7 +151,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             }
             items = items.map(item => {
                 const selectFolder = () => {
-                    setPath([...me.path, item.name]);
+                    setPath([...path.filter(Boolean), item.name]);
                 }
                 return (
                     <FolderItem key={item.name} {...item} select={selectFolder} />
@@ -166,11 +172,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const sortDirectionState = react.util.useState("desc");
         const updateState = react.util.useState(0);
         const searchState = react.util.useState("");
-        const pathState = react.util.makeState([me.path.split("/").filter(Boolean), value => {
+        const pathState = react.util.makeState([me.path.split("/"), value => {
             me.path = value.join("/");
-            if (!me.path) {
-                me.path = "/";
-            }
             me.loadItems();
         }]);
         const [language] = languageState;
@@ -262,12 +265,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.path = "/";
+        me.path = "";
         await me.loadItems();
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.loadItems = async function () {
-        me.items = await storage.fs.list(me.path);
+        me.items = await storage.fs.list("/" + me.path);
         if (me.redraw) {
             me.redraw();
         }

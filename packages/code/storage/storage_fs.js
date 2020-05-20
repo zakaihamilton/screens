@@ -184,9 +184,10 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         return timestamp;
     };
     me.createFolder = async function (path) {
-        const names = path.split("/");
-        for (const index = 0; index < count; index++) {
-            const subPath = path.slice(0, index);
+        const names = path.split("/").filter(Boolean);
+        const count = names.length;
+        for (let index = 0; index < count; index++) {
+            const subPath = "/" + names.slice(0, index + 1).join("/");
             const type = await me.type(subPath);
             if (type === "file") {
                 throw "Cannot create folder since object is a file, path:" + path;
@@ -195,6 +196,9 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
                 continue;
             }
             let folderPath = core.path.folderPath(subPath);
+            if (!folderPath) {
+                folderPath = "/";
+            }
             let folderInfo = await me.info(folderPath);
             if (folderInfo) {
                 const type = await me.type(folderPath);

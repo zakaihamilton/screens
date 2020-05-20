@@ -22,6 +22,7 @@
 .app-storage-children {
     display: flex;
     flex-direction: column;
+    margin: 1em;
 }
 
 .app-storage-item {
@@ -30,7 +31,10 @@
     overflow: hidden;
     min-width: 5em;
     min-height: 2em;
-    margin: 0.5em;
+    padding: 0.5em;
+}
+
+.app-storage-item.root {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -39,11 +43,17 @@
     opacity: 0.5;
 }
 
+.app-storage-item.active {
+    border: 1px solid transparent;
+}
+
 .app-storage-item.active:hover {
-    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.app-storage-item.active:hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
-    outline: 1px solid rgba(81, 203, 238, 1);
     background-color: var(--chrome-background);
 }
 
@@ -51,12 +61,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 0.5em;
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
     text-align: center;
-    color: var(--color);
-    background-color: var(--background);
     border-bottom: 1px solid var(--border);
 }
 

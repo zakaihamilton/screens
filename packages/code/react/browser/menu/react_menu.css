@@ -5,8 +5,6 @@
 
 .react-menu-button {
     display: flex;
-    padding: 0.25em;
-    margin: 0.25em;
     border: 1px solid transparent;
     align-content: center;
     justify-content: center;
@@ -14,6 +12,14 @@
 
 .react-menu-button:hover {
     border: 1px solid var(--chrome-color);
+}
+
+.react-menu-icon {
+    padding: 0.5em;
+}
+
+.react-menu-label {
+    padding: 0.5em;
 }
 
 .react-menu-button:hover:active {
@@ -64,15 +70,13 @@
 }
 
 .react-menu-item {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
     font-weight: bold;
     display: flex;
     align-items: center;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
 }
 
 .react-menu-item:active:hover {

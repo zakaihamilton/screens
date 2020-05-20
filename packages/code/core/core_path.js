@@ -40,9 +40,6 @@ screens.core.path = function CorePath(me, { core }) {
         path = path.split("/");
         path.pop();
         path = path.join("/");
-        if (!path) {
-            path = "/";
-        }
         return path;
     };
     me.fullName = function (path) {

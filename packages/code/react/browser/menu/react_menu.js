@@ -1,4 +1,4 @@
-screens.react.Menu = ({ children }) => {
+screens.react.Menu = ({ label, children }) => {
     const { Item, Element, Direction } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -48,12 +48,25 @@ screens.react.Menu = ({ children }) => {
         open: isOpen
     };
 
+    const iconClassName = {
+        "react-menu-icon": true,
+        open: isOpen
+    };
+
+    const labelClassName = {
+        "react-menu-label": true,
+        open: isOpen
+    };
+
     const popupChildren = React.Children.map(children, (child => {
         return React.cloneElement(child, { open });
     }));
 
     return (<Element className="react-menu">
-        <Element ref={menuRef} className={buttonClassName} onClick={togglePopup}>&#9776;</Element>
+        <Element ref={menuRef} className={buttonClassName} onClick={togglePopup}>
+            <Element className={iconClassName}>&#9776;</Element>
+            {label && <Element className={labelClassName}>{label}</Element>}
+        </Element>
         <Element className={modalClassName} onClick={() => setOpen(false)} />
         <Element ref={popupRef} className={popupClassName}>
             <Element className="react-menu-items">
@@ -71,8 +84,11 @@ screens.react.Menu.Item = ({ id = "", children, open, onClick, ...props }) => {
     const className = {
         "react-menu-item": true
     };
-    const handleClick = () => {
-        const result = onClick && onClick();
+    const handleClick = async () => {
+        let result = false;
+        if (onClick) {
+            result = await onClick();
+        }
         if (!result) {
             setOpen(false);
         }
