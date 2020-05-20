@@ -1,0 +1,85 @@
+.react-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.react-menu-button {
+    display: flex;
+    padding: 0.25em;
+    margin: 0.25em;
+    border: 1px solid transparent;
+    align-content: center;
+    justify-content: center;
+}
+
+.react-menu-button:hover {
+    border: 1px solid var(--chrome-color);
+}
+
+.react-menu-button:hover:active {
+    background-color: var(--chrome-background);
+}
+
+.react-menu-button.open {
+    border: 1px solid var(--chrome-color);
+    background-color: var(--chrome-background);
+}
+
+.react-menu-modal {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 999;
+}
+
+.react-menu-modal.show {
+    display: flex;
+}
+
+.react-menu-popup {
+    display: none;
+    outline: 1px solid var(--chrome-border);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: absolute;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    z-index: 1000;
+}
+
+.react-menu-popup.show {
+    display: flex;
+}
+
+.react-menu-items {
+    background-color: var(--chrome-background);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    color: var(--chrome-color);
+}
+
+.react-menu-item {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+.react-menu-item:active:hover {
+    opacity: 0.8;
+}
+
+.react-menu-item:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}

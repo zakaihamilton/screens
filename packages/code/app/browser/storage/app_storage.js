@@ -16,7 +16,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Input,
         Clone,
         Path,
-        Separator
+        Separator,
+        Menu
     } = react;
 
     const AppToolbar = ({ pathState, languageState, sortState, searchState, sortDirectionState }) => {
@@ -86,13 +87,27 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         <Text language="heb">חיפוש</Text>
                     </>
                 }>
-                    <Input size="12" type="Search" state={searchState} />
+                    <Input size="1em" type="Search" state={searchState} />
                 </Field>
             </Bar>
         );
     };
 
-    const FolderItem = ({ name, count, active, select, index }) => {
+    const RootItem = ({ children, name }) => {
+        return (
+            <Element className="app-storage-root">
+                <Element className={{ "app-storage-item": true, active: false }}>
+                    <Menu>
+                        <Item>Create Folder...</Item>
+                    </Menu>
+                    <Element className="app-storage-item-name">{name}</Element>
+                </Element>
+                <Element className="app-storage-children">
+                    {children}
+                </Element>
+            </Element >);
+    };
+    const FolderItem = ({ name, count, active, select }) => {
         const disabled = count <= 0;
         if (disabled) {
             select = null;
@@ -112,6 +127,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         react.util.useSubscribe(sortState);
         react.util.useSubscribe(updateState);
         react.util.useSubscribe(searchState);
+        let name = path[path.length - 1];
+        if (!name) {
+            name = (<>
+                <Text language="eng">Home</Text>
+                <Text language="heb">בית</Text>
+            </>);
+        }
         const children = react.util.useData(() => {
             let items = me.items || [];
             items = me.sort.find(item => item.id === sort).sort(items);
@@ -121,18 +143,19 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             if (direction === "asc") {
                 items = items.reverse();
             }
-            return items.map((item, index) => {
+            items = items.map(item => {
                 const selectFolder = () => {
                     setPath([...me.path, item.name]);
                 }
                 return (
-                    <FolderItem key={item.name} {...item} index={index} select={selectFolder} />
+                    <FolderItem key={item.name} {...item} select={selectFolder} />
                 );
             });
+            return items;
         }, [counter, path, sort, direction, search]);
-        return (<Element className="app-storage-items">
+        return (<RootItem name={name}>
             {children}
-        </Element>);
+        </RootItem>);
     };
 
     const Main = () => {

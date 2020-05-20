@@ -97,7 +97,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
                         <Text language="heb">חיפוש</Text>
                     </>
                 }>
-                    <Input size="12" type="Search" state={searchState} />
+                    <Input size="1em" type="Search" state={searchState} />
                 </Field>
             </Bar>
         );

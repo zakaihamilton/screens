@@ -103,7 +103,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                         <Text language="heb">חיפוש</Text>
                     </>
                 }>
-                    <Input size="12" type="Search" state={searchState} />
+                    <Input size="1em" type="Search" state={searchState} />
                 </Field>
             </Bar>
         );
