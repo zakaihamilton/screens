@@ -6902,6 +6902,11 @@
             "hebrew": "הלכות"
         },
         {
+            "term": "halakhic",
+            "translation": "Religious Law",
+            "hebrew": "הלכה"
+        },
+        {
             "term": "halakha",
             "translation": "Code of Law",
             "hebrew": "הלכה"
