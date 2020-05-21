@@ -91,7 +91,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const RootItem = ({ children, name }) => {
+    const RootItem = ({ children, name, pathState }) => {
+        const [path, setPath] = pathState;
         const createFolder = async () => {
             let path = me.path;
             if (path) {
@@ -101,13 +102,27 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             await storage.fs.createFolder("/" + path);
             await me.loadItems();
         };
+        const gotoParentFolder = () => {
+            setPath(path.slice(0, path.length - 1));
+        };
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
                     <Menu label={
                         <Element className="app-storage-item-name">{name}</Element>
                     }>
-                        <Item onClick={createFolder}>Create Folder...</Item>
+                        <Item onClick={createFolder}>
+                            <>
+                                <Text language="eng">Create Folder</Text>
+                                <Text language="heb">יצירת תיקיה</Text>
+                            </>
+                        </Item>
+                        {path.length > 0 && <Item onClick={gotoParentFolder}>
+                            <>
+                                <Text language="eng">Goto Parent Folder</Text>
+                                <Text language="heb">לך לתיקיה העליונה</Text>
+                            </>
+                        </Item>}
                     </Menu>
                 </Element>
                 <Element className="app-storage-children">
@@ -157,7 +172,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
             return items;
         }, [counter, path, sort, direction, search]);
-        return (<RootItem name={name}>
+        return (<RootItem name={name} pathState={pathState}>
             {children}
         </RootItem>);
     };
@@ -170,7 +185,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const sortDirectionState = react.util.useState("desc");
         const updateState = react.util.useState(0);
         const searchState = react.util.useState("");
-        const pathState = react.util.makeState([me.path.split("/"), value => {
+        const pathState = react.util.makeState([me.path.split("/").filter(Boolean), value => {
             me.path = value.join("/");
             me.loadItems();
         }]);

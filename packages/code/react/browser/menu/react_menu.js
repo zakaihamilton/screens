@@ -59,8 +59,8 @@ screens.react.Menu = ({ label, children }) => {
     };
 
     const popupChildren = React.Children.map(children, (child => {
-        return React.cloneElement(child, { open });
-    }));
+        return child && React.cloneElement(child, { open });
+    })).filter(Boolean);
 
     return (<Element className="react-menu">
         <Element ref={menuRef} className={buttonClassName} onClick={togglePopup}>

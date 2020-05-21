@@ -9,8 +9,8 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
     const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
     children = React.Children.map(children, (child => {
-        return React.cloneElement(child, { ...child && typeof child.props.state === "undefined" && { state }, open, path });
-    }));
+        return child && React.cloneElement(child, { ...child && typeof child.props.state === "undefined" && { state }, open, path });
+    })).filter(Boolean);
 
     const updatePosition = () => {
         const element = popupRef.current;
@@ -49,18 +49,18 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
 
     if (multiple && selected.length > 1) {
         currentChildren = React.Children.map(multiple, child => {
-            return React.cloneElement(child, { state, open, current: true, display: true });
-        });
+            return child && React.cloneElement(child, { state, open, current: true, display: true });
+        }).filter(Boolean);
     }
     else {
         currentChildren = React.Children.map(children, child => {
-            return React.cloneElement(child, { current: true });
-        });
+            return child && React.cloneElement(child, { current: true });
+        }).filter(Boolean);
     }
 
     const popupChildren = React.Children.map(children, (child => {
-        return React.cloneElement(child, { ...child && typeof child.props.popup === "undefined" && { popup: true } });
-    }));
+        return child && React.cloneElement(child, { ...child && typeof child.props.popup === "undefined" && { popup: true } });
+    })).filter(Boolean);
 
     return (<Element className="react-dropdown">
         <Element ref={selectedRef} className="react-dropdown-current" onClick={togglePopup}>

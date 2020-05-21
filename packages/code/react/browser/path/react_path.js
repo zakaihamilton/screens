@@ -3,8 +3,8 @@ screens.react.Path = ({ state, children }) => {
     const ref = React.useRef(null);
     const count = React.Children.count(children);
     children = React.Children.map(children, (child, index) => {
-        return React.cloneElement(child, { ...child, index, count, ...typeof child.props.state === "undefined" && { state } });
-    });
+        return child && React.cloneElement(child, { ...child, index, count, ...typeof child.props.state === "undefined" && { state } });
+    }).filter(Boolean);
 
     return (<Element className="react-path">
         <Element ref={ref} className="react-path-items">

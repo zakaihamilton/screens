@@ -46,7 +46,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
         const itemsToShowSize = 2 * itemSize;
         let visible = offset > position - itemsToShowSize && offset < position + size + itemsToShowSize;
         if (visible) {
-            element = React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, unit });
+            element = el && React.cloneElement(el, { offset, horizontal, width: itemWidth, height: itemHeight, itemSize, unit });
         }
         offset += itemSize;
         return element;

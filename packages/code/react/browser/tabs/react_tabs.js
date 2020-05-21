@@ -5,8 +5,8 @@ screens.react.Tabs = ({ state, children }) => {
     const counter = screens.react.util.useResize();
     const [selected] = state || [];
     children = React.Children.map(children, (child => {
-        return React.cloneElement(child, { state });
-    }));
+        return child && React.cloneElement(child, { state });
+    })).filter(Boolean);
 
     const updateIndicator = (animate) => {
         const items = Array.from((childrenRef.current && childrenRef.current.children) || []);
