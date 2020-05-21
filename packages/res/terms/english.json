@@ -6897,6 +6897,11 @@
             "hebrew": "עבודה זרה"
         },
         {
+            "term": "halakhot",
+            "translation": "Laws",
+            "hebrew": "הלכות"
+        },
+        {
             "term": "halakha",
             "translation": "Code of Law",
             "hebrew": "הלכה"
