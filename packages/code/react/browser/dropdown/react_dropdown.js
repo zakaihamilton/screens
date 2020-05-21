@@ -1,4 +1,4 @@
-screens.react.DropDown = ({ state, children, multiple }) => {
+screens.react.DropDown = ({ state, children, multiple, path }) => {
     const { Item, Element, Direction } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -9,7 +9,7 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     const selectedRect = screens.react.util.getRect(selectedRef.current && selectedRef.current.querySelectorAll("[data-id]")[0], true);
     const counter = screens.react.util.useResize();
     children = React.Children.map(children, (child => {
-        return React.cloneElement(child, { ...child && typeof child.props.state === "undefined" && { state }, open });
+        return React.cloneElement(child, { ...child && typeof child.props.state === "undefined" && { state }, open, path });
     }));
 
     const updatePosition = () => {
@@ -47,16 +47,15 @@ screens.react.DropDown = ({ state, children, multiple }) => {
         show: isOpen
     };
 
-    let currentChildren = null;
     if (multiple && selected.length > 1) {
-        currentChildren = React.Children.map(multiple, (child => {
+        currentChildren = React.Children.map(multiple, child => {
             return React.cloneElement(child, { state, open, current: true, display: true });
-        }));
+        });
     }
     else {
-        currentChildren = React.Children.map(children, (child => {
+        currentChildren = React.Children.map(children, child => {
             return React.cloneElement(child, { current: true });
-        }));
+        });
     }
 
     const popupChildren = React.Children.map(children, (child => {
@@ -80,20 +79,25 @@ screens.react.DropDown = ({ state, children, multiple }) => {
     </Element>);
 };
 
-screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, style, children }) => {
+screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, path, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const [selected, setSelected, subscription] = state || [];
     const isMultiple = Array.isArray(selected);
     let index = -1;
     if (isMultiple) {
-        index = selected.findIndex(el => el === id);
+        if (path) {
+            index = selected.filter(Boolean).length === id ? id : -1;
+        }
+        else {
+            index = selected.findIndex(el => el === id);
+        }
     }
     else {
         index = (selected === id) ? 0 : -1;
     }
     subscription.subscribe(selected => {
-        if (isMultiple && !multiple && popup) {
+        if (isMultiple && !multiple && !path && popup) {
             index = selected.findIndex(el => el === id);
             if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
                 selected.splice(index, 1);
@@ -109,7 +113,11 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
             return;
         }
         if (isMultiple) {
-            if (multiple) {
+            if (path) {
+                setSelected(selected.slice(0, id));
+                setOpen && setOpen(0);
+            }
+            else if (multiple) {
                 if (index !== -1) {
                     selected.splice(index, 1);
                 }
@@ -117,11 +125,12 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
                     selected.push(id);
                 }
                 setSelected && setSelected(selected);
+                setOpen && setOpen(open + 1);
             }
             else {
                 setSelected && setSelected([id]);
+                setOpen && setOpen(open + 1);
             }
-            setOpen && setOpen(open + 1);
         }
         else {
             setSelected && setSelected(id);
@@ -134,7 +143,7 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
         open: isOpen,
         current,
         popup,
-        multiple: isMultiple && multiple
+        multiple: isMultiple && multiple && !path
     };
     if (current && index === -1 && !display) {
         return null;

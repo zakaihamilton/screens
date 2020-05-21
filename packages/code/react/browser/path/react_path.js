@@ -1,7 +1,6 @@
 screens.react.Path = ({ state, children }) => {
     const { Item, Element } = screens.react;
     const ref = React.useRef(null);
-    const counter = screens.react.util.useResize();
     const count = React.Children.count(children);
     children = React.Children.map(children, (child, index) => {
         return React.cloneElement(child, { ...child, index, count, ...typeof child.props.state === "undefined" && { state } });
@@ -19,7 +18,7 @@ screens.react.Path = ({ state, children }) => {
 screens.react.Path.Item = ({ id, state, index, count, style, children }) => {
     const { Element } = screens.react;
     const [path, setPath] = state || [];
-    const isLast = index === count - 1;
+    const isLast = index === count - 1 || !(path.filter(Boolean).length);
     const onClick = () => {
         if (!isLast) {
             setPath && setPath(path.slice(0, index));

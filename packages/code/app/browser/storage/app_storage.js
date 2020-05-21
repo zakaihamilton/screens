@@ -33,16 +33,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
         });
         const pathItems = (path || []).map((name, idx) => {
-            return (<Item key={idx} id={idx}>{name}</Item>);
+            return (<Item key={idx} id={idx + 1}>{name}</Item>);
         });
-        const noneItem = (<Item id="none" multiple={false}>
-            <Text language="eng">None</Text>
-            <Text language="heb">אין</Text>
-        </Item>);
-        const rootItem = (<Item id="none" multiple={false}>
+        const rootItem = (<Item id={0}>
             <Text language="eng">Home</Text>
             <Text language="heb">בית</Text>
         </Item>);
+        const isMobile = core.device.isMobile();
+        const PathOrDropDown = isMobile ? DropDown : Path;
         return (
             <Bar>
                 <Field label={
@@ -75,10 +73,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         <Text language="heb">נתיב</Text>
                     </>
                 }>
-                    <Path state={pathState}>
+                    <PathOrDropDown state={pathState} path={true}>
                         {rootItem}
                         {pathItems}
-                    </Path>
+                    </PathOrDropDown>
                 </Field>
                 <Element style={{ flex: 1 }}></Element>
                 <Field label={
