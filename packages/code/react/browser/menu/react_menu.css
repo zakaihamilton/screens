@@ -79,11 +79,15 @@
     align-items: center;
 }
 
-.react-menu-item:active:hover {
+.react-menu-item.disable {
+    opacity: 0.5;
+}
+
+.react-menu-item:not(.disable):active:hover {
     opacity: 0.8;
 }
 
-.react-menu-item:hover {
+.react-menu-item:not(.disable):hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
 }

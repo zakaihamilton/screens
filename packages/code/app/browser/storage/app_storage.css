@@ -47,17 +47,18 @@
     border: 1px solid transparent;
 }
 
-.app-storage-item.active:hover {
+.app-storage-item.active.hover {
     border: 1px solid rgba(81, 203, 238, 1);
 }
 
-.app-storage-item.active:hover:active {
+.app-storage-item.active.hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
     background-color: var(--chrome-background);
 }
 
 .app-storage-item-name {
+    margin-left: 0.5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

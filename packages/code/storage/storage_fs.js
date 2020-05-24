@@ -106,7 +106,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         }
         let info = await me.info(path);
         if (!info) {
-            let folderPath = core.path.folderPath(path);
+            let folderPath = core.path.folderPath(path) || "/";
             let folderInfo = await me.info(folderPath);
             if (folderInfo) {
                 const type = await me.type(folderPath);
@@ -123,7 +123,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             }
             const name = path.split("/").pop();
             folderInfo.timestamp = Date.now();
-            folderInfo.items.push({ name, type: "file" });
+            folderInfo.items.push({ name, type: "file", path });
             await me.setInfo(folderPath, folderInfo);
             info = {
                 type: "file"
@@ -149,16 +149,16 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             return;
         }
         if (type === "folder") {
-            const items = me.list(path);
-            for (const name of items) {
-                await me.delete(path + "/" + name);
+            const items = await me.list(path);
+            for (const item of items) {
+                await me.delete(item.path);
             }
         }
         const name = path.split("/").pop();
-        const folderPath = core.path.folderPath(path);
+        const folderPath = core.path.folderPath(path) || "/";
         const folderInfo = await me.info(folderPath);
         if (folderInfo) {
-            folderInfo.items = folderInfo.items.filter(item => item !== name);
+            folderInfo.items = folderInfo.items.filter(item => item.name !== name);
             folderPath.timestamp = Date.now();
             await me.setInfo(folderPath, folderInfo);
         }
@@ -195,10 +195,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             if (type) {
                 continue;
             }
-            let folderPath = core.path.folderPath(subPath);
-            if (!folderPath) {
-                folderPath = "/";
-            }
+            const folderPath = core.path.folderPath(subPath) || "/";
             let folderInfo = await me.info(folderPath);
             if (folderInfo) {
                 const type = await me.type(folderPath);
@@ -215,7 +212,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
             }
             const name = names[index];
             folderInfo.timestamp = Date.now();
-            folderInfo.items.push({ name, type: "folder" });
+            folderInfo.items.push({ name, type: "folder", path: folderPath + "/" + name });
             await me.setInfo(folderPath, folderInfo);
             const itemInfo = {
                 type: "folder",

@@ -1,4 +1,4 @@
-screens.react.Menu = ({ label, children }) => {
+screens.react.Menu = ({ label, icon, children }) => {
     const { Item, Element, Direction } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -64,7 +64,7 @@ screens.react.Menu = ({ label, children }) => {
 
     return (<Element className="react-menu">
         <Element ref={menuRef} className={buttonClassName} onClick={togglePopup}>
-            <Element className={iconClassName}>&#9776;</Element>
+            <Element className={iconClassName}>{icon}</Element>
             {label && <Element className={labelClassName}>{label}</Element>}
         </Element>
         <Element className={modalClassName} onClick={() => setOpen(false)} />
@@ -78,11 +78,12 @@ screens.react.Menu = ({ label, children }) => {
     </Element>);
 };
 
-screens.react.Menu.Item = ({ id = "", children, open, onClick, ...props }) => {
+screens.react.Menu.Item = ({ id = "", children, open, disable, onClick, ...props }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const className = {
-        "react-menu-item": true
+        "react-menu-item": true,
+        disable
     };
     const handleClick = async () => {
         let result = false;

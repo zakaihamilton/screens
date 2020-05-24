@@ -91,15 +91,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
+    const toPath = (...parts) => {
+        return "/" + parts.filter(Boolean).join("/");
+    };
+
     const RootItem = ({ children, name, pathState }) => {
         const [path, setPath] = pathState;
         const createFolder = async () => {
-            let path = me.path;
-            if (path) {
-                path += "/";
-            }
-            path += "New Folder";
-            await storage.fs.createFolder("/" + path);
+            await storage.fs.createFolder(toPath(me.path, "New Folder"));
             await me.loadItems();
         };
         const gotoParentFolder = () => {
@@ -108,21 +107,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
-                    <Menu label={
+                    <Menu icon="&#9776;" label={
                         <Element className="app-storage-item-name">{name}</Element>
                     }>
+                        <Item onClick={gotoParentFolder} disable={!path.length}>
+                            <>
+                                <Text language="eng">Goto Parent Folder</Text>
+                                <Text language="heb">לך לתיקיה העליונה</Text>
+                            </>
+                        </Item>
+                        <Separator />
                         <Item onClick={createFolder}>
                             <>
                                 <Text language="eng">Create Folder</Text>
                                 <Text language="heb">יצירת תיקיה</Text>
                             </>
                         </Item>
-                        {path.length > 0 && <Item onClick={gotoParentFolder}>
-                            <>
-                                <Text language="eng">Goto Parent Folder</Text>
-                                <Text language="heb">לך לתיקיה העליונה</Text>
-                            </>
-                        </Item>}
                     </Menu>
                 </Element>
                 <Element className="app-storage-children">
@@ -131,8 +131,21 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             </Element >);
     };
     const FolderItem = ({ name, select }) => {
-        return (<Element className={{ "app-storage-item": true, active: true }} onClick={select}>
-            <Element title={name} className="app-storage-item-name">{name}</Element>
+        const [hoverRef, hover] = react.util.useHover();
+        const deleteItem = async () => {
+            await storage.fs.delete(toPath(me.path, name));
+            await me.loadItems();
+        };
+        return (<Element className={{ "app-storage-item": true, active: true, hover }}>
+            <Menu icon="&#8942;">
+                <Item onClick={deleteItem}>
+                    <>
+                        <Text language="eng">Delete</Text>
+                        <Text language="heb">מחיקה</Text>
+                    </>
+                </Item>
+            </Menu>
+            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={select}>{name}</Element>
         </Element>);
     };
 
