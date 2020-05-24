@@ -77,6 +77,8 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
 }
 
 .react-menu-item.disable {

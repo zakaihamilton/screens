@@ -91,14 +91,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const toPath = (...parts) => {
-        return "/" + parts.filter(Boolean).join("/");
-    };
-
     const RootItem = ({ children, name, pathState }) => {
         const [path, setPath] = pathState;
         const createFolder = async () => {
-            await storage.fs.createFolder(toPath(me.path, "New Folder"));
+            await storage.fs.createFolder(core.path.normalize(me.path, "New Folder"));
             await me.loadItems();
         };
         const gotoParentFolder = () => {
@@ -133,7 +129,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const FolderItem = ({ name, select }) => {
         const [hoverRef, hover] = react.util.useHover();
         const deleteItem = async () => {
-            await storage.fs.delete(toPath(me.path, name));
+            await storage.fs.delete(core.path.normalize(me.path, name));
             await me.loadItems();
         };
         return (<Element className={{ "app-storage-item": true, active: true, hover }}>

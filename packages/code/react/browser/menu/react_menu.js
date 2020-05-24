@@ -87,6 +87,9 @@ screens.react.Menu.Item = ({ id = "", children, open, disable, onClick, ...props
     };
     const handleClick = async () => {
         let result = false;
+        if (disable) {
+            return;
+        }
         if (onClick) {
             result = await onClick();
         }

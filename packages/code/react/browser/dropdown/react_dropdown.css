@@ -44,11 +44,11 @@
 }
 
 .react-dropdown-items {
-    background-color: var(--chrome-background);
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    background-color: var(--chrome-background);
     color: var(--chrome-color);
 }
 
@@ -60,8 +60,6 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
 }
 
 .react-dropdown-item.current {
@@ -77,11 +75,11 @@
 }
 
 .react-dropdown-item.popup.selected {
-    border-left: 4px solid var(--phase-two-border);
-    background-color: var(--phase-two-border);
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
 }
 
 .react-dropdown-item.popup.multiple.selected {
-    border-left: 4px solid var(--phase-four-border);
-    background-color: var(--phase-four-border);
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
 }
