@@ -11,7 +11,16 @@ screens.storage.fs = function StorageFS(me, { core, storage }) {
         else {
             me.driver = storage.fs.local;
         }
-        const keys = ["read", "write", "list", "delete", "type", "timestamp", "createFolder"];
+        const keys = [
+            "read",
+            "write",
+            "list",
+            "delete",
+            "rename",
+            "type",
+            "timestamp",
+            "createFolder"
+        ];
         const methods = {};
         keys.forEach(key => {
             me[key] = (path, ...args) => {
@@ -69,6 +78,15 @@ screens.storage.fs.server = function StorageFSServer(me, { core }) {
             await core.file.delete(path);
         }
     };
+    me.rename = async function (source, target) {
+        if (!core.file.exists(source)) {
+            throw source + " does not exist";
+        }
+        if (!core.file.exists(target)) {
+            throw target + " already exists";
+        }
+        await core.file.rename(source, target);
+    }
     me.type = async function (path) {
         if (core.file.exists(path)) {
             const isFolder = await core.file.isDirectory(path);
@@ -166,6 +184,9 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         if (type === "file") {
             await storage.local.db.set(me.id, "data:" + path);
         }
+    };
+    me.rename = async function (source, target) {
+
     };
     me.type = async function (path) {
         let type = "";

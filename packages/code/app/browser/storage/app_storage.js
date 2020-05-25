@@ -16,6 +16,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Input,
         Clone,
         Path,
+        Modal,
         Separator,
         Menu
     } = react;
@@ -126,22 +127,75 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 </Element>
             </Element >);
     };
-    const FolderItem = ({ name, select }) => {
+    const StorageItem = ({ name, select }) => {
         const [hoverRef, hover] = react.util.useHover();
+        const editRef = React.useRef();
+        const editMode = react.util.useState(false);
+        const editState = react.util.useState(name);
+        const [inEditMode, setEditMode, subscribeEditMode, unsubscribeEditMode] = editMode;
+        const [editText, setEditText] = editState;
         const deleteItem = async () => {
             await storage.fs.delete(core.path.normalize(me.path, name));
             await me.loadItems();
         };
-        return (<Element className={{ "app-storage-item": true, active: true, hover }}>
-            <Menu icon="&#8942;">
+        const renameTo = async (text) => {
+            if (name === text) {
+                return;
+            }
+            const source = core.path.normalize(me.path, name);
+            const target = core.path.normalize(me.path, text);
+            await storage.fs.rename(source, target);
+            await me.loadItems();
+        };
+        const onSubmit = (text) => {
+            setEditMode(false);
+            renameTo(text);
+        };
+        React.useEffect(() => {
+            const handler = inEditMode => {
+                if (!inEditMode) {
+                    renameTo(editText);
+                }
+            };
+            subscribeEditMode(handler);
+            return () => unsubscribeEditMode(handler);
+        }, []);
+        React.useEffect(() => {
+            if (inEditMode && editRef.current) {
+                editRef.current.focus();
+            }
+        }, [inEditMode]);
+        const renameItem = async () => {
+            setEditMode(true);
+        };
+        let content = (<Element className="app-storage-item-label">{name}</Element>);
+        let onClick = select;
+        if (inEditMode) {
+            content = (
+                <>
+                    <Modal open={editMode} />
+                    <Input ref={editRef} className="app-storage-item-edit" onSubmit={onSubmit} state={editState} />
+                </>
+            );
+            onClick = null;
+        }
+        return (<Element className={{ "app-storage-item": true, active: true, hover: !inEditMode && hover }}>
+            <Menu icon={(<b>&#8942;</b>)}>
                 <Item onClick={deleteItem}>
                     <>
                         <Text language="eng">Delete</Text>
                         <Text language="heb">מחיקה</Text>
                     </>
                 </Item>
+                <Separator />
+                <Item onClick={renameItem}>
+                    <>
+                        <Text language="eng">Rename</Text>
+                        <Text language="heb">שינוי שם</Text>
+                    </>
+                </Item>
             </Menu>
-            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={select}>{name}</Element>
+            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>{content}</Element>
         </Element>);
     };
 
@@ -172,11 +226,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 items = items.reverse();
             }
             items = items.map(item => {
-                const selectFolder = () => {
-                    setPath([...path.filter(Boolean), item.name]);
+                const select = () => {
+                    if (item.type === "folder") {
+                        setPath([...path.filter(Boolean), item.name]);
+                    }
+                    else if (item.type === "file") {
+
+                    }
                 }
                 return (
-                    <FolderItem key={item.name} {...item} select={selectFolder} />
+                    <StorageItem key={item.name} {...item} select={select} />
                 );
             });
             return items;

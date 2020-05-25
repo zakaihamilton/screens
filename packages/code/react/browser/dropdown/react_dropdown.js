@@ -1,5 +1,5 @@
 screens.react.DropDown = ({ state, children, multiple, path }) => {
-    const { Item, Element, Direction } = screens.react;
+    const { Item, Element, Direction, Modal } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
     const selectedRef = React.useRef(null);
@@ -42,11 +42,6 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
         show: isOpen
     };
 
-    const modalClassName = {
-        "react-dropdown-modal": true,
-        show: isOpen
-    };
-
     if (multiple && selected.length > 1) {
         currentChildren = React.Children.map(multiple, child => {
             return child && React.cloneElement(child, { state, open, current: true, display: true });
@@ -68,7 +63,7 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
                 {currentChildren}
             </Item.Component.Provider>
         </Element>
-        <Element className={modalClassName} onClick={() => setOpen(false)} />
+        <Modal open={open} />
         <Element ref={popupRef} className={popupClassName}>
             <Element className="react-dropdown-items">
                 <Item.Component.Provider value={screens.react.DropDown.Item}>
@@ -82,7 +77,7 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
 screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, path, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
-    const [selected, setSelected, subscription] = state || [];
+    const [selected, setSelected, subscribe, unsubscribe] = state || [];
     const isMultiple = Array.isArray(selected);
     let index = -1;
     if (isMultiple) {
@@ -96,18 +91,22 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
     else {
         index = (selected === id) ? 0 : -1;
     }
-    subscription.subscribe(selected => {
-        if (isMultiple && !multiple && !path && popup) {
-            index = selected.findIndex(el => el === id);
-            if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
-                selected.splice(index, 1);
-                return selected;
+    React.useEffect(() => {
+        const handler = selected => {
+            if (isMultiple && !multiple && !path && popup) {
+                index = selected.findIndex(el => el === id);
+                if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
+                    selected.splice(index, 1);
+                    return selected;
+                }
+                else if (selected.length === 0) {
+                    return [id];
+                }
             }
-            else if (selected.length === 0) {
-                return [id];
-            }
-        }
-    });
+        };
+        subscribe(handler);
+        return () => unsubscribe(handler);
+    }, []);
     const onClick = () => {
         if (current) {
             return;

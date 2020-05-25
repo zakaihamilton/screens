@@ -14,20 +14,6 @@
     color: var(--highlight-color);
 }
 
-.react-dropdown-modal {
-    display: none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    z-index: 999;
-}
-
-.react-dropdown-modal.show {
-    display: flex;
-}
-
 .react-dropdown-popup {
     display: none;
     outline: 1px solid var(--chrome-border);

@@ -1,5 +1,5 @@
 screens.react.Menu = ({ label, icon, children }) => {
-    const { Item, Element, Direction } = screens.react;
+    const { Item, Element, Direction, Modal } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
     const menuRef = React.useRef(null);
@@ -38,11 +38,6 @@ screens.react.Menu = ({ label, icon, children }) => {
         show: isOpen
     };
 
-    const modalClassName = {
-        "react-menu-modal": true,
-        show: isOpen
-    };
-
     const buttonClassName = {
         "react-menu-button": true,
         open: isOpen
@@ -67,7 +62,7 @@ screens.react.Menu = ({ label, icon, children }) => {
             <Element className={iconClassName}>{icon}</Element>
             {label && <Element className={labelClassName}>{label}</Element>}
         </Element>
-        <Element className={modalClassName} onClick={() => setOpen(false)} />
+        <Modal open={open} />
         <Element ref={popupRef} className={popupClassName}>
             <Element className="react-menu-items">
                 <Item.Component.Provider value={screens.react.Menu.Item}>

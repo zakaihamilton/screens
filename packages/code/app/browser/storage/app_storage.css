@@ -62,8 +62,22 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
+}
+
+.app-storage-item-label {
+    padding: 0.4em;
+}
+
+.app-storage-item-edit {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+    position: relative;
+    border: none;
+    font-size: inherit;
+    z-index: 1000;
+    appearance: none;
+    outline: none;
+    padding: 0.4em;
 }
 
 .app-storage-user-index {

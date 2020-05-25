@@ -20,24 +20,18 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         };
         const update = (value) => {
             for (const subscription of subscriptions.current) {
-                const result = subscription(value);
-                if (typeof result !== "undefined") {
-                    value = result;
-                }
+                subscription(value);
             }
             setter(value);
         };
-        return [getter, update, {
-            subscribe,
-            unsubscribe
-        }];
+        return [getter, update, subscribe, unsubscribe];
     };
     me.useState = function (value) {
         const state = React.useState(value);
         return me.makeState(state);
     };
     me.useSubscribe = function (state) {
-        const [getter, setter, subscription] = state;
+        const [getter, setter, subscribe, unsubscribe] = state;
         const [counter, setCounter] = React.useState(0);
         React.useEffect(() => {
             const handler = () => {
@@ -45,9 +39,9 @@ screens.react.util = function ReactUtil(me, { core, react }) {
                     return counter + 1;
                 });
             };
-            subscription.subscribe(handler);
+            subscribe(handler);
             return () => {
-                subscription.unsubscribe(handler);
+                unsubscribe(handler);
             };
         });
     };

@@ -1,0 +1,13 @@
+.react-modal {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 999;
+}
+
+.react-modal.show {
+    display: flex;
+}

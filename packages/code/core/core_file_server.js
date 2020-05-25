@@ -60,6 +60,20 @@ screens.core.file = function CoreFile(me, { core }) {
             }
         });
     };
+    me.rename = function (source, target) {
+        source = me.path(source);
+        target = me.path(target);
+        return new Promise((resolve, reject) => {
+            me.fs.rename(source, target, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
+    };
     me.makeDir = function (path) {
         path = me.path(path);
         return new Promise((resolve, reject) => {
