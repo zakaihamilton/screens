@@ -28,7 +28,7 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
             unsubscribe(handler);
             stopTimer();
         }
-    }, []);
+    }, [text]);
 
     const value = hasTimer() ? currentText : text;
     return (<Element
