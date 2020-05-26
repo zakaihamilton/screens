@@ -1,15 +1,15 @@
 screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
     const { Element, util } = screens.react;
-    const [text, setText] = state;
+    const [text, setText, subscribe, unsubscribe] = state;
     const [currentText, setCurrentText] = React.useState(text);
     const [startTimer, stopTimer, hasTimer] = util.useTimer(250);
 
     const onChange = event => {
         const { value } = event.target;
+        setCurrentText(value);
         startTimer(() => {
             setText(value);
         });
-        setCurrentText(value);
     };
 
     const keyPressed = event => {
@@ -20,7 +20,12 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
     };
 
     React.useEffect(() => {
+        const handler = () => {
+            setCurrentText(text);
+        };
+        subscribe(handler);
         return () => {
+            unsubscribe(handler);
             stopTimer();
         }
     }, []);

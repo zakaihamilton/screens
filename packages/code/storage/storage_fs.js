@@ -186,7 +186,7 @@ screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
         }
     };
     me.rename = async function (source, target) {
-
+        throw "not implemented";
     };
     me.type = async function (path) {
         let type = "";

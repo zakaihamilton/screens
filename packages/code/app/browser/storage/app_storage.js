@@ -144,12 +144,17 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             }
             const source = core.path.normalize(me.path, name);
             const target = core.path.normalize(me.path, text);
-            await storage.fs.rename(source, target);
+            try {
+                await storage.fs.rename(source, target);
+            }
+            catch (err) {
+                setEditText(name);
+            }
             await me.loadItems();
         };
-        const onSubmit = (text) => {
+        const onSubmit = async (text) => {
+            await renameTo(text);
             setEditMode(false);
-            renameTo(text);
         };
         React.useEffect(() => {
             const handler = inEditMode => {
@@ -159,7 +164,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             };
             subscribeEditMode(handler);
             return () => unsubscribeEditMode(handler);
-        }, []);
+        }, [editText]);
         React.useEffect(() => {
             if (inEditMode && editRef.current) {
                 editRef.current.focus();
