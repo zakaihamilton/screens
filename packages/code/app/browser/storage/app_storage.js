@@ -95,7 +95,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const RootItem = ({ children, name, pathState }) => {
         const [path, setPath] = pathState;
         const createFolder = async () => {
-            await storage.fs.createFolder(core.path.normalize(me.path, "New Folder"));
+            me.create = { type: "folder", name: "" };
             await me.loadItems();
         };
         const gotoParentFolder = () => {
@@ -127,64 +127,69 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 </Element>
             </Element >);
     };
-    const StorageItem = ({ name, select }) => {
+    const StorageItem = ({ name, select, edit }) => {
         const [hoverRef, hover] = react.util.useHover();
         const editRef = React.useRef();
-        const editMode = react.util.useState(false);
+        const editVisibility = react.util.useState(edit);
         const editState = react.util.useState(name);
-        const [inEditMode, setEditMode, subscribeEditMode, unsubscribeEditMode] = editMode;
+        const [isEditVisibile, showEdit, subscribeEditVisibility, unsubscribeEditVisibility] = editVisibility;
         const [editText, setEditText] = editState;
         const deleteItem = async () => {
             await storage.fs.delete(core.path.normalize(me.path, name));
             await me.loadItems();
         };
         const renameTo = async (text) => {
-            if (name === text) {
-                return;
+            if (name !== text && text) {
+                const source = core.path.normalize(me.path, name);
+                const target = core.path.normalize(me.path, text);
+                try {
+                    if (name) {
+                        await storage.fs.rename(source, target);
+                    }
+                    else {
+                        await storage.fs.createFolder(target);
+                    }
+                }
+                catch (err) {
+                    setEditText(name);
+                }
             }
-            const source = core.path.normalize(me.path, name);
-            const target = core.path.normalize(me.path, text);
-            try {
-                await storage.fs.rename(source, target);
-            }
-            catch (err) {
-                setEditText(name);
-            }
+            me.create = null;
             await me.loadItems();
         };
         const onSubmit = async (text) => {
             await renameTo(text);
-            setEditMode(false);
+            showEdit(false);
         };
         React.useEffect(() => {
-            const handler = inEditMode => {
-                if (!inEditMode) {
+            const handler = isEditVisibile => {
+                if (!isEditVisibile) {
                     renameTo(editText);
                 }
             };
-            subscribeEditMode(handler);
-            return () => unsubscribeEditMode(handler);
+            subscribeEditVisibility(handler);
+            return () => unsubscribeEditVisibility(handler);
         }, [editText]);
         React.useEffect(() => {
-            if (inEditMode && editRef.current) {
+            if (isEditVisibile && editRef.current) {
                 editRef.current.focus();
             }
-        }, [inEditMode]);
+        }, [isEditVisibile]);
         const renameItem = async () => {
-            setEditMode(true);
+            showEdit(true);
         };
         let content = (<Element className="app-storage-item-label">{name}</Element>);
         let onClick = select;
-        if (inEditMode) {
+        if (isEditVisibile) {
             content = (
                 <>
-                    <Modal open={editMode} />
+                    <Modal open={editVisibility} />
                     <Input ref={editRef} className="app-storage-item-edit" onSubmit={onSubmit} state={editState} />
                 </>
             );
             onClick = null;
         }
-        return (<Element className={{ "app-storage-item": true, active: true, hover: !inEditMode && hover }}>
+        return (<Element className={{ "app-storage-item": true, active: true, hover: !isEditVisibile && hover }}>
             <Menu icon={(<b>&#8942;</b>)}>
                 <Item onClick={deleteItem}>
                     <>
@@ -243,6 +248,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <StorageItem key={item.name} {...item} select={select} />
                 );
             });
+            if (me.create) {
+                items.unshift(<StorageItem {...me.create} key="new folder" edit={true} />);
+            }
             return items;
         }, [counter, path, sort, direction, search]);
         return (<RootItem name={name} pathState={pathState}>
