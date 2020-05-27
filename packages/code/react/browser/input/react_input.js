@@ -26,9 +26,14 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
         subscribe(handler);
         return () => {
             unsubscribe(handler);
-            stopTimer();
         }
     }, [text]);
+
+    React.useEffect(() => {
+        return () => {
+            stopTimer();
+        }
+    }, []);
 
     const value = hasTimer() ? currentText : text;
     return (<Element
