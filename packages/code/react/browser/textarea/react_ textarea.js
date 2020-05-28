@@ -1,4 +1,4 @@
-screens.react.Input = React.forwardRef(({ state, onSubmit, focus, ...props }, ref) => {
+screens.react.TextArea = React.forwardRef(({ state, focus, ...props }, ref) => {
     const { Element, util } = screens.react;
     const inputRef = React.useRef(null);
     const combinedRef = util.useRefs(ref, inputRef);
@@ -14,13 +14,6 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, ...props }, re
         });
     };
 
-    const keyPressed = event => {
-        if (onSubmit && event.key === "Enter") {
-            setText(currentText);
-            onSubmit(currentText);
-        }
-    };
-
     React.useEffect(() => {
         setCurrentText(text);
     }, [text]);
@@ -33,11 +26,10 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, ...props }, re
 
     return (<Element
         ref={combinedRef}
-        tag="input"
+        tag="textarea"
         direction="auto"
         value={currentText}
-        onKeyPress={keyPressed}
         onChange={onChange}
-        className="react-input-edit"
+        className="react-textarea-edit"
         {...props} />);
 });

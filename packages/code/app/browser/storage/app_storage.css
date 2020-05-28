@@ -17,12 +17,14 @@
     flex-wrap: wrap;
     flex-direction: column;
     overflow-y: auto;
+    height: 100%;
 }
 
 .app-storage-children {
     display: flex;
     flex-direction: column;
     margin: 1em;
+    flex: 1;
 }
 
 .app-storage-item {

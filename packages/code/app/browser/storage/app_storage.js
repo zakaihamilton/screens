@@ -18,6 +18,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Path,
         Modal,
         Separator,
+        TextArea,
         Menu
     } = react;
 
@@ -92,17 +93,17 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const RootItem = ({ children, name, pathState }) => {
+    const FolderHeader = ({ children, name, pathState }) => {
         const [path, setPath] = pathState;
         const createFolder = async () => {
             me.create = { type: "folder", name: "" };
-            await me.loadItems();
+            await me.updateView();
         };
         const createFile = async () => {
             me.create = { type: "file", name: "" };
-            await me.loadItems();
+            await me.updateView();
         };
-        const gotoParentFolder = () => {
+        const gotoFolder = () => {
             setPath(path.slice(0, path.length - 1));
         };
         return (
@@ -111,7 +112,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Menu icon="&#9776;" label={
                         <Element className="app-storage-item-name">{name}</Element>
                     }>
-                        <Item onClick={gotoParentFolder} disable={!path.length}>
+                        <Item onClick={gotoFolder} disable={!path.length}>
                             <>
                                 <Text language="eng">Goto Parent Folder</Text>
                                 <Text language="heb">לך לתיקיה העליונה</Text>
@@ -137,16 +138,18 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 </Element>
             </Element >);
     };
+
     const StorageItem = ({ name, select, edit, type }) => {
         const [hoverRef, hover] = react.util.useHover();
-        const editRef = React.useRef();
-        const editVisibility = React.useState(edit);
-        const editState = React.useState(name);
+        const editVisibility = React.useState(edit && edit.editVisibility);
+        const editTextState = React.useState(name);
+        const editModeState = React.useState(edit && edit.editMode);
+        const [editMode, setEditMode] = editModeState;
         const [isEditVisibile, showEdit] = editVisibility;
-        const [editText, setEditText] = editState;
+        const [editText, setEditText] = editTextState;
         const deleteItem = async () => {
             await storage.fs.delete(core.path.normalize(me.path, name));
-            await me.loadItems();
+            await me.updateView();
         };
         const renameTo = async (text) => {
             if (name !== text && text) {
@@ -160,7 +163,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         await storage.fs.mkdir(target);
                     }
                     else if (type === "file") {
-                        await storage.fs.writeFile(target, "");
+                        await storage.fs.writeFile(target, "", "utf8");
                     }
                 }
                 catch (err) {
@@ -168,24 +171,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
             me.create = null;
-            await me.loadItems();
+            await me.updateView();
         };
         const onSubmit = async (text) => {
             await renameTo(text);
             showEdit(false);
+            setEditMode(false);
         };
         React.useEffect(() => {
-            if (!isEditVisibile) {
+            if (editMode && !isEditVisibile) {
                 renameTo(editText);
+                setEditMode(false);
             }
         }, [editText, isEditVisibile]);
-        React.useEffect(() => {
-            if (isEditVisibile && editRef.current) {
-                editRef.current.focus();
-            }
-        }, [isEditVisibile]);
         const renameItem = async () => {
             showEdit(true);
+            setEditMode(true);
         };
         let content = (<Element className="app-storage-item-label">{name}</Element>);
         let onClick = select;
@@ -193,7 +194,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             content = (
                 <>
                     <Modal open={editVisibility} />
-                    <Input ref={editRef} className="app-storage-item-edit" onSubmit={onSubmit} state={editState} />
+                    <Input className="app-storage-item-edit" onSubmit={onSubmit} state={editTextState} focus={true} />
                 </>
             );
             onClick = null;
@@ -221,8 +222,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         </Element>);
     };
 
-    const AppHub = ({ pathState, sortState, searchState, sortDirectionState, updateState }) => {
+    const FolderView = ({ pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState }) => {
         const [path, setPath] = pathState;
+        const [viewType, setViewType] = viewTypeState;
         const [sort] = sortState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
@@ -244,23 +246,65 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         items = items.map(item => {
             const select = () => {
-                if (item.type === "folder") {
-                    setPath([...path.filter(Boolean), item.name]);
-                }
-                else if (item.type === "file") {
-
-                }
+                setPath([...path.filter(Boolean), item.name]);
+                setViewType(item.type);
             }
             return (
                 <StorageItem key={item.name} {...item} select={select} />
             );
         });
         if (me.create) {
-            items.unshift(<StorageItem {...me.create} key="new folder" edit={true} />);
+            items.unshift(<StorageItem {...me.create} key="new folder" edit={{ editVisibility: true, editMode: true }} />);
         }
-        return (<RootItem name={name} pathState={pathState}>
+        return (<FolderHeader name={name} pathState={pathState}>
             {items}
-        </RootItem>);
+        </FolderHeader>);
+    };
+
+    const FileHeader = ({ children, name, pathState, viewTypeState }) => {
+        const [viewType, setViewType] = viewTypeState;
+        const [path, setPath] = pathState;
+        const gotoFolder = () => {
+            setPath(path.slice(0, path.length - 1));
+            setViewType("folder");
+        };
+        return (
+            <Element className="app-storage-root">
+                <Element className={{ "app-storage-item": true, active: false, root: true }}>
+                    <Menu icon="&#9776;" label={
+                        <Element className="app-storage-item-name">{name}</Element>
+                    }>
+                        <Item onClick={gotoFolder}>
+                            <>
+                                <Text language="eng">Goto Folder</Text>
+                                <Text language="heb">לך לתיקיה</Text>
+                            </>
+                        </Item>
+                    </Menu>
+                </Element>
+                <Element className="app-storage-children">
+                    {children}
+                </Element>
+            </Element >);
+    };
+
+    const FileView = ({ pathState, viewTypeState }) => {
+        const counter = react.util.useResize();
+        const [ref, width, height] = react.util.useSize(counter);
+        const textState = [me.content, async (content) => {
+            await storage.fs.writeFile("/" + me.path, content);
+        }];
+        const style = {
+            width: width + "px",
+            height: height + "px",
+            resize: "none",
+            flex: "1",
+            backgroundColor: "var(--chrome-background)",
+            color: "var(--chrome-color)"
+        };
+        return (<FileHeader name={name} pathState={pathState} viewTypeState={viewTypeState}>
+            <TextArea ref={ref} focus={true} wrap="off" state={textState} style={style} />
+        </FileHeader>);
     };
 
     const Main = () => {
@@ -272,11 +316,23 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const updateState = React.useState(0);
         const searchState = React.useState("");
         const pathState = React.useState(me.path.split("/").filter(Boolean));
-        const [path] = pathState;
+        const viewTypeState = React.useState(me.viewType);
+        const [path, setPath] = pathState;
+        const [viewType, setViewType] = viewTypeState;
+        pathState[1] = React.useCallback(path => {
+            me.viewType = "folder";
+            setViewType(me.viewType);
+            setPath(path);
+        });
         React.useEffect(() => {
             me.path = path.join("/");
-            me.loadItems();
         }, [path]);
+        React.useEffect(() => {
+            me.viewType = viewType;
+        }, [viewType]);
+        React.useEffect(() => {
+            me.updateView();
+        }, [path, viewType]);
         const [language] = languageState;
         const [delay] = delayState;
         const direction = me.languages.find(item => item.id === language).direction;
@@ -294,6 +350,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         });
         const state = {
             pathState,
+            viewTypeState,
             languageState,
             sortState,
             sortDirectionState,
@@ -308,7 +365,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             <Direction direction={direction}>
                 <Language language={language}>
                     <AppToolbar {...state} />
-                    <AppHub {...state} />
+                    {viewType === "folder" && <FolderView {...state} />}
+                    {viewType === "file" && <FileView {...state} />}
                 </Language>
             </Direction>
         );
@@ -371,11 +429,18 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             return me.singleton;
         }
         me.path = "";
-        await me.loadItems();
+        me.viewType = "folder";
+        await me.updateView();
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
-    me.loadItems = async function () {
-        me.items = await storage.fs.list("/" + me.path);
+    me.updateView = async function () {
+        console.log("viewType: " + me.viewType + " path: " + me.path);
+        if (me.viewType === "folder") {
+            me.items = await storage.fs.list("/" + me.path);
+        }
+        else if (me.viewType === "file") {
+            me.content = await storage.fs.readFile("/" + me.path, "utf8");
+        }
         if (me.redraw) {
             me.redraw();
         }
@@ -391,7 +456,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     me.visibilityChange = function () {
         const visibilityState = ui.session.visibilityState();
         if (me.singleton && visibilityState === "visible") {
-            me.loadItems();
+            me.updateView();
         }
     };
     me.render = function (object) {
