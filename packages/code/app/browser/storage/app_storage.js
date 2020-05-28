@@ -98,6 +98,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             me.create = { type: "folder", name: "" };
             await me.loadItems();
         };
+        const createFile = async () => {
+            me.create = { type: "file", name: "" };
+            await me.loadItems();
+        };
         const gotoParentFolder = () => {
             setPath(path.slice(0, path.length - 1));
         };
@@ -120,6 +124,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                                 <Text language="heb">יצירת תיקיה</Text>
                             </>
                         </Item>
+                        <Item onClick={createFile}>
+                            <>
+                                <Text language="eng">Create File</Text>
+                                <Text language="heb">יצירת קובץ</Text>
+                            </>
+                        </Item>
                     </Menu>
                 </Element>
                 <Element className="app-storage-children">
@@ -127,7 +137,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 </Element>
             </Element >);
     };
-    const StorageItem = ({ name, select, edit }) => {
+    const StorageItem = ({ name, select, edit, type }) => {
         const [hoverRef, hover] = react.util.useHover();
         const editRef = React.useRef();
         const editVisibility = React.useState(edit);
@@ -146,8 +156,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     if (name) {
                         await storage.fs.rename(source, target);
                     }
-                    else {
+                    else if (type === "folder") {
                         await storage.fs.mkdir(target);
+                    }
+                    else if (type === "file") {
+                        await storage.fs.writeFile(target, "");
                     }
                 }
                 catch (err) {
@@ -201,7 +214,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     </>
                 </Item>
             </Menu>
-            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>{content}</Element>
+            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
+                <Element title={core.string.title(type)} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>
+                {content}
+            </Element>
         </Element>);
     };
 
