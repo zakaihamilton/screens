@@ -77,7 +77,7 @@ screens.react.DropDown = ({ state, children, multiple, path }) => {
 screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, path, style, children }) => {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
-    const [selected, setSelected, subscribe, unsubscribe] = state || [];
+    const [selected, setSelected] = state || [];
     const isMultiple = Array.isArray(selected);
     let index = -1;
     if (isMultiple) {
@@ -92,21 +92,20 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
         index = (selected === id) ? 0 : -1;
     }
     React.useEffect(() => {
-        const handler = selected => {
-            if (isMultiple && !multiple && !path && popup) {
-                index = selected.findIndex(el => el === id);
-                if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
-                    selected.splice(index, 1);
-                    return selected;
-                }
-                else if (selected.length === 0) {
-                    return [id];
-                }
+        if (isMultiple && !multiple && !path && popup) {
+            index = selected.findIndex(el => el === id);
+            if (index !== -1 && (selected.length > 1 || selected[0] !== id)) {
+                const result = [...selected];
+                result.splice(index, 1);
+                setSelected(result);
+                setOpen && setOpen(isOpen + 1);
             }
-        };
-        subscribe(handler);
-        return () => unsubscribe(handler);
-    }, []);
+            else if (selected.length === 0) {
+                setSelected([id]);
+                setOpen && setOpen(isOpen + 1);
+            }
+        }
+    });
     const onClick = () => {
         if (current) {
             return;
@@ -117,19 +116,19 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
                 setOpen && setOpen(0);
             }
             else if (multiple) {
+                const result = [...selected];
                 if (index !== -1) {
-                    selected.splice(index, 1);
+                    result.splice(index, 1);
                 }
                 else {
-                    selected.push(id);
+                    result.push(id);
                 }
-                setSelected && setSelected(selected);
-                setOpen && setOpen(open + 1);
+                setSelected && setSelected(result);
             }
             else {
                 setSelected && setSelected([id]);
-                setOpen && setOpen(open + 1);
             }
+            setOpen && setOpen(isOpen + 1);
         }
         else {
             setSelected && setSelected(id);

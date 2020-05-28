@@ -150,75 +150,67 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         const [direction] = sortDirectionState;
         const [year] = yearState;
         const [search] = searchState;
-        react.util.useSubscribe(groupState);
-        react.util.useSubscribe(sortState);
-        react.util.useSubscribe(yearState);
-        react.util.useSubscribe(searchState);
-        react.util.useSubscribe(updateState);
-        const items = react.util.useData(() => {
-            let items = me.sessions;
-            const compare = (item, fields, search) => {
-                if (!search) {
+        let items = me.sessions;
+        const compare = (item, fields, search) => {
+            if (!search) {
+                return true;
+            }
+            for (const field of fields) {
+                if (core.string.caselessInclude(item[field], search)) {
                     return true;
                 }
-                for (const field of fields) {
-                    if (core.string.caselessInclude(item[field], search)) {
-                        return true;
-                    }
-                }
-            };
-            items = items.filter(item => group[0] === "all" || group.includes(item.group));
-            items = items.filter(item => year[0] === "all" || year.includes(item.year));
-            if (search) {
-                items = items.filter(item => {
-                    return compare(item, ["date", "name", "index", "durationText"], search);
-                });
             }
-            items = me.sort.find(item => item.id === sort).sort(items);
-            if (direction === "asc") {
-                items = items.reverse();
-            }
-            items = items.map(item => (
-                <Item key={item.id}>
-                    <Swimlane label={item.label}>
-                        {item.content.map(item => {
-                            const group = core.string.title(item.group);
-                            const loadSession = () => {
-                                core.app.launch("player", item.group, item.session);
-                            }
-                            return (
-                                <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
-                                    <Element className="app-sessions-row">
-                                        <Element>#{item.index}</Element>
-                                        {(group[0] === "all" || group.length > 1) && (
-                                            <Element direction="auto" key={group}>{group}</Element>
-                                        )}
-                                    </Element>
-                                    <Element className="app-sessions-row">
-                                        <Element>{item.date}</Element>
-                                        <Element>{item.durationText}</Element>
-                                    </Element>
-                                </Item>
-                            );
-                        })}
-                    </Swimlane>
-                </Item>
-            ));
-            return items;
-        }, [me.sessions, group, year, search, sort]);
+        };
+        items = items.filter(item => group[0] === "all" || group.includes(item.group));
+        items = items.filter(item => year[0] === "all" || year.includes(item.year));
+        if (search) {
+            items = items.filter(item => {
+                return compare(item, ["date", "name", "index", "durationText"], search);
+            });
+        }
+        items = me.sort.find(item => item.id === sort).sort(items);
+        if (direction === "asc") {
+            items = items.reverse();
+        }
+        items = items.map(item => (
+            <Item key={item.id}>
+                <Swimlane label={item.label}>
+                    {item.content.map(item => {
+                        const group = core.string.title(item.group);
+                        const loadSession = () => {
+                            core.app.launch("player", item.group, item.session);
+                        }
+                        return (
+                            <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
+                                <Element className="app-sessions-row">
+                                    <Element>#{item.index}</Element>
+                                    {(group[0] === "all" || group.length > 1) && (
+                                        <Element direction="auto" key={group}>{group}</Element>
+                                    )}
+                                </Element>
+                                <Element className="app-sessions-row">
+                                    <Element>{item.date}</Element>
+                                    <Element>{item.durationText}</Element>
+                                </Element>
+                            </Item>
+                        );
+                    })}
+                </Swimlane>
+            </Item>
+        ));
         return (<List itemSize={20} unit="em">
             {items}
         </List>);
     };
 
     const Main = () => {
-        const yearState = react.util.useState(["all"]);
-        const groupState = react.util.useState(["all"]);
-        const languageState = react.util.useState("eng");
-        const sortState = react.util.useState("date");
-        const sortDirectionState = react.util.useState("desc");
-        const searchState = react.util.useState("");
-        const updateState = react.util.useState(0);
+        const yearState = React.useState(["all"]);
+        const groupState = React.useState(["all"]);
+        const languageState = React.useState("eng");
+        const sortState = React.useState("date");
+        const sortDirectionState = React.useState("desc");
+        const searchState = React.useState("");
+        const updateState = React.useState(0);
         const [language] = languageState;
         const direction = me.languages.find(item => item.id === language).direction;
         React.useEffect(() => {

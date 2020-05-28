@@ -123,55 +123,44 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const [search] = searchState;
         const [direction] = sortDirectionState;
         const [counter] = updateState;
-        react.util.useSubscribe(meetingState);
-        react.util.useSubscribe(currentUserState);
-        react.util.useSubscribe(sortState);
-        react.util.useSubscribe(updateState);
-        react.util.useSubscribe(filterState);
-        react.util.useSubscribe(searchState);
-        const users = react.util.useData(() => {
-            if (!meeting) {
-                return;
+        let { users } = me.meetings.find(item => item.id === meeting);
+        me.filters.forEach(filterItem => {
+            if (filter.includes(filterItem.id)) {
+                users = filterItem.filter(users);
             }
-            let { users } = me.meetings.find(item => item.id === meeting);
-            me.filters.forEach(filterItem => {
-                if (filter.includes(filterItem.id)) {
-                    users = filterItem.filter(users);
-                }
-            });
-            users = me.sort.find(item => item.id === sort).sort(users, meeting);
-            if (search) {
-                users = users.filter(user => user.user_name.toLowerCase().includes(search.toLowerCase()));
+        });
+        users = me.sort.find(item => item.id === sort).sort(users, meeting);
+        if (search) {
+            users = users.filter(user => user.user_name.toLowerCase().includes(search.toLowerCase()));
+        }
+        if (direction === "asc") {
+            users = users.reverse();
+        }
+        const children = users.map((user, index) => {
+            const selectUser = () => {
+                setCurrentUserId(currentUserId !== user.user_id && user.user_id);
             }
-            if (direction === "asc") {
-                users = users.reverse();
-            }
-            return users.map((user, index) => {
-                const selectUser = () => {
-                    setCurrentUserId(currentUserId !== user.user_id && user.user_id);
-                }
-                return (
-                    <User key={user.user_id} {...user} index={index} active={currentUserId === user.user_id} select={selectUser} />
-                );
-            });
-        }, [currentUserId, counter, meeting, sort, filter, direction, search]);
+            return (
+                <User key={user.user_id} {...user} index={index} active={currentUserId === user.user_id} select={selectUser} />
+            );
+        });
         return (<Element className="app-workshop-users">
-            {users}
+            {children}
         </Element>);
     };
 
     const Main = () => {
         const firstMeetingId = me.meetings && me.meetings.length && me.meetings[0].id;
-        const [isOpen, setOpen] = react.util.useState(true);
-        const delayState = react.util.useState(5000);
-        const meetingState = react.util.useState(firstMeetingId);
-        const currentUserState = react.util.useState(0);
-        const languageState = react.util.useState("eng");
-        const sortState = react.util.useState("date");
-        const filterState = react.util.useState(["meeting"]);
-        const sortDirectionState = react.util.useState("desc");
-        const updateState = react.util.useState(0);
-        const searchState = react.util.useState("");
+        const [isOpen, setOpen] = React.useState(true);
+        const delayState = React.useState(5000);
+        const meetingState = React.useState(firstMeetingId);
+        const currentUserState = React.useState(0);
+        const languageState = React.useState("eng");
+        const sortState = React.useState("date");
+        const filterState = React.useState(["meeting"]);
+        const sortDirectionState = React.useState("desc");
+        const updateState = React.useState(0);
+        const searchState = React.useState("");
         const [meetingId, setMeetingId] = meetingState;
         const [language] = languageState;
         const [delay] = delayState;

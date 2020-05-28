@@ -19,6 +19,7 @@
     "@ffprobe-installer/ffprobe": "^1.0.12",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@google-cloud/datastore": "^2.0.0",
+    "@isomorphic-git/lightning-fs": "^4.2.2",
     "@rgrove/parse-xml": "^2.0.2",
     "animate.css": "^3.7.2",
     "autoprefixer": "^9.7.5",

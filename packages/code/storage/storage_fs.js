@@ -3,244 +3,65 @@
  @component StorageFS
  */
 
-screens.storage.fs = function StorageFS(me, { core, storage }) {
-    me.init = async function () {
+screens.storage.fs = function StorageFS(me, { }) {
+    me.init = function () {
         if (me.platform === "server") {
-            me.driver = storage.fs.server;
+            me.fs = require("fs");
         }
-        else {
-            me.driver = storage.fs.local;
+        else if (me.platform === "browser") {
+            me.fs = new LightningFS("screens-fs");
         }
-        const keys = [
-            "read",
-            "write",
-            "list",
-            "delete",
+        const methodNames = [
+            "mkdir",
+            "rmdir",
+            "readdir",
+            "writeFile",
+            "readFile",
+            "unlink",
             "rename",
-            "type",
-            "timestamp",
-            "createFolder"
+            "stat",
+            "lstat",
+            "symlink",
+            "readlink",
+            "du"
         ];
-        const methods = {};
-        keys.forEach(key => {
-            me[key] = (path, ...args) => {
-                path = me.fixPath(path);
-                return me.driver[key](path, ...args);
-            }
-            methods[key] = "storage.fs." + key;
+        methodNames.map(methodName => {
+            me[methodName] = async (...args) => {
+                return await me.fs.promises[methodName](...args);
+            };
         });
-        core.broadcast.register(me, methods);
     };
-    me.fixPath = function (path) {
-        if (!path) {
-            throw "Invalid path";
+    me.delete = async function (path) {
+        const stat = await me.stat(path);
+        if (stat.isDirectory()) {
+            const names = await me.readdir(path);
+            for (const name of names) {
+                await me.delete(path + "/" + name);
+            }
+            await me.rmdir(path);
         }
-        if (path[path.length - 1 === '/']) {
-            path = path.substring(0, -1);
-        }
-        return path;
-    }
-};
-
-screens.storage.fs.server = function StorageFSServer(me, { core }) {
-    me.read = async function (path) {
-        const type = await me.type(path);
-        if (type === "file") {
-            return await core.file.readFile(path);
-        }
-    };
-    me.write = async function (path, data) {
-        const type = await me.type(path);
-        if (type === "file") {
-            await core.file.writeFile(path, data);
-        }
-        else {
-            throw "Cannot write since object is a folder, path:" + path;
+        if (stat.isFile()) {
+            await me.unlink(path);
         }
     };
     me.list = async function (path) {
-        let items = [];
-        const type = await me.type(path);
-        if (type === "folder") {
-            items = await core.file.readDir(path);
-            items = items.map(name => {
-                const id = path + "/" + name;
-                return { name, id, path: id };
-            })
-            for (const item of items) {
-                item.type = await me.type(item.path);
+        const items = [];
+        const names = await me.readdir(path);
+        for (const name of names) {
+            const item = { name, path: path + "/" + name };
+            const stat = await me.stat(item.path);
+            if (stat.isDirectory()) {
+                item.type = "folder";
             }
+            else if (stat.isFile()) {
+                item.type = "file";
+            }
+            else if (stat.isSymbolicLink()) {
+                item.type = "link";
+            }
+            items.push(item);
         }
         return items;
     };
-    me.delete = async function (path) {
-        if (core.file.exists(path)) {
-            await core.file.delete(path);
-        }
-    };
-    me.rename = async function (source, target) {
-        if (!core.file.exists(source)) {
-            throw source + " does not exist";
-        }
-        if (!core.file.exists(target)) {
-            throw target + " already exists";
-        }
-        await core.file.rename(source, target);
-    }
-    me.type = async function (path) {
-        if (core.file.exists(path)) {
-            const isFolder = await core.file.isDirectory(path);
-            return isFolder ? "folder" : "file";
-        }
-        return "";
-    };
-    me.timestamp = async function (path) {
-        if (core.file.exists(path)) {
-            return await core.file.timestamp(path);
-        }
-    };
-    me.createFolder = async function (path) {
-        await core.file.makeDir(path);
-    };
 };
 
-screens.storage.fs.local = function StorageFSLocal(me, { core, storage }) {
-    me.info = async function (path) {
-        return storage.local.db.get(me.id, "info:" + path);
-    };
-    me.setInfo = async function (path, info) {
-        await storage.local.db.set(me.id, "info:" + path, info);
-    };
-    me.read = async function (path) {
-        const type = await me.type(path);
-        if (type === "file") {
-            return await storage.local.db.get(me.id, "data:" + path);
-        }
-    };
-    me.write = async function (path, data) {
-        const type = await me.type(path);
-        if (type === "folder") {
-            throw "Cannot write since object is a folder, path:" + path;
-        }
-        let info = await me.info(path);
-        if (!info) {
-            let folderPath = core.path.folderPath(path) || "/";
-            let folderInfo = await me.info(folderPath);
-            if (folderInfo) {
-                const type = await me.type(folderPath);
-                if (type !== "folder") {
-                    throw "Invalid folder: " + folderPath;
-                }
-            }
-            else {
-                folderInfo = {
-                    type: "folder",
-                    items: [],
-                    timestamp: Date.now()
-                };
-            }
-            const name = path.split("/").pop();
-            folderInfo.timestamp = Date.now();
-            folderInfo.items.push({ name, type: "file", path });
-            await me.setInfo(folderPath, folderInfo);
-            info = {
-                type: "file"
-            };
-        }
-        info.size = data ? data.length : 0;
-        info.timestamp = Date.now();
-        await me.setInfo(path, info);
-        await storage.local.db.set(me.id, "data:" + path, data);
-    };
-    me.list = async function (path) {
-        const type = await me.type(path);
-        if (type === "folder") {
-            const info = await me.info(path);
-            const { items } = info;
-            return items;
-        }
-        return [];
-    };
-    me.delete = async function (path) {
-        const type = await me.type(path);
-        if (!type) {
-            return;
-        }
-        if (type === "folder") {
-            const items = await me.list(path);
-            for (const item of items) {
-                await me.delete(item.path);
-            }
-        }
-        const name = path.split("/").pop();
-        const folderPath = core.path.folderPath(path) || "/";
-        const folderInfo = await me.info(folderPath);
-        if (folderInfo) {
-            folderInfo.items = folderInfo.items.filter(item => item.name !== name);
-            folderPath.timestamp = Date.now();
-            await me.setInfo(folderPath, folderInfo);
-        }
-        await storage.local.db.set(me.id, "info:" + path);
-        if (type === "file") {
-            await storage.local.db.set(me.id, "data:" + path);
-        }
-    };
-    me.rename = async function (source, target) {
-        throw "not implemented";
-    };
-    me.type = async function (path) {
-        let type = "";
-        const info = await me.info(path);
-        if (info) {
-            type = info.type;
-        }
-        return type;
-    };
-    me.timestamp = async function (path) {
-        let timestamp = null;
-        const info = await me.info(path);
-        if (info) {
-            timestamp = info.timestamp;
-        }
-        return timestamp;
-    };
-    me.createFolder = async function (path) {
-        const names = path.split("/").filter(Boolean);
-        const count = names.length;
-        for (let index = 0; index < count; index++) {
-            const subPath = "/" + names.slice(0, index + 1).join("/");
-            const type = await me.type(subPath);
-            if (type === "file") {
-                throw "Cannot create folder since object is a file, path:" + path;
-            }
-            if (type) {
-                continue;
-            }
-            const folderPath = core.path.folderPath(subPath) || "/";
-            let folderInfo = await me.info(folderPath);
-            if (folderInfo) {
-                const type = await me.type(folderPath);
-                if (type !== "folder") {
-                    throw "Invalid folder: " + folderPath;
-                }
-            }
-            else {
-                folderInfo = {
-                    type: "folder",
-                    items: [],
-                    timestamp: Date.now()
-                };
-            }
-            const name = names[index];
-            folderInfo.timestamp = Date.now();
-            folderInfo.items.push({ name, type: "folder", path: folderPath + "/" + name });
-            await me.setInfo(folderPath, folderInfo);
-            const itemInfo = {
-                type: "folder",
-                items: [],
-                timestamp: Date.now()
-            };
-            await me.setInfo(subPath, itemInfo);
-        }
-    }
-}

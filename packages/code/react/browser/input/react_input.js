@@ -1,8 +1,8 @@
 screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
     const { Element, util } = screens.react;
-    const [text, setText, subscribe, unsubscribe] = state;
+    const [text, setText] = state;
     const [currentText, setCurrentText] = React.useState(text);
-    const [startTimer, stopTimer, hasTimer] = util.useTimer(250);
+    const [startTimer] = util.useTimer(250);
 
     const onChange = event => {
         const { value } = event.target;
@@ -20,27 +20,14 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, ...props }, ref) => {
     };
 
     React.useEffect(() => {
-        const handler = () => {
-            setCurrentText(text);
-        };
-        subscribe(handler);
-        return () => {
-            unsubscribe(handler);
-        }
+        setCurrentText(text);
     }, [text]);
 
-    React.useEffect(() => {
-        return () => {
-            stopTimer();
-        }
-    }, []);
-
-    const value = hasTimer() ? currentText : text;
     return (<Element
         ref={ref}
         tag="input"
         direction="auto"
-        value={value}
+        value={currentText}
         onKeyPress={keyPressed}
         onChange={onChange}
         className="react-input-edit"

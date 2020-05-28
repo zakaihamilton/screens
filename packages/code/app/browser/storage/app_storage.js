@@ -130,9 +130,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const StorageItem = ({ name, select, edit }) => {
         const [hoverRef, hover] = react.util.useHover();
         const editRef = React.useRef();
-        const editVisibility = react.util.useState(edit);
-        const editState = react.util.useState(name);
-        const [isEditVisibile, showEdit, subscribeEditVisibility, unsubscribeEditVisibility] = editVisibility;
+        const editVisibility = React.useState(edit);
+        const editState = React.useState(name);
+        const [isEditVisibile, showEdit] = editVisibility;
         const [editText, setEditText] = editState;
         const deleteItem = async () => {
             await storage.fs.delete(core.path.normalize(me.path, name));
@@ -147,7 +147,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         await storage.fs.rename(source, target);
                     }
                     else {
-                        await storage.fs.createFolder(target);
+                        await storage.fs.mkdir(target);
                     }
                 }
                 catch (err) {
@@ -162,14 +162,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             showEdit(false);
         };
         React.useEffect(() => {
-            const handler = isEditVisibile => {
-                if (!isEditVisibile) {
-                    renameTo(editText);
-                }
-            };
-            subscribeEditVisibility(handler);
-            return () => unsubscribeEditVisibility(handler);
-        }, [editText]);
+            if (!isEditVisibile) {
+                renameTo(editText);
+            }
+        }, [editText, isEditVisibile]);
         React.useEffect(() => {
             if (isEditVisibile && editRef.current) {
                 editRef.current.focus();
@@ -215,10 +211,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [search] = searchState;
         const [direction] = sortDirectionState;
         const [counter] = updateState;
-        react.util.useSubscribe(pathState);
-        react.util.useSubscribe(sortState);
-        react.util.useSubscribe(updateState);
-        react.util.useSubscribe(searchState);
         let name = path[path.length - 1];
         if (!name) {
             name = (<>
@@ -226,61 +218,64 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Text language="heb">בית</Text>
             </>);
         }
-        const children = react.util.useData(() => {
-            let items = me.items || [];
-            items = me.sort.find(item => item.id === sort).sort(items);
-            if (search) {
-                items = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
-            }
-            if (direction === "asc") {
-                items = items.reverse();
-            }
-            items = items.map(item => {
-                const select = () => {
-                    if (item.type === "folder") {
-                        setPath([...path.filter(Boolean), item.name]);
-                    }
-                    else if (item.type === "file") {
-
-                    }
+        let items = me.items || [];
+        items = me.sort.find(item => item.id === sort).sort(items);
+        if (search) {
+            items = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+        }
+        if (direction === "asc") {
+            items = items.reverse();
+        }
+        items = items.map(item => {
+            const select = () => {
+                if (item.type === "folder") {
+                    setPath([...path.filter(Boolean), item.name]);
                 }
-                return (
-                    <StorageItem key={item.name} {...item} select={select} />
-                );
-            });
-            if (me.create) {
-                items.unshift(<StorageItem {...me.create} key="new folder" edit={true} />);
+                else if (item.type === "file") {
+
+                }
             }
-            return items;
-        }, [counter, path, sort, direction, search]);
+            return (
+                <StorageItem key={item.name} {...item} select={select} />
+            );
+        });
+        if (me.create) {
+            items.unshift(<StorageItem {...me.create} key="new folder" edit={true} />);
+        }
         return (<RootItem name={name} pathState={pathState}>
-            {children}
+            {items}
         </RootItem>);
     };
 
     const Main = () => {
-        const [isOpen, setOpen] = react.util.useState(true);
-        const delayState = react.util.useState(5000);
-        const languageState = react.util.useState("eng");
-        const sortState = react.util.useState("name");
-        const sortDirectionState = react.util.useState("desc");
-        const updateState = react.util.useState(0);
-        const searchState = react.util.useState("");
-        const pathState = react.util.makeState([me.path.split("/").filter(Boolean), value => {
-            me.path = value.join("/");
+        const [isOpen, setOpen] = React.useState(true);
+        const delayState = React.useState(5000);
+        const languageState = React.useState("eng");
+        const sortState = React.useState("name");
+        const sortDirectionState = React.useState("desc");
+        const updateState = React.useState(0);
+        const searchState = React.useState("");
+        const pathState = React.useState(me.path.split("/").filter(Boolean));
+        const [path] = pathState;
+        React.useEffect(() => {
+            me.path = path.join("/");
             me.loadItems();
-        }]);
+        }, [path]);
         const [language] = languageState;
         const [delay] = delayState;
         const direction = me.languages.find(item => item.id === language).direction;
-        me.redraw = () => {
-            const [counter, setCounter] = updateState;
-            setCounter(counter + 1);
-        };
-        me.close = () => {
-            me.singleton = null;
-            setOpen(false);
-        };
+        React.useEffect(() => {
+            me.redraw = () => {
+                setTimeout(() => {
+                    const [counter, setCounter] = updateState;
+                    setCounter(counter + 1);
+                });
+            };
+            me.close = () => {
+                me.singleton = null;
+                setOpen(false);
+            };
+        });
         const state = {
             pathState,
             languageState,

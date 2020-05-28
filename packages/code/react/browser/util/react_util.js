@@ -7,44 +7,6 @@ screens.react.util = function ReactUtil(me, { core, react }) {
     me.init = function () {
         me.Context = React.createContext(null);
     };
-    me.makeState = function ([getter, setter]) {
-        const subscriptions = React.useRef([]);
-        const subscribe = (handler) => {
-            subscriptions.current.push(handler);
-        };
-        const unsubscribe = (handler) => {
-            const index = subscriptions.current.findIndex(callback => callback === handler);
-            if (index !== -1) {
-                subscriptions.current.splice(index, 1);
-            }
-        };
-        const update = (value) => {
-            for (const subscription of subscriptions.current) {
-                subscription(value);
-            }
-            setter(value);
-        };
-        return [getter, update, subscribe, unsubscribe];
-    };
-    me.useState = function (value) {
-        const state = React.useState(value);
-        return me.makeState(state);
-    };
-    me.useSubscribe = function (state) {
-        const [getter, setter, subscribe, unsubscribe] = state;
-        const [counter, setCounter] = React.useState(0);
-        React.useEffect(() => {
-            const handler = () => {
-                setCounter(counter => {
-                    return counter + 1;
-                });
-            };
-            subscribe(handler);
-            return () => {
-                unsubscribe(handler);
-            };
-        });
-    };
     me.getRect = function (element, withDirection) {
         const direction = React.useContext(react.Direction.Context);
         const object = React.useContext(me.Context);
@@ -102,24 +64,30 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         return [ref, width, height];
     };
     me.useTimer = function (timeout) {
-        const [timer, setTimer] = React.useState(null);
-        const stopTimer = () => {
-            if (timer) {
-                clearTimeout(timer);
-                setTimer(null);
+        const timeoutRef = React.useRef();
+        const stop = React.useCallback(() => {
+            const timeoutId = timeoutRef.current;
+            if (timeoutId) {
+                timeoutRef.current = undefined;
+                clearTimeout(timeoutId);
             }
-        };
-        const startTimer = callback => {
-            stopTimer();
-            setTimer(setTimeout(() => {
-                setTimer(null);
+        });
+        const start = React.useCallback(callback => {
+            stop();
+            timeoutRef.current = setTimeout(() => {
+                timeoutRef.current = undefined;
                 callback();
-            }, timeout));
-        };
-        const hasTimer = () => {
-            return timer;
-        };
-        return [startTimer, stopTimer, hasTimer];
+            }, timeout);
+        });
+        const exists = React.useCallback(() => {
+            return timeoutRef.current;
+        });
+        React.useEffect(() => {
+            return () => {
+                stop();
+            }
+        }, []);
+        return [start, stop, exists];
     };
     me.render = function (object, component) {
         const { Context } = me;
@@ -129,17 +97,6 @@ screens.react.util = function ReactUtil(me, { core, react }) {
     };
     me.useObject = function () {
         return React.useContext(me.Context);
-    };
-    me.useData = function (callback, depends = []) {
-        const state = React.useRef({ depends: null, value: undefined });
-        const change = !state.current.depends || state.current.depends.some((item, idx) => {
-            return !core.json.compare(depends[idx], item);
-        });
-        if (change) {
-            const value = callback();
-            state.current = { depends: JSON.parse(JSON.stringify(depends)), value };
-        }
-        return state.current.value;
     };
     me.useHover = function () {
         const [value, setValue] = React.useState(false);
