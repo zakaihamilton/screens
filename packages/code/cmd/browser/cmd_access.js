@@ -25,6 +25,9 @@ screens.cmd.access = function CmdAccess(me, { core, user }) {
             if (!access.apps) {
                 access.apps = [];
             }
+            if (typeof access.apps === "string") {
+                access.apps = JSON.parse(access.apps);
+            }
             if (appName) {
                 if (toggle === "add") {
                     if (!access.apps.includes(appName)) {

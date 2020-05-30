@@ -1,4 +1,4 @@
-screens.react.TextArea = React.forwardRef(({ state, focus, ...props }, ref) => {
+screens.react.TextArea = React.forwardRef(({ className, state, focus, ...props }, ref) => {
     const { Element, util } = screens.react;
     const inputRef = React.useRef(null);
     const combinedRef = util.useRefs(ref, inputRef);
@@ -30,6 +30,6 @@ screens.react.TextArea = React.forwardRef(({ state, focus, ...props }, ref) => {
         direction="auto"
         value={currentText}
         onChange={onChange}
-        className="react-textarea-edit"
+        className={"react-textarea-edit " + (className || "")}
         {...props} />);
 });

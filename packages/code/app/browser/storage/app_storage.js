@@ -289,21 +289,19 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FileView = ({ pathState, viewTypeState }) => {
+        const [path] = pathState;
         const counter = react.util.useResize();
         const [ref, width, height] = react.util.useSize(counter);
         const textState = [me.content, async (content) => {
             await storage.fs.writeFile("/" + me.path, content);
         }];
+        let name = path[path.length - 1];
         const style = {
             width: width + "px",
-            height: height + "px",
-            resize: "none",
-            flex: "1",
-            backgroundColor: "var(--chrome-background)",
-            color: "var(--chrome-color)"
+            height: height + "px"
         };
         return (<FileHeader name={name} pathState={pathState} viewTypeState={viewTypeState}>
-            <TextArea ref={ref} focus={true} wrap="off" state={textState} style={style} />
+            <TextArea className="app-storage-file-editor" ref={ref} focus={true} wrap="off" state={textState} style={style} />
         </FileHeader>);
     };
 

@@ -43,7 +43,6 @@ screens.api = [
 
 screens.apps = [
     "transform",
-    "present",
     "profile",
     "theme",
     "login",
