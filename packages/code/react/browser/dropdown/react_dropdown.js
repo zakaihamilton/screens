@@ -1,4 +1,4 @@
-screens.react.DropDown = ({ state, children, multiple, path }) => {
+screens.react.DropDown = ({ state, children = [], multiple, path }) => {
     const { Item, Element, Direction, Modal } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -98,11 +98,15 @@ screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent,
                 const result = [...selected];
                 result.splice(index, 1);
                 setSelected(result);
-                setOpen && setOpen(isOpen + 1);
+                if (isOpen) {
+                    setOpen && setOpen(isOpen + 1);
+                }
             }
             else if (selected.length === 0) {
                 setSelected([id]);
-                setOpen && setOpen(isOpen + 1);
+                if (isOpen) {
+                    setOpen && setOpen(isOpen + 1);
+                }
             }
         }
     });

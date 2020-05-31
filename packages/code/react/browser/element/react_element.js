@@ -1,9 +1,10 @@
-screens.react.Element = React.forwardRef(({ tag = "div", children, direction, className, style, ...props }, ref) => {
-    const { Direction } = screens.react;
-    const contextDirection = React.useContext(Direction.Context);
+screens.react.Element = React.forwardRef(({ tag = "div", children, title, direction, className, style, ...props }, ref) => {
+    const { Direction, Language } = screens.react;
+    const currentLanguage = React.useContext(Language.Context);
+    const currentDirection = React.useContext(Direction.Context);
     const nightMode = screens.ui.theme.options.nightMode;
     if (!direction) {
-        direction = contextDirection;
+        direction = currentDirection;
     }
     props = props || {};
     className = className || "";
@@ -24,6 +25,9 @@ screens.react.Element = React.forwardRef(({ tag = "div", children, direction, cl
     if (direction === "auto") {
         props.dir = direction;
     }
+    if (title && typeof title === "object") {
+        title = title[currentLanguage];
+    }
     const Component = tag;
-    return (<Component ref={ref} style={style} {...props} className={className}>{children}</Component>);
+    return (<Component ref={ref} title={title} style={style} {...props} className={className}>{children}</Component>);
 });

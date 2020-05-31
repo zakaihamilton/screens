@@ -22,7 +22,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Menu
     } = react;
 
-    const AppToolbar = ({ pathState, languageState, sortState, searchState, sortDirectionState }) => {
+    const AppToolbar = ({ filterState, pathState, languageState, sortState, searchState, sortDirectionState }) => {
         const [path] = pathState;
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
@@ -30,6 +30,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         });
         const sortItems = (me.sort || []).map(sort => {
             return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
+        });
+        const filterItems = (me.filter || []).map(filter => {
+            return (<Item key={filter.id} id={filter.id}>{filter.name}</Item>);
         });
         const sortDirectionItems = (me.sortDirection || []).map(sort => {
             return (<Item key={sort.id} id={sort.id}>{sort.name}</Item>);
@@ -40,6 +43,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const rootItem = (<Item id={0}>
             <Text language="eng">Home</Text>
             <Text language="heb">בית</Text>
+        </Item>);
+        const noneItem = (<Item id="none" multiple={false}>
+            <Text language="eng">None</Text>
+            <Text language="heb">אין</Text>
         </Item>);
         const isMobile = core.device.isMobile();
         const PathOrDropDown = isMobile ? DropDown : Path;
@@ -67,6 +74,17 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         <Clone state={sortDirectionState} hideCurrent={true}>
                             {sortDirectionItems}
                         </Clone>
+                    </DropDown>
+                </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Filter</Text>
+                        <Text language="heb">סינון</Text>
+                    </>
+                }>
+                    <DropDown state={filterState}>
+                        {noneItem}
+                        {filterItems}
                     </DropDown>
                 </Field>
                 <Field label={
@@ -199,6 +217,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             );
             onClick = null;
         }
+        const typeLabel = me.types.find(item => item.id === type).title;
+        console.log(typeLabel);
         return (<Element className={{ "app-storage-item": true, active: true, hover: !isEditVisibile && hover }}>
             <Menu icon={(<b>&#8942;</b>)}>
                 <Item onClick={deleteItem}>
@@ -216,19 +236,20 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 </Item>
             </Menu>
             <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
-                <Element title={core.string.title(type)} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>
+                <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>
                 {content}
             </Element>
         </Element>);
     };
 
-    const FolderView = ({ pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState }) => {
+    const FolderView = ({ filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState }) => {
         const [path, setPath] = pathState;
         const [viewType, setViewType] = viewTypeState;
         const [sort] = sortState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
         const [counter] = updateState;
+        const [filter] = filterState;
         let name = path[path.length - 1];
         if (!name) {
             name = (<>
@@ -241,6 +262,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (search) {
             items = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
         }
+        me.filter.map(filterItem => {
+            const hasFilter = filter.includes(filterItem.id);
+            items = filterItem.filter(items, hasFilter);
+        });
         if (direction === "asc") {
             items = items.reverse();
         }
@@ -311,6 +336,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const languageState = React.useState("eng");
         const sortState = React.useState("name");
         const sortDirectionState = React.useState("desc");
+        const filterState = React.useState([]);
         const updateState = React.useState(0);
         const searchState = React.useState("");
         const pathState = React.useState(me.path.split("/").filter(Boolean));
@@ -354,7 +380,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             sortDirectionState,
             updateState,
             delayState,
-            searchState
+            searchState,
+            filterState
         };
         if (!isOpen) {
             return null;
@@ -418,6 +445,39 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     return a.name.localeCompare(b.name);
                 });
                 return items;
+            }
+        }
+    ];
+    me.filter = [
+        {
+            id: "hidden",
+            name: (
+                <>
+                    <Text language="eng">Hidden Folders {'&'} Files</Text>
+                    <Text language="heb">תיקיות וקבצים נסתרים</Text>
+                </>
+            ),
+            filter: (items, flag) => {
+                if (!flag) {
+                    items = items.filter(item => !item.name.startsWith("."));
+                }
+                return items;
+            }
+        }
+    ];
+    me.types = [
+        {
+            id: "folder",
+            title: {
+                eng: "Folder",
+                heb: "תיקיה"
+            }
+        },
+        {
+            id: "file",
+            title: {
+                eng: "File",
+                heb: "קובץ"
             }
         }
     ];
