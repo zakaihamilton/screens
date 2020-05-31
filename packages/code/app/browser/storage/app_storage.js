@@ -111,7 +111,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const FolderHeader = ({ children, name, pathState }) => {
+    const FolderHeader = ({ children, name, count, pathState }) => {
         const [path, setPath] = pathState;
         const createFolder = async () => {
             me.create = { type: "folder", name: "" };
@@ -128,7 +128,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
                     <Menu icon="&#9776;" label={
-                        <Element className="app-storage-item-name">{name}</Element>
+                        <Element className="app-storage-item-name">
+                            <>
+                                <b>{name}</b>
+                                &emsp;{"(" + count + ")"}
+                            </>
+                        </Element>
                     }>
                         <Item onClick={gotoFolder} disable={!path.length}>
                             <>
@@ -258,6 +263,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             </>);
         }
         let items = me.items || [];
+        const count = items.length;
         items = me.sort.find(item => item.id === sort).sort(items);
         if (search) {
             items = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
@@ -281,7 +287,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (me.create) {
             items.unshift(<StorageItem {...me.create} key="new folder" edit={{ editVisibility: true, editMode: true }} />);
         }
-        return (<FolderHeader name={name} pathState={pathState}>
+        return (<FolderHeader name={name} count={count} pathState={pathState}>
             {items}
         </FolderHeader>);
     };
