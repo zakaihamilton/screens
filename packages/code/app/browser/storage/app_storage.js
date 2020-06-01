@@ -266,8 +266,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             onClick = null;
         }
         const typeLabel = me.types.find(item => item.id === type).title;
+        const icon = parent ? (<b>&#9776;</b>) : (<b>&#8942;</b>);
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !isEditVisible && hover }}>
-            <Menu icon={(<b>&#8942;</b>)} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
+            <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} parent={parent} dialogState={dialogState} pathState={pathState} />
             </Menu>
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
