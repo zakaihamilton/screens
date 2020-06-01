@@ -1,5 +1,6 @@
 screens.react.Menu = ({ label, icon, children }) => {
-    const { Item, Element, Direction, Modal } = screens.react;
+    const { Item, Element, Direction, Modal, Menu } = screens.react;
+    const ItemContext = Menu.Item.Context;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
     const menuRef = React.useRef(null);
@@ -66,16 +67,18 @@ screens.react.Menu = ({ label, icon, children }) => {
         <Element ref={popupRef} className={popupClassName}>
             <Element className="react-menu-items">
                 <Item.Component.Provider value={screens.react.Menu.Item}>
-                    {popupChildren}
+                    <ItemContext.Provider value={open}>
+                        {popupChildren}
+                    </ItemContext.Provider>
                 </Item.Component.Provider>
             </Element>
         </Element>
     </Element>);
 };
 
-screens.react.Menu.Item = ({ id = "", children, open, disable, onClick, ...props }) => {
+screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) => {
     const { Element } = screens.react;
-    const [isOpen, setOpen] = open;
+    const [isOpen, setOpen] = React.useContext(screens.react.Menu.Item.Context);
     const className = {
         "react-menu-item": true,
         disable
@@ -98,3 +101,5 @@ screens.react.Menu.Item = ({ id = "", children, open, disable, onClick, ...props
         </Element>
     );
 };
+
+screens.react.Menu.Item.Context = React.createContext("");
