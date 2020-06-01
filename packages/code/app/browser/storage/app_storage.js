@@ -111,56 +111,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const MenuActions = ({ name, dialogState }) => {
-        const [dialog, setDialog] = dialogState;
-        const source = core.path.normalize(me.path, name);
-        const renameItem = async () => {
-            setDialog({ source, name, mode: "rename" });
-        };
-        const moveItem = async () => {
-            setDialog({ source, name, mode: "move" });
-        };
-        const copyItem = async () => {
-            setDialog({ source, name, mode: "copy" });
-        };
-        const deleteItem = async () => {
-            await storage.fs.delete(source);
-            await me.updateView();
-        };
-        return (
-            <>
-                <Item onClick={renameItem}>
-                    <>
-                        <Text language="eng">Rename</Text>
-                        <Text language="heb">שינוי שם</Text>
-                    </>
-                </Item>
-                <Item onClick={copyItem}>
-                    <>
-                        <Text language="eng">Copy To...</Text>
-                        <Text language="heb">...העתק אל</Text>
-                    </>
-                </Item>
-                <Item onClick={moveItem}>
-                    <>
-                        <Text language="eng">Move To...</Text>
-                        <Text language="heb">...שינוי מקום</Text>
-                    </>
-                </Item>
-                <Separator />
-                <Item onClick={deleteItem}>
-                    <>
-                        <Text language="eng">Delete</Text>
-                        <Text language="heb">מחיקה</Text>
-                    </>
-                </Item>
-            </>
-        );
-    };
-
-    const FolderHeader = ({ children, name, count, pathState, dialogState }) => {
-        const [dialog, setDialog] = dialogState;
+    const MenuActions = ({ name, dialogState, pathState, parent = false, root = false }) => {
         const [path, setPath] = pathState;
+        const [dialog, setDialog] = dialogState;
+        let parentPath = me.path;
+        if (parent) {
+            parentPath = parentPath.split("/").slice(0, -1).join("/");
+        }
+        const source = core.path.normalize(parentPath, name);
+        const dialogObject = { source, name, parent };
         const createFolder = async () => {
             setDialog({ mode: "create", type: "folder", name: "" });
         };
@@ -170,39 +129,79 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const gotoFolder = () => {
             setPath(path.slice(0, path.length - 1));
         };
+        const renameItem = async () => {
+            setDialog({ ...dialogObject, mode: "rename" });
+        };
+        const moveItem = async () => {
+            setDialog({ ...dialogObject, mode: "move" });
+        };
+        const copyItem = async () => {
+            setDialog({ ...dialogObject, mode: "copy" });
+        };
+        const deleteItem = async () => {
+            await storage.fs.delete(source);
+            await me.updateView();
+        };
+        return (
+            <>
+                {parent && <>
+                    <Item onClick={gotoFolder} disable={!path.length}>
+                        <>
+                            <Text language="eng">Goto Parent Folder</Text>
+                            <Text language="heb">לך לתיקיה העליונה</Text>
+                        </>
+                    </Item>
+                    <Separator />
+                    <Item onClick={createFolder}>
+                        <>
+                            <Text language="eng">Create Folder</Text>
+                            <Text language="heb">יצירת תיקיה</Text>
+                        </>
+                    </Item>
+                    <Item onClick={createFile}>
+                        <>
+                            <Text language="eng">Create File</Text>
+                            <Text language="heb">יצירת קובץ</Text>
+                        </>
+                    </Item>
+                </>}
+                {!root && <>
+                    {parent && <Separator />}
+                    <Item onClick={renameItem}>
+                        <>
+                            <Text language="eng">Rename</Text>
+                            <Text language="heb">שינוי שם</Text>
+                        </>
+                    </Item>
+                    <Item onClick={copyItem}>
+                        <>
+                            <Text language="eng">Copy To...</Text>
+                            <Text language="heb">...העתק אל</Text>
+                        </>
+                    </Item>
+                    <Item onClick={moveItem}>
+                        <>
+                            <Text language="eng">Move To...</Text>
+                            <Text language="heb">...שינוי מקום</Text>
+                        </>
+                    </Item>
+                    <Separator />
+                    <Item onClick={deleteItem}>
+                        <>
+                            <Text language="eng">Delete</Text>
+                            <Text language="heb">מחיקה</Text>
+                        </>
+                    </Item>
+                </>}
+            </>
+        );
+    };
+
+    const FolderHeader = ({ children, name, count, root, pathState, dialogState }) => {
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
-                    <Menu icon="&#9776;" label={
-                        <Element className="app-storage-item-name">
-                            <>
-                                <b>{name}</b>
-                                &emsp;{"(" + count + ")"}
-                            </>
-                        </Element>
-                    }>
-                        <Item onClick={gotoFolder} disable={!path.length}>
-                            <>
-                                <Text language="eng">Goto Parent Folder</Text>
-                                <Text language="heb">לך לתיקיה העליונה</Text>
-                            </>
-                        </Item>
-                        <Separator />
-                        <Item onClick={createFolder}>
-                            <>
-                                <Text language="eng">Create Folder</Text>
-                                <Text language="heb">יצירת תיקיה</Text>
-                            </>
-                        </Item>
-                        <Item onClick={createFile}>
-                            <>
-                                <Text language="eng">Create File</Text>
-                                <Text language="heb">יצירת קובץ</Text>
-                            </>
-                        </Item>
-                        <Separator />
-                        <MenuActions name={name} dialogState={dialogState} />
-                    </Menu>
+                    <StorageItem key={name} name={name} type="folder" parent={true} root={root} pathState={pathState} dialogState={dialogState} />
                 </Element>
                 <Element className="app-storage-children">
                     {children}
@@ -210,7 +209,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             </Element >);
     };
 
-    const StorageItem = ({ name, select, type, dialogState }) => {
+    const StorageItem = ({ name, select, type, parent, root, dialogState, pathState }) => {
+        const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
@@ -218,7 +218,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const renameTo = async (text) => {
             if (name !== text && text) {
                 const { source } = dialog;
-                const target = core.path.normalize(me.path, text);
+                let parentPath = me.path;
+                if (parent) {
+                    parentPath = parentPath.split("/").slice(0, -1).join("/");
+                }
+                const target = core.path.normalize(parentPath, text);
                 try {
                     if (name) {
                         await storage.fs.rename(source, target);
@@ -228,6 +232,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     }
                     else if (type === "file") {
                         await storage.fs.writeFile(target, "", "utf8");
+                    }
+                    if (parent) {
+                        setPath(target.split("/").filter(Boolean));
                     }
                     await me.updateView();
                 }
@@ -242,14 +249,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 renameTo(editText);
             }
         };
-        const isEditVisible = dialog && (dialog.mode === "rename" || dialog.mode === "create") && dialog.name === name;
+        const isEditVisible = dialog && (dialog.mode === "rename" || dialog.mode === "create") && dialog.name === name && !dialog.parent === !parent;
         const modalState = [isEditVisible, showEdit];
         const onSubmit = async (text) => {
             await renameTo(text);
         };
         let content = (<Element className="app-storage-item-label">{name}</Element>);
         let onClick = select;
-        if (modalState[0]) {
+        if (isEditVisible) {
             content = (
                 <>
                     <Modal open={modalState} />
@@ -259,15 +266,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             onClick = null;
         }
         const typeLabel = me.types.find(item => item.id === type).title;
-        return (<Element className={{ "app-storage-item": true, active: true, hover: !modalState[0] && hover }}>
-            <Menu icon={(<b>&#8942;</b>)}>
-                <MenuActions name={name} dialogState={dialogState} />
+        return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !isEditVisible && hover }}>
+            <Menu icon={(<b>&#8942;</b>)} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
+                <MenuActions name={name} root={root} parent={parent} dialogState={dialogState} pathState={pathState} />
             </Menu>
-            <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
-                <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>
+            {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
+                {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}
-            </Element>
-        </Element>);
+            </Element>}
+        </Element >);
     };
 
     const FolderView = ({ filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState }) => {
@@ -281,11 +288,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [counter] = updateState;
         const [filter] = filterState;
         let name = path[path.length - 1];
+        let root = false;
         if (!name) {
             name = (<>
                 <Text language="eng">Home</Text>
                 <Text language="heb">בית</Text>
             </>);
+            root = true;
         }
         let items = me.items || [];
         const count = items.length;
@@ -306,13 +315,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 setViewType(item.type);
             }
             return (
-                <StorageItem key={item.name} {...item} select={select} dialogState={dialogState} />
+                <StorageItem key={item.name} {...item} select={select} pathState={pathState} dialogState={dialogState} />
             );
         });
         if (dialog && dialog.mode === "create") {
-            items.unshift(<StorageItem key="new item" name={dialog.name} type={dialog.type} dialogState={dialogState} />);
+            items.unshift(<StorageItem key="new item" name={dialog.name} type={dialog.type} pathState={pathState} dialogState={dialogState} />);
         }
-        return (<FolderHeader name={name} count={count} pathState={pathState} dialogState={dialogState}>
+        return (<FolderHeader name={name} root={root} count={count} pathState={pathState} dialogState={dialogState}>
             {items}
         </FolderHeader>);
     };
@@ -523,7 +532,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.updateView = async function () {
-        console.log("viewType: " + me.viewType + " path: " + me.path);
         if (me.viewType === "folder") {
             me.items = await storage.fs.list("/" + me.path);
         }

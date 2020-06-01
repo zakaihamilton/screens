@@ -61,7 +61,8 @@ screens.storage.fs = function StorageFS(me, { }) {
         if (stat.isDirectory()) {
             const names = await me.readdir(path);
             for (const name of names) {
-                const item = { name, path: path + "/" + name };
+                const itemPath = path ? (path + "/" + name) : name;
+                const item = { name, path: itemPath };
                 const stat = await me.stat(item.path);
                 if (stat.isDirectory()) {
                     item.type = "folder";
