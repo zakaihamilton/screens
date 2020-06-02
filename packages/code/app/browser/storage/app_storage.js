@@ -553,7 +553,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             height: height + "px"
         };
         return (<FileHeader name={name} state={state}>
-            <TextArea className="app-storage-file-editor" ref={ref} focus={true} wrap="off" state={textState} style={style} />
+            <TextArea key={path} className="app-storage-file-editor" ref={ref} focus={true} wrap="off" state={textState} style={style} />
         </FileHeader>);
     };
 
