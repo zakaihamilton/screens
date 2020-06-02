@@ -1,5 +1,5 @@
 screens.react.Menu = ({ label, icon, children }) => {
-    const { Item, Element, Direction, Modal, Menu } = screens.react;
+    const { Item, Element, Direction, Modal, Menu, Portal } = screens.react;
     const ItemContext = Menu.Item.Context;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -58,22 +58,28 @@ screens.react.Menu = ({ label, icon, children }) => {
         return child && React.cloneElement(child, { open });
     })).filter(Boolean);
 
-    return (<Element className="react-menu">
-        <Element ref={menuRef} className={buttonClassName} onClick={togglePopup}>
-            <Element className={iconClassName}>{icon}</Element>
-            {label && <Element className={labelClassName}>{label}</Element>}
-        </Element>
-        <Modal open={open} />
-        <Element ref={popupRef} className={popupClassName}>
-            <Element className="react-menu-items">
-                <Item.Component.Provider value={screens.react.Menu.Item}>
-                    <ItemContext.Provider value={open}>
-                        {popupChildren}
-                    </ItemContext.Provider>
-                </Item.Component.Provider>
+    return (
+        <>
+            <Element ref={menuRef} className="react-menu">
+                <Element className={buttonClassName} onClick={togglePopup}>
+                    <Element className={iconClassName}>{icon}</Element>
+                    {label && <Element className={labelClassName}>{label}</Element>}
+                </Element>
             </Element>
-        </Element>
-    </Element>);
+            <Modal open={open} />
+            <Portal>
+                <Element ref={popupRef} className={popupClassName}>
+                    <Element className="react-menu-items">
+                        <Item.Component.Provider value={screens.react.Menu.Item}>
+                            <ItemContext.Provider value={open}>
+                                {popupChildren}
+                            </ItemContext.Provider>
+                        </Item.Component.Provider>
+                    </Element>
+                </Element>
+            </Portal>
+        </>
+    );
 };
 
 screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) => {

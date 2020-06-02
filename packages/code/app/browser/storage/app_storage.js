@@ -19,6 +19,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Modal,
         Separator,
         TextArea,
+        List,
         Menu
     } = react;
 
@@ -186,7 +187,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             if (parent) {
                 gotoFolder();
             }
-            await storage.fs.delete(source);
+            await me.send("storage.fs.delete", source);
             await me.updateView();
         };
         return (
@@ -356,7 +357,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         </>)}
                 </Element>
                 <Element className="app-storage-children">
-                    {children}
+                    <List itemSize={4} unit="em">
+                        {children}
+                    </List>
                 </Element>
                 {isTransfer && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     {footer}
@@ -477,11 +480,17 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 setViewType(item.type);
             }
             return (
-                <StorageItem key={item.name} {...item} select={select} state={state} />
+                <Item key={item.name}>
+                    <StorageItem {...item} select={select} state={state} />
+                </Item>
             );
         });
         if (dialog && dialog.mode === "create") {
-            items.unshift(<StorageItem key="new item" name={dialog.name} type={dialog.type} state={state} />);
+            items.unshift(
+                <Item key="new item">
+                    <StorageItem name={dialog.name} type={dialog.type} state={state} />
+                </Item>
+            );
         }
         return (<FolderHeader name={name} root={root} count={count} state={state}>
             {items}
