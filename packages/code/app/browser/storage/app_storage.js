@@ -261,22 +261,34 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const isTransfer = dialog && (dialog.mode === "move" || dialog.mode === "copy");
         let disableTooltip = null;
         let disable = !dialog;
+        const hebrewModeText = dialog && dialog.mode === "copy" ? "להעתיק" : "להעביר";
+        const hebrewTypeText = dialog && dialog.type === "folder" ? "תיקיה" : "קובץ";
         if (!disable) {
             disable = me.path === dialog.path;
             if (disable) {
-                const hebrewModeText = dialog.mode === "copy" ? "להעתיק" : "להעביר";
-                const hebrewTypeText = dialog.type === "folder" ? "תיקיה" : "קובץ";
                 disableTooltip = {
                     eng: `Cannot ${dialog.mode} ${dialog.type} to the same folder it is in`,
-                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו מקום`
+                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו תיקיה`
                 };
             }
         }
         if (!disable) {
             disable = (dialog.type === "folder" && dialog.path && me.path.includes(dialog.path));
+            if (disable) {
+                disableTooltip = {
+                    eng: `Cannot ${dialog.mode} ${dialog.type} to a child folder`,
+                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתת תיקיה`
+                };
+            }
         }
         if (!disable) {
             disable = me.items.find(item => item.name === dialog.name);
+            if (disable) {
+                disableTooltip = {
+                    eng: `Cannot ${dialog.mode} ${dialog.type} to a folder which contains an item with the same name`,
+                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתיקיה שיש בה פריט עם אותו שם`
+                };
+            }
         }
         const labels = isTransfer && [
             {
@@ -284,10 +296,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Copy</Text>
                     <Text language="heb">העתק</Text>
-                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.source} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Text language="eng">to folder</Text>
                     <Text language="heb">לתיקיה</Text>
-                    <StorageItem key={name} name={name} type="folder" transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
@@ -304,10 +316,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Move</Text>
                     <Text language="heb">העבר</Text>
-                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.source} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Text language="eng">to folder</Text>
                     <Text language="heb">לתיקיה</Text>
-                    <StorageItem key={name} name={name} type="folder" transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
@@ -349,7 +361,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const StorageItem = ({ name, select, type, parent, root, footer, dialogState, pathState, viewTypeState }) => {
+    const StorageItem = ({ name, select, type, parent, location, root, footer, dialogState, pathState, viewTypeState }) => {
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
@@ -394,7 +406,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const onSubmit = async (text) => {
             await renameTo(text);
         };
-        let content = (<Element className="app-storage-item-label">{name}</Element>);
+        let content = (<Element title={location} className="app-storage-item-label">{name}</Element>);
         let onClick = select;
         if (isEditVisible) {
             content = (
@@ -411,7 +423,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setPath(path.slice(0, path.length - 1));
         };
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
-            {!footer && <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
+            {!footer && <Menu icon={icon} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} dialogState={dialogState} pathState={pathState} viewTypeState={viewTypeState} />
             </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
