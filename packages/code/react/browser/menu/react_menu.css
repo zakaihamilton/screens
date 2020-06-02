@@ -10,10 +10,6 @@
     justify-content: center;
 }
 
-.react-menu-button:hover {
-    border: 1px solid var(--chrome-color);
-}
-
 .react-menu-icon {
     padding: 0.5em;
 }
@@ -22,8 +18,17 @@
     padding: 0.5em;
 }
 
+.react-menu-button:hover {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
 .react-menu-button:hover:active {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
     background-color: var(--chrome-background);
+    color: var(--chrome-color);
+    filter: invert(25%);
 }
 
 .react-menu-button.open {

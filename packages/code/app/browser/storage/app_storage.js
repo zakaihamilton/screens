@@ -217,13 +217,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const Button = ({ onClick, disable, children }) => {
+    const Button = ({ onClick, disable, children, border }) => {
         if (disable) {
             onClick = undefined;
         }
         return (<Element onClick={onClick} className={{
             "app-storage-button": true,
-            disable
+            disable,
+            border
         }}>
             {children}
         </Element>);
@@ -244,11 +245,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Text language="eng">to...</Text>
                     <Text language="heb">ל...</Text>
                     <Element style={{ flex: 1 }}></Element>
-                    <Button onClick={dialog.cancel}>
+                    <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
                     </Button>
-                    <Button disable={disable} onClick={dialog.done}>
+                    <Button border={true} disable={disable} onClick={dialog.done}>
                         <Text language="eng">Copy</Text>
                         <Text language="heb">העתק</Text>
                     </Button>
@@ -264,11 +265,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Text language="eng">to...</Text>
                     <Text language="heb">ל...</Text>
                     <Element style={{ flex: 1 }}></Element>
-                    <Button onClick={dialog.cancel}>
+                    <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
                     </Button>
-                    <Button disable={disable} onClick={dialog.done}>
+                    <Button border={true} disable={disable} onClick={dialog.done}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
                     </Button>
@@ -350,6 +351,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         const typeLabel = me.types.find(item => item.id === type).title;
         const icon = parent ? (<b>&#9776;</b>) : (<b>&#8942;</b>);
+        const gotoParentFolder = () => {
+            setPath(path.slice(0, path.length - 1));
+        };
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
             {!footer && <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} dialogState={dialogState} pathState={pathState} />
@@ -358,6 +362,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}
             </Element>}
+            {parent && !root && <Button onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };
 
@@ -605,6 +610,26 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             }
         }
     ];
+    me.sources = [
+        {
+            id: "browser",
+            name: (
+                <>
+                    <Text language="eng">Device</Text>
+                    <Text language="heb">מכשיר</Text>
+                </>
+            )
+        },
+        {
+            id: "browser",
+            name: (
+                <>
+                    <Text language="eng">Server</Text>
+                    <Text language="heb">שרת</Text>
+                </>
+            )
+        }
+    ];
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
@@ -612,6 +637,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         me.path = "";
         me.viewType = "folder";
+        me.source = "browser";
         await me.updateView();
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
@@ -645,5 +671,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
     me.resize = function (object) {
 
+    };
+    me.send = async function (method, ...params) {
+        var send_method = "send_" + me.source;
+        var send = core.message[send_method];
+        return await send(method, ...params);
     };
 };
