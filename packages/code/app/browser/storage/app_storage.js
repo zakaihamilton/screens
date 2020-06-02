@@ -124,7 +124,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const MenuActions = ({ name, dialogState, pathState, type, parent = false, root = false }) => {
+    const MenuActions = ({ name, dialogState, viewTypeState, pathState, type, parent = false, root = false }) => {
+        const [viewType, setViewType] = viewTypeState;
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const currentPath = me.path;
@@ -146,12 +147,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({ mode: "create", type: "file", name: "" });
         };
         const gotoFolder = () => {
+            setViewType("folder");
             setPath(path.slice(0, path.length - 1));
         };
         const renameItem = async () => {
             setDialog({ ...dialogObject, mode: "rename" });
         };
         const moveItem = async () => {
+            if (parent) {
+                gotoFolder();
+            }
             setDialog({
                 ...dialogObject, type, mode: "move", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -162,6 +167,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const copyItem = async () => {
+            if (parent) {
+                gotoFolder();
+            }
             setDialog({
                 ...dialogObject, type, mode: "copy", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -172,6 +180,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const deleteItem = async () => {
+            if (parent) {
+                gotoFolder();
+            }
             await storage.fs.delete(source);
             await me.updateView();
         };
@@ -184,19 +195,21 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                             <Text language="heb">לך לתיקיה העליונה</Text>
                         </>
                     </Item>
-                    <Separator />
-                    <Item onClick={createFolder}>
-                        <>
-                            <Text language="eng">Create Folder</Text>
-                            <Text language="heb">יצירת תיקיה</Text>
-                        </>
-                    </Item>
-                    <Item onClick={createFile}>
-                        <>
-                            <Text language="eng">Create File</Text>
-                            <Text language="heb">יצירת קובץ</Text>
-                        </>
-                    </Item>
+                    {type === "folder" && <>
+                        <Separator />
+                        <Item onClick={createFolder}>
+                            <>
+                                <Text language="eng">Create Folder</Text>
+                                <Text language="heb">יצירת תיקיה</Text>
+                            </>
+                        </Item>
+                        <Item onClick={createFile}>
+                            <>
+                                <Text language="eng">Create File</Text>
+                                <Text language="heb">יצירת קובץ</Text>
+                            </>
+                        </Item>
+                    </>}
                 </>}
                 {!root && <>
                     {parent && <Separator />}
@@ -215,7 +228,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Item onClick={moveItem}>
                         <>
                             <Text language="eng">Move To...</Text>
-                            <Text language="heb">...שינוי מקום</Text>
+                            <Text language="heb">...העבר אל</Text>
                         </>
                     </Item>
                     <Separator />
@@ -230,7 +243,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const Button = ({ onClick, disable, children, border }) => {
+    const Button = ({ onClick, disable, children, border, ...props }) => {
         if (disable) {
             onClick = undefined;
         }
@@ -238,31 +251,49 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             "app-storage-button": true,
             disable,
             border
-        }}>
+        }} {...props}>
             {children}
         </Element>);
     };
 
-    const FolderHeader = ({ children, name, count, root, pathState, dialogState }) => {
+    const FolderHeader = ({ children, name, count, root, pathState, dialogState, viewTypeState }) => {
         const [dialog, setDialog] = dialogState;
         const isTransfer = dialog && (dialog.mode === "move" || dialog.mode === "copy");
-        const disable = !dialog || me.path === dialog.path;
+        let disableTooltip = null;
+        let disable = !dialog;
+        if (!disable) {
+            disable = me.path === dialog.path;
+            if (disable) {
+                const hebrewModeText = dialog.mode === "copy" ? "להעתיק" : "להעביר";
+                const hebrewTypeText = dialog.type === "folder" ? "תיקיה" : "קובץ";
+                disableTooltip = {
+                    eng: `Cannot ${dialog.mode} ${dialog.type} to the same folder it is in`,
+                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו מקום`
+                };
+            }
+        }
+        if (!disable) {
+            disable = (dialog.type === "folder" && dialog.path && me.path.includes(dialog.path));
+        }
+        if (!disable) {
+            disable = me.items.find(item => item.name === dialog.name);
+        }
         const labels = isTransfer && [
             {
                 mode: "copy",
-                prefix: <>
+                footer: <>
                     <Text language="eng">Copy</Text>
                     <Text language="heb">העתק</Text>
-                </>,
-                suffix: <>
-                    <Text language="eng">to...</Text>
-                    <Text language="heb">ל...</Text>
+                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <Text language="eng">to folder</Text>
+                    <Text language="heb">לתיקיה</Text>
+                    <StorageItem key={name} name={name} type="folder" transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
                     </Button>
-                    <Button border={true} disable={disable} onClick={dialog.done}>
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
                         <Text language="eng">Copy</Text>
                         <Text language="heb">העתק</Text>
                     </Button>
@@ -270,30 +301,30 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             },
             {
                 mode: "move",
-                prefix: <>
+                footer: <>
                     <Text language="eng">Move</Text>
                     <Text language="heb">העבר</Text>
-                </>,
-                suffix: <>
-                    <Text language="eng">to...</Text>
-                    <Text language="heb">ל...</Text>
+                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
+                    <Text language="eng">to folder</Text>
+                    <Text language="heb">לתיקיה</Text>
+                    <StorageItem key={name} name={name} type="folder" transfer={true} footer={true} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
                     </Button>
-                    <Button border={true} disable={disable} onClick={dialog.done}>
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
                     </Button>
                 </>
             }
         ];
-        const { prefix, suffix } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
+        const { footer } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
-                    <StorageItem key={name} name={name} type="folder" parent={true} root={root} pathState={pathState} dialogState={dialogState} />
+                    <StorageItem key={name} name={name} type="folder" parent={true} root={root} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                     <Element style={{ flex: 1 }}></Element>
                     <b>{count}</b>
                     &nbsp;
@@ -312,15 +343,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     {children}
                 </Element>
                 {isTransfer && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
-                    {prefix}
-                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} />
-                    {suffix}
+                    {footer}
                 </Element>}
             </Element >
         );
     };
 
-    const StorageItem = ({ name, select, type, parent, root, footer, dialogState, pathState }) => {
+    const StorageItem = ({ name, select, type, parent, root, footer, dialogState, pathState, viewTypeState }) => {
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
@@ -383,7 +412,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
             {!footer && <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
-                <MenuActions name={name} root={root} type={type} parent={parent} dialogState={dialogState} pathState={pathState} />
+                <MenuActions name={name} root={root} type={type} parent={parent} dialogState={dialogState} pathState={pathState} viewTypeState={viewTypeState} />
             </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
                 {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
@@ -393,8 +422,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         </Element >);
     };
 
-    const FolderView = ({ filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState }) => {
-        const dialogState = React.useState(null);
+    const FolderView = ({ filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState, dialogState }) => {
         const [dialog, setDialog] = dialogState;
         const [path, setPath] = pathState;
         const [viewType, setViewType] = viewTypeState;
@@ -431,37 +459,24 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 setViewType(item.type);
             }
             return (
-                <StorageItem key={item.name} {...item} select={select} pathState={pathState} dialogState={dialogState} />
+                <StorageItem key={item.name} {...item} select={select} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
             );
         });
         if (dialog && dialog.mode === "create") {
-            items.unshift(<StorageItem key="new item" name={dialog.name} type={dialog.type} pathState={pathState} dialogState={dialogState} />);
+            items.unshift(<StorageItem key="new item" name={dialog.name} type={dialog.type} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />);
         }
-        return (<FolderHeader name={name} root={root} count={count} pathState={pathState} dialogState={dialogState}>
+        return (<FolderHeader name={name} root={root} count={count} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState}>
             {items}
         </FolderHeader>);
     };
 
-    const FileHeader = ({ children, name, pathState, viewTypeState }) => {
+    const FileHeader = ({ children, name, pathState, viewTypeState, dialogState }) => {
         const [viewType, setViewType] = viewTypeState;
         const [path, setPath] = pathState;
-        const gotoFolder = () => {
-            setPath(path.slice(0, path.length - 1));
-            setViewType("folder");
-        };
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
-                    <Menu icon="&#9776;" label={
-                        <Element className="app-storage-item-name">{name}</Element>
-                    }>
-                        <Item onClick={gotoFolder}>
-                            <>
-                                <Text language="eng">Goto Folder</Text>
-                                <Text language="heb">לך לתיקיה</Text>
-                            </>
-                        </Item>
-                    </Menu>
+                    <StorageItem key={name} name={name} type="file" parent={true} root={false} pathState={pathState} dialogState={dialogState} viewTypeState={viewTypeState} />
                 </Element>
                 <Element className="app-storage-children">
                     {children}
@@ -469,7 +484,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             </Element >);
     };
 
-    const FileView = ({ pathState, viewTypeState }) => {
+    const FileView = ({ pathState, viewTypeState, dialogState }) => {
         const [path] = pathState;
         const counter = react.util.useResize();
         const [ref, width, height] = react.util.useSize(counter);
@@ -481,13 +496,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             width: width + "px",
             height: height + "px"
         };
-        return (<FileHeader name={name} pathState={pathState} viewTypeState={viewTypeState}>
+        return (<FileHeader name={name} pathState={pathState} viewTypeState={viewTypeState} dialogState={dialogState}>
             <TextArea className="app-storage-file-editor" ref={ref} focus={true} wrap="off" state={textState} style={style} />
         </FileHeader>);
     };
 
     const Main = () => {
         const [isOpen, setOpen] = React.useState(true);
+        const dialogState = React.useState(null);
         const delayState = React.useState(5000);
         const languageState = React.useState("eng");
         const sortState = React.useState("name");
@@ -550,7 +566,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             delayState,
             searchState,
             filterState,
-            sourceState
+            sourceState,
+            dialogState
         };
         if (!isOpen) {
             return null;
