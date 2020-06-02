@@ -138,6 +138,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const source = core.path.normalize(parentPath, name);
         const dialogObject = {
             source, name, parent, path: me.path, cancel: () => {
+                setViewType("folder");
                 setPath(currentPath.split("/"));
                 setDialog(null);
             }
