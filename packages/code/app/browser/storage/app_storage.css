@@ -40,6 +40,12 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.app-storage-item.transfer {
+    background-color: var(--chrome-background);
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
 .app-storage-item.disabled {
     border: 1px solid lightgray;
     opacity: 0.5;
@@ -119,4 +125,33 @@
     background-color: var(--chrome-background) !important;
     color: var(--chrome-color) !important;
     padding: 1em !important;
+}
+
+.app-storage-button {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    border: 1px solid var(--chrome-color);
+    padding: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.app-storage-button.disable {
+    opacity: 0.5;
+}
+
+.app-storage-button:not(.disable):hover:active {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+    filter: invert(25%);
+}
+
+.app-storage-button:not(.disable):hover {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
 }

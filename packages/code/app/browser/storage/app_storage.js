@@ -111,15 +111,21 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const MenuActions = ({ name, dialogState, pathState, parent = false, root = false }) => {
+    const MenuActions = ({ name, dialogState, pathState, type, parent = false, root = false }) => {
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
+        const currentPath = me.path;
         let parentPath = me.path;
         if (parent) {
             parentPath = parentPath.split("/").slice(0, -1).join("/");
         }
         const source = core.path.normalize(parentPath, name);
-        const dialogObject = { source, name, parent };
+        const dialogObject = {
+            source, name, parent, path: me.path, cancel: () => {
+                setPath(currentPath.split("/"));
+                setDialog(null);
+            }
+        };
         const createFolder = async () => {
             setDialog({ mode: "create", type: "folder", name: "" });
         };
@@ -133,10 +139,24 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({ ...dialogObject, mode: "rename" });
         };
         const moveItem = async () => {
-            setDialog({ ...dialogObject, mode: "move" });
+            setDialog({
+                ...dialogObject, type, mode: "move", done: async () => {
+                    const target = core.path.normalize(me.path, name);
+                    await storage.fs.move(source, target);
+                    setDialog(null);
+                    await me.updateView();
+                }
+            });
         };
         const copyItem = async () => {
-            setDialog({ ...dialogObject, mode: "copy" });
+            setDialog({
+                ...dialogObject, type, mode: "copy", done: async () => {
+                    const target = core.path.normalize(me.path, name);
+                    await storage.fs.copy(source, target);
+                    setDialog(null);
+                    await me.updateView();
+                }
+            });
         };
         const deleteItem = async () => {
             await storage.fs.delete(source);
@@ -197,7 +217,65 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
+    const Button = ({ onClick, disable, children }) => {
+        if (disable) {
+            onClick = undefined;
+        }
+        return (<Element onClick={onClick} className={{
+            "app-storage-button": true,
+            disable
+        }}>
+            {children}
+        </Element>);
+    };
+
     const FolderHeader = ({ children, name, count, root, pathState, dialogState }) => {
+        const [dialog, setDialog] = dialogState;
+        const isTransfer = dialog && (dialog.mode === "move" || dialog.mode === "copy");
+        const disable = !dialog || me.path === dialog.path;
+        const labels = isTransfer && [
+            {
+                mode: "copy",
+                prefix: <>
+                    <Text language="eng">Copy</Text>
+                    <Text language="heb">העתק</Text>
+                </>,
+                suffix: <>
+                    <Text language="eng">to...</Text>
+                    <Text language="heb">ל...</Text>
+                    <Element style={{ flex: 1 }}></Element>
+                    <Button onClick={dialog.cancel}>
+                        <Text language="eng">Cancel</Text>
+                        <Text language="heb">ביטול</Text>
+                    </Button>
+                    <Button disable={disable} onClick={dialog.done}>
+                        <Text language="eng">Copy</Text>
+                        <Text language="heb">העתק</Text>
+                    </Button>
+                </>
+            },
+            {
+                mode: "move",
+                prefix: <>
+                    <Text language="eng">Move</Text>
+                    <Text language="heb">העבר</Text>
+                </>,
+                suffix: <>
+                    <Text language="eng">to...</Text>
+                    <Text language="heb">ל...</Text>
+                    <Element style={{ flex: 1 }}></Element>
+                    <Button onClick={dialog.cancel}>
+                        <Text language="eng">Cancel</Text>
+                        <Text language="heb">ביטול</Text>
+                    </Button>
+                    <Button disable={disable} onClick={dialog.done}>
+                        <Text language="eng">Move</Text>
+                        <Text language="heb">העבר</Text>
+                    </Button>
+                </>
+            }
+        ];
+        const { prefix, suffix } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
@@ -206,10 +284,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Element className="app-storage-children">
                     {children}
                 </Element>
+                {isTransfer && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
+                    {prefix}
+                    <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} />
+                    {suffix}
+                </Element>}
             </Element >);
     };
 
-    const StorageItem = ({ name, select, type, parent, root, dialogState, pathState }) => {
+    const StorageItem = ({ name, select, type, parent, root, footer, dialogState, pathState }) => {
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
@@ -267,10 +350,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         const typeLabel = me.types.find(item => item.id === type).title;
         const icon = parent ? (<b>&#9776;</b>) : (<b>&#8942;</b>);
-        return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !isEditVisible && hover }}>
-            <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
-                <MenuActions name={name} root={root} parent={parent} dialogState={dialogState} pathState={pathState} />
-            </Menu>
+        return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
+            {!footer && <Menu icon={icon} label={parent && !isEditVisible && <Element className="app-storage-item-name">{name}</Element>}>
+                <MenuActions name={name} root={root} type={type} parent={parent} dialogState={dialogState} pathState={pathState} />
+            </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
                 {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}

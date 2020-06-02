@@ -81,13 +81,13 @@ screens.storage.fs = function StorageFS(me, { }) {
     me.copy = async function (source, target) {
         const stat = await me.stat(source);
         if (stat.isDirectory()) {
-            if (!me.exists(target)) {
-                me.mkdir(target);
+            if (!await me.exists(target)) {
+                await me.mkdir(target);
             }
-            const names = me.readdir(source);
+            const names = await me.readdir(source);
             for (const name of names) {
                 const path = source + "/" + name;
-                me.copy(path, target + "/" + name);
+                await me.copy(path, target + "/" + name);
             }
         }
         else {
@@ -95,8 +95,8 @@ screens.storage.fs = function StorageFS(me, { }) {
                 await me.fs.promises.copyFile(source, target);
             }
             else {
-                const data = me.readFile(source);
-                me.writeFile(target, data);
+                const data = await me.readFile(source);
+                await me.writeFile(target, data);
             }
         }
     };
