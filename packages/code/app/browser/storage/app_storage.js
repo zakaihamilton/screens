@@ -508,6 +508,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         });
         sourceState[1] = React.useCallback(source => {
             me.source = source;
+            me.viewType = "folder";
+            setViewType(me.viewType);
+            setPath([]);
             setSource(source);
         });
         React.useEffect(() => {

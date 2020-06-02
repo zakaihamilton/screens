@@ -14,9 +14,7 @@
 
 .app-storage-root {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    overflow-y: auto;
     height: 100%;
 }
 
@@ -25,6 +23,8 @@
     flex-direction: column;
     margin: 1em;
     flex: 1;
+    flex-wrap: wrap;
+    overflow-y: auto;
 }
 
 .app-storage-item {

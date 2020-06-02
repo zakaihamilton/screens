@@ -63,17 +63,22 @@ screens.storage.fs = function StorageFS(me, { }) {
             for (const name of names) {
                 const itemPath = path ? (path + "/" + name) : name;
                 const item = { name, path: itemPath };
-                const stat = await me.stat(item.path);
-                if (stat.isDirectory()) {
-                    item.type = "folder";
+                try {
+                    const stat = await me.stat(item.path);
+                    if (stat.isDirectory()) {
+                        item.type = "folder";
+                    }
+                    else if (stat.isFile()) {
+                        item.type = "file";
+                    }
+                    else if (stat.isSymbolicLink()) {
+                        item.type = "link";
+                    }
+                    items.push(item);
                 }
-                else if (stat.isFile()) {
-                    item.type = "file";
+                catch (err) {
+                    console.log("Cannot read file: " + item.path);
                 }
-                else if (stat.isSymbolicLink()) {
-                    item.type = "link";
-                }
-                items.push(item);
             }
         }
         return items;
