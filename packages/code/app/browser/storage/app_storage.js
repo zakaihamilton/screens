@@ -22,7 +22,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Menu
     } = react;
 
-    const AppToolbar = ({ filterState, pathState, languageState, sortState, searchState, sortDirectionState }) => {
+    const AppToolbar = ({ sourceState, filterState, pathState, languageState, sortState, searchState, sortDirectionState }) => {
         const [path] = pathState;
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
@@ -39,6 +39,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         });
         const pathItems = (path || []).map((name, idx) => {
             return (<Item key={idx} id={idx + 1}>{name}</Item>);
+        });
+        const sourceItems = (me.sources || []).map(source => {
+            return (<Item key={source.id} id={source.id}>{source.name}</Item>);
         });
         const rootItem = (<Item id={0}>
             <Text language="eng">Home</Text>
@@ -60,6 +63,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }>
                     <DropDown state={languageState}>
                         {languageItems}
+                    </DropDown>
+                </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">Source</Text>
+                        <Text language="heb">מקור</Text>
+                    </>
+                }>
+                    <DropDown state={sourceState}>
+                        {sourceItems}
                     </DropDown>
                 </Field>
                 <Field label={
@@ -142,7 +155,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({
                 ...dialogObject, type, mode: "move", done: async () => {
                     const target = core.path.normalize(me.path, name);
-                    await storage.fs.move(source, target);
+                    await me.send("storage.fs.move", source, target);
                     setDialog(null);
                     await me.updateView();
                 }
@@ -152,7 +165,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({
                 ...dialogObject, type, mode: "copy", done: async () => {
                     const target = core.path.normalize(me.path, name);
-                    await storage.fs.copy(source, target);
+                    await me.send("storage.fs.copy", source, target);
                     setDialog(null);
                     await me.updateView();
                 }
@@ -281,6 +294,19 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
                     <StorageItem key={name} name={name} type="folder" parent={true} root={root} pathState={pathState} dialogState={dialogState} />
+                    <Element style={{ flex: 1 }}></Element>
+                    <b>{count}</b>
+                    &nbsp;
+                    {count === 1 && (
+                        <>
+                            <Text language="eng">Item</Text>
+                            <Text language="heb">פריט</Text>
+                        </>)}
+                    {count !== 1 && (
+                        <>
+                            <Text language="eng">Items</Text>
+                            <Text language="heb">פריטים</Text>
+                        </>)}
                 </Element>
                 <Element className="app-storage-children">
                     {children}
@@ -290,7 +316,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <StorageItem key={dialog.name} name={dialog.name} type={dialog.type} transfer={true} footer={true} pathState={pathState} dialogState={dialogState} />
                     {suffix}
                 </Element>}
-            </Element >);
+            </Element >
+        );
     };
 
     const StorageItem = ({ name, select, type, parent, root, footer, dialogState, pathState }) => {
@@ -309,13 +336,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 const target = core.path.normalize(parentPath, text);
                 try {
                     if (name) {
-                        await storage.fs.rename(source, target);
+                        await me.send("storage.fs.rename", source, target);
                     }
                     else if (type === "folder") {
-                        await storage.fs.mkdir(target);
+                        await me.send("storage.fs.mkdir", target);
                     }
                     else if (type === "file") {
-                        await storage.fs.writeFile(target, "", "utf8");
+                        await me.send("storage.fs.writeFile", target, "", "utf8");
                     }
                     if (parent) {
                         setPath(target.split("/").filter(Boolean));
@@ -447,7 +474,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const counter = react.util.useResize();
         const [ref, width, height] = react.util.useSize(counter);
         const textState = [me.content, async (content) => {
-            await storage.fs.writeFile("/" + me.path, content);
+            await me.send("storage.fs.writeFile", "/" + me.path, content);
         }];
         let name = path[path.length - 1];
         const style = {
@@ -469,23 +496,32 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const updateState = React.useState(0);
         const searchState = React.useState("");
         const pathState = React.useState(me.path.split("/").filter(Boolean));
+        const sourceState = React.useState(me.source);
         const viewTypeState = React.useState(me.viewType);
         const [path, setPath] = pathState;
+        const [source, setSource] = sourceState;
         const [viewType, setViewType] = viewTypeState;
         pathState[1] = React.useCallback(path => {
             me.viewType = "folder";
             setViewType(me.viewType);
             setPath(path);
         });
+        sourceState[1] = React.useCallback(source => {
+            me.source = source;
+            setSource(source);
+        });
         React.useEffect(() => {
             me.path = path.join("/");
         }, [path]);
+        React.useEffect(() => {
+            me.source = source;
+        }, [source]);
         React.useEffect(() => {
             me.viewType = viewType;
         }, [viewType]);
         React.useEffect(() => {
             me.updateView();
-        }, [path, viewType]);
+        }, [path, viewType, source]);
         const [language] = languageState;
         const [delay] = delayState;
         const direction = me.languages.find(item => item.id === language).direction;
@@ -510,7 +546,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             updateState,
             delayState,
             searchState,
-            filterState
+            filterState,
+            sourceState
         };
         if (!isOpen) {
             return null;
@@ -621,7 +658,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             )
         },
         {
-            id: "browser",
+            id: "server",
             name: (
                 <>
                     <Text language="eng">Server</Text>
@@ -643,10 +680,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
     me.updateView = async function () {
         if (me.viewType === "folder") {
-            me.items = await storage.fs.list("/" + me.path);
+            me.items = await me.send("storage.fs.list", "/" + me.path);
         }
         else if (me.viewType === "file") {
-            me.content = await storage.fs.readFile("/" + me.path, "utf8");
+            me.content = await me.send("storage.fs.readFile", "/" + me.path, "utf8");
         }
         if (me.redraw) {
             me.redraw();
