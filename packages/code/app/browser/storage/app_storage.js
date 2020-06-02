@@ -187,8 +187,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             if (parent) {
                 gotoFolder();
             }
-            await me.send("storage.fs.delete", source);
-            await me.updateView();
+            setDialog({
+                ...dialogObject, type, mode: "delete", done: async () => {
+                    await me.send("storage.fs.delete", source);
+                    setDialog(null);
+                    await me.updateView();
+                }
+            });
         };
         return (
             <>
@@ -263,39 +268,41 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const FolderHeader = ({ children, name, count, root, state }) => {
         const { pathState, dialogState, viewTypeState } = state;
         const [dialog, setDialog] = dialogState;
-        const isTransfer = dialog && (dialog.mode === "move" || dialog.mode === "copy");
+        const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
         let disableTooltip = null;
         let disable = !dialog;
         const hebrewModeText = dialog && dialog.mode === "copy" ? "להעתיק" : "להעביר";
         const hebrewTypeText = dialog && dialog.type === "folder" ? "תיקיה" : "קובץ";
-        if (!disable) {
-            disable = me.path === dialog.path;
-            if (disable) {
-                disableTooltip = {
-                    eng: `Cannot ${dialog.mode} ${dialog.type} to the same folder it is in`,
-                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו תיקיה`
-                };
+        if (dialog && dialog.mode !== "delete") {
+            if (!disable) {
+                disable = me.path === dialog.path;
+                if (disable) {
+                    disableTooltip = {
+                        eng: `Cannot ${dialog.mode} ${dialog.type} to the same folder it is in`,
+                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו תיקיה`
+                    };
+                }
+            }
+            if (!disable) {
+                disable = (dialog.type === "folder" && dialog.path && me.path.includes(dialog.path));
+                if (disable) {
+                    disableTooltip = {
+                        eng: `Cannot ${dialog.mode} ${dialog.type} to a child folder`,
+                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתת תיקיה`
+                    };
+                }
+            }
+            if (!disable) {
+                disable = me.items.find(item => item.name === dialog.name);
+                if (disable) {
+                    disableTooltip = {
+                        eng: `Cannot ${dialog.mode} ${dialog.type} to a folder which contains an item with the same name`,
+                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתיקיה שיש בה פריט עם אותו שם`
+                    };
+                }
             }
         }
-        if (!disable) {
-            disable = (dialog.type === "folder" && dialog.path && me.path.includes(dialog.path));
-            if (disable) {
-                disableTooltip = {
-                    eng: `Cannot ${dialog.mode} ${dialog.type} to a child folder`,
-                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתת תיקיה`
-                };
-            }
-        }
-        if (!disable) {
-            disable = me.items.find(item => item.name === dialog.name);
-            if (disable) {
-                disableTooltip = {
-                    eng: `Cannot ${dialog.mode} ${dialog.type} to a folder which contains an item with the same name`,
-                    heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתיקיה שיש בה פריט עם אותו שם`
-                };
-            }
-        }
-        const labels = isTransfer && [
+        const labels = isFooter && [
             {
                 mode: "copy",
                 footer: <>
@@ -303,7 +310,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Text language="heb">העתק</Text>
                     <StorageItem key={dialog.name} name={dialog.name} location={dialog.source} type={dialog.type} transfer={true} footer={true} state={state} />
                     <Text language="eng">to</Text>
-                    <Text language="heb">למקום</Text>
+                    <Text language="heb">ל</Text>
                     <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
@@ -323,7 +330,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Text language="heb">העבר</Text>
                     <StorageItem key={dialog.name} name={dialog.name} location={dialog.source} type={dialog.type} transfer={true} footer={true} state={state} />
                     <Text language="eng">to</Text>
-                    <Text language="heb">למקום</Text>
+                    <Text language="heb">ל</Text>
                     <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
                     <Element style={{ flex: 1 }}></Element>
                     <Button border={true} onClick={dialog.cancel}>
@@ -333,6 +340,26 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
+                    </Button>
+                </>
+            },
+            {
+                mode: "delete",
+                footer: <>
+                    <Text language="eng">Delete</Text>
+                    <Text language="heb">למחוק</Text>
+                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.source} type={dialog.type} transfer={true} footer={true} state={state} />
+                    <Text language="eng">from</Text>
+                    <Text language="heb">מ</Text>
+                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
+                    <Element style={{ flex: 1 }}></Element>
+                    <Button border={true} onClick={dialog.cancel}>
+                        <Text language="eng">Cancel</Text>
+                        <Text language="heb">ביטול</Text>
+                    </Button>
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
+                        <Text language="eng">Delete</Text>
+                        <Text language="heb">מחיקה</Text>
                     </Button>
                 </>
             }
@@ -361,7 +388,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         {children}
                     </List>
                 </Element>
-                {isTransfer && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
+                {isFooter && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     {footer}
                 </Element>}
             </Element >
@@ -543,12 +570,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const pathState = React.useState(me.path.split("/").filter(Boolean));
         const sourceState = React.useState(me.source);
         const viewTypeState = React.useState(me.viewType);
+        const [dialog, setDialog] = dialogState;
         const [path, setPath] = pathState;
         const [source, setSource] = sourceState;
         const [viewType, setViewType] = viewTypeState;
         pathState[1] = React.useCallback(path => {
             me.viewType = "folder";
             setViewType(me.viewType);
+            if (dialog && dialog.mode === "delete") {
+                setDialog(null);
+            }
             setPath(path);
         });
         sourceState[1] = React.useCallback(source => {
