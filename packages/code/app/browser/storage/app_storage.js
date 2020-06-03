@@ -160,6 +160,24 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const renameItem = async () => {
             setDialog({ ...dialogObject, mode: "rename" });
         };
+        const duplicateItem = async () => {
+            let duplicateName = null;
+            let target = null;
+            for (let index = 0; ; index++) {
+                duplicateName = core.path.suffix(name, index ? (" copy " + index) : " copy");
+                target = core.path.normalize(parentPath, duplicateName);
+                if (!await me.send("exists", target)) {
+                    break;
+                }
+            }
+            name = duplicateName;
+            await me.send("copy", dialogObject.path, target);
+            await me.updateView();
+            if (parent) {
+                gotoFolder();
+            }
+            setDialog({ ...dialogObject, mode: "rename", path: target, name });
+        };
         const moveItem = async () => {
             setDialog({
                 ...dialogObject, type, mode: "move", done: async () => {
@@ -223,6 +241,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                             <Text language="heb">שינוי שם</Text>
                         </>
                     </Item>
+                    <Item onClick={duplicateItem}>
+                        <>
+                            <Text language="eng">Duplicate</Text>
+                            <Text language="heb">שכפול</Text>
+                        </>
+                    </Item>
+                    {parent && <Separator />}
                     <Item onClick={copyItem}>
                         <>
                             <Text language="eng">Copy To...</Text>
@@ -472,7 +497,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             );
             onClick = null;
         }
-        const typeLabel = me.types.find(item => item.id === type).title;
+        const typeTitle = me.types.find(item => item.id === type).title;
         const icon = parent ? (<b>&#9776;</b>) : (<b>&#8942;</b>);
         const gotoParentFolder = () => {
             setPath(path.slice(0, path.length - 1));
@@ -486,18 +511,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             eng: formattedSize + " bytes",
             heb: formattedSize + " בתים"
         };
+        const gotoParentFolderTitle = {
+            eng: "Goto Parent Folder",
+            heb: "לך לתיקיה העליונה"
+        };
         const sizeString = size && core.string.formatBytes(size);
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
             {!footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
             </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
-                {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
+                {!parent && <Element title={typeTitle} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}
                 <Element style={{ flex: 1 }} />
             </Element>}
-            {!parent && <Element title={sizeTitle}>{sizeString}</Element>}
-            {parent && !root && <Button onClick={gotoParentFolder}><b>&#8682;</b></Button>}
+            {!parent && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
+            {parent && !root && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };
 

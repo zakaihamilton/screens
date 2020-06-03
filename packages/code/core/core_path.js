@@ -111,6 +111,19 @@ screens.core.path = function CorePath(me, { core }) {
         }
         return path;
     };
+    me.suffix = function (path, suffix) {
+        if (!suffix) {
+            suffix = "";
+        }
+        var currentExtension = me.extension(path);
+        if (currentExtension) {
+            path = path.replace("." + currentExtension, suffix + "." + currentExtension);
+        }
+        else {
+            path += suffix;
+        }
+        return path;
+    };
     me.normalize = function (...names) {
         return "/" + names.filter(name => name && name !== "/").map(name => {
             if (typeof name === "string") {

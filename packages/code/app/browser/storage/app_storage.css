@@ -98,6 +98,10 @@
     flex: 1;
 }
 
+.app-storage-item-size {
+    min-width: 5em;
+}
+
 .app-storage-user-index {
     display: flex;
     align-items: flex-end;
