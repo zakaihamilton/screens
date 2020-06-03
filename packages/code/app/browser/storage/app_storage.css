@@ -71,6 +71,7 @@
     margin-left: 0.5em;
     display: flex;
     align-items: center;
+    flex: 1;
 }
 
 .app-storage-item-label {

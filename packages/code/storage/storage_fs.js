@@ -3,7 +3,7 @@
  @component StorageFS
  */
 
-screens.storage.fs = function StorageFS(me, { }) {
+screens.storage.fs = function StorageFS(me, { core }) {
     me.init = function () {
         if (me.platform === "server") {
             me.fs = require("fs");
@@ -55,6 +55,14 @@ screens.storage.fs = function StorageFS(me, { }) {
             await me.unlink(path);
         }
     };
+    me.isDirectory = async function (path) {
+        const isDirectory = false;
+        const stat = await me.stat(path);
+        if (stat.isDirectory()) {
+            isDirectory = true;
+        }
+        return isDirectory;
+    };
     me.list = async function (path) {
         const items = [];
         const stat = await me.stat(path);
@@ -83,31 +91,53 @@ screens.storage.fs = function StorageFS(me, { }) {
         }
         return items;
     };
-    me.copy = async function (source, target) {
-        const stat = await me.stat(source);
+    me.copy = async function (from, to) {
+        const stat = await me.stat(from);
         if (stat.isDirectory()) {
-            if (!await me.exists(target)) {
-                await me.mkdir(target);
+            if (!await me.exists(to)) {
+                await me.mkdir(to);
             }
-            const names = await me.readdir(source);
+            const names = await me.readdir(from);
             for (const name of names) {
-                const path = source + "/" + name;
-                await me.copy(path, target + "/" + name);
+                const path = from + "/" + name;
+                await me.copy(path, to + "/" + name);
             }
         }
         else {
             if (me.platform === "server") {
-                await me.fs.promises.copyFile(source, target);
+                await me.fs.promises.copyFile(from, to);
             }
             else {
-                const data = await me.readFile(source);
-                await me.writeFile(target, data);
+                const data = await me.readFile(from);
+                await me.writeFile(to, data);
             }
         }
     };
-    me.move = async function (source, target) {
-        await me.copy(source, target);
-        await me.delete(source);
-    };
+    if (me.platform === "browser") {
+        me.transfer = async function (from, to, source, target) {
+            if (source === target) {
+                return await me.sendTo(target, "copy", from, to);
+            }
+            const isDirectory = await me.sendTo(source, "isDirectory", from);
+            if (isDirectory) {
+                if (!await me.sendTo(target, "exists", to)) {
+                    await me.sendTo(target, "mkdir", to);
+                }
+                const names = await me.sendTo(source, "readdir", from);
+                for (const name of names) {
+                    const path = from + "/" + name;
+                    await me.transfer(path, to + "/" + name, source, target);
+                }
+            }
+            else {
+                const data = await me.sendTo(source, "readFile", from);
+                await me.sendTo(target, "writeFile", to, data);
+            }
+        };
+        me.sendTo = async function (source, method, ...params) {
+            var send = core.message["send_" + source];
+            return await send("storage.fs." + method, ...params);
+        };
+    }
 };
 

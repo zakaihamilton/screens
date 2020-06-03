@@ -1,4 +1,4 @@
-screens.react.Menu = ({ label, icon, children }) => {
+screens.react.Menu = ({ label, icon, children, ...props }) => {
     const { Item, Element, Direction, Modal, Menu, Portal } = screens.react;
     const ItemContext = Menu.Item.Context;
     const direction = React.useContext(Direction.Context);
@@ -60,7 +60,7 @@ screens.react.Menu = ({ label, icon, children }) => {
 
     return (
         <>
-            <Element ref={menuRef} className="react-menu">
+            <Element ref={menuRef} className="react-menu" {...props}>
                 <Element className={buttonClassName} onClick={togglePopup}>
                     <Element className={iconClassName}>{icon}</Element>
                     {label && <Element className={labelClassName}>{label}</Element>}
