@@ -277,6 +277,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
         let disableTooltip = null;
         let disable = !dialog;
+        const diffSource = dialog && dialog.source !== me.source;
         const hebrewModeText = dialog && dialog.mode === "copy" ? "להעתיק" : "להעביר";
         const hebrewTypeText = dialog && dialog.type === "folder" ? "תיקיה" : "קובץ";
         if (dialog && dialog.mode !== "delete") {
@@ -308,22 +309,42 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
         }
+        if (dialog && !disable) {
+            disable = dialog.progress;
+            if (disable) {
+                disableTooltip = {
+                    eng: `Working...`,
+                    heb: `עובד...`
+                };
+            }
+        }
+        const onClick = async () => {
+            setDialog(dialog => {
+                return { ...dialog, progress: true };
+            });
+            await dialog.done();
+            setDialog(dialog => {
+                return { ...dialog, progress: false };
+            });
+        }
+        const fromSource = dialog && dialog.source && diffSource && <b>{me.sources.find(source => source.id === dialog.source).name}&nbsp;</b>;
+        const toSource = dialog && diffSource && <b>{me.sources.find(source => source.id === me.source).name}&nbsp;</b>;
         const labels = isFooter && [
             {
                 mode: "copy",
                 footer: <>
                     <Text language="eng">Copy</Text>
                     <Text language="heb">העתק</Text>
-                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
+                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
                     <Text language="eng">to</Text>
                     <Text language="heb">ל</Text>
-                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
+                    <StorageItem key={name} name={<>{toSource}{name}</>} location={me.path} type="folder" transfer={true} footer={true} state={state} />
                     <Element style={{ flex: 1 }}></Element>
-                    <Button border={true} onClick={dialog.cancel}>
+                    {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
-                    </Button>
-                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
+                    </Button>}
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Copy</Text>
                         <Text language="heb">העתק</Text>
                     </Button>
@@ -334,16 +355,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Move</Text>
                     <Text language="heb">העבר</Text>
-                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
+                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
                     <Text language="eng">to</Text>
                     <Text language="heb">ל</Text>
-                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
+                    <StorageItem key={name} name={<>{toSource}{name}</>} location={me.path} type="folder" transfer={true} footer={true} state={state} />
                     <Element style={{ flex: 1 }}></Element>
-                    <Button border={true} onClick={dialog.cancel}>
+                    {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
-                    </Button>
-                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
+                    </Button>}
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
                     </Button>
@@ -354,16 +375,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Delete</Text>
                     <Text language="heb">למחוק</Text>
-                    <StorageItem key={dialog.name} name={dialog.name} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
-                    <Text language="eng">from</Text>
-                    <Text language="heb">מ</Text>
-                    <StorageItem key={name} name={name} type="folder" location={"/" + me.path} transfer={true} footer={true} state={state} />
+                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
                     <Element style={{ flex: 1 }}></Element>
-                    <Button border={true} onClick={dialog.cancel}>
+                    {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
-                    </Button>
-                    <Button border={true} disable={disable} title={disableTooltip} onClick={dialog.done}>
+                    </Button>}
+                    <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Delete</Text>
                         <Text language="heb">מחיקה</Text>
                     </Button>
