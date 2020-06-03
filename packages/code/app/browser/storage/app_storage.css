@@ -91,6 +91,7 @@
     appearance: none;
     outline: none;
     padding: 0.4em;
+    flex: 1;
 }
 
 .app-storage-user-index {

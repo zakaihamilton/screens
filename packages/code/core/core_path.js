@@ -112,6 +112,16 @@ screens.core.path = function CorePath(me, { core }) {
         return path;
     };
     me.normalize = function (...names) {
-        return "/" + names.filter(Boolean).join("/");
+        return "/" + names.filter(name => name && name !== "/").map(name => {
+            if (typeof name === "string") {
+                if (name.startsWith("/")) {
+                    name = name.substring(1);
+                }
+                if (name.endsWith("/")) {
+                    name = name.substring(0, -1);
+                }
+            }
+            return name;
+        }).join("/");
     }
 };

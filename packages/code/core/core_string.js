@@ -272,6 +272,9 @@ screens.core.string = function CoreString(me, { core }) {
         formattedString = formattedString.trim();
         return formattedString;
     };
+    me.formatNumber = function (number) {
+        return number && number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    };
     me.formatBytes = function (number) {
         var set = false;
         if (number < 1000) {

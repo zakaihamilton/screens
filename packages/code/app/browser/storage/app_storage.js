@@ -415,7 +415,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const StorageItem = ({ name, select, type, parent, location, root, footer, state }) => {
+    const StorageItem = ({ name, size, select, type, parent, location, root, footer, state }) => {
         const { dialogState, pathState, viewTypeState } = state;
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
@@ -481,6 +481,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             eng: "Menu",
             heb: "תפריט"
         };
+        const formattedSize = core.string.formatNumber(size);
+        const sizeTitle = {
+            eng: formattedSize + " bytes",
+            heb: formattedSize + " בתים"
+        };
+        const sizeString = size && core.string.formatBytes(size);
         return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
             {!footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
@@ -488,7 +494,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
                 {!parent && <Element title={typeLabel} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}
+                <Element style={{ flex: 1 }} />
             </Element>}
+            {!parent && <Element title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && <Button onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };
@@ -785,9 +793,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
     me.updateView = async function () {
         if (me.viewType === "folder") {
+            me.items = [];
             me.items = await me.send("list", "/" + me.path);
         }
         else if (me.viewType === "file") {
+            me.content = "";
             me.content = await me.send("readFile", "/" + me.path, "utf8");
         }
         if (me.redraw) {
