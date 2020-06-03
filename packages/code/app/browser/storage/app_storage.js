@@ -144,8 +144,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             source,
             context: me.path,
             cancel: () => {
-                setViewType("folder");
-                setPath(currentPath.split("/"));
                 setDialog(null);
             }
         };
@@ -163,9 +161,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({ ...dialogObject, mode: "rename" });
         };
         const moveItem = async () => {
-            if (parent) {
-                gotoFolder();
-            }
             setDialog({
                 ...dialogObject, type, mode: "move", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -177,9 +172,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const copyItem = async () => {
-            if (parent) {
-                gotoFolder();
-            }
             setDialog({
                 ...dialogObject, type, mode: "copy", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -190,9 +182,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const deleteItem = async () => {
-            if (parent) {
-                gotoFolder();
-            }
             setDialog({
                 ...dialogObject, type, mode: "delete", done: async () => {
                     await me.send("delete", dialogObject.path);
@@ -272,6 +261,34 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FolderHeader = ({ children, name, count, root, state }) => {
+        return (
+            <Element className="app-storage-root">
+                <Element className={{ "app-storage-item": true, active: false, root: true }}>
+                    <StorageItem key={name} name={name} type="folder" parent={true} root={root} state={state} />
+                    <Element style={{ flex: 1 }}></Element>
+                    <b>{count}</b>
+                    &nbsp;
+                    {count === 1 && (
+                        <>
+                            <Text language="eng">Item</Text>
+                            <Text language="heb">פריט</Text>
+                        </>)}
+                    {count !== 1 && (
+                        <>
+                            <Text language="eng">Items</Text>
+                            <Text language="heb">פריטים</Text>
+                        </>)}
+                </Element>
+                <Element className="app-storage-children">
+                    <List itemSize={4} unit="em">
+                        {children}
+                    </List>
+                </Element>
+            </Element >
+        );
+    };
+
+    const Footer = ({ state }) => {
         const { pathState, dialogState, viewTypeState } = state;
         const [dialog, setDialog] = dialogState;
         const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
@@ -390,32 +407,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         ];
         const { footer } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
         return (
-            <Element className="app-storage-root">
-                <Element className={{ "app-storage-item": true, active: false, root: true }}>
-                    <StorageItem key={name} name={name} type="folder" parent={true} root={root} state={state} />
-                    <Element style={{ flex: 1 }}></Element>
-                    <b>{count}</b>
-                    &nbsp;
-                    {count === 1 && (
-                        <>
-                            <Text language="eng">Item</Text>
-                            <Text language="heb">פריט</Text>
-                        </>)}
-                    {count !== 1 && (
-                        <>
-                            <Text language="eng">Items</Text>
-                            <Text language="heb">פריטים</Text>
-                        </>)}
-                </Element>
-                <Element className="app-storage-children">
-                    <List itemSize={4} unit="em">
-                        {children}
-                    </List>
-                </Element>
+            <>
                 {isFooter && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     {footer}
                 </Element>}
-            </Element >
+            </>
         );
     };
 
@@ -666,6 +662,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <AppToolbar state={state} />
                     {viewType === "folder" && <FolderView state={state} />}
                     {viewType === "file" && <FileView state={state} />}
+                    <Footer state={state} />
                 </Language>
             </Direction>
         );
