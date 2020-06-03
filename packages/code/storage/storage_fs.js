@@ -22,7 +22,8 @@ screens.storage.fs = function StorageFS(me, { core }) {
             "stat",
             "lstat",
             "symlink",
-            "readlink"
+            "readlink",
+            "du"
         ];
         methodNames.map(methodName => {
             if (me.fs && me.fs.promises[methodName]) {
@@ -80,6 +81,9 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     const stat = await me.stat(item.path);
                     if (stat.isDirectory()) {
                         item.type = "folder";
+                        if (me.du) {
+                            item.size = await me.du(item.path);
+                        }
                     }
                     else if (stat.isFile()) {
                         item.type = "file";
