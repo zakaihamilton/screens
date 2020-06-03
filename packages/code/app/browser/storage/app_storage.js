@@ -164,7 +164,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             let duplicateName = null;
             let target = null;
             for (let index = 0; ; index++) {
-                duplicateName = core.path.suffix(name, index ? (" copy " + index) : " copy");
+                duplicateName = core.path.suffix(name, index ? (" copy " + (index + 1)) : " copy");
                 target = core.path.normalize(parentPath, duplicateName);
                 if (!await me.send("exists", target)) {
                     break;
