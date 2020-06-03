@@ -56,7 +56,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
         }
     };
     me.isDirectory = async function (path) {
-        const isDirectory = false;
+        let isDirectory = false;
         const stat = await me.stat(path);
         if (stat.isDirectory()) {
             isDirectory = true;
@@ -130,7 +130,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
                 }
             }
             else {
-                const data = await me.sendTo(source, "readFile", from);
+                const data = await me.sendTo(source, "readFile", from, "utf8");
                 await me.sendTo(target, "writeFile", to, data);
             }
         };

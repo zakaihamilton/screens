@@ -195,7 +195,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             }
             setDialog({
                 ...dialogObject, type, mode: "delete", done: async () => {
-                    await me.send("delete", source);
+                    await me.send("delete", dialogObject.path);
                     setDialog(null);
                     await me.updateView();
                 }
