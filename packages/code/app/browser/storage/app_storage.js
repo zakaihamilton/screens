@@ -485,7 +485,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 const target = core.path.normalize(parentPath, text);
                 try {
                     if (name) {
-                        await me.send("rename", source, target);
+                        await me.send("rename", dialog.path, target);
                     }
                     else if (type === "folder") {
                         await me.send("mkdir", target);
