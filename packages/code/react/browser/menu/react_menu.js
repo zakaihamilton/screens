@@ -14,10 +14,10 @@ screens.react.Menu = ({ label, icon, children, ...props }) => {
         if (element && menuRect) {
             if (direction === "rtl") {
                 popupRef.current.style.left = "";
-                popupRef.current.style.right = parseInt(menuRect.right) + "px";
+                popupRef.current.style.right = parseInt(menuRect.right + 1) + "px";
             }
             else {
-                popupRef.current.style.left = parseInt(menuRect.left) + "px";
+                popupRef.current.style.left = parseInt(menuRect.left + 1) + "px";
                 popupRef.current.style.right = "";
             }
             popupRef.current.style.top = parseInt(menuRect.bottom) + "px";
@@ -60,11 +60,9 @@ screens.react.Menu = ({ label, icon, children, ...props }) => {
 
     return (
         <>
-            <Element ref={menuRef} className="react-menu" {...props}>
-                <Element className={buttonClassName} onClick={togglePopup}>
-                    <Element className={iconClassName}>{icon}</Element>
-                    {label && <Element className={labelClassName}>{label}</Element>}
-                </Element>
+            <Element ref={menuRef} className={buttonClassName} onClick={togglePopup} {...props}>
+                <Element className={iconClassName}>{icon}</Element>
+                {label && <Element className={labelClassName}>{label}</Element>}
             </Element>
             <Modal open={open} />
             <Portal>

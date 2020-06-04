@@ -1,17 +1,23 @@
-.react-menu {
-    display: flex;
-    flex-direction: column;
-}
-
 .react-menu-button {
+    box-sizing: border-box;
     display: flex;
     border: 1px solid transparent;
+    align-items: center;
+    justify-items: center;
     align-content: center;
     justify-content: center;
 }
 
 .react-menu-icon {
-    padding: 0.5em;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
 }
 
 .react-menu-label {

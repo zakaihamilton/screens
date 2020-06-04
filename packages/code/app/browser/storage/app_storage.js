@@ -200,9 +200,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const deleteItem = async () => {
+            dialogObject.items = [name];
             setDialog({
                 ...dialogObject, type, mode: "delete", done: async () => {
-                    await me.send("delete", dialogObject.path);
+                    for (const name of dialogObject.items) {
+                        const itemPath = core.path.normalize(parentPath, name);
+                        await me.send("delete", itemPath);
+                    }
                     setDialog(null);
                     await me.updateView();
                 }
@@ -291,18 +295,20 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
                     <StorageItem key={name} name={name} type="folder" parent={true} root={root} state={state} />
                     <Element style={{ flex: 1 }}></Element>
-                    <b>{count}</b>
+                    <Element className="app-storage-item-count">
+                        <b>{count}</b>
                     &nbsp;
                     {count === 1 && (
-                        <>
-                            <Text language="eng">Item</Text>
-                            <Text language="heb">פריט</Text>
-                        </>)}
-                    {count !== 1 && (
-                        <>
-                            <Text language="eng">Items</Text>
-                            <Text language="heb">פריטים</Text>
-                        </>)}
+                            <>
+                                <Text language="eng">Item</Text>
+                                <Text language="heb">פריט</Text>
+                            </>)}
+                        {count !== 1 && (
+                            <>
+                                <Text language="eng">Items</Text>
+                                <Text language="heb">פריטים</Text>
+                            </>)}
+                    </Element>
                 </Element>
                 <Element className="app-storage-children">
                     <List itemSize={4} unit="em">
@@ -351,6 +357,17 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
         }
+        if (dialog && dialog.mode === "delete") {
+            if (!disable) {
+                disable = !dialog.items.length;
+                if (disable) {
+                    disableTooltip = {
+                        eng: "No items selected to delete",
+                        heb: "אין פריטים נבחרים למחוק"
+                    };
+                }
+            }
+        }
         if (dialog && !disable) {
             disable = dialog.progress;
             if (disable) {
@@ -371,6 +388,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         const fromSource = dialog && dialog.source && diffSource && <b>{me.sources.find(source => source.id === dialog.source).name}&nbsp;</b>;
         const toSource = dialog && diffSource && <b>{me.sources.find(source => source.id === me.source).name}&nbsp;</b>;
+        const items = dialog && dialog.items && dialog.items.map(name => {
+            return me.items.find(item => item.name === name);
+        }).filter(Boolean);
         const labels = isFooter && [
             {
                 mode: "copy",
@@ -417,7 +437,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Delete</Text>
                     <Text language="heb">למחוק</Text>
-                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
+                    {items.map(item => {
+                        return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
+                    })}
                     <Element style={{ flex: 1 }}></Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
@@ -433,7 +455,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const { footer } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
         return (
             <>
-                {isFooter && <Element className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
+                {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     {footer}
                 </Element>}
             </>
@@ -447,6 +469,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
         const [editText, setEditText] = editTextState;
+        const showCheckbox = !parent && !footer && dialog && dialog.mode === "delete";
         const renameTo = async (text) => {
             if (name !== text && text) {
                 const { source } = dialog;
@@ -487,7 +510,19 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             await renameTo(text);
         };
         let content = (<Element title={location} className="app-storage-item-label">{name}</Element>);
-        let onClick = select;
+        let onClick = !showCheckbox ? select : () => {
+            const items = dialog.items;
+            const index = items.findIndex(item => item === name);
+            if (index !== -1) {
+                items.splice(index, 1);
+            }
+            else {
+                items.push(name);
+            }
+            setDialog(dialog => {
+                return { ...dialog, items };
+            });
+        };
         if (isEditVisible) {
             content = (
                 <>
@@ -515,17 +550,25 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             eng: "Goto Parent Folder",
             heb: "לך לתיקיה העליונה"
         };
+        const checkboxTitle = {
+            eng: "Select",
+            heb: "בחירה"
+        };
         const sizeString = size && core.string.formatBytes(size);
-        return (<Element className={{ "app-storage-item": true, active: true, hover: !parent && !footer && !isEditVisible && hover }}>
-            {!footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
+        const isChecked = dialog && dialog.items && dialog.items.includes(name);
+        return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
+            {(parent || (!dialog || dialog.mode !== "delete")) && !footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
             </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
-                {!parent && <Element title={typeTitle} width="32px" height="32px" className={`app-storage-icon app-storage-${type}-icon`}></Element>}
+                {showCheckbox && <Element className="app-storage-item-checkbox" title={checkboxTitle}>
+                    <Element className={{ "app-storage-item-check": true, check: isChecked }}><b>&#10003;</b></Element>
+                </Element>}
+                {!parent && <Element title={typeTitle} className={`app-storage-icon app-storage-${type}-icon`}></Element>}
                 {content}
-                <Element style={{ flex: 1 }} />
+                {!footer && <Element style={{ flex: 1 }} />}
             </Element>}
-            {!parent && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
+            {!parent && !footer && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };

@@ -31,19 +31,30 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    min-width: 5em;
     min-height: 2em;
     padding: 0.5em;
     flex-shrink: 0;
 }
 
-.app-storage-item:not(.root) {
+.app-storage-item.minWidth {
+    min-width: 5em;
+}
+
+.app-storage-item:not(.root).ltr {
     margin-right: 1em;
 }
 
+.app-storage-item:not(.root).rtl {
+    margin-left: 1em;
+}
+
 .app-storage-item.root {
-    padding-right: 1em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.app-storage-item-count {
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .app-storage-item.transfer {
@@ -72,14 +83,13 @@
 }
 
 .app-storage-item-name {
-    margin-left: 0.5em;
     display: flex;
     align-items: center;
     flex: 1;
 }
 
 .app-storage-item-label {
-    padding: 0.4em;
+    padding: 0.5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -100,6 +110,31 @@
 
 .app-storage-item-size {
     min-width: 5em;
+    text-align: right;
+}
+
+.app-storage-item-checkbox {
+    border: 1px solid transparent;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
+    margin-right: 0.1em;
+}
+
+.app-storage-item-check {
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.app-storage-item-check.check {
+    visibility: visible;
 }
 
 .app-storage-user-index {
