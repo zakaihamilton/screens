@@ -410,7 +410,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Copy</Text>
                         <Text language="heb">העתק</Text>
-                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
+                        <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             },
@@ -431,7 +431,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
-                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
+                        <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             },
@@ -440,10 +440,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 footer: <>
                     <Text language="eng">Delete</Text>
                     <Text language="heb">למחוק</Text>
-                    {items.map(item => {
-                        return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
-                    })}
-                    <Element style={{ flex: 1 }}></Element>
+                    <Element className="app-storage-item-scroller">
+                        {items.map(item => {
+                            return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
+                        })}
+                    </Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
@@ -451,7 +452,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Delete</Text>
                         <Text language="heb">מחיקה</Text>
-                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
+                        <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             }

@@ -206,3 +206,16 @@
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
 }
+
+.app-storage-item-scroller {
+    display: flex;
+    overflow-x: auto;
+    flex: 1;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.app-storage-loading {
+    width: 1em;
+    height: 1em;
+}

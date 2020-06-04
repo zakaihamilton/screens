@@ -110,7 +110,7 @@ screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) =>
         <Element data-id={id} className={className} onClick={handleClick} {...props}>
             {children}
             <Element style={{ flex: 1 }} />
-            <ProgressRing.Loading show={isBusy} speed={250} stroke={3} />
+            <ProgressRing.Loading className="react-menu-item-loading" show={isBusy} speed={250} stroke={3} />
         </Element>
     );
 };

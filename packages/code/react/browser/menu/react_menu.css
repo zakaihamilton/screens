@@ -88,6 +88,7 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    align-content: center;
     background-color: var(--chrome-background);
     color: var(--chrome-color);
 }
@@ -107,4 +108,9 @@
 .react-menu-item:not(.disable):hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
+}
+
+.react-menu-item-loading {
+    width: 1em;
+    height: 1em;
 }
