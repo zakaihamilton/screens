@@ -96,6 +96,7 @@
 }
 
 .app-storage-item-edit {
+    outline: 1px solid var(--chrome-border);
     background-color: var(--chrome-background);
     color: var(--chrome-color);
     position: relative;
@@ -103,8 +104,8 @@
     font-size: inherit;
     z-index: 1000;
     appearance: none;
-    outline: none;
-    padding: 0.4em;
+    padding: 0.5em;
+    height: 2.5em;
     flex: 1;
 }
 
