@@ -24,6 +24,7 @@ screens.ui.theme = function UITheme(me, { core, ui }) {
     me.update = function () {
         me.updateColors();
         me.updateElements();
+        window.dispatchEvent(new Event("resize"));
     };
     me.toggleFontSize = function () {
         var fontSize = core.property.get(window.document.body, "ui.style.fontSize");

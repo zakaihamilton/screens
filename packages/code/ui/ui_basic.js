@@ -276,7 +276,7 @@ screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
             value = me.emToPixels(element, value);
         }
         return value;
-    }
+    };
     me.pixelsToUnit = function (element, pixelValue, unit) {
         if (element && unit === "em") {
             return me.pixelsToEm(element, pixelValue);

@@ -80,7 +80,7 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         }, [counter]);
         return [ref, width, height];
     };
-    me.useTimer = function (timeout) {
+    me.useTimeout = function (timeout) {
         const timeoutRef = React.useRef();
         const stop = React.useCallback(() => {
             const timeoutId = timeoutRef.current;
@@ -98,6 +98,32 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         });
         const exists = React.useCallback(() => {
             return timeoutRef.current;
+        });
+        React.useEffect(() => {
+            return () => {
+                stop();
+            }
+        }, []);
+        return [start, stop, exists];
+    };
+    me.useInterval = function (interval) {
+        const intervalRef = React.useRef();
+        const stop = React.useCallback(() => {
+            const intervalId = intervalRef.current;
+            if (intervalId) {
+                intervalRef.current = undefined;
+                clearInterval(intervalId);
+            }
+        });
+        const start = React.useCallback(callback => {
+            stop();
+            intervalRef.current = setInterval(() => {
+                intervalRef.current = undefined;
+                callback();
+            }, interval);
+        });
+        const exists = React.useCallback(() => {
+            return intervalRef.current;
         });
         React.useEffect(() => {
             return () => {

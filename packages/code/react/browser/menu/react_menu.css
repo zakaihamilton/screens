@@ -96,6 +96,10 @@
     opacity: 0.5;
 }
 
+.react-menu-item.busy {
+    opacity: 0.8;
+}
+
 .react-menu-item:not(.disable):active:hover {
     opacity: 0.8;
 }

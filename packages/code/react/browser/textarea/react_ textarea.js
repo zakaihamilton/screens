@@ -4,7 +4,7 @@ screens.react.TextArea = React.forwardRef(({ className, state, focus, ...props }
     const combinedRef = util.useRefs(ref, inputRef);
     const [text, setText] = state;
     const [currentText, setCurrentText] = React.useState(text);
-    const [startTimer] = util.useTimer(250);
+    const [startTimer] = util.useTimeout(250);
 
     const onChange = event => {
         const { value } = event.target;

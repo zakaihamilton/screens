@@ -20,7 +20,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         Separator,
         TextArea,
         List,
-        Menu
+        Menu,
+        ProgressRing
     } = react;
 
     const AppToolbar = ({ state }) => {
@@ -409,6 +410,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Copy</Text>
                         <Text language="heb">העתק</Text>
+                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             },
@@ -429,6 +431,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Move</Text>
                         <Text language="heb">העבר</Text>
+                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             },
@@ -448,6 +451,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
                         <Text language="eng">Delete</Text>
                         <Text language="heb">מחיקה</Text>
+                        <ProgressRing.Loading show={dialog.progress} speed={250} stroke={3} />
                     </Button>
                 </>
             }

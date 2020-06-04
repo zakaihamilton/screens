@@ -191,7 +191,7 @@
 }
 
 .app-storage-button.disable {
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 .app-storage-button:not(.disable):hover:active {

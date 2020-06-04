@@ -81,19 +81,26 @@ screens.react.Menu = ({ label, icon, children, ...props }) => {
 };
 
 screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) => {
-    const { Element } = screens.react;
+    const { Element, ProgressRing, } = screens.react;
     const [isOpen, setOpen] = React.useContext(screens.react.Menu.Item.Context);
+    const [isBusy, setBusy] = React.useState(false);
     const className = {
         "react-menu-item": true,
-        disable
+        disable,
+        busy: isBusy
     };
     const handleClick = async () => {
         let result = false;
         if (disable) {
             return;
         }
+        if (isBusy) {
+            return;
+        }
         if (onClick) {
+            setBusy(true);
             result = await onClick();
+            setBusy(false);
         }
         if (!result) {
             setOpen(false);
@@ -102,6 +109,8 @@ screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) =>
     return (
         <Element data-id={id} className={className} onClick={handleClick} {...props}>
             {children}
+            <Element style={{ flex: 1 }} />
+            <ProgressRing.Loading show={isBusy} speed={250} stroke={3} />
         </Element>
     );
 };
