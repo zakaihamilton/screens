@@ -1,8 +1,8 @@
-screens.react.ProgressRing = ({ radius, stroke, progress, color, fill = "transparent", ...props }) => {
+screens.react.ProgressRing = ({ radius, stroke, strokeDasharray, progress, color, fill = "transparent", ...props }) => {
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     const strokeDashoffset = circumference - progress / 100 * circumference;
-
+    strokeDasharray = strokeDasharray || circumference + ' ' + circumference;
     return (
         <svg
             height={radius * 2}
@@ -13,7 +13,7 @@ screens.react.ProgressRing = ({ radius, stroke, progress, color, fill = "transpa
                 stroke={color}
                 fill={fill}
                 strokeWidth={stroke}
-                strokeDasharray={circumference + ' ' + circumference}
+                strokeDasharray={strokeDasharray}
                 style={{ strokeDashoffset }}
                 stroke-width={stroke}
                 r={normalizedRadius}
@@ -24,7 +24,7 @@ screens.react.ProgressRing = ({ radius, stroke, progress, color, fill = "transpa
     );
 };
 
-screens.react.ProgressRing.Loading = ({ speed = 1000, show, style, color, radius, ...props }) => {
+screens.react.ProgressRing.Loading = ({ speed = 1000, show, style, color, strokeDasharray, radius, ...props }) => {
     const { util, ProgressRing } = screens.react;
     const object = util.useObject();
     const { nightMode, fontSize } = screens.ui.theme.options;
@@ -34,6 +34,7 @@ screens.react.ProgressRing.Loading = ({ speed = 1000, show, style, color, radius
     style = style || {};
     color = color || nightMode ? "white" : "black";
     style.visibility = show ? "visible" : "hidden";
+    strokeDasharray = strokeDasharray || 4;
     React.useEffect(() => {
         if (!show) {
             stop();
@@ -44,12 +45,10 @@ screens.react.ProgressRing.Loading = ({ speed = 1000, show, style, color, radius
                 if (progress >= 100) {
                     progress = 0;
                 }
-                else {
-                    progress += 10;
-                }
+                progress += 10;
                 return progress;
             });
         });
     }, [show]);
-    return (<ProgressRing progress={progress} color={color} radius={radius} style={style} {...props} />);
+    return (<ProgressRing progress={progress} strokeDasharray={strokeDasharray} color={color} radius={radius} style={style} {...props} />);
 };
