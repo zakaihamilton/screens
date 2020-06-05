@@ -277,6 +277,7 @@ screens.core.string = function CoreString(me, { core }) {
     };
     me.formatBytes = function (number) {
         var set = false;
+        number = parseInt(number);
         if (number < 1000) {
             number = parseInt(number) + " B";
             set = true;
