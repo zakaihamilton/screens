@@ -24,6 +24,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         ProgressRing
     } = react;
 
+    const HomeFolder = () => (<>
+        <Text language="eng">Home</Text>
+        <Text language="heb">בית</Text>
+    </>);
+
     const AppToolbar = ({ state }) => {
         const { sourceState, filterState, pathState, languageState, sortState, searchState, sortDirectionState } = state;
         const [path] = pathState;
@@ -47,8 +52,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             return (<Item key={source.id} id={source.id}>{source.name}</Item>);
         });
         const rootItem = (<Item id={0}>
-            <Text language="eng">Home</Text>
-            <Text language="heb">בית</Text>
+            <HomeFolder />
         </Item>);
         const noneItem = (<Item id="none" multiple={false}>
             <Text language="eng">None</Text>
@@ -323,6 +327,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const Footer = ({ state }) => {
         const { pathState, dialogState, viewTypeState } = state;
         const [dialog, setDialog] = dialogState;
+        const [path, setPath] = pathState;
         const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
         let disableTooltip = null;
         let disable = !dialog;
@@ -392,6 +397,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const items = dialog && dialog.items && dialog.items.map(name => {
             return me.items.find(item => item.name === name);
         }).filter(Boolean);
+        let name = path[path.length - 1];
+        if (!name) {
+            name = <HomeFolder />;
+        }
         const labels = isFooter && [
             {
                 mode: "copy",
@@ -441,7 +450,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Text language="eng">Delete</Text>
                     <Text language="heb">למחוק</Text>
                     <Element className="app-storage-item-scroller">
-                        {items.map(item => {
+                        {items && items.map(item => {
                             return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
                         })}
                     </Element>
@@ -591,10 +600,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         let name = path[path.length - 1];
         let root = false;
         if (!name) {
-            name = (<>
-                <Text language="eng">Home</Text>
-                <Text language="heb">בית</Text>
-            </>);
+            name = <HomeFolder />;
             root = true;
         }
         let items = me.items || [];
