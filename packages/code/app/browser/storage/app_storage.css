@@ -211,9 +211,12 @@
 .app-storage-item-scroller {
     display: flex;
     overflow-x: auto;
-    flex: 1;
     margin-left: 1em;
     margin-right: 1em;
+}
+
+.app-storage-item-scroller.multiple {
+    flex: 1;
 }
 
 .app-storage-loading {

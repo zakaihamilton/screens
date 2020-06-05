@@ -184,6 +184,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({ ...dialogObject, mode: "rename", path: target, name });
         };
         const moveItem = async () => {
+            dialogObject.items = [name];
             setDialog({
                 ...dialogObject, type, mode: "move", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -195,6 +196,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const copyItem = async () => {
+            dialogObject.items = [name];
             setDialog({
                 ...dialogObject, type, mode: "copy", done: async () => {
                     const target = core.path.normalize(me.path, name);
@@ -332,15 +334,34 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         let disableTooltip = null;
         let disable = !dialog;
         const diffSource = dialog && dialog.source !== me.source;
-        const hebrewModeText = dialog && dialog.mode === "copy" ? "להעתיק" : "להעביר";
-        const hebrewTypeText = dialog && dialog.type === "folder" ? "תיקיה" : "קובץ";
+        let hebrewToModeText = "";
+        let hebrewActionModeText = "";
+        let englishToModeText = "";
+        let englishActionModeText = "";
+        if (dialog) {
+            englishToModeText = englishActionModeText = core.string.title(dialog.mode);
+            if (dialog.mode === "copy") {
+                hebrewToModeText = "להעתיק";
+                hebrewActionModeText = "העתק";
+            }
+            if (dialog.mode === "move") {
+                hebrewToModeText = "להעביר";
+                hebrewActionModeText = "העבר";
+            }
+            if (dialog.mode === "delete") {
+                hebrewToModeText = "למחוק";
+                hebrewActionModeText = "מחק";
+            }
+        }
+        const englishItemName = dialog && dialog.items && dialog.items.length > 1 ? "items" : "item";
+        const hebrewItemName = dialog && dialog.items && dialog.items.length > 1 ? "פריטים" : "פריט";
         if (dialog && dialog.mode !== "delete") {
             if (!disable) {
                 disable = me.path === dialog.context;
                 if (disable) {
                     disableTooltip = {
-                        eng: `Cannot ${dialog.mode} ${dialog.type} to the same folder it is in`,
-                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לאותו תיקיה`
+                        eng: `Cannot ${dialog.mode} ${englishItemName} to the same folder it is in`,
+                        heb: `אי אפשר ${hebrewToModeText} ${hebrewItemName} לאותו תיקיה`
                     };
                 }
             }
@@ -348,8 +369,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 disable = (dialog.type === "folder" && dialog.context && me.path.includes(dialog.context));
                 if (disable) {
                     disableTooltip = {
-                        eng: `Cannot ${dialog.mode} ${dialog.type} to a child folder`,
-                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתת תיקיה`
+                        eng: `Cannot ${dialog.mode} folder to a child folder`,
+                        heb: `אי אפשר ${hebrewToModeText} תיקיה לתת תיקיה`
                     };
                 }
             }
@@ -357,8 +378,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 disable = me.items.find(item => item.name === dialog.name);
                 if (disable) {
                     disableTooltip = {
-                        eng: `Cannot ${dialog.mode} ${dialog.type} to a folder which contains an item with the same name`,
-                        heb: `אי אפשר ${hebrewModeText} ${hebrewTypeText} לתיקיה שיש בה פריט עם אותו שם`
+                        eng: `Cannot ${dialog.mode} ${englishItemName} to a folder which contains an item with the same name`,
+                        heb: `אי אפשר ${hebrewToModeText} ${hebrewItemName} לתיקיה שיש בה פריט עם אותו שם`
                     };
                 }
             }
@@ -368,8 +389,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 disable = !dialog.items.length;
                 if (disable) {
                     disableTooltip = {
-                        eng: "No items selected to delete",
-                        heb: "אין פריטים נבחרים למחוק"
+                        eng: `No items selected to ${dialog.mode}`,
+                        heb: `אין פריטים נבחרים ${hebrewToModeText}`
                     };
                 }
             }
@@ -388,9 +409,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 return { ...dialog, progress: true };
             });
             await dialog.done();
-            setDialog(dialog => {
-                return { ...dialog, progress: false };
-            });
         }
         const fromSource = dialog && dialog.source && diffSource && <b>{me.sources.find(source => source.id === dialog.source).name}&nbsp;</b>;
         const toSource = dialog && diffSource && <b>{me.sources.find(source => source.id === me.source).name}&nbsp;</b>;
@@ -401,76 +419,31 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (!name) {
             name = <HomeFolder />;
         }
-        const labels = isFooter && [
-            {
-                mode: "copy",
-                footer: <>
-                    <Text language="eng">Copy</Text>
-                    <Text language="heb">העתק</Text>
-                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
-                    <Text language="eng">to</Text>
-                    <Text language="heb">ל</Text>
-                    <StorageItem key={name} name={<>{toSource}{name}</>} location={me.path} type="folder" transfer={true} footer={true} state={state} />
-                    <Element style={{ flex: 1 }}></Element>
-                    {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
-                        <Text language="eng">Cancel</Text>
-                        <Text language="heb">ביטול</Text>
-                    </Button>}
-                    <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
-                        <Text language="eng">Copy</Text>
-                        <Text language="heb">העתק</Text>
-                        <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
-                    </Button>
-                </>
-            },
-            {
-                mode: "move",
-                footer: <>
-                    <Text language="eng">Move</Text>
-                    <Text language="heb">העבר</Text>
-                    <StorageItem key={dialog.name} name={<>{fromSource}{dialog.name}</>} location={dialog.path} type={dialog.type} transfer={true} footer={true} state={state} />
-                    <Text language="eng">to</Text>
-                    <Text language="heb">ל</Text>
-                    <StorageItem key={name} name={<>{toSource}{name}</>} location={me.path} type="folder" transfer={true} footer={true} state={state} />
-                    <Element style={{ flex: 1 }}></Element>
-                    {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
-                        <Text language="eng">Cancel</Text>
-                        <Text language="heb">ביטול</Text>
-                    </Button>}
-                    <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
-                        <Text language="eng">Move</Text>
-                        <Text language="heb">העבר</Text>
-                        <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
-                    </Button>
-                </>
-            },
-            {
-                mode: "delete",
-                footer: <>
-                    <Text language="eng">Delete</Text>
-                    <Text language="heb">למחוק</Text>
-                    <Element className="app-storage-item-scroller">
+        return (
+            <>
+                {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
+                    <Text language="eng">{englishToModeText}</Text>
+                    <Text language="heb">{hebrewToModeText}</Text>
+                    <Element className={{ "app-storage-item-scroller": true, "multiple": dialog && dialog.items && dialog.items.length > 1 }}>
                         {items && items.map(item => {
                             return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
                         })}
                     </Element>
+                    {dialog.mode !== "delete" && <>
+                        <Text language="eng">to</Text>
+                        <Text language="heb">ל</Text>
+                        <StorageItem key={name} name={<>{toSource}{name}</>} location={me.path} type="folder" transfer={true} footer={true} state={state} />
+                    </>}
+                    <Element style={{ flex: 1 }}></Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
                         <Text language="eng">Cancel</Text>
                         <Text language="heb">ביטול</Text>
                     </Button>}
                     <Button border={true} disable={disable} title={disableTooltip} onClick={onClick}>
-                        <Text language="eng">Delete</Text>
-                        <Text language="heb">מחיקה</Text>
+                        <Text language="eng">{englishActionModeText}</Text>
+                        <Text language="heb">{hebrewActionModeText}</Text>
                         <ProgressRing.Loading className="app-storage-loading" show={dialog.progress} speed={250} stroke={3} />
                     </Button>
-                </>
-            }
-        ];
-        const { footer } = (labels && labels.find(item => item.mode === dialog.mode)) || {};
-        return (
-            <>
-                {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
-                    {footer}
                 </Element>}
             </>
         );
@@ -568,7 +541,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             eng: "Select",
             heb: "בחירה"
         };
-        const sizeString = size && core.string.formatBytes(size);
+        const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
         const isChecked = dialog && dialog.items && dialog.items.includes(name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
             {(parent || (!dialog || dialog.mode !== "delete")) && !footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
@@ -640,9 +613,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FileHeader = ({ children, name, state }) => {
-        const { pathState, viewTypeState, dialogState } = state;
-        const [viewType, setViewType] = viewTypeState;
-        const [path, setPath] = pathState;
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
@@ -655,7 +625,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FileView = ({ state }) => {
-        const { pathState, viewTypeState, dialogState } = state;
+        const { pathState } = state;
         const [path] = pathState;
         const counter = react.util.useResize();
         const [ref, width, height] = react.util.useSize(counter);

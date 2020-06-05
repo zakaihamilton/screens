@@ -16,7 +16,6 @@ screens.react.ProgressRing = ({ radius, stroke, strokeDasharray, progress, color
                 strokeWidth={stroke}
                 strokeDasharray={strokeDasharray}
                 style={{ strokeDashoffset }}
-                stroke-width={stroke}
                 r={normalizedRadius}
                 cx={radius}
                 cy={radius}
