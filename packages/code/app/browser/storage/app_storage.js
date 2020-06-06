@@ -327,7 +327,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const Footer = ({ state }) => {
-        const { pathState, dialogState, viewTypeState } = state;
+        const { pathState, dialogState } = state;
         const [dialog, setDialog] = dialogState;
         const [path, setPath] = pathState;
         const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
@@ -424,7 +424,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     <Text language="eng">{englishToModeText}</Text>
                     <Text language="heb">{hebrewToModeText}</Text>
-                    <Element className={{ "app-storage-item-scroller": true, "multiple": dialog && dialog.items && dialog.items.length > 1 }}>
+                    <Element className="app-storage-item-scroller">
                         {items && items.map(item => {
                             return (<StorageItem key={item.name} name={<>{fromSource}{item.name}</>} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
                         })}
@@ -450,7 +450,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const StorageItem = ({ name, size, select, type, parent, location, root, footer, state }) => {
-        const { dialogState, pathState, viewTypeState } = state;
+        const { dialogState, pathState } = state;
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
@@ -544,7 +544,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
         const isChecked = dialog && dialog.items && dialog.items.includes(name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
-            {(parent || (!dialog || dialog.mode !== "delete")) && !footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
+            {(parent || !showCheckbox) && !footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
             </Menu>}
             {(!parent || isEditVisible) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>

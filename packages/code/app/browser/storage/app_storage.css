@@ -215,10 +215,6 @@
     margin-right: 1em;
 }
 
-.app-storage-item-scroller.multiple {
-    flex: 1;
-}
-
 .app-storage-loading {
     width: 1em;
     height: 1em;
