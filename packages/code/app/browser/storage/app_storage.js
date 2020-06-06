@@ -514,7 +514,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             content = (
                 <>
                     <Modal open={modalState} />
-                    <Input className="app-storage-item-edit" onSubmit={onSubmit} state={editTextState} focus={true} />
+                    <Input className="app-storage-item-edit" onSubmit={onSubmit} state={editTextState} focus={true} selectionRange={[0, 0]} />
                 </>
             );
             onClick = null;

@@ -1,4 +1,4 @@
-screens.react.Input = React.forwardRef(({ state, onSubmit, focus, ...props }, ref) => {
+screens.react.Input = React.forwardRef(({ state, onSubmit, focus, selectionRange, ...props }, ref) => {
     const { Element, util } = screens.react;
     const inputRef = React.useRef(null);
     const combinedRef = util.useRefs(ref, inputRef);
@@ -26,10 +26,22 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, ...props }, re
     }, [text]);
 
     React.useEffect(() => {
+        if (!combinedRef.current) {
+            return;
+        }
         if (focus) {
             combinedRef.current.focus();
         }
     }, [focus, combinedRef.current]);
+
+    React.useEffect(() => {
+        if (!combinedRef.current) {
+            return;
+        }
+        if (selectionRange) {
+            combinedRef.current.setSelectionRange(...selectionRange);
+        }
+    }, [selectionRange, combinedRef.current]);
 
     return (<Element
         ref={combinedRef}
