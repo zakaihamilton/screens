@@ -141,13 +141,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (parent) {
             parentPath = parentPath.split("/").slice(0, -1).join("/");
         }
+        const item = me.items.find(item => item.name === name);
         const source = me.source;
         const dialogObject = {
             path: core.path.normalize(parentPath, name),
-            name,
+            items: [item],
             parent,
             source,
             context: me.path,
+            type,
             cancel: () => {
                 setDialog(null);
             }
@@ -184,9 +186,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog({ ...dialogObject, mode: "rename", path: target, name });
         };
         const moveItem = async () => {
-            dialogObject.items = [name];
             setDialog({
-                ...dialogObject, type, mode: "move", done: async () => {
+                ...dialogObject, mode: "move", done: async () => {
                     const target = core.path.normalize(me.path, name);
                     await storage.fs.transfer(dialogObject.path, target, dialogObject.source, me.source);
                     await storage.fs.sendTo(dialogObject.source, "delete", dialogObject.path);
@@ -196,9 +197,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const copyItem = async () => {
-            dialogObject.items = [name];
             setDialog({
-                ...dialogObject, type, mode: "copy", done: async () => {
+                ...dialogObject, mode: "copy", done: async () => {
                     const target = core.path.normalize(me.path, name);
                     await storage.fs.transfer(dialogObject.path, target, dialogObject.source, me.source);
                     setDialog(null);
@@ -207,10 +207,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
         };
         const deleteItem = async () => {
-            dialogObject.items = [name];
             setDialog({
-                ...dialogObject, type, mode: "delete", done: async () => {
-                    for (const name of dialogObject.items) {
+                ...dialogObject, mode: "delete", done: async () => {
+                    for (const item of dialogObject.items) {
+                        const { name } = item;
                         const itemPath = core.path.normalize(parentPath, name);
                         await me.send("delete", itemPath);
                     }
@@ -410,11 +410,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
             await dialog.done();
         }
-        const fromSource = dialog && dialog.source && diffSource && <b>{me.sources.find(source => source.id === dialog.source).name}&nbsp;</b>;
-        const toSource = dialog && diffSource && <b>{me.sources.find(source => source.id === me.source).name}&nbsp;</b>;
-        const items = dialog && dialog.items && dialog.items.map(name => {
-            return me.items.find(item => item.name === name);
-        }).filter(Boolean);
+        const fromSource = dialog && dialog.source && diffSource && <b key={dialog.source}>{me.sources.find(source => source.id === dialog.source).name}&nbsp;</b>;
+        const toSource = dialog && diffSource && <b key={dialog.source}>{me.sources.find(source => source.id === me.source).name}&nbsp;</b>;
+        const items = dialog && dialog.items;
         let name = path[path.length - 1];
         if (!name) {
             name = <HomeFolder />;
@@ -459,7 +457,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const showCheckbox = !parent && !footer && dialog && dialog.mode === "delete";
         const renameTo = async (text) => {
             if (name !== text && text) {
-                const { source } = dialog;
                 let parentPath = me.path;
                 if (parent) {
                     parentPath = parentPath.split("/").slice(0, -1).join("/");
@@ -499,12 +496,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         let content = (<Element title={location} className="app-storage-item-label">{name}</Element>);
         let onClick = !showCheckbox ? select : () => {
             const items = dialog.items;
-            const index = items.findIndex(item => item === name);
+            const index = items.findIndex(item => item.name === name);
             if (index !== -1) {
                 items.splice(index, 1);
             }
             else {
-                items.push(name);
+                const item = me.items.find(item => item.name === name);
+                items.push(item);
             }
             setDialog(dialog => {
                 return { ...dialog, items };
@@ -542,7 +540,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             heb: "בחירה"
         };
         const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
-        const isChecked = dialog && dialog.items && dialog.items.includes(name);
+        const isChecked = dialog && dialog.items && dialog.items.find(item => item.name === name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
             {(parent || !showCheckbox) && !footer && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
