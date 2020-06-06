@@ -33,17 +33,35 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     if (typeof method !== "function") {
                         throw methodName + " is not a function";
                     }
+                    if (methodName === "writeFile" && typeof args[1] !== "string" && Array.isArray(args[1])) {
+                        if (me.platform === "server") {
+                            args[1] = Buffer.from(args[1]);
+                        }
+                        else {
+                            args[1] = Uint8Array.from(args[1]);
+                        }
+                    }
                     return await method(...args);
                 };
             }
             else if (methodName === "copyFile") {
                 me[methodName] = async (from, to) => {
                     const data = await me.readFile(from);
-                    await me.writeFile(to, data);
+                    const array = [...data];
+                    await me.writeFile(to, array);
                 }
             }
         });
     };
+    me.useFile = function (path, encoding) {
+        const [data, setData] = React.useState(null);
+        React.useEffect(() => {
+            const load = async () => {
+                const result = await me.readFile(path, encoding);
+            };
+            load();
+        }, []);
+    }
     me.exists = async function (path) {
         let result = undefined;
         try {
@@ -141,8 +159,9 @@ screens.storage.fs = function StorageFS(me, { core }) {
                 }
             }
             else {
-                const data = await me.sendTo(source, "readFile", from, "utf8");
-                await me.sendTo(target, "writeFile", to, data);
+                const data = await me.sendTo(source, "readFile", from);
+                const array = [...data];
+                await me.sendTo(target, "writeFile", to, array);
             }
         };
         me.sendTo = async function (source, method, ...params) {

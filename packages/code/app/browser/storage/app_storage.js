@@ -146,6 +146,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const dialogObject = {
             path: core.path.normalize(parentPath, name),
             items: [item],
+            name,
             parent,
             source,
             context: me.path,
@@ -453,6 +454,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
+        const [selectionRange, setSelectionRange] = React.useState([0, 0]);
         const [editText, setEditText] = editTextState;
         const showCheckbox = !parent && !footer && dialog && dialog.mode === "delete";
         const renameTo = async (text) => {
@@ -512,7 +514,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             content = (
                 <>
                     <Modal open={modalState} />
-                    <Input className="app-storage-item-edit" onSubmit={onSubmit} state={editTextState} focus={true} selectionRange={[0, 0]} />
+                    <Input className="app-storage-item-edit" onSubmit={onSubmit} state={editTextState} focus={true} selectionRange={selectionRange} />
                 </>
             );
             onClick = null;

@@ -32,7 +32,7 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, selectionRange
         if (focus) {
             combinedRef.current.focus();
         }
-    }, [focus, combinedRef.current]);
+    }, [focus]);
 
     React.useEffect(() => {
         if (!combinedRef.current) {
@@ -40,8 +40,9 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, selectionRange
         }
         if (selectionRange) {
             combinedRef.current.setSelectionRange(...selectionRange);
+            console.log("setSelectionRange", selectionRange);
         }
-    }, [selectionRange, combinedRef.current]);
+    }, [selectionRange]);
 
     return (<Element
         ref={combinedRef}
