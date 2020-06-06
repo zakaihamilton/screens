@@ -16,6 +16,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
             "rmdir",
             "readdir",
             "writeFile",
+            "copyFile",
             "readFile",
             "unlink",
             "rename",
@@ -34,6 +35,12 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     }
                     return await method(...args);
                 };
+            }
+            else if (methodName === "copyFile") {
+                me[methodName] = async (from, to) => {
+                    const data = await me.readFile(from);
+                    await me.writeFile(to, data);
+                }
             }
         });
     };
@@ -114,13 +121,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
             }
         }
         else {
-            if (me.platform === "server") {
-                await me.fs.promises.copyFile(from, to);
-            }
-            else {
-                const data = await me.readFile(from);
-                await me.writeFile(to, data);
-            }
+            await me.copyFile(from, to);
         }
     };
     if (me.platform === "browser") {
