@@ -118,6 +118,9 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         const start = React.useCallback(callback => {
             stop();
             intervalRef.current = setInterval(() => {
+                if (!intervalRef.current) {
+                    return;
+                }
                 intervalRef.current = undefined;
                 callback();
             }, interval);

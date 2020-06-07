@@ -188,10 +188,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         const moveItem = async () => {
             setDialog({
-                ...dialogObject, mode: "move", done: async () => {
-                    const target = core.path.normalize(me.path, name);
-                    await storage.fs.transfer(dialogObject.path, target, dialogObject.source, me.source);
-                    await storage.fs.sendTo(dialogObject.source, "delete", dialogObject.path);
+                ...dialogObject, mode: "move", multiSelect: true, done: async () => {
+                    for (const item of dialogObject.items) {
+                        const target = core.path.normalize(me.path, item.name);
+                        await storage.fs.transfer(item.path, target, item.source, me.source);
+                        await storage.fs.sendTo(item.source, "delete", item.path);
+                    }
                     setDialog(null);
                     await me.updateView();
                 }
@@ -199,9 +201,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         const copyItem = async () => {
             setDialog({
-                ...dialogObject, mode: "copy", done: async () => {
-                    const target = core.path.normalize(me.path, name);
-                    await storage.fs.transfer(dialogObject.path, target, dialogObject.source, me.source);
+                ...dialogObject, mode: "copy", multiSelect: true, done: async () => {
+                    for (const item of dialogObject.items) {
+                        const target = core.path.normalize(me.path, item.name);
+                        await storage.fs.transfer(item.path, target, item.source, me.source);
+                    }
                     setDialog(null);
                     await me.updateView();
                 }
@@ -209,7 +213,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         const deleteItem = async () => {
             setDialog({
-                ...dialogObject, mode: "delete", done: async () => {
+                ...dialogObject, mode: "delete", multiSelect: true, done: async () => {
                     for (const item of dialogObject.items) {
                         const { name } = item;
                         const itemPath = core.path.normalize(parentPath, name);
@@ -456,7 +460,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const editTextState = React.useState(name);
         const [selectionRange, setSelectionRange] = React.useState([0, 0]);
         const [editText, setEditText] = editTextState;
-        const showCheckbox = !parent && !footer && dialog && dialog.mode === "delete";
+        const showCheckbox = !parent && !footer && dialog && dialog.multiSelect;
         const renameTo = async (text) => {
             if (name !== text && text) {
                 let parentPath = me.path;
@@ -555,6 +559,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {content}
                 {!footer && <Element style={{ flex: 1 }} />}
             </Element>}
+            {!parent && !footer && type === "folder" && dialog && dialog.multiSelect && <Button border={true} onClick={select}>
+                <Text language="eng">Open</Text>
+                <Text language="heb">פתח</Text>
+            </Button>}
             {!parent && !footer && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);

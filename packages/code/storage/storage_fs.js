@@ -101,7 +101,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
             const names = await me.readdir(path);
             for (const name of names) {
                 const itemPath = core.path.normalize(path, name);
-                const item = { name, path: itemPath };
+                const item = { name, path: itemPath, source: me.platform };
                 try {
                     const stat = await me.stat(item.path);
                     if (stat.isDirectory()) {
