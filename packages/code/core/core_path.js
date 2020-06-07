@@ -125,7 +125,7 @@ screens.core.path = function CorePath(me, { core }) {
         return path;
     };
     me.normalize = function (...names) {
-        return "/" + names.filter(name => name && name !== "/").map(name => {
+        return names.filter(name => name && name !== "/").map(name => {
             if (typeof name === "string") {
                 if (name.startsWith("/")) {
                     name = name.substring(1);

@@ -80,7 +80,7 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         }, [counter]);
         return [ref, width, height];
     };
-    me.useTimeout = function (timeout) {
+    me.useTimeout = function (timeout = 0) {
         const timeoutRef = React.useRef();
         const stop = React.useCallback(() => {
             const timeoutId = timeoutRef.current;
@@ -121,7 +121,6 @@ screens.react.util = function ReactUtil(me, { core, react }) {
                 if (!intervalRef.current) {
                     return;
                 }
-                intervalRef.current = undefined;
                 callback();
             }, interval);
         });

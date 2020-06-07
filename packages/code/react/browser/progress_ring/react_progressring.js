@@ -34,7 +34,6 @@ screens.react.ProgressRing.Loading = ({ speed = 1000, show, style, color, stroke
     style = style || {};
     color = color || nightMode ? "white" : "black";
     style.visibility = show ? "visible" : "hidden";
-    strokeDasharray = strokeDasharray || 2.5;
     React.useEffect(() => {
         if (!show) {
             stop();
