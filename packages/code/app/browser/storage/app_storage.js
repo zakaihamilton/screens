@@ -541,10 +541,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
         const isChecked = dialog && dialog.items && dialog.items.find(item => item.name === name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
-            {(parent || !showCheckbox) && !footer && me.path && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
+            {(parent || !showCheckbox) && !footer && me.path && (!dialog || dialog.mode !== "delete") && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
                 <MenuActions name={name} root={root} type={type} parent={parent} state={state} />
             </Menu>}
-            {(!parent || isEditVisible || !me.path) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
+            {(!parent || isEditVisible || !me.path || (dialog && dialog.mode === "delete")) && <Element title={name} ref={hoverRef} className="app-storage-item-name" onClick={onClick}>
                 {showCheckbox && <Element className="app-storage-item-checkbox" title={checkboxTitle}>
                     <Element className={{ "app-storage-item-check": true, check: isChecked }}><b>&#10003;</b></Element>
                 </Element>}
@@ -552,12 +552,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {content}
                 {!footer && <Element style={{ flex: 1 }} />}
             </Element>}
-            {!parent && !footer && type === "folder" && dialog && dialog.multiSelect && <Button border={true} onClick={select}>
+            {!parent && !footer && type === "folder" && dialog && dialog.multiSelect && dialog.mode !== "delete" && <Button border={true} onClick={select}>
                 <Text language="eng">Open</Text>
                 <Text language="heb">פתח</Text>
             </Button>}
             {!parent && !footer && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
-            {parent && !root && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
+            {parent && !root && (!dialog || dialog.mode !== "delete") && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };
 
