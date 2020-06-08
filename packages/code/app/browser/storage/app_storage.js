@@ -784,6 +784,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 });
                 return items;
             }
+        },
+        {
+            id: "size",
+            name: (
+                <>
+                    <Text language="eng">Size</Text>
+                    <Text language="heb">גודל</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return a.size - b.size;
+                });
+                return items;
+            }
         }
     ];
     me.filter = [
