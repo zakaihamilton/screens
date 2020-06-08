@@ -18,10 +18,17 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         me.fs = require("fs");
         me.cdn = cdn;
     };
-    me.uploadFile = function (from, to) {
-        let tokens = to.split("/");
+    me.parseUrl = function (path) {
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        let tokens = path.split("/");
         let bucketName = tokens.shift();
-        let path = tokens.join("/");
+        path = tokens.join("/");
+        return [bucketName, path];
+    }
+    me.uploadFile = function (from, to) {
+        const [bucketName, path] = me.parseUrl(to);
         var params = {
             Bucket: bucketName,
             Key: path,
@@ -44,9 +51,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         });
     };
     me.downloadFile = function (from, to) {
-        let tokens = from.split("/");
-        let bucketName = tokens.shift();
-        let path = tokens.join("/");
+        const [bucketName, path] = me.parseUrl(from);
         var params = {
             Bucket: bucketName,
             Key: path
@@ -59,10 +64,127 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             readStream.pipe(writeStream);
         });
     };
-    me.exists = function (path) {
-        let tokens = path.split("/");
-        let bucketName = tokens.shift();
-        path = tokens.join("/");
+    me.uploadData = function (url, data) {
+        const [bucketName, path] = me.parseUrl(url);
+        var params = {
+            Bucket: bucketName,
+            Key: path,
+            Body: data,
+            ACL: "public-read"
+        };
+        var options = {
+            partSize: me.bufferSize,
+            queueSize: 10
+        };
+        return new Promise((resolve, reject) => {
+            me.s3.upload(params, options, function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+    me.downloadData = function (url) {
+        const [bucketName, path] = me.parseUrl(url);
+        var params = {
+            Bucket: bucketName,
+            Key: path
+        };
+        return new Promise((resolve, reject) => {
+            me.s3.getObject(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data.Body.toString());
+                }
+            });
+        });
+    };
+    me.copyFile = function (from, to) {
+        const [fromBucketName, fromPath] = me.parseUrl(from);
+        const [toBucketName, toPath] = me.parseUrl(to);
+        var params = {
+            Bucket: toBucketName,
+            CopySource: fromBucketName + "/" + fromPath,
+            Key: toPath
+        };
+        return new Promise(resolve => {
+            me.s3.copyObject(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+    me.moveFile = function (from, to) {
+        const [fromBucketName, fromPath] = me.parseUrl(from);
+        const [toBucketName, toPath] = me.parseUrl(to);
+        var params = {
+            Bucket: toBucketName,
+            CopySource: fromBucketName + "/" + fromPath,
+            Key: toPath
+        };
+        return new Promise(resolve => {
+            me.s3.copyObject(params, async function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    await deleteFile(from);
+                    resolve(data);
+                }
+            });
+        });
+    };
+    me.deleteFile = function (url) {
+        const [bucketName, path] = me.parseUrl(url);
+        var params = {
+            Bucket: bucketName,
+            Key: path
+        };
+        return new Promise(resolve => {
+            me.s3.deleteObject(params, function (err, data) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+    me.metadata = function (url) {
+        const [bucketName, path] = me.parseUrl(url);
+        if (!path) {
+            return {
+                type: "application/x-directory",
+                name: bucketName
+            };
+        }
+        var params = {
+            Bucket: bucketName,
+            Key: path
+        };
+        return new Promise(resolve => {
+            me.s3.headObject(params, function (err, data) {
+                if (err) {
+                    resolve(null);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+    me.exists = function (url) {
+        const [bucketName, path] = me.parseUrl(url);
         var params = {
             Bucket: bucketName,
             Key: path
@@ -78,13 +200,29 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             });
         });
     };
-    me.list = function (path) {
-        let tokens = path.split("/");
-        let bucketName = tokens.shift();
-        path = tokens.join("/");
+    me.list = function (url) {
+        const [bucketName, path] = me.parseUrl(url);
         var params = {
             Bucket: bucketName
         };
+        if (!bucketName) {
+            return new Promise((resolve, reject) => {
+                me.s3.listBuckets({}, function (err, data) {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    var buckets = [];
+                    data.Buckets.forEach(function (element) {
+                        buckets.push({
+                            name: element.Name,
+                            type: "application/x-directory"
+                        });
+                    });
+                    resolve(buckets);
+                });
+            });
+        }
         return new Promise((resolve, reject) => {
             me.s3.listObjectsV2(params, function (err, data) {
                 if (err) {
@@ -94,6 +232,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 var files = [];
                 data.Contents.forEach(function (element) {
                     files.push({
+                        type: element.content_type,
                         name: element.Key,
                         size: element.Size,
                         date: element.lastModified
