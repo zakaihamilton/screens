@@ -25,9 +25,6 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         }
         return path;
     };
-    me.list = function (path) {
-        return me.getChildren(path);
-    };
     me.getChildren = async function (path, recursive = false) {
         me.log("requesting items for path: " + path + " recursive: " + recursive);
         var entries = [];
@@ -84,9 +81,15 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         return response;
     };
     me.metadata = async function (path) {
+        if (!path || path === "/") {
+            return {
+                ".tag": "folder",
+                name: ""
+            };
+        }
         var service = await me.getService();
         path = me.fixPath(path);
-        var response = service.filesGetMetadata({ path: path });
+        var response = service.filesGetMetadata({ path });
         return response;
     };
     me.copyFile = async function (source, target) {
@@ -96,6 +99,24 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         var response = await service.filesCopy({
             from_path,
             to_path
+        });
+        return response;
+    };
+    me.moveFile = async function (source, target) {
+        var service = await me.getService();
+        var from_path = me.fixPath(source);
+        var to_path = me.fixPath(target);
+        var response = await service.filesMove({
+            from_path,
+            to_path
+        });
+        return response;
+    };
+    me.deleteFile = async function (path) {
+        const service = await me.getService();
+        path = me.fixPath(path);
+        var response = await service.filesDeleteV2({
+            path
         });
         return response;
     };

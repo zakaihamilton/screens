@@ -8,6 +8,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
         "mkdir",
         "rmdir",
         "readdir",
+        "listdir",
         "writeFile",
         "copyFile",
         "readFile",
@@ -36,6 +37,9 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     const [source, ...path] = url.split("/");
                     const driver = me.sources[source];
                     const method = driver[methodName];
+                    if (!method) {
+                        return null;
+                    }
                     return method("/" + path.join("/"), ...args);
                 };
             }
@@ -89,6 +93,30 @@ screens.storage.fs = function StorageFS(me, { core }) {
         const items = [];
         const stat = await me.stat(path);
         if (stat.isDirectory) {
+            const results = await me.listdir(path);
+            if (results) {
+                return results.map(result => {
+                    const { stat, name } = result;
+                    const itemPath = core.path.normalize(path, name);
+                    let type = "";
+                    if (stat.isDirectory) {
+                        type = "folder";
+                    }
+                    else if (stat.isFile) {
+                        type = "file";
+                    }
+                    else if (stat.isSymbolicLink) {
+                        type = "link";
+                    }
+                    return {
+                        name,
+                        path: itemPath,
+                        size: stat.size,
+                        type
+                    };
+                });
+                return result;
+            }
             const names = await me.readdir(path);
             for (const name of names) {
                 const itemPath = core.path.normalize(path, name);

@@ -33,9 +33,6 @@ screens.fs.local.driver = function FServerDriver(me, { storage }) {
                     await me.writeFile(to, array);
                 }
             }
-            else {
-                throw methodName + " is not supported";
-            }
         });
     }
     return "browser";
