@@ -800,6 +800,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 });
                 return items;
             }
+        },
+        {
+            id: "type",
+            name: (
+                <>
+                    <Text language="eng">Type</Text>
+                    <Text language="heb">סוג</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return ((a.type !== "folder") - (b.type !== "folder")) || a.name.localeCompare(b.name);
+                });
+                return items;
+            }
         }
     ];
     me.filter = [
