@@ -160,8 +160,9 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             });
         });
     };
-    me.metadata = function (url) {
+    me.metadata = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
+        const name = core.path.fileName(url, true);
         if (!path) {
             return {
                 type: "application/x-directory",
@@ -170,77 +171,86 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         }
         var params = {
             Bucket: bucketName,
-            Key: path
+            Key: path + "/"
         };
-        return new Promise(resolve => {
-            me.s3.headObject(params, function (err, data) {
-                if (err) {
-                    resolve(null);
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        try {
+            const data = await me.s3.headObject(params).promise();
+            return {
+                type: data.content_type,
+                name,
+                size: data.Size,
+                date: data.lastModified
+            }
+        }
+        catch (err) {
+            const params = {
+                Bucket: bucketName,
+                Delimiter: '/',
+                ...path && { Prefix: path + '/' }
+            };
+            const result = await me.s3.listObjects(params).promise();
+            if (result.Contents.length > 0) {
+                return {
+                    type: "application/x-directory",
+                    name
+                };
+            }
+        }
+        return null;
     };
     me.exists = function (url) {
-        const [bucketName, path] = me.parseUrl(url);
-        var params = {
-            Bucket: bucketName,
-            Key: path
-        };
-        return new Promise(resolve => {
-            me.s3.headObject(params, function (err, resp, body) {
-                if (err) {
-                    resolve(false);
-                }
-                else {
-                    resolve(true);
-                }
-            });
-        });
+        const metadata = me.metadata(url);
+        return metadata !== null;
     };
-    me.list = function (url) {
+    me.list = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
-        var params = {
-            Bucket: bucketName
+        const params = {
+            Bucket: bucketName,
+            Delimiter: '/',
+            ...path && { Prefix: path + '/' }
         };
         if (!bucketName) {
-            return new Promise((resolve, reject) => {
-                me.s3.listBuckets({}, function (err, data) {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    var buckets = [];
-                    data.Buckets.forEach(function (element) {
-                        buckets.push({
-                            name: element.Name,
-                            type: "application/x-directory"
-                        });
-                    });
-                    resolve(buckets);
+            const result = await me.s3.listBuckets({}).promise();
+            var buckets = [];
+            result.Buckets.forEach(function (element) {
+                buckets.push({
+                    name: element.Name,
+                    type: "application/x-directory"
                 });
             });
+            return buckets;
         }
-        return new Promise((resolve, reject) => {
-            me.s3.listObjectsV2(params, function (err, data) {
-                if (err) {
-                    reject(err);
+        const items = [];
+        for (; ;) {
+            const result = await me.s3.listObjects(params).promise();
+            result.CommonPrefixes.forEach(prefix => {
+                const name = core.path.fileName(prefix.Prefix.substring(0, prefix.Prefix.length - 1), true);
+                items.push({
+                    type: "application/x-directory",
+                    name
+                });
+            });
+            result.Contents.forEach(content => {
+                const folder = core.path.folderPath(content.Key);
+                if (path !== folder) {
                     return;
                 }
-                var files = [];
-                data.Contents.forEach(function (element) {
-                    files.push({
-                        type: element.content_type,
-                        name: element.Key,
-                        size: element.Size,
-                        date: element.lastModified
-                    });
+                const name = core.path.fileName(content.Key, true);
+                items.push({
+                    type: content.content_type,
+                    name,
+                    size: content.Size,
+                    date: content.lastModified
                 });
-                resolve(files);
             });
-        });
+            if (result.IsTruncated && result.NextMarker) {
+                params.Marker = result.NextMarker;
+            }
+            else {
+                break;
+            }
+        }
+        return items;
     };
     me.url = function (path) {
         let tokens = path.split("/");

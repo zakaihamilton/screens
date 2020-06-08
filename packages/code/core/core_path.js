@@ -58,7 +58,7 @@ screens.core.path = function CorePath(me, { core }) {
         }
         return name;
     };
-    me.fileName = function (path) {
+    me.fileName = function (path, withExtension) {
         var name = "";
         var last = path.split("/").pop();
         if (last) {
@@ -69,7 +69,7 @@ screens.core.path = function CorePath(me, { core }) {
                 hidden = true;
             }
             var period = name.lastIndexOf(".");
-            if (period !== -1) {
+            if (!withExtension && period !== -1) {
                 name = name.substr(0, period);
             }
             if (hidden) {

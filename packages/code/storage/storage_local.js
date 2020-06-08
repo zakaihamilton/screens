@@ -136,4 +136,7 @@ screens.storage.local.db = function StorageLocalDb(me, { core }) {
             return me.method(collection, "put", value, key);
         }
     };
+    me.delete = function (collection) {
+        indexedDB.deleteDatabase(collection);
+    };
 };

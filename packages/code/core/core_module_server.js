@@ -316,7 +316,6 @@ screens.core.module = function CoreModule(me, { core, storage, db }) {
                 }
                 if (info.url.startsWith("/reset")) {
                     db.events.msg.send(me.id + ".emptyCache");
-                    storage.local.empty();
                     info.body = "Local Cache Empty";
                     return;
                 }
