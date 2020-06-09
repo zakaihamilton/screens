@@ -860,14 +860,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         me.path = "";
         me.items = [];
         me.loading = false;
+        me.counter = 0;
         me.viewType = "folder";
         await me.updateView();
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.updateView = async function () {
-        if (me.loading) {
-            return;
-        }
+        const counter = ++me.counter;
         if (me.viewType === "folder") {
             me.items = [];
             if (me.path) {
@@ -876,6 +875,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     me.redraw();
                 }
                 me.items = await storage.fs.list(me.path);
+                if (counter !== me.counter) {
+                    return;
+                }
                 me.loading = false;
             }
             else {
@@ -892,6 +894,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 me.redraw();
             }
             me.content = await storage.fs.readFile(me.path, "utf8");
+            if (counter !== me.counter) {
+                return;
+            }
             me.loading = false;
         }
         if (me.redraw) {
