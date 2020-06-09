@@ -18,7 +18,6 @@
         "storage.local.key": "@ui.windowkey.app-storage-window",
         "storage.local.restore": "widget.window.store",
         "ui.resize.event": "app.storage.resize",
-        "ui.session.visibilityChange": "app.storage.visibilityChange",
         "app.storage.initOptions": null
     }
 }

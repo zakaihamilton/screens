@@ -906,12 +906,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         core.property.set(window, "app", me);
         core.property.set(window, "name", "");
     };
-    me.visibilityChange = function () {
-        const visibilityState = ui.session.visibilityState();
-        if (me.singleton && visibilityState === "visible") {
-            me.updateView();
-        }
-    };
     me.render = function (object) {
         return (<Main />);
     };
