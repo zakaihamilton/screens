@@ -215,7 +215,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             result.Buckets.forEach(function (element) {
                 buckets.push({
                     name: element.Name,
-                    type: "application/x-directory"
+                    type: "bucket"
                 });
             });
             return buckets;

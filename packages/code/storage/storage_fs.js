@@ -112,7 +112,8 @@ screens.storage.fs = function StorageFS(me, { core }) {
                         name,
                         path: itemPath,
                         size: stat.size,
-                        type
+                        type,
+                        isReadOnly: stat.isReadOnly
                     };
                 });
                 return result;
@@ -136,6 +137,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     else if (stat.isSymbolicLink) {
                         item.type = "link";
                     }
+                    item.isReadOnly = stat.isReadOnly;
                     items.push(item);
                 }
                 catch (err) {

@@ -22,14 +22,16 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
         const children = await storage.aws.list(path);
         const items = children.map(child => {
             const { type } = child;
-            const isFolder = type === "application/x-directory";
+            const isFolder = type === "application/x-directory" || type === "bucket";
+            const isReadOnly = type === "bucket";
             return {
                 name: child.name,
                 stat: {
                     isDirectory: isFolder,
                     isFile: !isFolder,
                     isSymbolicLink: false,
-                    size: child.size
+                    size: child.size,
+                    isReadOnly
                 }
             };
         });
@@ -62,10 +64,12 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
         }
         const metadata = await storage.aws.metadata(path);
         const { type } = metadata;
-        const isFolder = type === "application/x-directory";
+        const isFolder = type === "application/x-directory" || type === "bucket";
+        const isReadOnly = type === "bucket";
         metadata.isDirectory = isFolder;
         metadata.isFile = !isFolder;
         metadata.isSymbolicLink = false;
+        metadata.isReadOnly = isReadOnly;
         return metadata;
     };
     me.lstat = async function (path) {
