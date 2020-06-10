@@ -81,7 +81,7 @@ screens.ui.class = function UIClass(me, { core, ui }) {
         if (path.startsWith(".")) {
             path = path.substr(1);
         }
-        path = path.replace(/[\.\_]/g, "-");
+        path = path.replace(/[._]/g, "-");
         return path;
     };
     me.to_package = function (object, path) {

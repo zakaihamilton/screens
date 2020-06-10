@@ -397,12 +397,12 @@ screens.widget.player.controls = function WidgetPlayerControls(me, { core, media
             me.seekEvent(object, event);
         }
     };
-    me.seekOver = function (object, event) {
+    me.seekOver = function (object) {
         if (object.seeking) {
             object.over = true;
         }
     };
-    me.seekLeave = function (object, event) {
+    me.seekLeave = function (object) {
         if (object.seeking) {
             object.over = false;
         }

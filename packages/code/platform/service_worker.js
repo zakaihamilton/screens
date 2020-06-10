@@ -14,7 +14,7 @@ for (var the_package of screens.packages) {
 screens.require(components).then(() => screens.core.startup.run());
 
 workbox.routing.registerRoute(
-    ({ url, event }) => {
+    ({ url }) => {
         if (url.pathname === "/") {
             return true;
         }
@@ -36,7 +36,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    ({ url, event }) => {
+    ({ url }) => {
         if (url.pathname.endsWith(".js")) {
             return true;
         }

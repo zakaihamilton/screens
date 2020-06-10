@@ -1,4 +1,4 @@
-screens.react.Path = ({ state, children }) => {
+screens.react.Path = function Path({ state, children }) {
     const { Item, Element } = screens.react;
     const ref = React.useRef(null);
     const count = React.Children.count(children);
@@ -15,7 +15,7 @@ screens.react.Path = ({ state, children }) => {
     </Element>);
 };
 
-screens.react.Path.Item = ({ id, state, index, count, style, children }) => {
+screens.react.Path.Item = function PathItem({ id, state, index, count, style, children }) {
     const { Element } = screens.react;
     const [path, setPath] = state || [];
     const isLast = index === count - 1 || !(path.filter(Boolean).length);

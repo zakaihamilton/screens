@@ -22,7 +22,7 @@ screens.widget.tree = function WidgetTree(me, { core, ui }) {
         }
     };
     me.clear = {
-        set: function (object, value) {
+        set: function (object) {
             ui.node.empty(object.var.container);
         }
     };
@@ -60,7 +60,7 @@ screens.widget.tree = function WidgetTree(me, { core, ui }) {
     };
 };
 
-screens.widget.tree.dropdown = function WidgetDropDownList(me, { ui }) {
+screens.widget.tree.dropdown = function WidgetDropDownList(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
@@ -109,7 +109,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me, { ui }) {
         }
     };
     me.dropdown = {
-        set: function (object, value) {
+        set: function (object) {
             var region = ui.rect.absoluteRegion(object.parentNode);
             object.var.tree = ui.element.create({
                 "ui.element.component": "widget.tree.popup",
@@ -163,7 +163,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me, { ui }) {
         }
     };
 };
-screens.widget.tree.popup = function WidgetListPopup(me) {
+screens.widget.tree.popup = function WidgetListPopup(me, { core, ui }) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -227,7 +227,7 @@ screens.widget.tree.list = function WidgetTreeList(me) {
     };
 };
 
-screens.widget.tree.item = function WidgetTreeItem(me) {
+screens.widget.tree.item = function WidgetTreeItem(me, { core, ui, widget }) {
     me.element = {
         properties: {
             "ui.basic.tag": "li",

@@ -1,4 +1,4 @@
-screens.react.Input = React.forwardRef(({ state, onSubmit, focus, selectionRange, ...props }, ref) => {
+screens.react.Input = React.forwardRef(function Input({ state, onSubmit, focus, selectionRange, ...props }, ref) {
     const { Element, util } = screens.react;
     const inputRef = React.useRef(null);
     const combinedRef = util.useRefs(ref, inputRef);
@@ -40,6 +40,7 @@ screens.react.Input = React.forwardRef(({ state, onSubmit, focus, selectionRange
         }
         if (selectionRange) {
             combinedRef.current.setSelectionRange(...selectionRange);
+            // eslint-disable-next-line no-console
             console.log("setSelectionRange", selectionRange);
         }
     }, [selectionRange]);

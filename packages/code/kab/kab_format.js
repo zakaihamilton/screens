@@ -66,7 +66,7 @@ screens.kab.format = function KabFormat(me, { core, kab }) {
     me.insert = function (words, wordIndex, collection, defaultWord, wordToInsert, text) {
         if (collection && wordToInsert) {
             for (var itemName in collection) {
-                var item = collection[itemName];
+                const item = collection[itemName];
                 if (!item.match) {
                     continue;
                 }
@@ -90,7 +90,7 @@ screens.kab.format = function KabFormat(me, { core, kab }) {
             }
         }
         if (defaultWord && !wordToInsert) {
-            var item = collection[defaultWord.toLowerCase()];
+            const item = collection[defaultWord.toLowerCase()];
             if (item && item.replaceOnly) {
                 defaultWord = null;
             }

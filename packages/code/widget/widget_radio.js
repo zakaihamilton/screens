@@ -43,7 +43,7 @@ screens.widget.radio = function WidgetRadio(me) {
         }
     };
     me.check = {
-        set: function (object, value) {
+        set: function (object) {
             object.parentNode.var.input.checked = true;
         }
     };

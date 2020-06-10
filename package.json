@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: I don't have any test yet :-[\" && exit 1",
     "start": "node ./packages/code/platform/server.js",
-    "dev": "node ./packages/code/platform/server.js -port=5050 -localhost"
+    "dev": "node ./packages/code/platform/server.js -port=5050 -localhost",
+    "lint": "eslint --max-warnings 0 packages/code"
   },
   "license": "Unlicense",
   "dependencies": {
@@ -60,6 +61,13 @@
     "videojs-contrib-hls": "^5.15.0",
     "workbox-sw": "^4.3.1",
     "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "eslint": "7.1.0",
+    "eslint-plugin-flowtype": "3.12.1",
+    "eslint-plugin-react-hooks": "1.6.0",
+    "eslint-plugin-react": "7.20.0",
+    "babel-eslint": "10.1.0"
   },
   "settings": {
     "core": {

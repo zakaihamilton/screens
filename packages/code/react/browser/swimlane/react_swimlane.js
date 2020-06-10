@@ -1,4 +1,4 @@
-screens.react.Swimlane = ({ label, children }) => {
+screens.react.Swimlane = function Swimlane({ label, children }) {
     const { Element, List } = screens.react;
 
     return (
@@ -15,7 +15,7 @@ screens.react.Swimlane = ({ label, children }) => {
     );
 };
 
-screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, itemSize, unit, imageClick, overlay, ...props }) => {
+screens.react.Swimlane.Item = function SwimlaneItem({ image, offset, title, children, unit, imageClick, overlay, ...props }) {
     const { Element, Direction } = screens.react;
     const [isLoading, setLoading] = React.useState(false);
     const [isImageVisible, setImageVisibile] = React.useState(false);
@@ -34,7 +34,7 @@ screens.react.Swimlane.Item = ({ image, offset, title, horizontal, children, ite
         }, 500);
         return (() => {
             clearTimeout(timerHandle);
-        })
+        });
     }, []);
     props = props || {};
     props.style = props.style || {};

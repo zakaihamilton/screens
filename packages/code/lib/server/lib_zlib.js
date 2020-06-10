@@ -22,7 +22,7 @@ screens.lib.zlib = function LibZLib(me, { core }) {
         }
         if (compressMethod) {
             return core.pack.cache(info.url, info.body, () => {
-                return new Promise((resolve, reject) => {
+                return new Promise(resolve => {
                     compressMethod(info.body, (err, buf) => {
                         if (err) {
                             me.log("compress encoding failed for encoding: " + encoding + " error: " + JSON.stringify(err));

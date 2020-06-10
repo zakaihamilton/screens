@@ -42,7 +42,7 @@ screens.widget.list = function WidgetList(me, { core, ui }) {
         }
     };
     me.selection = {
-        get: function (object, value) {
+        get: function (object) {
             var selection = [];
             var childList = ui.node.childList(object.var.container);
             if (childList) {
@@ -71,7 +71,7 @@ screens.widget.list = function WidgetList(me, { core, ui }) {
     };
 };
 
-screens.widget.list.dropdown = function WidgetDropDownList(me, { core }) {
+screens.widget.list.dropdown = function WidgetDropDownList(me, { core, ui }) {
     me.element = {
         dependencies: {
             properties: ["ui.element.count", "ui.basic.text"]
@@ -120,7 +120,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me, { core }) {
         }
     };
     me.dropdown = {
-        set: function (object, value) {
+        set: function (object) {
             var region = ui.rect.absoluteRegion(object.parentNode);
             object.var.list = ui.element.create({
                 "ui.element.component": "widget.list.popup",
@@ -175,7 +175,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me, { core }) {
     };
 };
 
-screens.widget.list.popup = function WidgetListPopup(me, { core }) {
+screens.widget.list.popup = function WidgetListPopup(me, { core, ui }) {
     me.element = {
         redirect: {
             "ui.basic.elements": "elements"
@@ -230,7 +230,7 @@ screens.widget.list.popup = function WidgetListPopup(me, { core }) {
     };
 };
 
-screens.widget.list.item = function WidgetListItem(me, { core }) {
+screens.widget.list.item = function WidgetListItem(me, { core, ui }) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",

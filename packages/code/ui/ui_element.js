@@ -65,12 +65,12 @@ screens.ui.element = function UIElement(me, { core, ui }) {
         return match;
     };
     me.document = {
-        get: function (object) {
+        get: function () {
             return document;
         }
     };
     me.body = {
-        get: function (object) {
+        get: function () {
             return document.getElementsByTagName("body")[0];
         }
     };

@@ -9,6 +9,7 @@ screens.ui.screenshot = function UIScreenshot(me, { core, ui, widget }) {
         var label = core.property.get(window, "widget.window.label");
         var content = widget.window.content(window);
         var altContent = ui.node.findByName(content, "content");
+        // eslint-disable-next-line no-undef
         var dataUrl = await domtoimage.toPng(altContent ? altContent : content);
         var link = document.createElement("a");
         link.download = label + ".png";

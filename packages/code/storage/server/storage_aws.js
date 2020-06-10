@@ -26,7 +26,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         let bucketName = tokens.shift();
         path = tokens.join("/");
         return [bucketName, path];
-    }
+    };
     me.uploadFile = function (from, to) {
         const [bucketName, path] = me.parseUrl(to);
         var params = {
@@ -112,7 +112,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             CopySource: fromBucketName + "/" + fromPath,
             Key: toPath
         };
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             me.s3.copyObject(params, function (err, data) {
                 if (err) {
                     reject(err);
@@ -131,13 +131,13 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             CopySource: fromBucketName + "/" + fromPath,
             Key: toPath
         };
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             me.s3.copyObject(params, async function (err, data) {
                 if (err) {
                     reject(err);
                 }
                 else {
-                    await deleteFile(from);
+                    await me.deleteFile(from);
                     resolve(data);
                 }
             });
@@ -149,7 +149,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             Bucket: bucketName,
             Key: path
         };
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             me.s3.deleteObject(params, function (err, data) {
                 if (err) {
                     reject(err);
@@ -180,13 +180,13 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 name,
                 size: data.Size,
                 date: data.lastModified
-            }
+            };
         }
         catch (err) {
             const params = {
                 Bucket: bucketName,
-                Delimiter: '/',
-                ...path && { Prefix: path + '/' }
+                Delimiter: "/",
+                ...path && { Prefix: path + "/" }
             };
             const result = await me.s3.listObjects(params).promise();
             if (result.Contents.length > 0) {
@@ -206,8 +206,8 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         const [bucketName, path] = me.parseUrl(url);
         const params = {
             Bucket: bucketName,
-            Delimiter: '/',
-            ...path && { Prefix: path + '/' }
+            Delimiter: "/",
+            ...path && { Prefix: path + "/" }
         };
         if (!bucketName) {
             const result = await me.s3.listBuckets({}).promise();

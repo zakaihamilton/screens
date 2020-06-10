@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 async function startBrowser(appName, appArgs) {
     var components = [];
     for (var the_package of screens.packages) {

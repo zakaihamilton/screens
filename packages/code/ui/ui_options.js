@@ -22,7 +22,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
             component.storageName = storage;
         }
     };
-    me.storageKey = function (component, object) {
+    me.storageKey = function (component) {
         var storageKey = component.id + ".options";
         var validKey = storage.local.validKey(storageKey);
         return validKey;
@@ -85,7 +85,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
                 }
                 return options[key];
             },
-            set: function (object, value) {
+            set: function (object) {
                 if (toTargetCallback) {
                     if (component === toTargetCallback) {
                         object = component;
@@ -172,7 +172,7 @@ screens.ui.options = function UIOptions(me, { core, storage }) {
             component.options = {};
         }
         component[key] = {
-            get: function (object, value) {
+            get: function (object) {
                 if (toTargetCallback) {
                     if (component === toTargetCallback) {
                         object = component;

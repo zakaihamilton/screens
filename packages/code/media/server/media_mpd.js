@@ -26,14 +26,14 @@ screens.media.mpd = function MediaMPD(me, { core }) {
                 body += `<BaseURL>${baseUrl}</BaseURL>`;
                 body += `<AdaptationSet mimeType="${mimeType}">`;
                 body += `<Representation id="${resolution}" bandwidth="${bandwidth}" width="${width}" height="${height}">`;
-                body += `<SegmentList timescale="90000" duration="5400000">`;
-                body += `<RepresentationIndex sourceURL="representation-index.sidx" />`;
-                body += `<SegmentURL media="segment-1.ts" />`;
-                body += `</SegmentList >`;
-                body += `</Representation >`;
-                body += `</AdaptationSet>`;
-                body += `</Period>`;
-                body += `</MPD>`;
+                body += "<SegmentList timescale=\"90000\" duration=\"5400000\">";
+                body += "<RepresentationIndex sourceURL=\"representation-index.sidx\" />";
+                body += "<SegmentURL media=\"segment-1.ts\" />";
+                body += "</SegmentList >";
+                body += "</Representation >";
+                body += "</AdaptationSet>";
+                body += "</Period>";
+                body += "</MPD>";
 
 
 

@@ -21,7 +21,7 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
     me.listdir = async function (path) {
         const children = await storage.dropbox.getChildren(path);
         const items = children.map(child => {
-            const type = child[".tag"]
+            const type = child[".tag"];
             return {
                 name: child.name,
                 stat: {
@@ -33,12 +33,12 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
             };
         });
         return items;
-    }
-    me.readFile = async function (path, options) {
+    };
+    me.readFile = async function (path) {
         const result = await storage.dropbox.downloadData(path);
         return result;
     };
-    me.writeFile = async function (path, data, options) {
+    me.writeFile = async function (path, data) {
         await storage.dropbox.uploadData(path, data);
     };
     me.copyFile = async function (from, to) {
@@ -61,10 +61,10 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
     me.lstat = async function (path) {
         return me.stat(path);
     };
-    me.symlink = async function (path) {
+    me.symlink = async function () {
         throw "Links not supported";
     };
-    me.readlink = async function (path) {
+    me.readlink = async function () {
         throw "Links not supported";
     };
     me.du = async function (path) {

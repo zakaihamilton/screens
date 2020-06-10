@@ -1,4 +1,4 @@
-screens.react.Spinner = ({ children, delay, ...props }) => {
+screens.react.Spinner = function Spinner({ children, delay, ...props }) {
     const { Element, util } = screens.react;
     const [startTimer] = util.useTimeout(delay);
     const [isVisible, setVisible] = React.useState(false);

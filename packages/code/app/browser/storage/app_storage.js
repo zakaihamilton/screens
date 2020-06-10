@@ -121,10 +121,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
 
     const MenuActions = ({ name, state, type, parent = false, root = false }) => {
         const { dialogState, viewTypeState, pathState } = state;
-        const [viewType, setViewType] = viewTypeState;
+        const [, setViewType] = viewTypeState;
         const [path, setPath] = pathState;
-        const [dialog, setDialog] = dialogState;
-        const currentPath = me.path;
+        const [, setDialog] = dialogState;
         let parentPath = me.path;
         if (parent) {
             parentPath = parentPath.split("/").slice(0, -1).join("/");
@@ -289,7 +288,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
 
     const FolderHeader = ({ children, name, count, root, state }) => {
         const { loadingState } = state;
-        const [loading, setLoading] = loadingState;
+        const [loading] = loadingState;
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
@@ -298,7 +297,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     <Element className="app-storage-item-count">
                         <b>{count}</b>
                     &nbsp;
-                    {count === 1 && (
+                        {count === 1 && (
                             <>
                                 <Text language="eng">Item</Text>
                                 <Text language="heb">פריט</Text>
@@ -330,7 +329,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     const Footer = ({ state }) => {
         const { pathState, dialogState } = state;
         const [dialog, setDialog] = dialogState;
-        const [path, setPath] = pathState;
+        const [path] = pathState;
         const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
         let disableTooltip = null;
         let disable = !dialog;
@@ -399,8 +398,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             disable = dialog.progress;
             if (disable) {
                 disableTooltip = {
-                    eng: `Working...`,
-                    heb: `עובד...`
+                    eng: "Working...",
+                    heb: "עובד..."
                 };
             }
         }
@@ -409,7 +408,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 return { ...dialog, progress: true };
             });
             await dialog.done();
-        }
+        };
         const items = dialog && dialog.items;
         let name = path[path.length - 1];
         if (!name) {
@@ -451,7 +450,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
-        const [selectionRange, setSelectionRange] = React.useState([0, 0]);
+        const [selectionRange] = React.useState([0, 0]);
         const [editText, setEditText] = editTextState;
         const showCheckbox = !parent && !footer && dialog && dialog.multiSelect;
         const renameTo = async (text) => {
@@ -563,14 +562,13 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FolderView = ({ state }) => {
-        const { filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, updateState, dialogState } = state;
-        const [dialog, setDialog] = dialogState;
+        const { filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, dialogState } = state;
+        const [dialog] = dialogState;
         const [path, setPath] = pathState;
-        const [viewType, setViewType] = viewTypeState;
+        const [, setViewType] = viewTypeState;
         const [sort] = sortState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
-        const [counter] = updateState;
         const [filter] = filterState;
         let name = path[path.length - 1];
         let root = false;
@@ -595,7 +593,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             const select = () => {
                 setPath([...path.filter(Boolean), item.name]);
                 setViewType(item.type);
-            }
+            };
             return (
                 <Item key={item.name}>
                     <StorageItem {...item} select={select} state={state} />
@@ -616,7 +614,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
 
     const FileHeader = ({ children, name, state }) => {
         const { loadingState } = state;
-        const [loading, setLoading] = loadingState;
+        const [loading] = loadingState;
         return (
             <Element className="app-storage-root">
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
@@ -694,7 +692,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             me.updateView();
         }, [path, viewType]);
         const [language] = languageState;
-        const [delay] = delayState;
         const direction = me.languages.find(item => item.id === language).direction;
         React.useEffect(() => {
             me.redraw = () => {
@@ -824,7 +821,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             id: "hidden",
             name: (
                 <>
-                    <Text language="eng">Hidden Folders {'&'} Files</Text>
+                    <Text language="eng">Hidden Folders {"&"} Files</Text>
                     <Text language="heb">תיקיות וקבצים נסתרים</Text>
                 </>
             ),
@@ -911,10 +908,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         core.property.set(window, "app", me);
         core.property.set(window, "name", "");
     };
-    me.render = function (object) {
+    me.render = function Render() {
         return (<Main />);
     };
-    me.resize = function (object) {
+    me.resize = function () {
 
     };
 };

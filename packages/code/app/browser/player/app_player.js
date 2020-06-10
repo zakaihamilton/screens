@@ -174,7 +174,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
     };
-    me.updateResolutions = async function (object) {
+    me.updateResolutions = async function () {
         await media.file.convertListing();
     };
     me.updateSession = async function (object, name) {
@@ -415,7 +415,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             widget.player.controls.setJumpTime(player, jumpTime);
         });
     };
-    me.resize = function (object) {
+    me.resize = function () {
         var window = me.singleton;
         if (window && window.var.player) {
             core.property.set(window.var.player, "resize");

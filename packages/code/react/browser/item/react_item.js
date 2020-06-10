@@ -1,4 +1,4 @@
-screens.react.Item = (props) => {
+screens.react.Item = function Item(props) {
     const Component = React.useContext(screens.react.Item.Component);
     if (!Component) {
         throw "No parent component defined as Item.Component context";

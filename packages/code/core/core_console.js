@@ -55,6 +55,7 @@ screens.core.console = function CoreConsole(me, { core, db, storage }) {
             }
             var fullMessage = me.formatMessage(componentId, userName, message);
             me.push(fullMessage);
+            // eslint-disable-next-line no-console
             console.log(fullMessage);
         }
     };
@@ -68,6 +69,7 @@ screens.core.console = function CoreConsole(me, { core, db, storage }) {
             }
             var fullMessage = me.formatMessage(componentId, userName, message);
             me.push(fullMessage);
+            // eslint-disable-next-line no-console
             console.warn(fullMessage);
         }
     };
@@ -87,6 +89,7 @@ screens.core.console = function CoreConsole(me, { core, db, storage }) {
                     userName,
                     message + " stack: " + stack);
                 me.push(fullMessage);
+                // eslint-disable-next-line no-console
                 console.error(fullMessage);
             }
         }

@@ -5,7 +5,7 @@ screens.fs.aws = function FSAWS(me, { storage }) {
 };
 
 screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
-    me.mkdir = function (path) {
+    me.mkdir = function () {
         /* ignore on aws */
     };
     me.rmdir = async function (path) {
@@ -36,12 +36,12 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
             };
         });
         return items;
-    }
-    me.readFile = async function (path, options) {
+    };
+    me.readFile = async function (path) {
         const result = await storage.aws.downloadData(path);
         return result;
     };
-    me.writeFile = async function (path, data, options) {
+    me.writeFile = async function (path, data) {
         await storage.aws.uploadData(path, data);
     };
     me.copyFile = async function (from, to) {
@@ -60,7 +60,7 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
                 isDirectory: true,
                 isFile: false,
                 isSymbolicLink: false
-            }
+            };
         }
         const metadata = await storage.aws.metadata(path);
         const { type } = metadata;
@@ -75,10 +75,10 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
     me.lstat = async function (path) {
         return me.stat(path);
     };
-    me.symlink = async function (path) {
+    me.symlink = async function () {
         throw "Links not supported";
     };
-    me.readlink = async function (path) {
+    me.readlink = async function () {
         throw "Links not supported";
     };
     me.du = async function (path) {

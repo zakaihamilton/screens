@@ -93,7 +93,7 @@ screens.ui.move = function UIMove(me, { core, ui, widget }) {
             me.snap(object, true);
         }
     };
-    me.up = function (object, event) {
+    me.up = function (object) {
         var type = object.move_type;
         core.property.set(object, {
             "ui.touch.move": null,

@@ -48,7 +48,7 @@ screens.ui.touch = function UITouch(me, { core }) {
             }
             return true;
         },
-        dblclick: function (object, method, event) {
+        dblclick: function (object) {
             if (object.click_timeout !== null) {
                 clearTimeout(object.click_timeout);
                 object.click_timeout = null;

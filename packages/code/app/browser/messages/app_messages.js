@@ -60,7 +60,7 @@ screens.app.messages = function AppMessages(me, { core, ui, db }) {
         core.property.set(me.singleton, "ui.class.rise", true);
         return me.singleton;
     };
-    me.html = function (object) {
+    me.html = function () {
         var messages = me.messages;
         var html = "<div class=\"app-messages-items\">";
         for (let index = 0; index < messages.length; index++) {

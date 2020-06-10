@@ -3,7 +3,7 @@
  @component AppWorkshop
  */
 
-screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, react }) {
+screens.app.workshop = function AppWorkshop(me, { core, ui, widget, lib, react }) {
     const {
         DropDown,
         Item,
@@ -110,19 +110,18 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         }
         return (<Element className={{ "app-workshop-user": true, active: active && !disabled, disabled }} onClick={select}>
             <Element title={user_name} className="app-workshop-user-long-name">{user_name}</Element>
-            <Element className="app-workshop-user-short-name">{user_name.split(/[ \@]/)[0]}</Element>
+            <Element className="app-workshop-user-short-name">{user_name.split(/[ @]/)[0]}</Element>
             <Element className="app-workshop-user-index">{index + 1}</Element>
         </Element>);
     };
 
-    const AppHub = ({ meetingState, currentUserState, filterState, sortState, searchState, sortDirectionState, updateState }) => {
+    const AppHub = ({ meetingState, currentUserState, filterState, sortState, searchState, sortDirectionState }) => {
         const [meeting] = meetingState;
         const [currentUserId, setCurrentUserId] = currentUserState;
         const [sort] = sortState;
         const [filter] = filterState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
-        const [counter] = updateState;
         let { users } = me.meetings.find(item => item.id === meeting);
         me.filters.forEach(filterItem => {
             if (filter.includes(filterItem.id)) {
@@ -139,7 +138,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
         const children = users.map((user, index) => {
             const selectUser = () => {
                 setCurrentUserId(currentUserId !== user.user_id && user.user_id);
-            }
+            };
             return (
                 <User key={user.user_id} {...user} index={index} active={currentUserId === user.user_id} select={selectUser} />
             );
@@ -383,10 +382,10 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, db, lib, rea
             me.loadMeetings();
         }
     };
-    me.render = function (object) {
+    me.render = function Render() {
         return (<Main />);
     };
-    me.resize = function (object) {
+    me.resize = function () {
 
     };
 };

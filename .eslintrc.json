@@ -20,7 +20,10 @@
     "rules": {
         "indent": [
             "error",
-            4
+            4,
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
             "error",
@@ -35,11 +38,22 @@
             "always"
         ],
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "react/react-in-jsx-scope": "error",
+        "react/prop-types": [
+            0
+        ]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     },
     "globals": {
         "screens": true,
         "COMPONENT": true,
-        "React": true
+        "React": true,
+        "workbox": true,
+        "importScripts": true
     }
 }

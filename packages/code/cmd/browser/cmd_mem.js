@@ -4,7 +4,7 @@
 */
 
 screens.cmd.mem = function CmdMem(me, { core }) {
-    me.cmd = async function (terminal, args) {
+    me.cmd = async function (terminal) {
         const memoryUsage = await core.server.memoryUsage();
         const used = parseInt(memoryUsage.heapUsed / 1024 / 1024);
         core.property.set(terminal, "print", `The server uses approximately ${used} MB`);

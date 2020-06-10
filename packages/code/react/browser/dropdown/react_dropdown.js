@@ -1,4 +1,4 @@
-screens.react.DropDown = ({ state, children = [], multiple, path }) => {
+screens.react.DropDown = function DropDown({ state, children = [], multiple, path }) {
     const { Item, Element, Direction, Modal } = screens.react;
     const direction = React.useContext(Direction.Context);
     const popupRef = React.useRef(null);
@@ -42,6 +42,7 @@ screens.react.DropDown = ({ state, children = [], multiple, path }) => {
         show: isOpen
     };
 
+    let currentChildren = null;
     if (multiple && selected.length > 1) {
         currentChildren = React.Children.map(multiple, child => {
             return child && React.cloneElement(child, { state, open, current: true, display: true });
@@ -74,7 +75,7 @@ screens.react.DropDown = ({ state, children = [], multiple, path }) => {
     </Element>);
 };
 
-screens.react.DropDown.Item = ({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, path, style, children }) => {
+screens.react.DropDown.Item = function DropDownItem({ id, state, open, display, current, hideCurrent, hideInList, popup, multiple = true, path, style, children }) {
     const { Element } = screens.react;
     const [isOpen, setOpen] = open;
     const [selected, setSelected] = state || [];

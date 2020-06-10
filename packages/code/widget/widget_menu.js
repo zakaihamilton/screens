@@ -166,7 +166,7 @@ screens.widget.menu = function WidgetMenu(me, { core, ui, widget }) {
         }
     };
     me.back = {
-        set: function (object, value) {
+        set: function (object) {
             core.property.set(object, "ui.style.zIndex", "");
             core.property.set(object.var.modal, "ui.style.display", "none");
             core.property.set(object.var.menu, "ui.node.parent");
@@ -652,11 +652,6 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core, ui, widget }) {
                 if (options.column) {
                     core.property.set(object, "ui.style.gridColumn", options.column);
                 }
-                me.handleValue(object, options, "debugger", (value) => {
-                    if (value) {
-                        debugger;
-                    }
-                });
                 me.handleValue(object, options, "enabled", (value) => {
                     core.property.set(object, "ui.basic.enabled", value);
                 });
@@ -769,7 +764,7 @@ screens.widget.menu.item = function WidgetMenuItem(me, { core, ui, widget }) {
         return parent;
     };
     me.hover = {
-        set: function (object, value) {
+        set: function (object) {
             var parentMenu = me.parentMenu(object);
             if (parentMenu.selected_item !== object && object.menu_select) {
                 ui.html.markElement(object, null);

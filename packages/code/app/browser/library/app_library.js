@@ -615,7 +615,9 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
         var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== "user" && name !== "_id").map(name => {
             return { name: name, title: core.string.title(name), type: "text" };
         });
+        // eslint-disable-next-line no-undef
         $(window.var.resultsGrid).jsGrid("clearFilter");
+        // eslint-disable-next-line no-undef
         $(window.var.resultsGrid).jsGrid({
             width: "100%",
             height: "100%",
@@ -645,6 +647,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
                     if (!filterCount) {
                         return this.data;
                     }
+                    // eslint-disable-next-line no-undef
                     return $.grep(this.data, function (item) {
                         var filterIndex = 0;
                         for (key in filter) {

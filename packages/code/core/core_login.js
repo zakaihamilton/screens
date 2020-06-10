@@ -21,10 +21,12 @@ screens.core.login = function CoreLogin(me, { core, storage }) {
         }
         var login = core.util.config("settings.core.login");
         return new Promise((resolve, reject) => {
+            // eslint-disable-next-line no-undef
             gapi.load("auth2", {
                 callback: async function () {
                     login = await login;
                     try {
+                        // eslint-disable-next-line no-undef
                         me.auth2 = await gapi.auth2.init({
                             client_id: login.client_id,
                             ux_mode: "redirect"

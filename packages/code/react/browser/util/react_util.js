@@ -41,12 +41,12 @@ screens.react.util = function ReactUtil(me, { core, react }) {
             const handler = () => {
                 setCounter(counter => counter + 1);
             };
-            window.addEventListener('resize', handler);
+            window.addEventListener("resize", handler);
             const forwardList = core.property.forwardList(object, "resize");
             forwardList.set(handler, true);
             setCounter(counter + 1);
             return () => {
-                window.removeEventListener('resize', handler);
+                window.removeEventListener("resize", handler);
                 forwardList.delete(handler);
             };
         }, []);
@@ -57,17 +57,17 @@ screens.react.util = function ReactUtil(me, { core, react }) {
 
         React.useEffect(() => {
             refs.forEach(ref => {
-                if (!ref) return
+                if (!ref) return;
 
-                if (typeof ref === 'function') {
-                    ref(targetRef.current)
+                if (typeof ref === "function") {
+                    ref(targetRef.current);
                 } else {
-                    ref.current = targetRef.current
+                    ref.current = targetRef.current;
                 }
-            })
-        }, [refs])
+            });
+        }, [refs]);
 
-        return targetRef
+        return targetRef;
     };
     me.useSize = function (counter) {
         const ref = React.useRef();
@@ -102,7 +102,7 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         React.useEffect(() => {
             return () => {
                 stop();
-            }
+            };
         }, []);
         return [start, stop, exists];
     };
@@ -130,11 +130,11 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         React.useEffect(() => {
             return () => {
                 stop();
-            }
+            };
         }, []);
         return [start, stop, exists];
     };
-    me.render = function (object, component) {
+    me.render = function Render(object, component) {
         const { Context } = me;
         return (<Context.Provider value={object}>
             {component}
@@ -153,12 +153,12 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         React.useEffect(() => {
             const node = ref.current;
             if (node) {
-                node.addEventListener('mouseover', handleMouseOver);
-                node.addEventListener('mouseout', handleMouseOut);
+                node.addEventListener("mouseover", handleMouseOver);
+                node.addEventListener("mouseout", handleMouseOut);
 
                 return () => {
-                    node.removeEventListener('mouseover', handleMouseOver);
-                    node.removeEventListener('mouseout', handleMouseOut);
+                    node.removeEventListener("mouseover", handleMouseOver);
+                    node.removeEventListener("mouseout", handleMouseOut);
                 };
             }
         }, [ref.current]);

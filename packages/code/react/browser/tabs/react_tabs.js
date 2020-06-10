@@ -1,4 +1,4 @@
-screens.react.Tabs = ({ state, children }) => {
+screens.react.Tabs = function Tabs({ state, children }) {
     const { Item, Element } = screens.react;
     const childrenRef = React.useRef(null);
     const indicatorRef = React.useRef(null);
@@ -50,7 +50,7 @@ screens.react.Tabs = ({ state, children }) => {
     );
 };
 
-screens.react.Tabs.Item = ({ id, state, children }) => {
+screens.react.Tabs.Item = function TabsItem({ id, state, children }) {
     const { Element } = screens.react;
     const [selected, setSelected] = state || [];
     const onClick = () => {
