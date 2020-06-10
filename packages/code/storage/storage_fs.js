@@ -23,7 +23,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
     me.sources = {};
     me.init = function () {
         me.methodNames.map(methodName => {
-            if (methodName === "copyFile") {
+            if (methodName === "copyFile" || methodName === "rename") {
                 me[methodName] = (from, to, ...args) => {
                     const [source, ...fromPath] = from.split("/");
                     const [target, ...toPath] = to.split("/");
@@ -116,7 +116,6 @@ screens.storage.fs = function StorageFS(me, { core }) {
                         isReadOnly: stat.isReadOnly
                     };
                 });
-                return result;
             }
             const names = await me.readdir(path);
             for (const name of names) {
