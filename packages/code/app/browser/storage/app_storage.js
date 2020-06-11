@@ -124,9 +124,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [, setViewType] = viewTypeState;
         const [path, setPath] = pathState;
         const [, setDialog] = dialogState;
-        let parentPath = me.path;
+        let parentPath = path.join("/");
         if (parent) {
-            parentPath = parentPath.split("/").slice(0, -1).join("/");
+            parentPath = path.slice(0, -1).join("/");
         }
         const item = me.items.find(item => item.name === name);
         const dialogObject = {
@@ -134,7 +134,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             items: [item],
             name,
             parent,
-            context: me.path,
+            context: path.join("/"),
             type,
             cancel: () => {
                 setDialog(null);
@@ -356,7 +356,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const hebrewItemName = dialog && dialog.items && dialog.items.length > 1 ? "פריטים" : "פריט";
         if (dialog && dialog.mode !== "delete") {
             if (!disable) {
-                disable = me.path === dialog.context;
+                disable = path.join("/") === dialog.context;
                 if (disable) {
                     disableTooltip = {
                         eng: `Cannot ${dialog.mode} ${englishItemName} to the same folder it is in`,
@@ -365,7 +365,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
             if (!disable) {
-                disable = (dialog.type === "folder" && dialog.context && me.path.includes(dialog.context));
+                disable = (dialog.type === "folder" && dialog.context && path.includes(dialog.context));
                 if (disable) {
                     disableTooltip = {
                         eng: `Cannot ${dialog.mode} folder to a child folder`,
@@ -427,7 +427,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     {dialog.mode !== "delete" && <>
                         <Text language="eng">to</Text>
                         <Text language="heb">ל</Text>
-                        <StorageItem key={name} name={name} location={me.path} type="folder" transfer={true} footer={true} state={state} />
+                        <StorageItem key={name} name={name} location={path.join("/")} type="folder" transfer={true} footer={true} state={state} />
                     </>}
                     <Element style={{ flex: 1 }}></Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
@@ -455,7 +455,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const showCheckbox = !parent && !footer && dialog && dialog.multiSelect;
         const renameTo = async (text) => {
             if (name !== text && text) {
-                let parentPath = me.path;
+                let parentPath = path.join("/");
                 if (parent) {
                     parentPath = parentPath.split("/").slice(0, -1).join("/");
                 }
@@ -537,7 +537,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             eng: "Select",
             heb: "בחירה"
         };
-        const showMenu = !isReadOnly && me.path;
+        const showMenu = !isReadOnly && path && path.join("/");
         const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
         const isChecked = dialog && dialog.items && dialog.items.find(item => item.name === name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
@@ -640,7 +640,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const counter = react.util.useResize();
         const [ref, width, height] = react.util.useSize(counter);
         const textState = [me.content, async (content) => {
-            await storage.fs.writeFile(me.path, content);
+            await storage.fs.writeFile(path.join("/"), content);
         }];
         let name = path[path.length - 1];
         const style = {
@@ -721,12 +721,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (!isOpen) {
             return null;
         }
+        const View = viewType === "folder" ? FolderView : FileView;
         return (
             <Direction direction={direction}>
                 <Language language={language}>
                     <AppToolbar state={state} />
-                    {viewType === "folder" && <FolderView state={state} />}
-                    {viewType === "file" && <FileView state={state} />}
+                    <Element className="app-storage-views">
+                        <View state={state} />
+                    </Element>
                     <Footer state={state} />
                 </Language>
             </Direction>
@@ -864,14 +866,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
     me.updateView = async function () {
         const counter = ++me.counter;
+        const path = me.path;
         if (me.viewType === "folder") {
             me.items = [];
-            if (me.path) {
+            if (path) {
                 me.loading = true;
                 if (me.redraw) {
                     me.redraw();
                 }
-                me.items = await storage.fs.list(me.path);
+                me.items = await storage.fs.list(path);
                 if (counter !== me.counter) {
                     return;
                 }
@@ -890,7 +893,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             if (me.redraw) {
                 me.redraw();
             }
-            me.content = await storage.fs.readFile(me.path, "utf8");
+            me.content = await storage.fs.readFile(path, "utf8");
             if (counter !== me.counter) {
                 return;
             }

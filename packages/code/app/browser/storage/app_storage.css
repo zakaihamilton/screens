@@ -16,6 +16,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    flex: 1;
 }
 
 .app-storage-children {
@@ -228,4 +229,13 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+}
+
+.app-storage-views {
+    display: flex;
+    align-items: stretch;
+    justify-items: stretch;
+    align-content: stretch;
+    justify-content: stretch;
+    flex: 1;
 }
