@@ -66,7 +66,7 @@ screens.app.keyboard = function AppKeyboard(me, { core, ui, widget, kab }) {
         });
         core.property.set(window.var.buttons, "ui.style.fontSize", window.options.fontSize);
     };
-    me.fontSizesEm = function (object) {
+    me.fontSizesEm = function () {
         var fontSizeList = [];
         var fontSize = 0;
         var item = null;

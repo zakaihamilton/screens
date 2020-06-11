@@ -1,4 +1,4 @@
-screens.react.Menu = ({ label, icon, children, ...props }) => {
+screens.react.Menu = function Menu({ label, icon, children, ...props }) {
     const { Item, Element, Direction, Modal, Menu, Portal } = screens.react;
     const ItemContext = Menu.Item.Context;
     const direction = React.useContext(Direction.Context);
@@ -80,9 +80,9 @@ screens.react.Menu = ({ label, icon, children, ...props }) => {
     );
 };
 
-screens.react.Menu.Item = ({ id = "", children, disable, onClick, ...props }) => {
+screens.react.Menu.Item = function MenuItem({ id = "", children, disable, onClick, ...props }) {
     const { Element, ProgressRing, } = screens.react;
-    const [isOpen, setOpen] = React.useContext(screens.react.Menu.Item.Context);
+    const [, setOpen] = React.useContext(screens.react.Menu.Item.Context);
     const [isBusy, setBusy] = React.useState(false);
     const className = {
         "react-menu-item": true,

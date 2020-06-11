@@ -49,7 +49,7 @@ screens.db.shared.metadata = function DbSharedContent(me, { storage }) {
     return "server";
 };
 
-screens.db.shared.message = function DbSharedContent(me, { core, storage }) {
+screens.db.shared.message = function DbSharedContent(me, { core, storage, db }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.listing = async function (user) {

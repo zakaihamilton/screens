@@ -37,7 +37,7 @@ screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
             }
             return ref;
         },
-        set: function (object, value) {
+        set: function (object) {
             var ref = null;
             var parent = object.parentNode;
             if (parent) {
@@ -231,14 +231,6 @@ screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
             object.metadata = value;
         }
     };
-    me.debugger = {
-        get: function (object) {
-            debugger;
-        },
-        set: function (object, value) {
-            debugger;
-        }
-    };
     me.show = {
         get: function (object) {
             return object.style.visibility !== "hidden";
@@ -282,5 +274,5 @@ screens.ui.basic = function UIBasic(me, { core, ui, widget }) {
             return me.pixelsToEm(element, pixelValue);
         }
         return pixelValue;
-    }
+    };
 };

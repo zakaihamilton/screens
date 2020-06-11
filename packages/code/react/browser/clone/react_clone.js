@@ -1,4 +1,4 @@
-screens.react.Clone = ({ children, ...props }) => {
+screens.react.Clone = function Clone({ children, ...props }) {
     if (children) {
         children = React.Children.map(children, child => {
             return child && React.cloneElement(child, { ...props });

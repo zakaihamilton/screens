@@ -153,9 +153,9 @@ screens.media.voice = function MediaVoice(me, { core, kab }) {
         me.replay();
     };
     me.preProcess = function (text) {
-        text = text.replace(/i\.e\.\ /g, "For Example.. ");
+        text = text.replace(/i\.e\. /g, "For Example.. ");
         return text;
-    }
+    };
     me.textSplit = function (text) {
         return text.split(/[.,:;?!\n]/g);
     };

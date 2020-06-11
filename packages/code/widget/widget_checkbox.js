@@ -42,7 +42,7 @@ screens.widget.checkbox = function WidgetCheckBox(me) {
         }
     };
     me.toggle = {
-        set: function (object, value) {
+        set: function (object) {
             object.parentNode.var.input.checked = !object.parentNode.var.input.checked;
         }
     };

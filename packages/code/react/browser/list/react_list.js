@@ -1,4 +1,4 @@
-screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px" }) => {
+screens.react.List = function List({ children, style, horizontal, item, itemSize, unit = "px" }) {
     const { pixelsToUnit } = screens.ui.basic;
     const { Item, Element, Direction, util } = screens.react;
     const object = util.useObject();
@@ -78,7 +78,7 @@ screens.react.List = ({ children, style, horizontal, item, itemSize, unit = "px"
     );
 };
 
-screens.react.List.Item = ({ horizontal, offset, width, height, style = {}, children, unit = "px" }) => {
+screens.react.List.Item = function ListItem({ horizontal, offset, width, height, style = {}, children, unit = "px" }) {
     const { Element } = screens.react;
     const className = {
         "react-list-item": true

@@ -236,10 +236,10 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         }
     };
     me.close = {
-        get: function (object) {
+        get: function () {
             return true;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var isFocused = ui.focus.is_active(window);
             var isStatic = core.property.get(window, "static");
@@ -436,7 +436,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var embed = core.property.get(window, "ui.class.contains", "embed");
             return !minimized && !embed;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var minimized = core.property.get(window, "ui.class.contains", "minimize");
             if (minimized) {
@@ -477,7 +477,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var embed = core.property.get(window, "ui.class.contains", "embed");
             return !core.property.get(window, "fixed") && !core.property.get(window, "popup") && !maximized && !minimized && !embed;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var wasMinimized = core.property.get(window, "ui.class.contains", "minimize");
             var wasMaximized = core.property.get(window, "ui.class.contains", "maximize");
@@ -531,7 +531,6 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         var window = me.get(object);
         var region = ui.rect.absoluteRegion(window);
         var workspace_region = ui.rect.absoluteRegion(ui.element.workspace());
-        var update = false;
         var fixed = core.property.get(window, "fixed");
         if (region.left <= workspace_region.left || region.left >= workspace_region.right) {
             core.property.set(window, "ui.style.left", "0px");
@@ -575,7 +574,6 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         set: function (object, value) {
             var window = me.get(object);
             var parent_window = me.parent(window);
-            var fixed = core.property.get(window, "widget.window.fixed");
             var minimized = core.property.get(window, "ui.class.contains", "minimize");
             if (value) {
                 if (parent_window && parent_window.child_window && parent_window.child_window !== window) {
@@ -599,7 +597,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var embed = core.property.get(window, "ui.class.contains", "embed");
             return maximized || minimized || embed;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var parent_window = me.parent(window);
             var minimized = core.property.get(window, "ui.class.contains", "minimize");
@@ -666,7 +664,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var maximized = core.property.get(window, "ui.class.contains", "maximize");
             return maximized || minimized;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var parent_window = me.parent(window);
             var minimized = core.property.get(window, "ui.class.contains", "minimize");
@@ -708,7 +706,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         }
     };
     me.toggleSize = {
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             if (core.property.get(window, "ui.class.contains", "minimize")) {
                 core.property.set(window, "widget.window.restore");
@@ -722,7 +720,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             }
         }
     };
-    me.toggleVisibility = function (object, value) {
+    me.toggleVisibility = function (object) {
         var window = me.get(object);
         if (core.property.get(window, "ui.focus.active")) {
             if (core.property.get(window, "ui.class.contains", "minimize")) {
@@ -742,7 +740,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var seeThrough = core.property.get(window, "ui.class.contains", "see-through");
             return seeThrough;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             core.property.set(window, "ui.class.toggle", "see-through");
         }
@@ -753,7 +751,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var fullscreen = core.property.get(window, "ui.class.contains", "fullscreen");
             return fullscreen;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var fullscreen = core.property.get(window, "ui.class.contains", "fullscreen");
             var list = [];
@@ -790,7 +788,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
             var direction = core.property.get(window, "ui.class.contains", "direction");
             return direction;
         },
-        set: function (object, value) {
+        set: function (object) {
             var window = me.get(object);
             var direction = core.property.get(window, "ui.class.contains", "direction");
             var list = [];
@@ -947,7 +945,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         }
     };
     me.visibleWindows = {
-        get: function (object, value) {
+        get: function (object) {
             var content = ui.element.workspace();
             if (object !== ui.element.workspace()) {
                 content = core.property.get(object, "widget.window.content");
@@ -973,7 +971,7 @@ screens.widget.window = function WidgetWindow(me, { core, ui, widget }) {
         }
     };
     me.refocus = {
-        set: function (object, value) {
+        set: function (object) {
             if (ui.focus.inChange) {
                 return;
             }

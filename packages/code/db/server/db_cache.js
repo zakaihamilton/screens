@@ -3,7 +3,7 @@
  @component DbCache
  */
 
-screens.db.cache = function DbCache(me) {
+screens.db.cache = function DbCache() {
     return "server";
 };
 

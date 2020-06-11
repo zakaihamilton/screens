@@ -1,9 +1,9 @@
-screens.react.ProgressRing = ({ radius, stroke, strokeDasharray, progress, color, fill = "transparent", ...props }) => {
+screens.react.ProgressRing = function ProgressRing({ radius, stroke, strokeDasharray, progress, color, fill = "transparent", ...props }) {
     const multiplier = 2;
     const normalizedRadius = radius - stroke * multiplier;
     const circumference = normalizedRadius * multiplier * Math.PI;
     const strokeDashoffset = circumference - progress / 100 * circumference;
-    strokeDasharray = strokeDasharray || circumference + ' ' + circumference;
+    strokeDasharray = strokeDasharray || circumference + " " + circumference;
     return (
         <svg
             height={radius * multiplier}

@@ -6,6 +6,7 @@ screens.fs.local = function FSLocal(me, { storage }) {
 
 screens.fs.local.driver = function FServerDriver(me, { storage }) {
     me.init = function () {
+        // eslint-disable-next-line no-undef
         me.fs = new LightningFS("screens-fs");
         storage.fs.methodNames.map(methodName => {
             if (me.fs && me.fs.promises[methodName]) {
@@ -31,9 +32,9 @@ screens.fs.local.driver = function FServerDriver(me, { storage }) {
                     const data = await me.readFile(from);
                     const array = [...data];
                     await me.writeFile(to, array);
-                }
+                };
             }
         });
-    }
+    };
     return "browser";
 };

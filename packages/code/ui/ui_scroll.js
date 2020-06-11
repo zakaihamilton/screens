@@ -84,7 +84,7 @@ screens.ui.scroll = function UIScroll(me, { core, widget, ui }) {
         }
     };
     me.scrolled = {
-        set: function (object, value) {
+        set: function (object) {
             var container = me.container(object);
             var pageSize = container.ui_scroll_pageSize;
             if (container.ui_scroll_snapTimeout) {

@@ -5,13 +5,13 @@
 
 screens.ui.key = function UIKey(me, { core }) {
     me.handle = {
-        keydown: function (object, method, event) {
+        keydown: function () {
             return true;
         },
-        keyup: function (object, method, event) {
+        keyup: function () {
             return true;
         },
-        enter: function (object, method, event) {
+        enter: function (_object, _method, event) {
             return event.keyCode === 13;
         }
     };

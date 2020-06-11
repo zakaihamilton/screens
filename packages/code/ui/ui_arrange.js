@@ -181,7 +181,7 @@ screens.ui.arrange = function UIArrange(me, { core, widget, ui }) {
             }
         }
     };
-    me.arrangeIcons = function (object) {
+    me.arrangeIcons = function () {
 
     };
     me.center = function (object) {

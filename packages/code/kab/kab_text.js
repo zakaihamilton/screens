@@ -42,6 +42,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
             wordsString = wordsString.replace(/<[/]?iframe[^>]*>/g, "");
         }
         catch (err) {
+            // eslint-disable-next-line no-console
             console.error(err);
         }
         if (!session.options.parentheses) {
@@ -172,9 +173,6 @@ screens.kab.text = function KabText(me, { core, kab }) {
                         suffixLetters: core.string.suffixLetters(collectedWords, match),
                         textOnly: textOnly
                     };
-                    if (item.debug) {
-                        debugger;
-                    }
                     match = me.handleInstance(session, instance);
                     wordIndex = instance.wordIndex;
                     if (match) {
@@ -216,7 +214,7 @@ screens.kab.text = function KabText(me, { core, kab }) {
                 terms
             };
         }
-        lines = lines.map(async (line, index) => {
+        lines = lines.map(async line => {
             var language = core.string.language(me.clean(line));
             let json = languages[language].json;
             let terms = languages[language].terms;

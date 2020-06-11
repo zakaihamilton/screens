@@ -3,7 +3,7 @@
  @component AppSessions
  */
 
-screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, react }) {
+screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react }) {
     const {
         DropDown,
         Item,
@@ -144,7 +144,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         return items;
     };
 
-    const AppHub = ({ groupState, sortState, sortDirectionState, yearState, searchState, updateState }) => {
+    const AppHub = ({ groupState, sortState, sortDirectionState, yearState, searchState }) => {
         const [group] = groupState;
         const [sort] = sortState;
         const [direction] = sortDirectionState;
@@ -179,7 +179,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                         const group = core.string.title(item.group);
                         const loadSession = () => {
                             core.app.launch("player", item.group, item.session);
-                        }
+                        };
                         return (
                             <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
                                 <Element className="app-sessions-row">
@@ -298,7 +298,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
                     const handler = language => {
                         const date = new Date(item.year, item.month - 1, item.day);
                         const { locale } = me.languages.find(obj => obj.id === language);
-                        const month = date.toLocaleString(locale, { month: 'long' });
+                        const month = date.toLocaleString(locale, { month: "long" });
                         return month + " " + item.year;
                     };
                     swimlane.id = item.month + " " + item.year;
@@ -380,7 +380,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
         let [year, month, day, name = ""] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+)/g).slice(1);
         const date = [year, month, day].join("-");
         return { year, month, day, date, name: core.path.fileName(name).trim() };
-    }
+    };
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
@@ -412,10 +412,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, db, media, r
             me.loadData();
         }
     };
-    me.render = function (object) {
+    me.render = function Render() {
         return (<Main />);
     };
-    me.resize = function (object) {
+    me.resize = function () {
 
     };
 };

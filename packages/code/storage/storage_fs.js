@@ -26,7 +26,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
             if (methodName === "copyFile" || methodName === "rename") {
                 me[methodName] = (from, to, ...args) => {
                     const [source, ...fromPath] = from.split("/");
-                    const [target, ...toPath] = to.split("/");
+                    const [, ...toPath] = to.split("/");
                     const driver = me.sources[source];
                     const method = driver[methodName];
                     return method("/" + fromPath.join("/"), "/" + toPath.join("/"), ...args);
@@ -53,15 +53,21 @@ screens.storage.fs = function StorageFS(me, { core }) {
         React.useEffect(() => {
             const load = async () => {
                 const result = await me.readFile(path, encoding);
+                if (result) {
+                    setData(result);
+                }
             };
             load();
         }, []);
-    }
+        return data;
+    };
     me.exists = async function (path) {
         let result = undefined;
         try {
             const stat = await me.stat(path);
-            result = true;
+            if (stat) {
+                result = true;
+            }
         }
         catch (err) {
             result = false;
@@ -140,6 +146,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
                     items.push(item);
                 }
                 catch (err) {
+                    // eslint-disable-next-line no-console
                     console.log("Cannot read file: " + item.path + " err: " + err);
                 }
             }
@@ -176,7 +183,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
             const names = await me.readdir(from);
             for (const name of names) {
                 const path = core.path.normalize(from, name);
-                await me.transfer(path, core.path.normalize(to, name), source, target);
+                await me.transfer(path, core.path.normalize(to, name));
             }
         }
         else {

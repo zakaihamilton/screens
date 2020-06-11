@@ -45,13 +45,16 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             }
             me.log("normal server is listening");
             process.on("SIGINT", () => {
+                // eslint-disable-next-line no-console
                 console.info("SIGINT signal received.");
                 server.close(async function (err) {
                     if (err) {
+                        // eslint-disable-next-line no-console
                         console.error(err);
                         process.exit(1);
                     }
                     await Promise.all(core.broadcast.send("shutdown"));
+                    // eslint-disable-next-line no-console
                     console.log("Components shutdown");
                     process.exit(0);
                 });

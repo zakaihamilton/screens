@@ -86,7 +86,7 @@ screens.ui.resize = function UIResize(me, { core, widget, ui }) {
         }
     };
     me.up = {
-        set: function (object, event) {
+        set: function (object) {
             core.property.set(object, {
                 "ui.touch.move": null,
                 "ui.touch.up": null

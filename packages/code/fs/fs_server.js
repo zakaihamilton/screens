@@ -27,6 +27,6 @@ screens.fs.server.driver = function FServerDriver(me, { storage }) {
                 };
             }
         });
-    }
+    };
     return "server";
 };

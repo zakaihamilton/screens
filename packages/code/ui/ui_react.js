@@ -14,6 +14,7 @@ screens.ui.react = function UIReact(me, { core, react }) {
     me.render = async function (object, method) {
         const component = await core.property.get(object, method);
         const element = react.util.render(object, component);
+        // eslint-disable-next-line no-undef
         ReactDOM.render(element, object);
     };
 };

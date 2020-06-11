@@ -136,5 +136,5 @@ screens.core.path = function CorePath(me, { core }) {
             }
             return name;
         }).join("/");
-    }
+    };
 };

@@ -26,6 +26,7 @@ screens.core.cmd = function CoreCmd(me, { core }) {
             terminal.handle = await core.message.send(application + ".cmd", terminal, args);
         }
         catch (err) {
+            // eslint-disable-next-line no-console
             console.log("error: " + err);
             core.property.set(terminal, "print", "Unknown command");
             me.exit(terminal);

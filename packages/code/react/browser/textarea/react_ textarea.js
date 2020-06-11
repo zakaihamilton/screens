@@ -1,4 +1,4 @@
-screens.react.TextArea = React.forwardRef(({ className, state, focus, ...props }, ref) => {
+screens.react.TextArea = React.forwardRef(function TextArea({ className, state, focus, ...props }, ref) {
     const { Element, util } = screens.react;
     const inputRef = React.useRef(null);
     const combinedRef = util.useRefs(ref, inputRef);

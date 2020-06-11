@@ -10,7 +10,7 @@ screens.kab.style = function KabStyle(me, { core, kab, ui }) {
         var html = "";
         var subHeading = "";
         var category = "";
-        var phase = null, parentPhase = null, heading = null, tooltip = null;
+        var phase = null, heading = null, tooltip = null;
         var term = instance.target;
         if (typeof styles === "string") {
             if (session.json.style) {
@@ -25,15 +25,11 @@ screens.kab.style = function KabStyle(me, { core, kab, ui }) {
         if (styles && styles.phase) {
             phase = styles.phase;
             if (typeof phase !== "string") {
-                if (phase.major) {
-                    parentPhase = phase.major;
-                }
                 if (phase.minor) {
                     phase = phase.minor;
                 }
                 else {
                     phase = phase.major;
-                    parentPhase = null;
                 }
             }
             if (styles) {

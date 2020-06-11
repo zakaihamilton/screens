@@ -3,6 +3,7 @@ function screens_platform() {
     if (typeof global !== "undefined" && global.platform) {
         platform = global.platform;
     }
+    // eslint-disable-next-line no-constant-condition
     else if ("__source_platform__") {
         platform = "__source_platform__";
     }
@@ -53,6 +54,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         platform = null;
     }
     if (platform && screens.platform !== platform) {
+        // eslint-disable-next-line no-console
         console.log(screens.platform + " => " + id + " => " + platform);
         let handler = {
             get: function (object, property) {
@@ -129,6 +131,7 @@ async function screens_init(items) {
                             error = { message: "Unknown error" };
                         }
                         var message = error.message || error;
+                        // eslint-disable-next-line no-console
                         console.error(screens.platform + ": Failed to initialise component: " + init.package_name + "." + init.component_name + " with error: " + message + " stack: " + err.stack);
                     }
                 }
@@ -147,9 +150,11 @@ function screens_import(path) {
     }
     else if (screens.platform === "client" || screens.platform === "service_worker") {
         try {
+            // eslint-disable-next-line no-undef
             importScripts(path);
         }
         catch (e) {
+            // eslint-disable-next-line no-console
             console.error("Failure in importing: " + path);
             throw e;
         }
@@ -217,6 +222,7 @@ function screens_load(items, state) {
                         continue;
                     }
                     let path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+                    // eslint-disable-next-line no-console
                     console.log(screens.platform + ": Loading " + path);
                     item.promises = [screens_import(path)];
                 }
@@ -244,6 +250,7 @@ function screens_load(items, state) {
             if (paths.length) {
                 let path = paths.join(",") + "?platform=" + screens.platform;
                 if (state === "import") {
+                    // eslint-disable-next-line no-console
                     console.log(screens.platform + ": Loading " + path);
                     var promises = items[0].promises = [];
                     promises.push(screens_import(path));

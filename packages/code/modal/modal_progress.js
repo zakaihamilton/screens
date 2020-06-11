@@ -3,7 +3,7 @@
  @component ModalProgress
  */
 
-screens.modal.progress = function ModalProgress(me, { core, ui }) {
+screens.modal.progress = function ModalProgress(me, { core, ui, widget }) {
     me.launch = function (args) {
         return ui.element.create(me.json, "workspace", "self", args[0]);
     };

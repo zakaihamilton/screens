@@ -1,4 +1,4 @@
-screens.react.Modal = ({ open }) => {
+screens.react.Modal = function Modal({ open }) {
     const { Element, Portal } = screens.react;
     const [isOpen, setOpen] = open;
     const modalClassName = {

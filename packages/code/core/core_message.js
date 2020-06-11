@@ -226,6 +226,7 @@ screens.core.message.worker = function CoreMessageWorker(me, { core }) {
             window.module = {};
         }
         if (me.platform === "client") {
+            // eslint-disable-next-line no-undef
             me.handle = new PromiseWorker();
             me.register();
         }
@@ -251,6 +252,7 @@ screens.core.message.worker = function CoreMessageWorker(me, { core }) {
         });
     };
     me.load = async function (path) {
+        // eslint-disable-next-line no-undef
         me.handle = new PromiseWorker(new Worker(path));
         me.register();
         me.handle.postMessage(null);
@@ -298,6 +300,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, { co
                         navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
                     });
                 }
+                // eslint-disable-next-line no-undef
                 me.handle = new PromiseWorker(navigator.serviceWorker);
             }
             catch (err) {
@@ -318,6 +321,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, { co
             me.load(me.path);
         }
         else {
+            // eslint-disable-next-line no-undef
             registerPromiseWorker(async (info) => {
                 if (!info) {
                     return;

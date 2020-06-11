@@ -73,8 +73,8 @@ screens.ui.html = function UIHtml(me, { core }) {
                 html = await core.http.send(info);
             }
             catch (err) {
-                err = "Cannot load html file: " + path + " err: " + err.message || err;
-                me.log_error(err);
+                const error = "Cannot load html file: " + path + " err: " + err.message || err;
+                me.log_error(error);
             }
             if (useCache) {
                 me.files[path] = html;

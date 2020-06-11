@@ -18,11 +18,11 @@ screens.ui.print = function UIPrint(me, { core, ui }) {
         };
     };
     me.copy = async function (text) {
-        var a = window.open('', '', '');
-        a.document.write('<html>');
-        a.document.write('<body><p>');
+        var a = window.open("", "", "");
+        a.document.write("<html>");
+        a.document.write("<body><p>");
         a.document.write(text.split("\n").join("</p><p>"));
-        a.document.write('</p></body></html>');
+        a.document.write("</p></body></html>");
         a.document.close();
         a.print();
     };

@@ -3,6 +3,7 @@ global.platform = "server";
 process.on("uncaughtException", (err) => {
     var fs = require("fs");
     var date = new Date();
+    // eslint-disable-next-line no-console
     console.log("fatal error: " + date.toUTCString() + err.stack);
     fs.writeFileSync("crash.txt", "error: " + date.toUTCString() + err.stack);
 });
