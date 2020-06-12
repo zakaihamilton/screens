@@ -1,7 +1,6 @@
 screens.react.TextArea = React.forwardRef(function TextArea({ className, state, focus, ...props }, ref) {
     const { Element, util } = screens.react;
-    const inputRef = React.useRef(null);
-    const combinedRef = util.useRefs(ref, inputRef);
+    ref = util.useRef(ref);
     const [text, setText] = state;
     const [currentText, setCurrentText] = React.useState(text);
     const [startTimer] = util.useTimeout(250);
@@ -20,12 +19,12 @@ screens.react.TextArea = React.forwardRef(function TextArea({ className, state, 
 
     React.useEffect(() => {
         if (focus) {
-            combinedRef.current.focus();
+            ref.current.focus();
         }
-    }, [focus, combinedRef.current]);
+    }, [focus, ref.current]);
 
     return (<Element
-        ref={combinedRef}
+        ref={ref}
         tag="textarea"
         direction="auto"
         value={currentText}

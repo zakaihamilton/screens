@@ -52,22 +52,9 @@ screens.react.util = function ReactUtil(me, { core, react }) {
         }, []);
         return counter;
     };
-    me.useRefs = function (...refs) {
-        const targetRef = React.useRef();
-
-        React.useEffect(() => {
-            refs.forEach(ref => {
-                if (!ref) return;
-
-                if (typeof ref === "function") {
-                    ref(targetRef.current);
-                } else {
-                    ref.current = targetRef.current;
-                }
-            });
-        }, [refs]);
-
-        return targetRef;
+    me.useRef = function (ref) {
+        const targetRef = React.useRef(null);
+        return ref || targetRef;
     };
     me.useSize = function (counter) {
         const ref = React.useRef();

@@ -1,7 +1,6 @@
 screens.react.Input = React.forwardRef(function Input({ state, onSubmit, focus, selectionRange, ...props }, ref) {
     const { Element, util } = screens.react;
-    const inputRef = React.useRef(null);
-    const combinedRef = util.useRefs(ref, inputRef);
+    ref = util.useRef(ref);
     const [text, setText] = state;
     const [currentText, setCurrentText] = React.useState(text);
     const [startTimer] = util.useTimeout(250);
@@ -26,27 +25,27 @@ screens.react.Input = React.forwardRef(function Input({ state, onSubmit, focus, 
     }, [text]);
 
     React.useEffect(() => {
-        if (!combinedRef.current) {
+        if (!ref.current) {
             return;
         }
         if (focus) {
-            combinedRef.current.focus();
+            ref.current.focus();
         }
     }, [focus]);
 
     React.useEffect(() => {
-        if (!combinedRef.current) {
+        if (!ref.current) {
             return;
         }
         if (selectionRange) {
-            combinedRef.current.setSelectionRange(...selectionRange);
+            ref.current.setSelectionRange(...selectionRange);
             // eslint-disable-next-line no-console
             console.log("setSelectionRange", selectionRange);
         }
     }, [selectionRange]);
 
     return (<Element
-        ref={combinedRef}
+        ref={ref}
         tag="input"
         direction="auto"
         value={currentText}
