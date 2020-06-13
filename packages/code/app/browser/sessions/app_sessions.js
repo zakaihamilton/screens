@@ -17,7 +17,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         List,
         Input,
         Clone,
-        Separator
+        Separator,
+        Spinner
     } = react;
 
     const AppToolbar = ({ languageState, sortState, sortDirectionState, groupState, yearState, searchState }) => {
@@ -151,6 +152,14 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         const [year] = yearState;
         const [search] = searchState;
         let items = me.sessions;
+        if (!items) {
+            return (<Element className="app-sessions-loading" key="loadingItems">
+                <Spinner delay={250}>
+                    <Text language="eng">Loading...</Text>
+                    <Text language="heb">טוען...</Text>
+                </Spinner>
+            </Element>);
+        }
         const compare = (item, fields, search) => {
             if (!search) {
                 return true;
@@ -239,7 +248,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         );
     };
     me.groups = [];
-    me.sessions = [];
+    me.sessions = null;
     me.languages = [
         {
             id: "eng",
