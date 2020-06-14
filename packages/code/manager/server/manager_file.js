@@ -16,7 +16,7 @@ screens.manager.file = function ManagerFile(me, { core, storage }) {
             me.log("waiting to download file: " + from + " to: " + to);
             var unlock = await core.mutex.lock(me.id);
             me.log("downloading file: " + from + " to: " + to);
-            exists = core.file.exists(to);
+            exists = await core.file.exists(to);
             if (!exists) {
                 try {
                     await storage.dropbox.downloadFile(from, to);

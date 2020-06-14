@@ -9,9 +9,9 @@ screens.media.speech = function MediaSpeech(me, { core }) {
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
     };
-    me.exists = function (path) {
+    me.exists = async function (path) {
         var transcriptPath = core.path.replaceExtension(path, "txt");
-        return core.file.exists(transcriptPath);
+        return await core.file.exists(transcriptPath);
     };
     me.load = async function (path) {
         var transcriptPath = core.path.replaceExtension(path, "txt");

@@ -95,7 +95,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
 
             if (!await storage.aws.exists(awsPath)) {
                 let uploadSourcePath = file.local;
-                me.log("Downloading file: " + file.local + ", size: " + file.size);
+                me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);
                 await manager.file.download(file.remote, file.local);
                 deleteFile = true;
                 if (file.local.endsWith(".m4a")) {
@@ -204,7 +204,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             for (var file of files) {
                 if (file.extension === "m4a") {
                     try {
-                        if (!media.speech.exists(file.local)) {
+                        if (!await media.speech.exists(file.local)) {
                             me.log("transcribing: " + file.local);
                             await media.speech.transcribe(file.local);
                             var info = await manager.download.clean(me.tempDir, "flac");

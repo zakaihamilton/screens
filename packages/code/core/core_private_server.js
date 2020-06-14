@@ -17,7 +17,7 @@ screens.core.private = function CorePrivate(me, { core }) {
         return "private/" + name + ".json";
     };
     me.file = async function (path) {
-        var exists = core.file.exists(path);
+        var exists = await core.file.exists(path);
         var data = null;
         if (exists) {
             data = await core.file.readFile(path, "utf8");

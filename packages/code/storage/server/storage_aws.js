@@ -171,7 +171,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         }
         var params = {
             Bucket: bucketName,
-            Key: path + "/"
+            Key: path
         };
         try {
             const data = await me.s3.headObject(params).promise();
@@ -198,8 +198,8 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         }
         return null;
     };
-    me.exists = function (url) {
-        const metadata = me.metadata(url);
+    me.exists = async function (url) {
+        const metadata = await me.metadata(url);
         return metadata !== null;
     };
     me.list = async function (url) {
