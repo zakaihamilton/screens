@@ -98,7 +98,7 @@ screens.storage.fs = function StorageFS(me, { core }) {
     me.list = async function (path) {
         const items = [];
         const stat = await me.stat(path);
-        if (stat.isDirectory) {
+        if (stat && stat.isDirectory) {
             const results = await me.listdir(path);
             if (results) {
                 return results.map(result => {
@@ -129,6 +129,9 @@ screens.storage.fs = function StorageFS(me, { core }) {
                 const item = { name, path: itemPath };
                 try {
                     const stat = await me.stat(item.path);
+                    if (!stat) {
+                        continue;
+                    }
                     if (stat.isDirectory) {
                         item.type = "folder";
                         if (me.du) {
