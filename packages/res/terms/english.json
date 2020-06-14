@@ -1096,6 +1096,13 @@
             "translation": "Wisdom"
         },
         {
+            "term": "RADAK",
+            "hebrew": "הרד״ק",
+            "style": {
+                "category": "Author"
+            }
+        },
+        {
             "translation": "Light",
             "term": "Ohr",
             "hebrew": "אור"
