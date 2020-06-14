@@ -120,8 +120,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const MenuActions = ({ name, state, type, parent = false, root = false }) => {
-        const { dialogState, viewTypeState, pathState, updateState, itemsState } = state;
-        const [, setViewType] = viewTypeState;
+        const { dialogState, pathState, updateState, itemsState } = state;
         const [path, setPath] = pathState;
         const [, setDialog] = dialogState;
         const [items] = itemsState;
