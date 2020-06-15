@@ -448,7 +448,16 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             setDialog(dialog => {
                 return { ...dialog, progress: true };
             });
-            await dialog.done({ state });
+            try {
+                await dialog.done({ state });
+            }
+            catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(err);
+                setDialog(dialog => {
+                    return { ...dialog, progress: false };
+                });
+            }
         };
         const onSubmit = (query) => {
             const { queryState } = state;

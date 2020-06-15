@@ -128,7 +128,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         const [toBucketName, toPath] = me.parseUrl(to);
         var params = {
             Bucket: toBucketName,
-            CopySource: fromBucketName + "/" + fromPath,
+            CopySource: encodeURIComponent(fromBucketName + "/" + fromPath),
             Key: toPath
         };
         return new Promise((resolve, reject) => {
@@ -189,7 +189,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 ...path && { Prefix: path + "/" }
             };
             const result = await me.s3.listObjects(params).promise();
-            if (result.Contents.length > 0) {
+            if (result.Contents.length > 0 || result.CommonPrefixes.length > 0) {
                 return {
                     type: "application/x-directory",
                     name

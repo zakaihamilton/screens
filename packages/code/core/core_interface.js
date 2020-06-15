@@ -14,25 +14,29 @@ screens.core.interface = function CoreInterface(me, { core, storage }) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/interface")) {
             info.args = me.fromTypeFormat(info.body);
             var args = [];
+            let isValid = false;
             try {
                 await core.property.set(info, "user.verify.verify");
                 await core.property.set(info, "user.access.access");
+                isValid = true;
             }
             catch (err) {
                 me.log("failed check args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
                 args = [err];
             }
-            await core.util.performance(info.args[0], async () => {
-                try {
-                    core.message.prepareArgs(info);
-                    args = await core.message.handleLocal(info, info.args);
-                    core.message.releaseArgs(info);
-                }
-                catch (err) {
-                    me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
-                    args = [err];
-                }
-            });
+            if (isValid) {
+                await core.util.performance(info.args[0], async () => {
+                    try {
+                        core.message.prepareArgs(info);
+                        args = await core.message.handleLocal(info, info.args);
+                        core.message.releaseArgs(info);
+                    }
+                    catch (err) {
+                        me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                        args = [err];
+                    }
+                });
+            }
 
             info["content-type"] = "application/json";
             info.body = me.toTypeFormat(args);

@@ -76,21 +76,23 @@ screens.storage.fs = function StorageFS(me, { core }) {
     };
     me.delete = async function (path) {
         const stat = await me.stat(path);
-        if (stat.isDirectory) {
-            const names = await me.readdir(path);
-            for (const name of names) {
-                await me.delete(core.path.normalize(path, name));
+        if (stat) {
+            if (stat.isDirectory) {
+                const names = await me.readdir(path);
+                for (const name of names) {
+                    await me.delete(core.path.normalize(path, name));
+                }
+                await me.rmdir(path);
             }
-            await me.rmdir(path);
-        }
-        if (stat.isFile) {
-            await me.unlink(path);
+            if (stat.isFile) {
+                await me.unlink(path);
+            }
         }
     };
     me.isDirectory = async function (path) {
         let isDirectory = false;
         const stat = await me.stat(path);
-        if (stat.isDirectory) {
+        if (stat && stat.isDirectory) {
             isDirectory = true;
         }
         return isDirectory;
@@ -158,26 +160,31 @@ screens.storage.fs = function StorageFS(me, { core }) {
     };
     me.copy = async function (from, to) {
         const stat = await me.stat(from);
-        if (stat.isDirectory) {
-            if (!await me.exists(to)) {
-                await me.mkdir(to);
+        if (stat) {
+            if (stat.isDirectory) {
+                if (!await me.exists(to)) {
+                    await me.mkdir(to);
+                }
+                const names = await me.readdir(from);
+                for (const name of names) {
+                    const path = core.path.normalize(from, name);
+                    await me.copy(path, core.path.normalize(to, name));
+                }
             }
-            const names = await me.readdir(from);
-            for (const name of names) {
-                const path = core.path.normalize(from, name);
-                await me.copy(path, core.path.normalize(to, name));
+            else {
+                await me.copyFile(from, to);
             }
-        }
-        else {
-            await me.copyFile(from, to);
         }
     };
     me.createPath = async function (base, path) {
         if (path.indexOf(base) === 0) {
             path = path.slice(base.length);
         }
-        var tokens = path.split("/");
+        var tokens = path.split("/").filter(Boolean);
         var mkdirPath = base;
+        if (await me.exists(path)) {
+            return;
+        }
         for (var token of tokens) {
             if (mkdirPath) {
                 mkdirPath += "/" + token;

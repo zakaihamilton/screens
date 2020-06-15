@@ -220,7 +220,8 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         me.log("finished update");
     };
     me.streamingPath = async function (group, name, extension, resolution) {
-        let path = me.awsBucket + "/" + group + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
+        const [, year] = name.match(/([0-9]*)-.*/);
+        let path = me.awsBucket + "/" + group + "/" + year + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
         await db.shared.stream.use({ user: this.userName, group, session: name }, { userId: this.userId, date: new Date().toString() });
         return storage.aws.url(path);
     };
