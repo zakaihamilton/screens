@@ -9,11 +9,11 @@ screens.user.access = function UserAccess(me, { core, storage }) {
     };
     me.access = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {
-            var method = info.args[0];
+            const method = info.args[0];
             if (!info.userId) {
                 throw " User " + info.userName + " has no user id to use method: " + method;
             }
-            var result = await me.isAPIAllowed(method, info.userId);
+            const result = me.admin(info.userName) || await me.isAPIAllowed(method, info.userId);
             if (!result) {
                 throw " User " + info.userName + " is not authorised to use method: " + method;
             }
@@ -85,9 +85,7 @@ screens.user.access = function UserAccess(me, { core, storage }) {
         return result;
     };
     me.isAPIAllowed = async function (path, user) {
-        if (!user) {
-            user = this.userId;
-        }
+        user = user || this.userId;
         var access = await me.get(user);
         var result = false;
         var userName = user;
