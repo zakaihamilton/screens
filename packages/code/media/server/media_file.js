@@ -5,9 +5,9 @@
 
 screens.media.file = function MediaFile(me, { core, storage, media, db, manager }) {
     me.resolutions = ["640x480", "800x600", "1024x768"];
-    me.rootPath = "/Kab/concepts/private";
+    me.rootPath = "/sessions";
     me.cachePath = "cache";
-    me.awsBucket = "screens";
+    me.awsBucket = "screens/sessions";
     me.init = function () {
         const ffprobePath = require("@ffprobe-installer/ffprobe").path;
         me.ffmpeg = require("fluent-ffmpeg");
@@ -33,16 +33,19 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             });
         });
     };
-    me.paths = function (groupName, path) {
+    me.paths = function (groupName, name) {
+        const [, year] = name.match(/([0-9]*)-.*/);
         var paths = {
-            local: me.cachePath + "/" + path,
-            remote: me.rootPath + "/" + groupName + "/" + path
+            local: me.cachePath + "/" + name,
+            remote: me.rootPath + "/" + groupName + "/" + year + "/" + name,
+            aws: me.awsBucket + "/" + groupName + "/" + year + "/" + name
         };
         return paths;
     };
-    me.download = async function (groupName, path) {
-        var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + path,
-            me.cachePath + "/" + path);
+    me.download = async function (groupName, name) {
+        const [, year] = name.match(/([0-9]*)-.*/);
+        var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + year + "/" + name,
+            me.cachePath + "/" + name);
         return target;
     };
     me.groups = async function (update = false) {
@@ -88,12 +91,9 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             file.session = core.path.fileName(file.name);
             file.extension = core.path.extension(file.name);
             file.label = core.string.title(core.path.fileName(file.name));
-            file.remote = parent.path + "/" + file.name;
-            file.local = me.cachePath + "/" + file.name;
-            let awsPath = me.awsBucket + "/" + parent.name + "/" + file.name;
+            Object.assign(file, me.paths(parent.name, file.name));
             let deleteFile = false;
-
-            if (!await storage.aws.exists(awsPath)) {
+            if (!await storage.aws.exists(file.aws)) {
                 let uploadSourcePath = file.local;
                 me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);
                 await manager.file.download(file.remote, file.local);
@@ -109,7 +109,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                     }
                 }
                 me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await storage.aws.uploadFile(uploadSourcePath, awsPath);
+                await storage.aws.uploadFile(uploadSourcePath, file.aws);
                 me.log("Finished uploading file: " + file.local);
                 if (uploadSourcePath !== file.local) {
                     await core.file.delete(uploadSourcePath);
@@ -118,7 +118,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             if (file.local.endsWith(".m4a")) {
                 if (!file.duration || !file.durationText) {
                     me.log("Downloading file: " + file.local + ", size: " + file.size);
-                    await storage.aws.downloadFile(awsPath, file.local);
+                    await storage.aws.downloadFile(file.aws, file.local);
                     deleteFile = true;
                     me.log("Retrieving metadata for file: " + file.local);
                     var metadata = await me.info(file.local);
@@ -138,9 +138,10 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                 me.log("Deleted file: " + file.local);
             }
             if (file.local.endsWith(".mp4")) {
+                const [, year] = file.session.match(/([0-9]*)-.*/);
                 let resolutions = [];
                 for (let resolution of me.resolutions) {
-                    let path = me.awsBucket + "/" + file.group + "/" + file.session + "_" + resolution + ".mp4";
+                    let path = me.awsBucket + "/" + file.group + "/" + year + "/" + file.session + "_" + resolution + ".mp4";
                     if (await storage.aws.exists(path)) {
                         resolutions.push(resolution);
                     }
@@ -234,10 +235,11 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         let result = false;
         try {
             const from_ext = ".mp4", to_ext = ".png";
-            var remote = me.awsBucket + "/" + group + "/" + session + from_ext;
+            const [, year] = session.match(/([0-9]*)-.*/);
+            var remote = me.awsBucket + "/" + group + "/" + year + "/" + session + from_ext;
             var local = me.cachePath + "/" + session + from_ext;
             var local_convert = me.cachePath + "/" + session + to_ext;
-            var remote_convert = me.awsBucket + "/" + group + "/" + session + to_ext;
+            var remote_convert = me.awsBucket + "/" + group + "/" + year + "/" + session + to_ext;
             if (await storage.aws.exists(remote_convert)) {
                 me.log("already converted: " + remote_convert);
                 return false;
@@ -318,10 +320,11 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         let result = false;
         try {
             var extension = ".mp4";
-            var remote = me.awsBucket + "/" + group + "/" + session + extension;
+            const [, year] = session.match(/([0-9]*)-.*/);
+            var remote = me.awsBucket + "/" + group + "/" + year + "/" + session + extension;
             var local = me.cachePath + "/" + session + extension;
             var local_convert = me.cachePath + "/" + session + "_" + resolution + extension;
-            var remote_convert = me.awsBucket + "/" + group + "/" + session + "_" + resolution + extension;
+            var remote_convert = me.awsBucket + "/" + group + "/" + year + "/" + session + "_" + resolution + extension;
             if (await storage.aws.exists(remote_convert)) {
                 me.log("already converted: " + remote_convert);
                 return false;
@@ -395,15 +398,16 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             var list = group.sessions.filter(session => session.extension === "mp4");
             me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
             await Promise.all(list.map(async item => {
+                const [, year] = item.session.match(/([0-9]*)-.*/);
                 if (resolution === "screenshot") {
-                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + ".png";
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + year + "/" + item.session + ".png";
                     if (await storage.aws.exists(remote_convert)) {
                         return;
                     }
                     argList.push(["media.file.screenshot", group.name, item.session]);
                 }
                 else {
-                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + year + "/" + item.session + "_" + resolution + ".mp4";
                     if (await storage.aws.exists(remote_convert)) {
                         return;
                     }
@@ -428,8 +432,9 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             var list = group.sessions.filter(session => session.extension === "mp4");
             me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
             await Promise.all(list.map(async item => {
+                const [, year] = item.session.match(/([0-9]*)-.*/);
                 if (resolution === "screenshot") {
-                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + ".png";
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + year + "/" + item.session + ".png";
                     if (await storage.aws.exists(remote_convert)) {
                         return;
                     }
@@ -437,7 +442,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                     count++;
                 }
                 else {
-                    const remote_convert = me.awsBucket + "/" + group.name + "/" + item.session + "_" + resolution + ".mp4";
+                    const remote_convert = me.awsBucket + "/" + group.name + "/" + year + "/" + item.session + "_" + resolution + ".mp4";
                     if (await storage.aws.exists(remote_convert)) {
                         return;
                     }
