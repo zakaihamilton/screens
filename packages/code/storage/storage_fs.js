@@ -172,6 +172,24 @@ screens.storage.fs = function StorageFS(me, { core }) {
             await me.copyFile(from, to);
         }
     };
+    me.createPath = async function (base, path) {
+        if (path.indexOf(base) === 0) {
+            path = path.slice(base.length);
+        }
+        var tokens = path.split("/");
+        var mkdirPath = base;
+        for (var token of tokens) {
+            if (mkdirPath) {
+                mkdirPath += "/" + token;
+            }
+            else {
+                mkdirPath = token;
+            }
+            if (!await me.exists(mkdirPath)) {
+                await me.mkdir(mkdirPath);
+            }
+        }
+    };
     me.transfer = async function (from, to) {
         const [fromSource] = from.split("/");
         const [toSource] = to.split("/");

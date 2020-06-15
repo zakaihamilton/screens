@@ -132,7 +132,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const item = items.find(item => item.name === name);
         const dialogObject = {
             path: core.path.normalize(parentPath, name),
-            items: [item],
+            items: [item].filter(Boolean),
             name,
             parent,
             context: path.join("/"),
@@ -152,6 +152,26 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         const renameItem = async () => {
             setDialog({ ...dialogObject, mode: "rename" });
+        };
+        const organizeItems = async () => {
+            setDialog({
+                ...dialogObject, query: "", mode: "organize", done: async ({ state }) => {
+                    const { queryState } = state;
+                    const [query] = queryState;
+                    const items = await storage.fs.list(dialogObject.path);
+                    for (const item of items) {
+                        const { name, path } = item;
+                        const result = name.match(core.string.regex(query));
+                        if (result && result.length > 1) {
+                            const targetPath = dialogObject.path + "/" + result.slice(1).join("/") + "/" + name;
+                            await storage.fs.createPath(dialogObject.path, targetPath);
+                            await storage.fs.rename(path, targetPath);
+                        }
+                    }
+                    setDialog(null);
+                    setUpdateCounter(counter => counter + 1);
+                }
+            });
         };
         const duplicateItem = async () => {
             let duplicateName = null;
@@ -254,6 +274,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                             <Text language="heb">שכפול</Text>
                         </>
                     </Item>
+                    {type === "folder" && <>
+                        <Item onClick={organizeItems}>
+                            <>
+                                <Text language="eng">Organize</Text>
+                                <Text language="heb">ארגון</Text>
+                            </>
+                        </Item>
+                    </>}
                     {parent && <Separator />}
                     <Item onClick={copyItem}>
                         <>
@@ -334,35 +362,40 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const Footer = ({ state }) => {
-        const { pathState, dialogState, itemsState } = state;
+        const { pathState, dialogState, itemsState, queryState } = state;
         const [dialog, setDialog] = dialogState;
         const [path] = pathState;
         const [items] = itemsState;
-        const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete");
+        const isFooter = dialog && (dialog.mode === "move" || dialog.mode === "copy" || dialog.mode === "delete" || dialog.mode === "organize");
+        if (!isFooter) {
+            return null;
+        }
         let disableTooltip = null;
         let disable = !dialog;
         let hebrewToModeText = "";
         let hebrewActionModeText = "";
         let englishToModeText = "";
         let englishActionModeText = "";
-        if (dialog) {
-            englishToModeText = englishActionModeText = core.string.title(dialog.mode);
-            if (dialog.mode === "copy") {
-                hebrewToModeText = "להעתיק";
-                hebrewActionModeText = "העתק";
-            }
-            if (dialog.mode === "move") {
-                hebrewToModeText = "להעביר";
-                hebrewActionModeText = "העבר";
-            }
-            if (dialog.mode === "delete") {
-                hebrewToModeText = "למחוק";
-                hebrewActionModeText = "מחק";
-            }
+        englishToModeText = englishActionModeText = core.string.title(dialog.mode);
+        if (dialog.mode === "organize") {
+            hebrewToModeText = "לארגן";
+            hebrewActionModeText = "ארגון";
+        }
+        if (dialog.mode === "copy") {
+            hebrewToModeText = "להעתיק";
+            hebrewActionModeText = "העתק";
+        }
+        if (dialog.mode === "move") {
+            hebrewToModeText = "להעביר";
+            hebrewActionModeText = "העבר";
+        }
+        if (dialog.mode === "delete") {
+            hebrewToModeText = "למחוק";
+            hebrewActionModeText = "מחק";
         }
         const englishItemName = dialog && dialog.items && dialog.items.length > 1 ? "items" : "item";
         const hebrewItemName = dialog && dialog.items && dialog.items.length > 1 ? "פריטים" : "פריט";
-        if (dialog && dialog.mode !== "delete") {
+        if (!(dialog.mode === "delete" || dialog.mode === "organize")) {
             if (!disable) {
                 disable = path.join("/") === dialog.context;
                 if (disable) {
@@ -391,7 +424,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
         }
-        if (dialog && dialog.mode === "delete") {
+        if (dialog.mode === "delete") {
             if (!disable) {
                 disable = !dialog.items.length;
                 if (disable) {
@@ -402,7 +435,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             }
         }
-        if (dialog && !disable) {
+        if (!disable) {
             disable = dialog.progress;
             if (disable) {
                 disableTooltip = {
@@ -417,6 +450,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             });
             await dialog.done({ state });
         };
+        const onSubmit = (query) => {
+            const { queryState } = state;
+            queryState[0] = query;
+            onAction({ state });
+        };
         let name = path[path.length - 1];
         if (!name) {
             name = <HomeFolder />;
@@ -426,15 +464,18 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     <Text language="eng">{englishToModeText}</Text>
                     <Text language="heb">{hebrewToModeText}</Text>
-                    <Element className="app-storage-item-scroller">
-                        {dialog.items && dialog.items.map(item => {
-                            return (<StorageItem key={item.name} name={item.name} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
-                        })}
-                    </Element>
-                    {dialog.mode !== "delete" && <>
-                        <Text language="eng">to</Text>
-                        <Text language="heb">ל</Text>
-                        <StorageItem key={name} name={name} location={path.join("/")} type="folder" transfer={true} footer={true} state={state} />
+                    {dialog.mode === "organize" && <Input state={queryState} focus={true} onSubmit={onSubmit} />}
+                    {dialog.mode !== "organize" && <>
+                        <Element className="app-storage-item-scroller">
+                            {dialog.items && dialog.items.map(item => {
+                                return (<StorageItem key={item.name} name={item.name} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
+                            })}
+                        </Element>
+                        {dialog.mode !== "delete" && dialog.mode !== "organize" && <>
+                            <Text language="eng">to</Text>
+                            <Text language="heb">ל</Text>
+                            <StorageItem key={name} name={name} location={path.join("/")} type="folder" transfer={true} footer={true} state={state} />
+                        </>}
                     </>}
                     <Element style={{ flex: 1 }}></Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
@@ -452,13 +493,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const StorageItem = ({ name, size, isReadOnly, select, type, parent, location, root, footer, state }) => {
-        const { dialogState, pathState, updateState } = state;
+        const { dialogState, pathState, updateState, itemsState } = state;
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
         const [selectionRange] = React.useState([0, 0]);
         const [, setUpdateCounter] = updateState;
+        const [items] = itemsState;
         const [editText, setEditText] = editTextState;
         const showCheckbox = !parent && !footer && dialog && dialog.multiSelect;
         const renameTo = async (text) => {
@@ -501,14 +543,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         let content = (<Element title={location} className="app-storage-item-label">{name}</Element>);
         let onClick = !showCheckbox ? select : () => {
-            const items = dialog.items;
             const index = dialog.items.findIndex(item => item.name === name);
             if (index !== -1) {
                 items.splice(index, 1);
             }
             else {
                 const item = items.find(item => item.name === name);
-                dialog.items.push(item);
+                if (item) {
+                    dialog.items.push(item);
+                }
             }
             setDialog(dialog => {
                 return { ...dialog, items: dialog.items };
@@ -680,6 +723,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const contentState = React.useState("");
         const pathState = React.useState([]);
         const viewTypeState = React.useState("folder");
+        const queryState = React.useState("");
         const state = {
             pathState,
             viewTypeState,
@@ -693,7 +737,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             dialogState,
             loadingState,
             contentState,
-            itemsState
+            itemsState,
+            queryState
         };
         const [updateCounter, setUpdateCounter] = updateState;
         const [dialog, setDialog] = dialogState;
