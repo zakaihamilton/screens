@@ -236,6 +236,9 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                     return;
                 }
                 const name = core.path.fileName(content.Key, true);
+                if (!name) {
+                    return;
+                }
                 items.push({
                     type: content.content_type,
                     name,
