@@ -112,7 +112,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
 
     me.imageUrl = function (groupName, sessionName) {
         const [, year] = sessionName.match(/([0-9]*)-.*/);
-        return "https://screens.sfo2.cdn.digitaloceanspaces.com/" + groupName + "/" + year + "/" + encodeURIComponent(sessionName) + ".png";
+        return "https://files.screensview.com/sessions/" + groupName + "/" + year + "/" + encodeURIComponent(sessionName) + ".png";
     };
 
     const prepareSessions = (sessions) => {
