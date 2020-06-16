@@ -49,10 +49,15 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         return target;
     };
     me.groups = async function (update = false) {
-        var files = await db.cache.file.listing(me.rootPath, update);
-        for (let file of files) {
-            file.path = me.rootPath + "/" + file.name;
-            var sessions = await me.listing(file, update);
+        var groups = await db.cache.file.listing(me.rootPath, update);
+        for (const group of groups) {
+            group.path = me.rootPath + "/" + group.name;
+            const years = await db.cache.file.listing(me.rootPath + "/" + group.name, update);
+            let sessions = [];
+            for (const year of years) {
+                year.path = me.rootPath + "/" + group.name + "/" + year.name;
+                sessions.push(...await me.listing(year, group.name, update));
+            }
             sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
             sessions.map(item => {
                 ["is_downloadable",
@@ -66,11 +71,10 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                     "rev"].map(key => delete item[key]);
             });
             sessions.reverse();
-            file.sessions = sessions;
+            group.sessions = sessions;
         }
-        files = files.sort((a, b) => a.name.localeCompare(b.name));
-        files.sort();
-        return files;
+        groups = groups.sort((a, b) => a.name.localeCompare(b.name));
+        return groups;
     };
     me.exists = async function (name) {
         var groups = await me.groups();
@@ -83,15 +87,15 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         }
         return null;
     };
-    me.listing = async function (parent, update = false) {
+    me.listing = async function (parent, group, update = false) {
         let argList = [];
         var files = await db.cache.file.listing(parent.path, update, async (file) => {
             let result = false;
-            file.group = parent.name;
+            file.group = group;
             file.session = core.path.fileName(file.name);
             file.extension = core.path.extension(file.name);
             file.label = core.string.title(core.path.fileName(file.name));
-            Object.assign(file, me.paths(parent.name, file.name));
+            Object.assign(file, me.paths(group, file.name));
             let deleteFile = false;
             if (!await storage.aws.exists(file.aws)) {
                 let uploadSourcePath = file.local;
@@ -221,6 +225,9 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         me.log("finished update");
     };
     me.streamingPath = async function (group, name, extension, resolution) {
+        if (!name) {
+            return null;
+        }
         const [, year] = name.match(/([0-9]*)-.*/);
         let path = me.awsBucket + "/" + group + "/" + year + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
         await db.shared.stream.use({ user: this.userName, group, session: name }, { userId: this.userId, date: new Date().toString() });

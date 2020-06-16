@@ -73,8 +73,7 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db }) {
             }
             files = await db.cache.file.list({ folder });
             if (!files || !files.length || updateNew || updateExisting) {
-                var children = await storage.dropbox.getChildren(folder, true);
-                children = children.filter(child => child[".tag"] !== "folder");
+                var children = await storage.dropbox.getChildren(folder);
                 for (let file of children) {
                     file.folder = folder;
                     var exists = files && files.find(item => item.name === file.name);
