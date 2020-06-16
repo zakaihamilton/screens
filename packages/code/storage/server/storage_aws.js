@@ -258,7 +258,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
     me.url = function (path) {
         let tokens = path.split("/");
         tokens.shift();
-        let fileName = tokens.pop().toLowerCase();
+        let fileName = tokens.pop();
         path = tokens.join("/");
         var url = "https://" + me.cdn + "/" + path + "/" + encodeURIComponent(fileName);
         return url;
