@@ -98,7 +98,10 @@ screens.fs.mongo.driver = function FSMongoDriver(me, { core, storage }) {
             return null;
         }
         const collection = cluster.db(dbName).collection(collectionName);
-        const record = await collection.findOne({ _id: storage.db.objectId(recordId) });
+        let record = await collection.findOne({ _id: storage.db.objectId(recordId) });
+        if (!record) {
+            record = await collection.findOne({ _id: recordId });
+        }
         let result = null;
         if (record) {
             result = JSON.stringify(record, null, 4);
