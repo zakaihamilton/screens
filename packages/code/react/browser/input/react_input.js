@@ -1,4 +1,4 @@
-screens.react.Input = React.forwardRef(function Input({ state, onSubmit, focus, selectionRange, ...props }, ref) {
+screens.react.Input = React.forwardRef(function Input({ state, disable, onSubmit, focus, selectionRange, ...props }, ref) {
     const { Element, util } = screens.react;
     ref = util.useRef(ref);
     const [text, setText] = state;
@@ -51,6 +51,10 @@ screens.react.Input = React.forwardRef(function Input({ state, onSubmit, focus, 
         value={currentText}
         onKeyPress={keyPressed}
         onChange={onChange}
-        className="react-input-edit"
+        readOnly={disable}
+        className={{
+            "react-input-edit": true,
+            disable
+        }}
         {...props} />);
 });

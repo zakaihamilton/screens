@@ -473,18 +473,20 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {isFooter && <Element style={{ height: "4em" }} className={{ "app-storage-item": true, active: false, root: true, transfer: true }}>
                     <Text language="eng">{englishToModeText}</Text>
                     <Text language="heb">{hebrewToModeText}</Text>
-                    {dialog.mode === "organize" && <Input state={queryState} focus={true} onSubmit={onSubmit} />}
-                    {dialog.mode !== "organize" && <>
-                        <Element className="app-storage-item-scroller">
-                            {dialog.items && dialog.items.map(item => {
-                                return (<StorageItem key={item.name} name={item.name} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
-                            })}
-                        </Element>
-                        {dialog.mode !== "delete" && dialog.mode !== "organize" && <>
-                            <Text language="eng">to</Text>
-                            <Text language="heb">ל</Text>
-                            <StorageItem key={name} name={name} location={path.join("/")} type="folder" transfer={true} footer={true} state={state} />
-                        </>}
+                    <Element className="app-storage-item-scroller">
+                        {dialog.items && dialog.items.map(item => {
+                            return (<StorageItem key={item.name} name={item.name} location={item.path} type={item.type} transfer={true} footer={true} state={state} />);
+                        })}
+                    </Element>
+                    {dialog.mode === "organize" && <>
+                        <Text language="eng">Query</Text>
+                        <Text language="heb">שאילתא</Text>
+                        <Input state={queryState} disable={dialog.progress} focus={true} onSubmit={onSubmit} />
+                    </>}
+                    {dialog.mode !== "delete" && dialog.mode !== "organize" && <>
+                        <Text language="eng">to</Text>
+                        <Text language="heb">ל</Text>
+                        <StorageItem key={name} name={name} location={path.join("/")} type="folder" transfer={true} footer={true} state={state} />
                     </>}
                     <Element style={{ flex: 1 }}></Element>
                     {!dialog.progress && <Button border={true} onClick={dialog.cancel}>
