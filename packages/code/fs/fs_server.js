@@ -8,7 +8,7 @@ screens.fs.server.driver = function FServerDriver(me, { storage }) {
     me.init = function () {
         me.fs = require("fs");
         storage.fs.methodNames.map(methodName => {
-            if (me.fs && me.fs.promises[methodName]) {
+            if (me.fs && me.fs.promises && me.fs.promises[methodName]) {
                 me[methodName] = async (...args) => {
                     let method = me.fs.promises[methodName];
                     if (typeof method !== "function") {
