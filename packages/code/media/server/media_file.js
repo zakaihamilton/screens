@@ -440,6 +440,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             me.log("Checking listing for group: " + group.name + " to convert to resolution: " + resolution + " out of " + list.length + " items");
             await Promise.all(list.map(async item => {
                 const [, year] = item.session.match(/([0-9]*)-.*/);
+                await core.util.sleep(100);
                 if (resolution === "screenshot") {
                     const remote_convert = me.awsBucket + "/" + group.name + "/" + year + "/" + item.session + ".png";
                     if (await storage.aws.exists(remote_convert)) {
