@@ -18,7 +18,7 @@ screens.storage.data = function StorageData(me, { core }) {
             me.log_error("Datastore not initialized");
             return null;
         }
-        me.handle = me.datastore({
+        me.handle = new me.datastore.Datastore({
             projectId: me.projectId,
             keyFilename: core.private.path("google")
         });
