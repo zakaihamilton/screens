@@ -222,12 +222,9 @@ screens.core.message = function CoreMessage(me, { core }) {
 
 screens.core.message.worker = function CoreMessageWorker(me, { core }) {
     me.init = async function () {
-        if (me.platform === "browser") {
-            window.module = {};
-        }
         if (me.platform === "client") {
             // eslint-disable-next-line no-undef
-            me.handle = new PromiseWorker();
+            me.handle = new self.exports.PWBWorker();
             me.register();
         }
     };
@@ -253,7 +250,7 @@ screens.core.message.worker = function CoreMessageWorker(me, { core }) {
     };
     me.load = async function (path) {
         // eslint-disable-next-line no-undef
-        me.handle = new PromiseWorker(new Worker(path));
+        me.handle = new window.PWBHost(new Worker(path));
         me.register();
         me.handle.postMessage(null);
     };

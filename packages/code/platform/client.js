@@ -1,4 +1,4 @@
-self.module = {};
+self.exports = {};
 importScripts("/node_modules/promise-worker-bi/dist/commonjs.js");
 importScripts("/packages/code/screens.js?platform=client");
 importScripts("/platform/client.js?platform=client");
