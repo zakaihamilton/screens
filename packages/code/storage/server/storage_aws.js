@@ -6,8 +6,8 @@
 screens.storage.aws = function StorageAWS(me, { core }) {
     me.bufferSize = 10 * 1024 * 1024;
     me.init = async function () {
-        let AWS = require("aws-sdk");
-        let keys = await core.private.keys("aws");
+        const AWS = require("aws-sdk");
+        const keys = await core.private.keys("aws");
         let { accessKeyId, secretAccessKey, endpoint, cdn } = keys;
         endpoint = new AWS.Endpoint(endpoint);
         me.s3 = new AWS.S3({
@@ -179,7 +179,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 type: data.content_type,
                 name,
                 size: data.Size,
-                date: data.lastModified
+                date: data.LastModified
             };
         }
         catch (err) {
@@ -243,7 +243,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                     type: content.content_type,
                     name,
                     size: content.Size,
-                    date: content.lastModified
+                    date: content.LastModified
                 });
             });
             if (result.IsTruncated && result.NextMarker) {

@@ -12,3 +12,4 @@
 /*.pem
 /dump
 crash.txt
+.env
