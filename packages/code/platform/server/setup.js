@@ -26,15 +26,21 @@ async function loadPrivate() {
             const { Key, LastModified } = content;
             const name = Key.split("/").pop();
             const localPath = "private/" + name;
-            const stat = fs.statSync(localPath);
-            if (stat) {
-                if (stat.mtime) {
-                    const remoteDate = LastModified.toDateString();
-                    const localDate = stat.mtime.toDateString();
-                    if (remoteDate === localDate) {
-                        continue;
+            try {
+                const stat = fs.statSync(localPath);
+                if (stat) {
+                    if (stat.mtime) {
+                        const remoteDate = LastModified.toDateString();
+                        const localDate = stat.mtime.toDateString();
+                        if (remoteDate === localDate) {
+                            continue;
+                        }
                     }
                 }
+            }
+            // eslint-disable-next-line no-empty
+            catch (err) {
+
             }
             const writeStream = fs.createWriteStream(localPath);
             // eslint-disable-next-line no-console
