@@ -9,6 +9,8 @@ async function loadPrivate() {
         AWS_PRIVATEPATH
     } = process.env;
     if (AWS_ENDPOINT && AWS_ACCESSKEYID && AWS_SECRETACCESSKEY) {
+        // eslint-disable-next-line no-console
+        console.log("checking private AWS configuration...");
         const AWS = require("aws-sdk");
         const endpoint = new AWS.Endpoint(AWS_ENDPOINT);
         const s3 = new AWS.S3({
@@ -59,7 +61,11 @@ async function loadPrivate() {
 }
 
 function setup(callback) {
-    loadPrivate().then(callback).catch(err => {
+    loadPrivate().then(() => {
+        // eslint-disable-next-line no-console
+        console.log("loading screens...");
+        callback();
+    }).catch(err => {
         // eslint-disable-next-line no-console
         console.error("Failed to setup screens: error: " + err);
     });
