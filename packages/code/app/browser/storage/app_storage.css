@@ -110,9 +110,27 @@
     flex: 1;
 }
 
-.app-storage-item-size {
-    min-width: 5em;
+.app-storage-item-field {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.app-storage-item-field.ltr {
     text-align: right;
+}
+
+.app-storage-item-field.rtl {
+    text-align: left;
+}
+
+.app-storage-item-date {
+    min-width: 10em;
+}
+
+.app-storage-item-size {
+    min-width: 8em;
 }
 
 .app-storage-item-checkbox {

@@ -179,7 +179,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 type: data.content_type,
                 name,
                 size: data.Size,
-                date: data.LastModified
+                date: data.LastModified.valueOf()
             };
         }
         catch (err) {
@@ -243,7 +243,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                     type: content.content_type,
                     name,
                     size: content.Size,
-                    date: content.LastModified
+                    date: content.LastModified.valueOf()
                 });
             });
             if (result.IsTruncated && result.NextMarker) {

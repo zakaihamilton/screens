@@ -31,6 +31,7 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
                     isFile: !isFolder,
                     isSymbolicLink: false,
                     size: child.size,
+                    date: child.date,
                     isReadOnly
                 }
             };
@@ -66,13 +67,14 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
         if (!metadata) {
             return null;
         }
-        const { type } = metadata;
+        const { type, date } = metadata;
         const isFolder = type === "application/x-directory" || type === "bucket";
         const isReadOnly = type === "bucket";
         metadata.isDirectory = isFolder;
         metadata.isFile = !isFolder;
         metadata.isSymbolicLink = false;
         metadata.isReadOnly = isReadOnly;
+        metadata.date = date;
         return metadata;
     };
     me.lstat = async function (path) {

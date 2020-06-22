@@ -28,7 +28,8 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
                     isDirectory: type === "folder",
                     isFile: type === "file",
                     isSymbolicLink: false,
-                    size: child.size
+                    size: child.size,
+                    date: new Date(child.server_modified).valueOf()
                 }
             };
         });
@@ -53,10 +54,13 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
     me.stat = async function (path) {
         const metadata = await storage.dropbox.metadata(path);
         const type = metadata[".tag"];
-        metadata.isDirectory = type === "folder";
-        metadata.isFile = type === "file";
-        metadata.isSymbolicLink = false;
-        return metadata;
+        const stat = {};
+        stat.isDirectory = type === "folder";
+        stat.isFile = type === "file";
+        stat.isSymbolicLink = false;
+        stat.date = new Date(metadata.server_modified).valueOf();
+        stat.size = metadata.size;
+        return stat;
     };
     me.lstat = async function (path) {
         return me.stat(path);

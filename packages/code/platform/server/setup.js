@@ -25,7 +25,7 @@ async function loadPrivate() {
             ...AWS_PRIVATEPATH && { Prefix: AWS_PRIVATEPATH + "/" }
         }).promise();
         for (const content of listResult.Contents) {
-            const { Key, LastModified } = content;
+            const { Key, LastModified, Size } = content;
             const name = Key.split("/").pop();
             const localPath = "private/" + name;
             try {
@@ -33,8 +33,10 @@ async function loadPrivate() {
                 if (stat) {
                     if (stat.mtime) {
                         const remoteDate = LastModified.toDateString();
+                        const remoteSize = Size;
                         const localDate = stat.mtime.toDateString();
-                        if (remoteDate === localDate) {
+                        const localSize = stat.size;
+                        if (remoteDate === localDate && localSize === remoteSize) {
                             continue;
                         }
                     }

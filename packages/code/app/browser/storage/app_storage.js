@@ -328,7 +328,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Element className={{ "app-storage-item": true, active: false, root: true }}>
                     <StorageItem key={name} name={name} type="folder" parent={true} root={root} state={state} />
                     <Element style={{ flex: 1 }}></Element>
-                    <Element className="app-storage-item-count">
+                    {!loading && <Element className="app-storage-item-count">
                         <b>{count}</b>
                     &nbsp;
                         {count === 1 && (
@@ -341,7 +341,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                                 <Text language="eng">Items</Text>
                                 <Text language="heb">פריטים</Text>
                             </>)}
-                    </Element>
+                    </Element>}
                 </Element>
                 {loading &&
                     <Element className="app-storage-loading" key="loadingItems">
@@ -503,8 +503,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const StorageItem = ({ name, size, isReadOnly, select, type, parent, location, root, footer, state }) => {
-        const { dialogState, pathState, updateState, itemsState } = state;
+    const StorageItem = ({ name, date, size, isReadOnly, select, type, parent, location, root, footer, state }) => {
+        const { dialogState, pathState, updateState, itemsState, languageState } = state;
+        const [language] = languageState;
         const [path, setPath] = pathState;
         const [dialog, setDialog] = dialogState;
         const [hoverRef, hover] = react.util.useHover();
@@ -513,6 +514,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [, setUpdateCounter] = updateState;
         const [items] = itemsState;
         const [editText, setEditText] = editTextState;
+        const { locale } = me.languages.find(item => item.id === language);
         const showCheckbox = !parent && !footer && dialog && dialog.multiSelect;
         const renameTo = async (text) => {
             if (name !== text && text) {
@@ -600,7 +602,19 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             heb: "בחירה"
         };
         const showMenu = !isReadOnly && path && path.join("/");
-        const sizeString = typeof size !== "undefined" && core.string.formatBytes(size);
+        let suffixes = null;
+        if (locale === "he-IL") {
+            suffixes = {
+                B: "בתים",
+                KB: "קילו-בתים",
+                MB: "מגה-בתים",
+                GB: "גיגה-בתים",
+                TB: "טרה-בתים"
+            };
+        }
+        const sizeString = typeof size !== "undefined" && core.string.formatBytes(size, suffixes);
+        const dateString = typeof date !== "undefined" && me.toDisplayDate(date, locale);
+        const dateTitle = typeof date !== "undefined" && new Date(date).toString();
         const isChecked = dialog && dialog.items && dialog.items.find(item => item.name === name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
             {(parent || !showCheckbox) && !footer && showMenu && (!dialog || dialog.mode !== "delete") && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
@@ -618,7 +632,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Text language="eng">Open</Text>
                 <Text language="heb">פתח</Text>
             </Button>}
-            {!parent && !footer && <Element className="app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
+            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-date" title={dateTitle}>{dateString}</Element>}
+            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && (!dialog || dialog.mode !== "delete") && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };
@@ -765,7 +780,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             me.updateView({ state });
         }, [path, viewType, updateCounter]);
         const [language] = languageState;
-        const direction = me.languages.find(item => item.id === language).direction;
+        const { direction } = me.languages.find(item => item.id === language);
         React.useEffect(() => {
             me.redraw = () => {
                 setTimeout(() => {
@@ -861,6 +876,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             }
         },
         {
+            id: "date",
+            name: (
+                <>
+                    <Text language="eng">Date</Text>
+                    <Text language="heb">תאריך</Text>
+                </>
+            ),
+            sort: (items) => {
+                items = [...items];
+                items.sort((a, b) => {
+                    return a.date - b.date;
+                });
+                return items;
+            }
+        },
+        {
             id: "type",
             name: (
                 <>
@@ -929,7 +960,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         if (viewType === "folder") {
             if (path.length) {
                 setLoading(true);
-                setItems(await storage.fs.list(path.join("/")));
+                const items = await storage.fs.list(path.join("/"));
+                setItems(items);
                 if (counter !== me.counter) {
                     return;
                 }
@@ -964,5 +996,23 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
     me.resize = function () {
 
+    };
+    me.toDisplayDate = function (date, locale = "en-US") {
+        if (!me.formatDate || me.formatDate.locale !== locale) {
+            const options = {
+                day: "2-digit",
+                month: "2-digit",
+                year: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+            };
+            me.formatDate = {
+                handle: new Intl.DateTimeFormat(locale, options),
+                locale
+            };
+        }
+        return me.formatDate.handle.format(date);
     };
 };

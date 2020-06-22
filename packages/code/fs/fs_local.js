@@ -23,6 +23,7 @@ screens.fs.local.driver = function FServerDriver(me, { storage }) {
                         result.isDirectory = result.isDirectory();
                         result.isFile = result.isFile();
                         result.isSymbolicLink = result.isSymbolicLink();
+                        result.date = result.mtimeMs;
                     }
                     return result;
                 };

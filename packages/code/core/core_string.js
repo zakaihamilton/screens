@@ -275,38 +275,45 @@ screens.core.string = function CoreString(me, { core }) {
     me.formatNumber = function (number) {
         return number && number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     };
-    me.formatBytes = function (number) {
+    me.formatBytes = function (number, suffixes) {
+        suffixes = suffixes || {
+            B: "B",
+            KB: "KB",
+            MB: "MB",
+            GB: "GB",
+            TB: "TB"
+        };
         var set = false;
         number = parseInt(number);
         if (number < 1000) {
-            number = parseInt(number) + " B";
+            number = parseInt(number) + " " + suffixes.B;
             set = true;
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + " KB";
+                number = parseInt(number) + " " + suffixes.KB;
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + " MB";
+                number = parseInt(number) + " " + suffixes.MB;
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + " GB";
+                number = parseInt(number) + " " + suffixes.GB;
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + " TB";
+                number = parseInt(number) + " " + suffixes.TB;
                 set = true;
             }
         }

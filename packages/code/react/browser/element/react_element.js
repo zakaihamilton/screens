@@ -28,6 +28,9 @@ screens.react.Element = React.forwardRef(({ tag = "div", children, title, direct
     if (title && typeof title === "object") {
         title = title[currentLanguage];
     }
+    if (!title) {
+        title = null;
+    }
     const Component = tag;
     return (<Component ref={ref} title={title} style={style} {...props} className={className}>{children}</Component>);
 });
