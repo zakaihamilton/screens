@@ -240,11 +240,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         };
         return (
             <>
-                <Item onClick={refresh}>
-                    <Text language="eng">Refresh</Text>
-                    <Text language="heb">רענן</Text>
-                </Item>
                 {parent && <>
+                    <Item onClick={refresh}>
+                        <Text language="eng">Refresh</Text>
+                        <Text language="heb">רענן</Text>
+                    </Item>
                     <Item onClick={gotoFolder} disable={!path.length}>
                         <>
                             <Text language="eng">Goto Parent Folder</Text>
