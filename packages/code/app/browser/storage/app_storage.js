@@ -235,8 +235,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }
             });
         };
+        const refresh = () => {
+            setUpdateCounter(counter => counter + 1);
+        };
         return (
             <>
+                <Item onClick={refresh}>
+                    <Text language="eng">Refresh</Text>
+                    <Text language="heb">רענן</Text>
+                </Item>
                 {parent && <>
                     <Item onClick={gotoFolder} disable={!path.length}>
                         <>
@@ -614,7 +621,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         }
         const sizeString = typeof size !== "undefined" && core.string.formatBytes(size, suffixes);
         const dateString = typeof date !== "undefined" && me.toDisplayDate(date, locale);
-        const dateTitle = typeof date !== "undefined" && new Date(date).toString();
         const isChecked = dialog && dialog.items && dialog.items.find(item => item.name === name);
         return (<Element className={{ "app-storage-item": true, active: true, minWidth: !footer, hover: !parent && !footer && !isEditVisible && hover }}>
             {(parent || !showCheckbox) && !footer && showMenu && (!dialog || dialog.mode !== "delete") && <Menu icon={icon} title={menuTitle} label={parent && !isEditVisible && <Element title={location} className="app-storage-item-name">{name}</Element>}>
@@ -632,7 +638,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 <Text language="eng">Open</Text>
                 <Text language="heb">פתח</Text>
             </Button>}
-            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-date" title={dateTitle}>{dateString}</Element>}
+            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-date">{dateString}</Element>}
             {!parent && !footer && <Element className="app-storage-item-field app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && (!dialog || dialog.mode !== "delete") && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
