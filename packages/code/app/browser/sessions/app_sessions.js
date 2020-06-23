@@ -112,7 +112,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
 
     me.imageUrl = function (groupName, sessionName) {
         const [, year] = sessionName.match(/([0-9]*)-.*/);
-        return "https://files.screensview.com/sessions/" + groupName + "/" + year + "/" + encodeURIComponent(sessionName) + ".png";
+        return "https://" + me.cdn + "/sessions/" + groupName + "/" + year + "/" + encodeURIComponent(sessionName) + ".png";
     };
 
     const prepareSessions = (sessions) => {
@@ -399,9 +399,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.loadData = async function (update) {
-        const { groups, metadataList } = await media.sessions.list(update);
+        const { groups, metadataList, cdn } = await media.sessions.list(update);
         me.groups = groups;
         me.metadataList = metadataList;
+        me.cdn = cdn;
         me.sessions = prepareSessions([].concat.apply([], me.groups.map(group => group.sessions)));
         me.years = Array.from(new Set(me.sessions.map(item => item.year)));
         if (me.redraw) {

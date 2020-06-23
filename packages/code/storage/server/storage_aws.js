@@ -8,7 +8,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
     me.init = async function () {
         const AWS = require("aws-sdk");
         const keys = await core.private.keys("aws");
-        let { accessKeyId, secretAccessKey, endpoint, cdn } = keys;
+        let { accessKeyId, secretAccessKey, endpoint, cdn, bucket } = keys;
         endpoint = new AWS.Endpoint(endpoint);
         me.s3 = new AWS.S3({
             endpoint,
@@ -17,6 +17,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         });
         me.fs = require("fs");
         me.cdn = cdn;
+        me.bucket = bucket;
     };
     me.parseUrl = function (path) {
         if (path.startsWith("/")) {

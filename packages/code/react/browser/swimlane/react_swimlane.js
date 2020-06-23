@@ -37,6 +37,8 @@ screens.react.Swimlane.Item = function SwimlaneItem({ image, offset, title, chil
         });
     }, []);
     props = props || {};
+    delete props.horizontal;
+    delete props.itemSize;
     props.style = props.style || {};
     if (direction === "rtl") {
         props.style.right = offset + unit;

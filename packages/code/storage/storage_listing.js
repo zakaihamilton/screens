@@ -3,8 +3,10 @@
  @component StorageListing
  */
 
-screens.storage.listing = function StorageListing(me, { storage }) {
-    me.metadata = "aws/screens/metadata";
+screens.storage.listing = function StorageListing(me, { storage, media }) {
+    me.init = async () => {
+        me.metadata = "aws/" + await media.file.bucket() + "/metadata";
+    };
     me.update = async path => {
         const listing = await storage.fs.list(path);
         await storage.fs.createPath(me.metadata, me.metadata + "/" + path);
