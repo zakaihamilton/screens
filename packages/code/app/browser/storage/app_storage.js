@@ -238,8 +238,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const refresh = () => {
             setUpdateCounter(counter => counter + 1);
         };
+        const storageFolderActions = core.broadcast.send("storageFolderActions", { path: dialogObject.path, state }).filter(Boolean);
+        const hasStorageFolderActions = React.Children.count(storageFolderActions) > 0;
         return (
             <>
+                {type === "folder" && hasStorageFolderActions && <>
+                    {storageFolderActions}
+                    <Separator />
+                </>}
                 {parent && <>
                     <Item onClick={refresh}>
                         <Text language="eng">Refresh</Text>
