@@ -23,7 +23,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
     me.init = async function () {
         if (me.platform === "server") {
             me.http = require("http");
-            me.http2 = require("http2");
+            me.https = require("https");
             me.request = require("request");
             me.fs = require("fs");
             if (me.platform === "server" && !me.localhost) {
@@ -94,7 +94,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
                             key: keyBuffer,
                             cert: certBuffer
                         };
-                        server = me.http2.createServer(options, requestHandler);
+                        server = me.https.createServer(options, requestHandler);
                         port = 443;
                         server.on("error", function (e) {
                             reject(e);

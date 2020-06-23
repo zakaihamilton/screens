@@ -7,9 +7,9 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
     me.resolutions = ["640x480", "800x600", "1024x768"];
     me.rootPath = "/sessions";
     me.cachePath = "cache";
-    me.awsPath = storage.aws.bucket + "/sessions";
     me.init = function () {
         const ffprobePath = require("@ffprobe-installer/ffprobe").path;
+        me.awsPath = storage.aws.bucket + "/sessions";
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
         me.os = require("os");
