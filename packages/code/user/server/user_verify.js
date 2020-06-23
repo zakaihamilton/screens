@@ -5,7 +5,6 @@
 
 screens.user.verify = function UserVerify(me, { core, db }) {
     me.init = async function () {
-        core.property.link("core.socket.verify", "user.verify.verify", true);
         var login = await core.util.config("settings.core.login");
         me.client_id = login.client_id;
         const { OAuth2Client } = require("google-auth-library");
@@ -20,7 +19,7 @@ screens.user.verify = function UserVerify(me, { core, db }) {
         return await db.shared.user.list();
     };
     me.verify = async function (info) {
-        if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
+        if (me.platform === "server" && !info.platform) {
             var name = decodeURIComponent(info.headers["user_name"]);
             var email = decodeURIComponent(info.headers["user_email"]);
             var token = info.headers["token"];

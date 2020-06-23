@@ -141,7 +141,7 @@ screens.core.string = function CoreString(me, { core }) {
         return suffix;
     };
     me.encode = function (string) {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             return Buffer.from((unescape(encodeURIComponent(string))), "binary").toString("base64");
         }
         else {
@@ -149,7 +149,7 @@ screens.core.string = function CoreString(me, { core }) {
         }
     };
     me.decode = function (string) {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             return decodeURIComponent(escape(Buffer.from(string, "base64").toString("binary")));
         }
         else {

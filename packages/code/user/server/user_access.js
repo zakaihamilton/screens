@@ -3,12 +3,9 @@
  @component UserAccess
  */
 
-screens.user.access = function UserAccess(me, { core, storage }) {
-    me.init = function () {
-        core.property.link("core.socket.access", "user.access.access", true);
-    };
+screens.user.access = function UserAccess(me, { storage }) {
     me.access = async function (info) {
-        if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {
+        if (me.platform === "server" && (!info.platform) && info.args) {
             const method = info.args[0];
             if (!info.userId) {
                 throw " User " + info.userName + " has no user id to use method: " + method;

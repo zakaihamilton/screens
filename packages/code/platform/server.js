@@ -27,7 +27,6 @@ setup(() => {
         "user.access.appList",
         "user.access.get",
         "user.access.isAPIAllowed",
-        "core.socket",
         "core.object",
         "core.console",
         "core.client",

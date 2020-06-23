@@ -131,7 +131,7 @@ screens.core.pack = function CorePack(me, { core }) {
     };
     me.js = async function (info, data) {
         var body = "";
-        var platforms = ["server", "service", "browser", "client", "service_worker"];
+        var platforms = ["server", "browser", "client", "service_worker"];
         if (platforms.includes(info.folder) && info.folder !== info.target) {
             body += `screens.${info.package}.${info.component} = function (me, ) { return "${info.folder}"; };\n`;
         }

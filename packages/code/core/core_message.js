@@ -45,11 +45,6 @@ screens.core.message = function CoreMessage(me, { core }) {
             return me.send.call(this, ...params);
         }
     };
-    me.send_socket = function (...params) {
-        return me.send_info((info) => {
-            return core.socket.send(this, "send", info);
-        }, params);
-    };
     me.send_info = async function (send_callback, args) {
         var info = {
             args,
@@ -61,17 +56,6 @@ screens.core.message = function CoreMessage(me, { core }) {
         await core.property.set(info, "headers", null);
         var result = send_callback(info);
         return result;
-    };
-    me.send_service = function (...params) {
-        if (me.platform === "server") {
-            return me.send_socket.call(this, ...params);
-        } else if (me.platform === "service") {
-            return me.send.call(this, ...params);
-        } else if (me.platform === "browser") {
-            params.unshift("service");
-            params.unshift("core.socket.sendFirst");
-            return me.send_server.call(this, ...params);
-        }
     };
     me.send_platform = function (platform, ...params) {
         if (!platform) {
@@ -98,24 +82,7 @@ screens.core.message = function CoreMessage(me, { core }) {
             }
             return arg;
         }
-        if (me.platform === "server") {
-            if (typeof arg === "string") {
-                var varNames = ["userId", "userName"];
-                for (var varName of varNames) {
-                    if (arg.includes("$" + varName)) {
-                        arg = arg.replace("$" + varName, info[varName]);
-                    }
-                }
-                if (core.handle.isHandle(arg, "function")) {
-                    let handle = arg;
-                    arg = function (...params) {
-                        var sendInfo = { args: params, callback: handle };
-                        info.socket.emit("notify", sendInfo);
-                    };
-                }
-            }
-        }
-        else if (me.platform === "client") {
+        if (me.platform === "client") {
             if (core.handle.isHandle(arg, "function")) {
                 let handle = arg;
                 arg = function (...params) {

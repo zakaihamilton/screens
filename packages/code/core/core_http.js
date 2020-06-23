@@ -12,27 +12,24 @@ screens.core.http = function CoreHttp(me, { core, db }) {
         else {
             me.port = process.env.PORT || 4040;
         }
-    } else if (screens.platform === "service") {
-        me.port = 4050;
     } else {
         me.port = 80;
     }
-    if (screens.platform === "service" || screens.platform === "server") {
+    if (screens.platform === "server") {
         me.localhost = core.args.value("-localhost");
     }
     me.listeners = [];
     me.forwardUrl = null;
     me.init = async function () {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             me.http = require("http");
             me.https = require("https");
             me.request = require("request");
             me.fs = require("fs");
             if (me.platform === "server" && !me.localhost) {
                 try {
-                    let server = await me.createServer(true);
+                    await me.createServer(true);
                     me.log("secure server is listening");
-                    me.io = require("socket.io")(server);
                 }
                 catch (err) {
                     me.log_error("cannot create secure server, error: " + err);
@@ -40,9 +37,6 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             }
             me.log("creating normal server");
             let server = await me.createServer(false);
-            if (!me.io) {
-                me.io = require("socket.io")(server);
-            }
             me.log("normal server is listening");
             process.on("SIGINT", () => {
                 // eslint-disable-next-line no-console
@@ -136,18 +130,6 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             });
         }
     };
-    me.clientIp = function (request) {
-        var ip = null;
-        if (request) {
-            ip = core.json.value(request, {
-                "headers.x-forwarded-for": value => value ? value.split(",").pop() : null,
-                "connection.remoteAddress": null,
-                "connection.socket.remoteAddress": null,
-                "socket.remoteAddress": null
-            });
-        }
-        return ip;
-    };
     me.handleRequest = async function (request, response, body, secure) {
         if (body) {
             body = Buffer.concat(body).toString();
@@ -171,7 +153,6 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             response: response,
             custom: false,
             stop: false,
-            clientIp: me.clientIp(request),
             responseHeaders: {}
         };
         core.property.object.create(me, info);
@@ -215,9 +196,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
         }
         await core.property.set(info, "headers", null);
         var headers = Object.assign({}, info.headers);
-        if (me.platform === "service") {
-            return await core.message.send_server(me.id + ".send", info);
-        } else if (me.platform === "server") {
+        if (me.platform === "server") {
             return new Promise((resolve, reject) => {
                 var request = {
                     url: info.url,

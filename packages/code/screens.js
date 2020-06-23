@@ -145,7 +145,7 @@ function screens_import(path) {
         return true;
     }
     screens.imports.push(path);
-    if (screens.platform === "server" || screens.platform === "service") {
+    if (screens.platform === "server") {
         require(path);
     }
     else if (screens.platform === "client" || screens.platform === "service_worker") {
@@ -215,7 +215,7 @@ function screens_import(path) {
 
 function screens_load(items, state) {
     if (items && items.length) {
-        if (screens.platform === "server" || screens.platform === "service") {
+        if (screens.platform === "server") {
             for (var item of items) {
                 if (state === "import") {
                     if (item.package_name in screens && item.component_name in screens[item.package_name]) {
@@ -401,7 +401,6 @@ var screens = {
     },
 };
 
-if (screens.platform === "server" ||
-    screens.platform === "service") {
+if (screens.platform === "server") {
     global.screens = screens;
 }

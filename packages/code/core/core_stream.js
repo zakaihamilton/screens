@@ -5,7 +5,7 @@
 
 screens.core.stream = function CoreStream(me, { core }) {
     me.init = function () {
-        if (screens.platform === "server" || screens.platform === "service") {
+        if (screens.platform === "server") {
             me.fs = require("fs");
         }
     };

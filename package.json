@@ -55,8 +55,6 @@
     "react-dom": "^16.13.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0",
     "temp": "^0.9.1",
     "uglify-es": "^3.3.9",
     "video.js": "^7.8.2",
@@ -79,22 +77,6 @@
     "core": {
       "login": {
         "client_id": "635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
-      }
-    },
-    "service": {
-      "netmonitor": {
-        "device": [
-          "eth0",
-          "en0"
-        ],
-        "filter": "",
-        "delay": 5000
-      },
-      "httpserver": {
-        "path": "./",
-        "newStreamMatch": [
-          "segment_0.ts"
-        ]
       }
     }
   }

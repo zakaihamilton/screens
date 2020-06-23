@@ -103,7 +103,7 @@ screens.storage.local.db = function StorageLocalDb(me, { core }) {
     };
     me.method = async function (collection, methodName, ...params) {
         let storeName = "screens";
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             return;
         }
         var access = {

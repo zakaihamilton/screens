@@ -42,7 +42,7 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
         return item;
     };
     me.isOnline = function () {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             return true;
         }
         else {
@@ -68,7 +68,7 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
         return new Promise(resolve => setTimeout(resolve, time));
     };
     me.start = function () {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             const time = process.hrtime();
             return time;
         }
@@ -77,7 +77,7 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
         }
     };
     me.duration = function (start) {
-        if (me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server") {
             const NS_PER_SEC = 1e9;
             const diff = process.hrtime(start);
             return (diff[0] * NS_PER_SEC + diff[1]) / 1000000;
