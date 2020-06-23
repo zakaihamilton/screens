@@ -238,12 +238,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const refresh = () => {
             setUpdateCounter(counter => counter + 1);
         };
-        const storageFolderActions = core.broadcast.send("storageFolderActions", { path: dialogObject.path, state }).filter(Boolean);
-        const hasStorageFolderActions = React.Children.count(storageFolderActions) > 0;
+        const storageActions = core.broadcast.send("storageActions", { name, path: dialogObject.path, state, type }).filter(Boolean);
+        const hasStorageActions = React.Children.count(storageActions) > 0;
         return (
             <>
-                {type === "folder" && hasStorageFolderActions && <>
-                    {storageFolderActions}
+                {type === "folder" && hasStorageActions && <>
+                    {storageActions}
                     <Separator />
                 </>}
                 {parent && <>
