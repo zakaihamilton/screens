@@ -25,9 +25,10 @@ screens.storage.cache = function StorageCache(me, { core, storage }) {
             else {
                 cache = await core.message.send_server(me.id + ".cache.update", path);
             }
+            const body = cache ? JSON.stringify(cache, null, 4) : "";
             const metadataPath = me.cache.metadataPath();
             await storage.fs.createPath(metadataPath + "/" + path);
-            await storage.fs.writeFile(metadataPath + "/" + path + "/" + component + ".json", JSON.stringify(cache, null, 4), "utf8");
+            await storage.fs.writeFile(metadataPath + "/" + path + "/" + component + ".json", body, "utf8");
             return cache;
         },
         get: async path => {

@@ -124,7 +124,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [path, setPath] = pathState;
         const [, setDialog] = dialogState;
         const [items] = itemsState;
-        const [, setUpdateCounter] = updateState;
+        const [updateCounter, setUpdateCounter] = updateState;
         let parentPath = path.join("/");
         if (parent) {
             parentPath = path.slice(0, -1).join("/");
@@ -169,7 +169,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         }
                     }
                     setDialog(null);
-                    setUpdateCounter(counter => counter + 1);
+                    setUpdateCounter(updateCounter + 1);
                 }
             });
         };
@@ -189,7 +189,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 gotoFolder();
             }
             else {
-                setUpdateCounter(counter => counter + 1);
+                setUpdateCounter(updateCounter + 1);
             }
             setDialog({ ...dialogObject, mode: "rename", path: target, name });
         };
@@ -204,7 +204,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         await storage.fs.delete(item.path);
                     }
                     setDialog(null);
-                    setUpdateCounter(counter => counter + 1);
+                    setUpdateCounter(updateCounter + 1);
                 }
             });
         };
@@ -218,7 +218,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         await storage.fs.transfer(item.path, target);
                     }
                     setDialog(null);
-                    setUpdateCounter(counter => counter + 1);
+                    setUpdateCounter(updateCounter + 1);
                 }
             });
         };
@@ -231,12 +231,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         await storage.fs.delete(itemPath);
                     }
                     setDialog(null);
-                    setUpdateCounter(counter => counter + 1);
+                    setUpdateCounter(updateCounter + 1);
                 }
             });
         };
         const refresh = () => {
-            setUpdateCounter(counter => counter + 1);
+            setUpdateCounter(updateCounter + 1);
         };
         const storageActions = core.broadcast.send("storageActions", { name, path: dialogObject.path, state, type }).filter(Boolean);
         const hasStorageActions = React.Children.count(storageActions) > 0;
@@ -524,7 +524,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [hoverRef, hover] = react.util.useHover();
         const editTextState = React.useState(name);
         const [selectionRange] = React.useState([0, 0]);
-        const [, setUpdateCounter] = updateState;
+        const [updateCounter, setUpdateCounter] = updateState;
         const [items] = itemsState;
         const [editText, setEditText] = editTextState;
         const { locale } = me.languages.find(item => item.id === language);
@@ -549,7 +549,9 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                     if (parent) {
                         setPath(target.split("/").filter(Boolean));
                     }
-                    setUpdateCounter(counter => counter + 1);
+                    else {
+                        setUpdateCounter(updateCounter + 1);
+                    }
                 }
                 catch (err) {
                     setEditText(name);
@@ -681,11 +683,6 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         items = items.map(item => {
             const select = () => {
                 setPath([...path.filter(Boolean), item.name]);
-                if (item.type !== "folder") {
-                    setTimeout(() => {
-                        setViewType(item.type);
-                    });
-                }
             };
             return (
                 <Item key={item.name}>
@@ -783,28 +780,22 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [path] = pathState;
         const [viewType, setViewType] = viewTypeState;
         React.useEffect(() => {
-            setViewType("folder");
             if (dialog && dialog.mode === "delete") {
                 setDialog(null);
             }
-            setUpdateCounter(counter => counter + 1);
+            setUpdateCounter(updateCounter + 1);
         }, [path]);
         React.useEffect(() => {
             me.updateView({ state });
-        }, [viewType, updateCounter]);
+        }, [updateCounter]);
         const [language] = languageState;
         const { direction } = me.languages.find(item => item.id === language);
         React.useEffect(() => {
-            me.redraw = () => {
-                setTimeout(() => {
-                    setUpdateCounter(counter => counter + 1);
-                });
-            };
             me.close = () => {
                 me.singleton = null;
                 setOpen(false);
             };
-        });
+        }, []);
         if (!isOpen) {
             return null;
         }
@@ -968,12 +959,14 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [, setItems] = itemsState;
         const [, setContent] = contentState;
         const [path] = pathState;
-        const [viewType] = viewTypeState;
+        const [, setViewType] = viewTypeState;
         const counter = ++me.counter;
-        if (viewType === "folder") {
+        setLoading(true);
+        const isDirectory = !path.length || await storage.fs.isDirectory(path.join("/"));
+        if (isDirectory) {
             if (path.length) {
-                setLoading(true);
                 const items = await storage.fs.list(path.join("/"));
+                setViewType("folder");
                 setItems(items);
                 if (counter !== me.counter) {
                     return;
@@ -987,8 +980,8 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 }));
             }
         }
-        else if (viewType === "file") {
-            setLoading(true);
+        else {
+            setViewType("file");
             setContent(await storage.fs.readFile(path.join("/"), "utf8"));
             if (counter !== me.counter) {
                 return;

@@ -1,13 +1,16 @@
-screens.storage.listingActions = function StorageListingActions(me, { core, react, storage }) {
+screens.storage.actions = function StorageActions(me, { core, react, storage }) {
     me.init = () => {
         core.broadcast.register(me, {
-            storageActions: "storage.listingActions.storageActions"
+            storageActions: "storage.actions.storageActions"
         });
     };
     me.storageActions = function storageActions({ path, type }) {
         const { Item, Text } = react;
         const updateListing = async () => {
             await storage.listing.cache.update(path);
+        };
+        const updateDuration = async () => {
+            await storage.duration.cache.update(path);
         };
         if (type !== "folder") {
             return null;
@@ -19,6 +22,10 @@ screens.storage.listingActions = function StorageListingActions(me, { core, reac
             <Item onClick={updateListing}>
                 <Text language="eng">Update Listing</Text>
                 <Text language="heb">רענן רישום</Text>
+            </Item>
+            <Item onClick={updateDuration}>
+                <Text language="eng">Update Duration</Text>
+                <Text language="heb">רענן משך</Text>
             </Item>
         </React.Fragment>);
     };
