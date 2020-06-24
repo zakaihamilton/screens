@@ -787,10 +787,11 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
             if (dialog && dialog.mode === "delete") {
                 setDialog(null);
             }
+            setUpdateCounter(counter => counter + 1);
         }, [path]);
         React.useEffect(() => {
             me.updateView({ state });
-        }, [path, viewType, updateCounter]);
+        }, [viewType, updateCounter]);
         const [language] = languageState;
         const { direction } = me.languages.find(item => item.id === language);
         React.useEffect(() => {
