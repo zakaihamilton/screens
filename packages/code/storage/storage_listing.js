@@ -3,22 +3,33 @@
  @component StorageListing
  */
 
-screens.storage.listing = function StorageListing(me, { storage, media }) {
-    me.metadataPath = async () => {
+screens.storage.listing = function StorageListing(me, { core, storage }) {
+    me.metadataPath = () => {
         if (!me.metadata) {
-            me.metadata = "aws/" + await media.file.bucket() + "/metadata";
+            if (screens.platform === "server") {
+                me.metadata = "aws/" + storage.aws.bucket + "/metadata";
+            }
+            else {
+                me.metadata = "local/metadata";
+            }
         }
         return me.metadata;
     };
     me.update = async path => {
-        const metadataPath = await me.metadataPath();
-        const listing = await storage.fs.list(path);
-        await storage.fs.createPath(metadataPath, metadataPath + "/" + path);
+        let listing = null;
+        if (screens.platform !== "server") {
+            listing = await core.message.send_server("storage.listing.update", path);
+        }
+        else {
+            listing = await storage.fs.list(path);
+        }
+        const metadataPath = me.metadataPath();
+        await storage.fs.createPath(metadataPath + "/" + path);
         await storage.fs.writeFile(metadataPath + "/" + path + "/listing.json", JSON.stringify(listing, null, 4), "utf8");
         return listing;
     };
     me.get = async path => {
-        const metadataPath = await me.metadataPath();
+        const metadataPath = me.metadataPath();
         const listingPath = metadataPath + "/" + path + "/listing.json";
         if (!await storage.fs.exists(listingPath)) {
             return await me.update(path);

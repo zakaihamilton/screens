@@ -5,9 +5,7 @@
 
 screens.core.stream = function CoreStream(me, { core }) {
     me.init = function () {
-        if (screens.platform === "server") {
-            me.fs = require("fs");
-        }
+        me.fs = require("fs");
     };
     me.serve = function (headers, response, path, contentType) {
         path = core.file.path(path);
@@ -83,4 +81,5 @@ screens.core.stream = function CoreStream(me, { core }) {
         }
         return partial;
     };
+    return "server";
 };

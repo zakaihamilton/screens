@@ -130,7 +130,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
         }
     };
     me.handleRequest = async function (request, response, body, secure) {
-        if (body) {
+        if (body && typeof body !== "string") {
             body = Buffer.concat(body).toString();
         }
         var url = request.url;

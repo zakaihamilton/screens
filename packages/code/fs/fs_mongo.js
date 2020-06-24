@@ -6,7 +6,7 @@ screens.fs.mongo = function FSMongo(me, { storage }) {
 
 screens.fs.mongo.driver = function FSMongoDriver(me, { core, storage }) {
     me.mkdir = function () {
-        /* ignore on aws */
+        /* ignore on mongo */
     };
     me.location = function (path = "") {
         const [dbName, collectionName, recordId] = path.split("/").filter(Boolean);

@@ -90,5 +90,4 @@ screens.fs.aws.driver = function FSAWSDriver(me, { storage }) {
         const result = await storage.aws.metadata(path);
         return result && result.size;
     };
-    return "browser";
 };

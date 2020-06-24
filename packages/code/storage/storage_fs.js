@@ -178,25 +178,24 @@ screens.storage.fs = function StorageFS(me, { core }) {
             }
         }
     };
-    me.createPath = async function (base, path) {
-        if (path.indexOf(base) === 0) {
-            path = path.slice(base.length);
-        }
-        var tokens = path.split("/").filter(Boolean);
-        var mkdirPath = base;
-        if (await me.exists(path)) {
+    me.createPath = async function (root) {
+        var tokens = root.split("/").filter(Boolean);
+        if (await me.exists(root)) {
             return;
         }
-        for (var token of tokens) {
-            if (mkdirPath) {
-                mkdirPath += "/" + token;
+        let index = tokens.length;
+        for (; index >= 0; index--) {
+            const path = tokens.slice(0, index).join("/");
+            if (await me.exists(path)) {
+                break;
             }
-            else {
-                mkdirPath = token;
+        }
+        for (index++; index <= tokens.length; index++) {
+            const path = tokens.slice(0, index).join("/");
+            if (await me.exists(path)) {
+                break;
             }
-            if (!await me.exists(mkdirPath)) {
-                await me.mkdir(mkdirPath);
-            }
+            await me.mkdir(path);
         }
     };
     me.transfer = async function (from, to) {

@@ -77,5 +77,4 @@ screens.fs.dropbox.driver = function FSDropBoxDriver(me, { storage }) {
         const result = await storage.dropbox.metadata(path);
         return result.size;
     };
-    return "browser";
 };

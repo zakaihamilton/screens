@@ -164,7 +164,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                         const result = name.match(core.string.regex(query));
                         if (result && result.length > 1) {
                             const targetPath = dialogObject.path + "/" + result.slice(1).join("/");
-                            await storage.fs.createPath(dialogObject.path, targetPath);
+                            await storage.fs.createPath(targetPath);
                             await storage.fs.rename(path, targetPath + "/" + name);
                         }
                     }
