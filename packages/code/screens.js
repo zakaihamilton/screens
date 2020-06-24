@@ -84,11 +84,17 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
     }
     else {
-        component_obj.implement = async (me) => {
+        component_obj.implement = async (me, ...args) => {
             var context = constructor(me, screens);
             var result = null;
-            if (context.init) {
-                result = await context.init();
+            if (typeof context === "function") {
+                result = await context(...args);
+            }
+            else if (typeof context === "object" && context.init) {
+                result = await context.init(...args);
+            }
+            else {
+                result = context;
             }
             return result;
         };

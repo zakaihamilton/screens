@@ -7,12 +7,12 @@ screens.storage.listingActions = function StorageListingActions(me, { core, reac
     me.storageActions = function storageActions({ path, type }) {
         const { Item, Text } = react;
         const updateListing = async () => {
-            await storage.listing.update(path);
+            await storage.listing.cache.update(path);
         };
         if (type !== "folder") {
             return null;
         }
-        if (path.startsWith(storage.listing.metadata) || path.startsWith("local/")) {
+        if (path.startsWith(storage.listing.cache.metadata) || path.startsWith("local/")) {
             return null;
         }
         return (<React.Fragment key="storage.listing">
