@@ -653,11 +653,10 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
     };
 
     const FolderView = ({ state }) => {
-        const { filterState, pathState, viewTypeState, sortState, searchState, sortDirectionState, dialogState, itemsState } = state;
+        const { filterState, pathState, sortState, searchState, sortDirectionState, dialogState, itemsState } = state;
         const [dialog] = dialogState;
         let [items] = itemsState;
         const [path, setPath] = pathState;
-        const [, setViewType] = viewTypeState;
         const [sort] = sortState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
@@ -778,7 +777,7 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         const [updateCounter, setUpdateCounter] = updateState;
         const [dialog, setDialog] = dialogState;
         const [path] = pathState;
-        const [viewType, setViewType] = viewTypeState;
+        const [viewType] = viewTypeState;
         React.useEffect(() => {
             if (dialog && dialog.mode === "delete") {
                 setDialog(null);

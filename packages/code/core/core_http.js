@@ -36,22 +36,26 @@ screens.core.http = function CoreHttp(me, { core, db }) {
                 }
             }
             me.log("creating normal server");
-            let server = await me.createServer(false);
-            me.log("normal server is listening");
-            process.on("SIGINT", () => {
-                // eslint-disable-next-line no-console
-                console.info("SIGINT signal received.");
-                server.close(async function (err) {
-                    if (err) {
-                        // eslint-disable-next-line no-console
-                        console.error(err);
-                        process.exit(1);
-                    }
-                    await Promise.all(core.broadcast.send("shutdown"));
+            await me.createServer(false).then(server => {
+                me.log("normal server is listening");
+                process.on("SIGINT", () => {
                     // eslint-disable-next-line no-console
-                    console.log("Components shutdown");
-                    process.exit(0);
+                    console.info("SIGINT signal received.");
+                    server.close(async function (err) {
+                        if (err) {
+                            // eslint-disable-next-line no-console
+                            console.error(err);
+                            process.exit(1);
+                        }
+                        await Promise.all(core.broadcast.send("shutdown"));
+                        // eslint-disable-next-line no-console
+                        console.log("Components shutdown");
+                        process.exit(0);
+                    });
                 });
+                setTimeout(() => {
+                    core.broadcast.send("httpReady");
+                }, 100);
             });
         }
     };
@@ -95,6 +99,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
                             cert: certBuffer
                         };
                         server = me.https.createServer(options, requestHandler);
+                        me.io = require("socket.io")(server);
                         port = 443;
                         server.on("error", function (e) {
                             reject(e);
@@ -114,6 +119,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             me.log("using http");
             return new Promise((resolve, reject) => {
                 server = me.http.createServer(requestHandler);
+                me.io = require("socket.io")(server);
                 server.on("error", function (e) {
                     reject(e);
                 });
@@ -188,13 +194,17 @@ screens.core.http = function CoreHttp(me, { core, db }) {
     me.headers = function () {
 
     };
-    me.send = async function (info) {
+    me.prepare = async function (info) {
         core.property.object.create(me, info);
         if (!info.headers) {
             info.headers = {};
         }
         await core.property.set(info, "headers", null);
-        var headers = Object.assign({}, info.headers);
+        const headers = Object.assign({}, info.headers);
+        return headers;
+    };
+    me.send = async function (info) {
+        const headers = await me.prepare(info);
         if (me.platform === "server") {
             return new Promise((resolve, reject) => {
                 var request = {

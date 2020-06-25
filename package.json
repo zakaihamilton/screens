@@ -55,6 +55,7 @@
     "react-dom": "^16.13.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
+    "socket.io": "^2.3.0",
     "temp": "^0.9.1",
     "uglify-es": "^3.3.9",
     "video.js": "^7.8.2",

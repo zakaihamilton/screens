@@ -32,7 +32,6 @@ screens.user.access = function UserAccess(me, { storage }) {
             user = this.userName;
         }
         var isMatch = screens.admins && screens.admins.includes(user);
-        me.log("admin: " + user + " = " + isMatch);
         return isMatch;
     };
     me.get = async function (user) {
