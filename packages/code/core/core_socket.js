@@ -46,7 +46,7 @@ screens.core.socket = function CoreSocket(me, { core }) {
                 console.log("user event", data);
             });
             socket.on("message", async (info, callback) => {
-                const result = await core.interface.handle(info);
+                const result = await core.interface.handle({ ...info, socket });
                 callback(result);
             });
             socket.on("ready", data => {
