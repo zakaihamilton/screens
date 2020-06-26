@@ -40,7 +40,7 @@ screens.core.socket = function CoreSocket(me, { core }) {
         const io = core.http.io;
         io.on("connection", socket => {
             // eslint-disable-next-line no-console
-            console.log("a user connected");
+            console.log("user connected");
             socket.on("event", data => {
                 // eslint-disable-next-line no-console
                 console.log("user event", data);
@@ -49,9 +49,9 @@ screens.core.socket = function CoreSocket(me, { core }) {
                 const result = await core.interface.handle({ ...info, socket });
                 callback(result);
             });
-            socket.on("ready", data => {
+            socket.on("ready", () => {
                 // eslint-disable-next-line no-console
-                console.log("user ready", data);
+                console.log("user ready");
             });
             socket.on("disconnect", () => {
                 // eslint-disable-next-line no-console

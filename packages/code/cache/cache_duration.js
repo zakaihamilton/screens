@@ -1,11 +1,11 @@
 /*
  @author Zakai Hamilton
- @component StorageDuration
+ @component CacheDuration
  */
 
-screens.storage.duration = function StorageDuration(me, { storage, db }) {
+screens.cache.duration = function CacheDuration(me, { cache, db }) {
     me.init = async function () {
-        await storage.cache.implement(me);
+        await cache.manager.implement(me);
     };
     me.load = async path => {
         const folder = path.split("/").filter(Boolean).slice(1).join("/");
