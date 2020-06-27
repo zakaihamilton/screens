@@ -99,6 +99,9 @@ screens.core.message = function CoreMessage(me, { core }) {
                 arg = core.handle.push(arg, "element");
             }
         }
+        if (typeof arg === "string" && info.userId) {
+            arg = arg.replace("$userId", info.userId);
+        }
         return arg;
     };
     me.prepareArgs = function (info) {

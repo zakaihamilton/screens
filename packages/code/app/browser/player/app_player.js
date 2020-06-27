@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, db }) {
+screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, db, cache }) {
     me.init = async function () {
         await ui.content.implement(me);
         me.content.search = me.search;
@@ -482,7 +482,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                     metadata = {};
                 }
                 metadata[property] = !metadata[property];
-                await db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
+                await cache.playlists.set("$userId/" + metadata.group + "/" + metadata.title, metadata);
                 me.metadataList = await media.sessions.updateMetadata();
             }
         };
