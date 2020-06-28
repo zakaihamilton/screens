@@ -6,13 +6,13 @@
 screens.media.sessions = function MediaSessions(me, { media, cache }) {
     me.list = async function (update) {
         if (update || !me.groups || !me.metadataList || !me.cdn || !me.bucket) {
-            me.cdn = await media.file.cdn();
-            me.bucket = await media.file.bucket();
+            const { cdn } = await cache.path.get();
+            me.cdn = cdn;
             me.groups = await media.file.groups(update);
             me.metadataList = await cache.playlists.get("$userId") || [];
         }
-        const { groups, metadataList, cdn, bucket } = me;
-        return { groups, metadataList, cdn, bucket };
+        const { groups, metadataList, cdn } = me;
+        return { groups, metadataList, cdn };
     };
     me.updateMetadata = async function () {
         me.metadataList = await cache.playlists.get("$userId") || [];
