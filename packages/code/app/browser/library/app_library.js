@@ -8,10 +8,7 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
         core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
     };
-    me.ready = function (methods) {
-        methods["app.library.setTags"] = ["db.library.tagList"];
-    };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         var search = args[0];
         var params = { search };
         if (core.property.get(me.singleton, "ui.node.parent")) {
@@ -22,15 +19,15 @@ screens.app.library = function AppLibrary(me, { core, ui, widget, db }) {
             }
             return me.singleton;
         }
+        if (!me.tagList) {
+            me.tagList = await db.library.tagList();
+        }
         me.singleton = ui.element.create(me.json, "workspace", "self", params);
     };
     me.refresh = async function (object) {
         var window = widget.window.get(object);
         me.tagList = await db.library.tagList();
         window.names = null;
-    };
-    me.setTags = function (tags) {
-        me.tagList = tags;
     };
     me.initOptions = async function (object) {
         var window = widget.window.get(object);

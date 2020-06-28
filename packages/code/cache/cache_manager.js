@@ -26,7 +26,10 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         }
         const body = cache ? JSON.stringify(cache, null, 4) : "";
         const metadataPath = me.metadataPath();
-        await storage.fs.createPath(metadataPath + "/" + path);
+        await storage.fs.createPath(metadataPath);
+        if (path) {
+            await storage.fs.createPath(metadataPath + "/" + path);
+        }
         await storage.fs.writeFile(cachePath, body, "utf8");
         return cache;
     };
@@ -49,9 +52,9 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         }
         return unique;
     };
-    me.get = async path => {
+    me.get = async (path, update) => {
         const cachePath = me.path(path);
-        if (!await storage.fs.exists(cachePath)) {
+        if (update || !await storage.fs.exists(cachePath)) {
             return await me.update(path);
         }
         const buffer = await storage.fs.readFile(cachePath, "utf8");
@@ -59,14 +62,40 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         if (buffer && buffer.length) {
             cache = JSON.parse(buffer);
         }
-        me.unique(path).then(unique => {
-            core.message.send_server(me.id + ".update", path, unique).then(cache => {
-                if (cache) {
-                    const body = cache ? JSON.stringify(cache, null, 4) : "";
-                    storage.fs.writeFile(cachePath, body, "utf8");
-                }
-            });
+        me.push(path, async () => {
+            const unique = await me.unique(path);
+            const cache = await core.message.send_server(me.id + ".update", path, unique);
+            if (cache) {
+                const body = cache ? JSON.stringify(cache, null, 4) : "";
+                await storage.fs.writeFile(cachePath, body, "utf8");
+            }
         });
         return cache;
+    };
+    me.push = (path, callback) => {
+        if (!me.queue) {
+            me.queue = [];
+        }
+        const exists = me.queue.find(item => item.path === path);
+        if (exists) {
+            return;
+        }
+        me.queue.push({
+            path,
+            callback
+        });
+        if (!me.timer) {
+            me.timer = setTimeout(async () => {
+                for (; ;) {
+                    const item = me.queue.pop();
+                    if (!item) {
+                        break;
+                    }
+                    await item.callback();
+                }
+                clearTimeout(me.timer);
+                me.timer = null;
+            }, 1000);
+        }
     };
 };

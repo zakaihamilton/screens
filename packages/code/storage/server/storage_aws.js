@@ -177,9 +177,9 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         try {
             const data = await me.s3.headObject(params).promise();
             return {
-                type: data.content_type,
+                type: data.ContentType,
                 name,
-                size: data.Size,
+                size: data.ContentLength,
                 date: data.LastModified.valueOf()
             };
         }
@@ -241,9 +241,9 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                     return;
                 }
                 items.push({
-                    type: content.content_type,
+                    type: content.ContentType,
                     name,
-                    size: content.Size,
+                    size: content.ContentLength,
                     date: content.LastModified.valueOf()
                 });
             });

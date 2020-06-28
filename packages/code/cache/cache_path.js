@@ -9,6 +9,8 @@ screens.cache.path = function CachePath(me, { cache, media }) {
     };
     me.load = async () => {
         const cdn = await media.file.cdn();
-        return { cdn };
+        const bucket = await media.file.bucket();
+        const sessions = await media.file.awsPath();
+        return { cdn, bucket, sessions };
     };
 };

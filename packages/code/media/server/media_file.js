@@ -36,15 +36,6 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
     me.bucket = function () {
         return storage.aws.bucket;
     };
-    me.paths = function (groupName, name) {
-        const [, year] = name.match(/([0-9]*)-.*/);
-        var paths = {
-            local: me.cachePath + "/" + name,
-            remote: me.rootPath + "/" + groupName + "/" + year + "/" + name,
-            aws: me.awsPath() + "/" + groupName + "/" + year + "/" + name
-        };
-        return paths;
-    };
     me.download = async function (groupName, name) {
         const [, year] = name.match(/([0-9]*)-.*/);
         var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + year + "/" + name,
@@ -98,7 +89,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             file.session = core.path.fileName(file.name);
             file.extension = core.path.extension(file.name);
             file.label = core.string.title(core.path.fileName(file.name));
-            Object.assign(file, me.paths(group, file.name));
+            Object.assign(file, media.sessions.paths(group, file.name));
             let deleteFile = false;
             if (!await storage.aws.exists(file.aws)) {
                 let uploadSourcePath = file.local;
