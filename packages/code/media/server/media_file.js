@@ -238,6 +238,12 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         }
         const [, year] = name.match(/([0-9]*)-.*/);
         let path = me.awsPath() + "/" + group + "/" + year + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
+        if (!storage.aws.exists(path)) {
+            path = me.awsPath() + "/" + group + "/" + year + "/" + name + "." + extension;
+        }
+        if (!storage.aws.exists(path)) {
+            return null;
+        }
         await db.shared.stream.use({ user: this.userName, group, session: name }, { userId: this.userId, date: new Date().toString() });
         return storage.aws.url(path);
     };

@@ -289,7 +289,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         me.streamingList = await media.file.streamingList(groupName, sessionName);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
-        core.property.set(player, "source", target);
+        core.property.set(player, "source", target || "");
         core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
