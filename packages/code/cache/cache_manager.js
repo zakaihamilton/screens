@@ -34,7 +34,7 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         path = path || "";
         var [, component] = me.id.split(".");
         const metadataPath = me.metadataPath();
-        return metadataPath + "/" + path + "/" + component + ".json";
+        return [metadataPath, path, component + ".json"].filter(Boolean).join("/");
     };
     me.unique = async path => {
         let unique;

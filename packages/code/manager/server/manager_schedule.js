@@ -9,7 +9,7 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
         var { start, end } = query;
         var startDate = me.toDate(start);
         var endDate = me.toDate(end);
-        var groups = await media.file.groups();
+        var groups = await media.sessions.groups();
         for (let group of groups) {
             let sessions = group.sessions;
             sessions = sessions.filter(item => {

@@ -490,7 +490,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
     me.search = async function (text) {
         var results = [];
         if (!me.groups) {
-            me.groups = await media.file.groups();
+            me.groups = await media.sessions.groups();
         }
         me.groups.map(group => {
             var list = group.sessions.filter(session => session.extension === "m4a");
