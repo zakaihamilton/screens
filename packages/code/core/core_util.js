@@ -191,6 +191,7 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
         });
         let cacheNames = await caches.keys();
         await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+        await storage.fs.delete("local/metadata");
         await core.message.service_worker.unregister();
         location.reload(true);
     };
