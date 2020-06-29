@@ -6,7 +6,7 @@
 screens.cache.manager = function StorageCache(me, { core, storage }) {
     me.metadataPath = () => {
         if (screens.platform === "server") {
-            return "aws/" + storage.aws.bucket + "/metadata";
+            return "server/metadata";
         }
         else {
             return "local/metadata";
@@ -44,7 +44,7 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         try {
             const metadata = await storage.fs.stat(me.path(path));
             if (metadata) {
-                unique = metadata.date + metadata.size;
+                unique = metadata.size;
             }
         }
         catch (err) {
