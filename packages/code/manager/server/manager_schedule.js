@@ -16,7 +16,7 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
                 return item.extension === "m4a";
             });
             for (let item of sessions) {
-                const { name } = item;
+                const { title } = item;
                 let [, year, month, day] = item.date.split(/(\d{4})-(\d{2})-(\d{2})/);
                 month = parseInt(month) - 1;
                 let eventDate = me.toDate({ year, month, day });
@@ -27,7 +27,7 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
                             month: parseInt(month),
                             day: parseInt(day),
                         },
-                        name,
+                        name: title,
                         group: group.name,
                         user: group.name,
                         title: item.title,

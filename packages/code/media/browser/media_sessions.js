@@ -54,14 +54,15 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
             const [title, resolution] = name.split("_");
             const durationItem = durations.find(item => item.name === file.name);
             const dateAndTitle = date + " " + title;
-            let item = sessions.find(item => item.session === dateAndTitle);
+            const sessionName = dateAndTitle + "." + extension;
+            let item = sessions.find(item => item.name === name);
             if (!item) {
                 item = {
                     group: groupName,
                     extension,
                     date,
                     title,
-                    name: dateAndTitle,
+                    name: sessionName,
                     session: dateAndTitle,
                     label: core.string.title(dateAndTitle),
                     resolutions: [],
