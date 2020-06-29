@@ -51,16 +51,19 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         let sessions = [];
         for (const file of listing) {
             const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/);
-            const [session, resolution] = name.split("_");
+            const [title, resolution] = name.split("_");
             const durationItem = durations.find(item => item.name === file.name);
-            const dateAndName = date + " " + session;
-            let item = sessions.find(item => item.session === dateAndName);
+            const dateAndTitle = date + " " + title;
+            let item = sessions.find(item => item.session === dateAndTitle);
             if (!item) {
                 item = {
                     group: groupName,
                     extension,
-                    session: dateAndName,
-                    label: core.string.title(dateAndName),
+                    date,
+                    title,
+                    name: dateAndTitle,
+                    session: dateAndTitle,
+                    label: core.string.title(dateAndTitle),
                     resolutions: [],
                     ...durationItem && {
                         duration: durationItem.duration,

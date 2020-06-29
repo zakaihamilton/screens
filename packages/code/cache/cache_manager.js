@@ -54,10 +54,16 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
     };
     me.get = async (path, update) => {
         const cachePath = me.path(path);
-        if (update || !await storage.fs.exists(cachePath)) {
+        if (update) {
             return await me.update(path);
         }
-        const buffer = await storage.fs.readFile(cachePath, "utf8");
+        let buffer = null;
+        try {
+            buffer = await storage.fs.readFile(cachePath, "utf8");
+        }
+        catch (err) {
+            return await me.update(path);
+        }
         let cache = null;
         if (buffer && buffer.length) {
             cache = JSON.parse(buffer);

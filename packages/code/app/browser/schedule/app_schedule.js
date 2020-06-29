@@ -36,6 +36,9 @@ screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
     };
     me.refresh = async function (object) {
         var window = widget.window.get(object);
+        if (core.property.get(window, "ui.work.state")) {
+            return;
+        }
         core.property.set(window, "ui.work.state", true);
         core.property.set(window.var.schedule, "options", window.options);
         core.property.set(window.var.schedule, "current", window.currentDate);

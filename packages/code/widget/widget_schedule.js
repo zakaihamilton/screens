@@ -35,9 +35,6 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
             ]
         }
     };
-    me.init = function () {
-
-    };
     me.methods = {
         get: function (object) {
             return object.schedule_methods;

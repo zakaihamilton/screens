@@ -71,7 +71,14 @@ screens.core.interface = function CoreInterface(me, { core, storage }) {
             url: "/interface/" + method.replace(/\./g, "/"),
             body
         };
-        result = await core.socket.send(info);
+        try {
+            result = await core.socket.send(info);
+        }
+        catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(err);
+            result = await core.http.send(info);
+        }
         if (result[0] === "[" || result[0] === "{") {
             result = me.fromTypeFormat(result);
         }

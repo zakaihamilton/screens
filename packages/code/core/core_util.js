@@ -87,7 +87,7 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
             return end - start;
         }
     };
-    me.performance = async function (name, callback, min) {
+    me.performance = async function (name, callback, min = 1000) {
         var start = me.start();
         var result = await callback();
         var duration = me.duration(start);

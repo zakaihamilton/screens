@@ -94,14 +94,16 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             Bucket: bucketName,
             Key: path
         };
-        return new Promise((resolve, reject) => {
-            me.s3.getObject(params, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data.Body.toString());
-                }
+        return core.util.performance(me.id + ": " + url, () => {
+            return new Promise((resolve, reject) => {
+                me.s3.getObject(params, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(data.Body.toString());
+                    }
+                });
             });
         });
     };
