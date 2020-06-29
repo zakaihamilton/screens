@@ -10,6 +10,7 @@ screens.fs.server.driver = function FServerDriver(me, { storage }) {
         storage.fs.methodNames.map(methodName => {
             if (me.fs && me.fs.promises && me.fs.promises[methodName]) {
                 me[methodName] = async (...args) => {
+                    args[0] = process.cwd() + "/" + args[0].replace(/\.\.?\//, "");
                     let method = me.fs.promises[methodName];
                     if (typeof method !== "function") {
                         throw methodName + " is not a function";
