@@ -66,7 +66,13 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         }
         let cache = null;
         if (buffer && buffer.length) {
-            cache = JSON.parse(buffer);
+            try {
+                cache = JSON.parse(buffer);
+            }
+            catch (err) {
+                // eslint-disable-next-line no-console
+                console.error("file '" + path + "' does not have a valid JSON, error: " + err);
+            }
         }
         me.push(path, async () => {
             const unique = await me.unique(path);
