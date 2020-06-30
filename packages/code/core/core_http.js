@@ -99,7 +99,6 @@ screens.core.http = function CoreHttp(me, { core, db }) {
                             cert: certBuffer
                         };
                         server = me.https.createServer(options, requestHandler);
-                        me.io = require("socket.io")(server);
                         port = 443;
                         server.on("error", function (e) {
                             reject(e);
@@ -119,7 +118,6 @@ screens.core.http = function CoreHttp(me, { core, db }) {
             me.log("using http");
             return new Promise((resolve, reject) => {
                 server = me.http.createServer(requestHandler);
-                me.io = require("socket.io")(server);
                 server.on("error", function (e) {
                     reject(e);
                 });
