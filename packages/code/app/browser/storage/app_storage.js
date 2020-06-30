@@ -320,14 +320,15 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
         );
     };
 
-    const Button = ({ onClick, disable, children, border, ...props }) => {
+    const Button = ({ onClick, hidden, disable, children, border, ...props }) => {
         if (disable) {
             onClick = undefined;
         }
         return (<Element onClick={onClick} className={{
             "app-storage-button": true,
             disable,
-            border
+            border,
+            hidden
         }} {...props}>
             {children}
         </Element>);
@@ -642,12 +643,12 @@ screens.app.storage = function AppStorage(me, { core, ui, widget, storage, react
                 {content}
                 {!footer && <Element style={{ flex: 1 }} />}
             </Element>}
-            {!parent && !footer && type === "folder" && dialog && dialog.multiSelect && dialog.mode !== "delete" && <Button border={true} onClick={select}>
+            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-date">{dateString}</Element>}
+            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
+            {!parent && !footer && dialog && dialog.multiSelect && dialog.mode !== "delete" && <Button border={true} hidden={type !== "folder"} onClick={select}>
                 <Text language="eng">Open</Text>
                 <Text language="heb">פתח</Text>
             </Button>}
-            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-date">{dateString}</Element>}
-            {!parent && !footer && <Element className="app-storage-item-field app-storage-item-size" title={sizeTitle}>{sizeString}</Element>}
             {parent && !root && (!dialog || dialog.mode !== "delete") && <Button title={gotoParentFolderTitle} onClick={gotoParentFolder}><b>&#8682;</b></Button>}
         </Element >);
     };

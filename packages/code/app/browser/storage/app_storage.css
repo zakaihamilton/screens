@@ -214,6 +214,10 @@
     opacity: 0.75;
 }
 
+.app-storage-button.hidden {
+    visibility: hidden;
+}
+
 .app-storage-button:not(.disable):hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
