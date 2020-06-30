@@ -74,10 +74,12 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
                 console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err + " length: " + buffer.length + " buffer: " + buffer);
             }
         }
-        me.push(path, async () => {
-            const unique = await me.unique(path);
-            return { unique, update, path };
-        });
+        if (me.platform === "browser") {
+            me.push(path, async () => {
+                const unique = await me.unique(path);
+                return { unique, update, path };
+            });
+        }
         return cache;
     };
     me.bulk = async (requests) => {
@@ -110,31 +112,47 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
             callback
         });
         if (!me.timer) {
-            me.timer = setTimeout(async () => {
-                clearTimeout(me.timer);
-                me.timer = null;
-                let requests = [];
-                for (; ;) {
-                    const item = me.queue.pop();
-                    if (!item) {
-                        break;
-                    }
-                    const request = await item.callback();
-                    requests.push(request);
+            me.timer = setInterval(async () => {
+                if (me.busy) {
+                    return;
                 }
-                requests = await core.message.send_server(me.id + ".bulk", requests);
-                for (const request of requests) {
-                    if (!request.result) {
-                        continue;
+                me.busy = true;
+                try {
+                    let requests = [];
+                    for (; ;) {
+                        const item = me.queue.pop();
+                        if (!item) {
+                            break;
+                        }
+                        const request = await item.callback();
+                        requests.push(request);
                     }
-                    await storage.fs.createPath(metadataPath);
-                    if (request.path) {
-                        await storage.fs.createPath(metadataPath + "/" + request.path);
+                    // eslint-disable-next-line no-console
+                    console.log("processing " + requests.length + " bulk requests");
+                    requests = await core.message.send_server(me.id + ".bulk", requests);
+                    for (const request of requests) {
+                        if (!request.result) {
+                            continue;
+                        }
+                        await storage.fs.createPath(metadataPath);
+                        if (request.path) {
+                            await storage.fs.createPath(metadataPath + "/" + request.path);
+                        }
+                        const cachePath = me.path(request.path);
+                        const body = JSON.stringify(request.result, null, 4);
+                        await storage.fs.writeFile(cachePath, body, "utf8");
                     }
-                    const cachePath = me.path(request.path);
-                    const body = JSON.stringify(request.result, null, 4);
-                    await storage.fs.writeFile(cachePath, body, "utf8");
                 }
+                catch (err) {
+                    // eslint-disable-next-line no-console
+                    console.error("failed in bulk requests: " + err);
+                    me.queue.length = 0;
+                }
+                if (!me.queue.length) {
+                    clearInterval(me.timer);
+                    me.timer = null;
+                }
+                me.busy = false;
             }, 1000);
         }
     };

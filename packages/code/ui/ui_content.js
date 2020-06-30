@@ -89,18 +89,16 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 }
             ];
         },
-        update: function () {
+        update: async function () {
             var [the_package, component] = me.id.split(".");
-            var lists = ui.content.data.lists;
+            let lists = await manager.content.lists();
             var filter = item => item.package === the_package && item.component === component;
             me.content.publicList = lists.publicList.filter(filter);
             me.content.privateList = lists.privateList.filter(filter);
         },
         refresh: async function (object) {
             var window = widget.window.get(object);
-            let lists = await manager.content.lists();
-            ui.content.data.setLists(lists);
-            me.content.update();
+            await me.content.update();
             var info = me.content.info(window);
             me.content.associated.update(window, info._title);
         },
@@ -438,13 +436,4 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
         }
     };
     return me.content;
-};
-
-screens.ui.content.data = function (me) {
-    me.ready = function (methods) {
-        methods["ui.content.data.setLists"] = ["manager.content.lists"];
-    };
-    me.setLists = function (lists) {
-        me.lists = lists;
-    };
 };
