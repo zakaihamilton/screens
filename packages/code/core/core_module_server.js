@@ -316,8 +316,8 @@ screens.core.module = function CoreModule(me, { core, db, storage, cmd }) {
                 }
                 if (info.url.startsWith("/reset")) {
                     db.events.msg.send(me.id + ".emptyCache");
-                    await storage.fs.delete("server/metadata");
-                    info.body = "Local Cache Empty";
+                    storage.fs.delete("server/metadata");
+                    info.body = "Emptying cache";
                     return;
                 }
                 if (info.url.startsWith("/upgrade")) {
@@ -327,7 +327,7 @@ screens.core.module = function CoreModule(me, { core, db, storage, cmd }) {
                     return;
                 }
                 if (info.url.startsWith("/reload")) {
-                    core.server.run("pm2 reload all");
+                    db.events.msg.send("core.server.run", "pm2 reload all");
                     info.body = "Reload complete";
                     return;
                 }
