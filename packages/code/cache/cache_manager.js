@@ -71,7 +71,7 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
             }
             catch (err) {
                 // eslint-disable-next-line no-console
-                console.error("file '" + path + "' does not have a valid JSON, error: " + err);
+                console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err);
             }
         }
         me.push(path, async () => {
