@@ -9,14 +9,15 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
         var { start, end } = query;
         var startDate = me.toDate(start);
         var endDate = me.toDate(end);
-        var groups = await media.file.groups();
+        var groups = await media.sessions.groups();
         for (let group of groups) {
             let sessions = group.sessions;
             sessions = sessions.filter(item => {
-                return core.path.extension(item.name) === "m4a";
+                return item.extension === "m4a";
             });
             for (let item of sessions) {
-                let [year, month, day, name] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+).m4a/g).slice(1);
+                const { title } = item;
+                let [, year, month, day] = item.date.split(/(\d{4})-(\d{2})-(\d{2})/);
                 month = parseInt(month) - 1;
                 let eventDate = me.toDate({ year, month, day });
                 if (startDate <= eventDate && eventDate <= endDate) {
@@ -26,13 +27,12 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
                             month: parseInt(month),
                             day: parseInt(day),
                         },
-                        name,
+                        name: title,
                         group: group.name,
-                        path: item.path,
                         user: group.name,
-                        title: core.path.fileName(item.name),
+                        title: item.title,
                         app: "Player",
-                        launch: ["player", group.name, core.path.fileName(item.name)]
+                        launch: ["player", group.name, item.session]
                     });
                 }
             }

@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, db }) {
+screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, cache }) {
     me.init = async function () {
         await ui.content.implement(me);
         me.content.search = me.search;
@@ -162,16 +162,21 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             metadata.group === groupName && metadata[property]));
         return list.length;
     };
-    me.refresh = async function (object, type) {
+    me.refresh = async function (object) {
         var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window, "app.player.format", "Audio");
-        let update = {};
-        update[type] = true;
-        const { groups, metadataList } = await media.sessions.list(update);
+        const { groups, metadataList } = await media.sessions.list(true);
         me.groups = groups;
         me.metadataList = metadataList;
         await me.updateSessions(window);
+        core.property.set(window, "ui.work.state", false);
+    };
+    me.pullLatest = async function (object) {
+        var window = widget.window.get(object);
+        core.property.set(window, "ui.work.state", true);
+        await media.file.pullLatest(true);
+        await me.refresh(object);
         core.property.set(window, "ui.work.state", false);
     };
     me.updateResolutions = async function () {
@@ -289,7 +294,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         me.streamingList = await media.file.streamingList(groupName, sessionName);
         core.property.set(window.var.audioPlayer, "source", "");
         core.property.set(window.var.videoPlayer, "source", "");
-        core.property.set(player, "source", target);
+        core.property.set(player, "source", target || "");
         core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
@@ -348,7 +353,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                         core.property.set(progress, "modal.progress.specific", data);
                     });
                 }
-                await me.refresh(window, "new");
+                await me.refresh(window);
             }
             finally {
                 core.property.set(progress, "close");
@@ -482,7 +487,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                     metadata = {};
                 }
                 metadata[property] = !metadata[property];
-                await db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
+                await cache.playlists.set("$userId/" + metadata.group + "/" + metadata.title, metadata);
                 me.metadataList = await media.sessions.updateMetadata();
             }
         };
@@ -490,7 +495,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
     me.search = async function (text) {
         var results = [];
         if (!me.groups) {
-            me.groups = await media.file.groups();
+            me.groups = await media.sessions.groups();
         }
         me.groups.map(group => {
             var list = group.sessions.filter(session => session.extension === "m4a");

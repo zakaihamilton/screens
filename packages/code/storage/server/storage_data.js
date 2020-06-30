@@ -24,16 +24,12 @@ screens.storage.data = function StorageData(me, { core }) {
         });
         return me.handle;
     };
-    me.toDataStore = function (json, nonIndexed, user) {
+    me.toDataStore = function (json, nonIndexed) {
         nonIndexed = nonIndexed || [];
         let results = [];
         Object.keys(json).forEach((key) => {
             if (json[key] === undefined) {
                 return;
-            }
-            if (json[key] === "$userId") {
-                json[key] = user;
-                me.log("storing with user: " + JSON.stringify(user));
             }
             results.push({
                 name: key,
@@ -44,14 +40,13 @@ screens.storage.data = function StorageData(me, { core }) {
         return results;
     };
     me.save = async function (value, kind, id, nonIndexed) {
-        var user = this.userId;
         var service = me.getService();
         if (service) {
             const key = service.key([kind, id]);
             return new Promise((resolve, reject) => {
                 service.save({
                     key: key,
-                    data: me.toDataStore(value, nonIndexed, user)
+                    data: me.toDataStore(value, nonIndexed)
                 }, function (err) {
                     if (err) {
                         err = "error saving data for kind: " + kind + " id: " + id + " err:" + err;

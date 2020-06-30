@@ -15,11 +15,6 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         me.tempDir = me.os.tmpdir();
         core.file.makeDir(me.cachePath);
         core.mutex.enable(me.id, true);
-        if (!core.http.localhost) {
-            core.broadcast.register(me, {
-                startup: "media.file.groups"
-            });
-        }
     };
     me.awsPath = () => {
         return storage.aws.bucket + "/sessions";
@@ -41,30 +36,22 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
     me.bucket = function () {
         return storage.aws.bucket;
     };
-    me.paths = function (groupName, name) {
-        const [, year] = name.match(/([0-9]*)-.*/);
-        var paths = {
-            local: me.cachePath + "/" + name,
-            remote: me.rootPath + "/" + groupName + "/" + year + "/" + name,
-            aws: me.awsPath() + "/" + groupName + "/" + year + "/" + name
-        };
-        return paths;
-    };
     me.download = async function (groupName, name) {
         const [, year] = name.match(/([0-9]*)-.*/);
         var target = await manager.file.download(me.rootPath + "/" + groupName + "/" + year + "/" + name,
             me.cachePath + "/" + name);
         return target;
     };
-    me.groups = async function (update = false) {
-        var groups = await db.cache.file.listing(me.rootPath, update);
+    me.pullLatest = async function () {
+        await db.events.msg.sendParallel([["storage.fs.delete", "server/metadata"]]);
+        var groups = await db.cache.file.listing(me.rootPath, true);
         for (const group of groups) {
             group.path = me.rootPath + "/" + group.name;
-            const years = await db.cache.file.listing(me.rootPath + "/" + group.name, update);
+            const years = await db.cache.file.listing(me.rootPath + "/" + group.name, true);
             let sessions = [];
             for (const year of years) {
                 year.path = me.rootPath + "/" + group.name + "/" + year.name;
-                sessions.push(...await me.listing(year, group.name, update));
+                sessions.push(...await me.listing(year, group.name, true));
             }
             sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
             sessions.map(item => {
@@ -103,7 +90,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             file.session = core.path.fileName(file.name);
             file.extension = core.path.extension(file.name);
             file.label = core.string.title(core.path.fileName(file.name));
-            Object.assign(file, me.paths(group, file.name));
+            Object.assign(file, media.sessions.paths(group, file.name));
             let deleteFile = false;
             if (!await storage.aws.exists(file.aws)) {
                 let uploadSourcePath = file.local;
@@ -238,6 +225,12 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         }
         const [, year] = name.match(/([0-9]*)-.*/);
         let path = me.awsPath() + "/" + group + "/" + year + "/" + name + (resolution ? "_" + resolution : "") + "." + extension;
+        if (!storage.aws.exists(path)) {
+            path = me.awsPath() + "/" + group + "/" + year + "/" + name + "." + extension;
+        }
+        if (!storage.aws.exists(path)) {
+            return null;
+        }
         await db.shared.stream.use({ user: this.userName, group, session: name }, { userId: this.userId, date: new Date().toString() });
         return storage.aws.url(path);
     };

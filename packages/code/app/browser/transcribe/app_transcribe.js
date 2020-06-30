@@ -11,7 +11,7 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.groups = await media.file.groups();
+        me.groups = await media.sessions.groups();
         me.singleton = ui.element.create(me.json, "workspace", "self");
         me.singleton.args = args;
         return me.singleton;
@@ -44,7 +44,7 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
     me.refresh = async function (object) {
         var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
-        me.groups = await media.file.groups(true);
+        me.groups = await media.sessions.groups(true);
         await me.updateSessions(window);
         core.property.set(window, "ui.work.state", false);
     };

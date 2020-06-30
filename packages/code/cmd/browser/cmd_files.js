@@ -13,7 +13,7 @@ screens.cmd.files = function CmdFiles(me, { core, media, storage }) {
         var resolution = args[1];
         core.property.set(terminal, "print", "converting video files to resolution:" + resolution);
         try {
-            var groups = await media.file.groups();
+            var groups = await media.sessions.groups();
             for (let group of groups) {
                 var list = group.sessions.filter(session => session.extension === "mp4");
                 for (let item of list) {

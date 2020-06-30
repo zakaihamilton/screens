@@ -35,9 +35,6 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
             ]
         }
     };
-    me.init = function () {
-
-    };
     me.methods = {
         get: function (object) {
             return object.schedule_methods;
@@ -244,7 +241,7 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
                                     styles: { "grid-column": (weekday + 1) }
                                 }, () => {
                                     var html = "";
-                                    var matches = {};
+                                    var matches = [];
                                     for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
                                         let event = events[eventIndex];
                                         if (event.date.year !== dayDate.getFullYear()) {
@@ -259,16 +256,17 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
                                         if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.group.toLowerCase()) {
                                             continue;
                                         }
-                                        let list = matches[event.name];
-                                        if (!list) {
-                                            list = matches[event.name] = [];
+                                        let match = matches.find(match => match.name.toLowerCase() === event.name.toLowerCase());
+                                        if (!match) {
+                                            match = { events: [], name: event.name };
+                                            matches.push(match);
                                         }
                                         event.eventIndex = eventIndex;
-                                        list.push(event);
+                                        match.events.push(event);
                                     }
                                     if (matches) {
-                                        for (let name in matches) {
-                                            const events = matches[name];
+                                        for (let match of matches) {
+                                            const { name, events } = match;
                                             let classes = ["widget-schedule-event", type];
                                             html += ui.html.item({ classes }, () => {
                                                 let html = "";
@@ -279,7 +277,7 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
                                                 classes = ["widget-schedule-apps", type];
                                                 html += ui.html.item({ classes }, () => {
                                                     var html = "";
-                                                    for (let event of matches[name]) {
+                                                    for (let event of events) {
                                                         let classes = ["widget-schedule-app", type];
                                                         let attributes = {
                                                             "onclick": "screens.widget.schedule.click(this," + event.eventIndex + ")"
