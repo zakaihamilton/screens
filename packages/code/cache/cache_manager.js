@@ -73,6 +73,11 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
             const cache = await core.message.send_server(me.id + ".update", path, unique);
             if (cache) {
                 const body = cache ? JSON.stringify(cache, null, 4) : "";
+                const metadataPath = me.metadataPath();
+                await storage.fs.createPath(metadataPath);
+                if (path) {
+                    await storage.fs.createPath(metadataPath + "/" + path);
+                }
                 await storage.fs.writeFile(cachePath, body, "utf8");
             }
         });
