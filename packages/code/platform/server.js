@@ -40,7 +40,8 @@ setup(() => {
         "db.cache",
         "media.file",
         "lib.zoom.meetingInfo",
-        "lib.zoom.meetings"
+        "lib.zoom.meetings",
+        "cache"
     ];
 
     screens.apps = [
