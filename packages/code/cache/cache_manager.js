@@ -52,17 +52,17 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         }
         return unique;
     };
-    me.get = async (path, update) => {
+    me.get = async (path, update, unique) => {
         const cachePath = me.path(path);
         if (update) {
-            return await me.update(path);
+            return await me.update(path, unique);
         }
         let buffer = null;
         try {
             buffer = await storage.fs.readFile(cachePath, "utf8");
         }
         catch (err) {
-            return await me.update(path);
+            return await me.update(path, unique);
         }
         let cache = null;
         if (buffer && buffer.length) {
@@ -70,20 +70,19 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         }
         me.push(path, async () => {
             const unique = await me.unique(path);
-            const cache = await core.message.send_server(me.id + ".update", path, unique);
-            if (cache) {
-                const body = cache ? JSON.stringify(cache, null, 4) : "";
-                const metadataPath = me.metadataPath();
-                await storage.fs.createPath(metadataPath);
-                if (path) {
-                    await storage.fs.createPath(metadataPath + "/" + path);
-                }
-                await storage.fs.writeFile(cachePath, body, "utf8");
-            }
+            return { unique, update, path };
         });
         return cache;
     };
+    me.bulk = async (requests) => {
+        for (const request of requests) {
+            const { path, update, unique } = request;
+            request.result = await me.get(path, update, unique);
+        }
+        return requests;
+    };
     me.push = (path, callback) => {
+        const metadataPath = me.metadataPath();
         if (!me.queue) {
             me.queue = [];
         }
@@ -97,15 +96,30 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         });
         if (!me.timer) {
             me.timer = setTimeout(async () => {
+                clearTimeout(me.timer);
+                me.timer = null;
+                let requests = [];
                 for (; ;) {
                     const item = me.queue.pop();
                     if (!item) {
                         break;
                     }
-                    await item.callback();
+                    const request = await item.callback();
+                    requests.push(request);
                 }
-                clearTimeout(me.timer);
-                me.timer = null;
+                requests = await core.message.send_server(me.id + ".bulk", requests);
+                for (const request of requests) {
+                    if (!request.result) {
+                        continue;
+                    }
+                    await storage.fs.createPath(metadataPath);
+                    if (request.path) {
+                        await storage.fs.createPath(metadataPath + "/" + request.path);
+                    }
+                    const cachePath = me.path(request.path);
+                    const body = JSON.stringify(request.result, null, 4);
+                    await storage.fs.writeFile(cachePath, body, "utf8");
+                }
             }, 1000);
         }
     };
