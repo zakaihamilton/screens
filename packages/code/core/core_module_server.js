@@ -3,7 +3,7 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me, { core, db }) {
+screens.core.module = function CoreModule(me, { core, db, storage }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
@@ -316,6 +316,7 @@ screens.core.module = function CoreModule(me, { core, db }) {
                 }
                 if (info.url.startsWith("/reset")) {
                     db.events.msg.send(me.id + ".emptyCache");
+                    await storage.fs.delete("server/metadata");
                     info.body = "Local Cache Empty";
                     return;
                 }
