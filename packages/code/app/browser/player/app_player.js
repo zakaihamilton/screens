@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, db, cache }) {
+screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, cache }) {
     me.init = async function () {
         await ui.content.implement(me);
         me.content.search = me.search;
@@ -175,7 +175,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
     me.pullLatest = async function (object) {
         var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
-        await media.file.groups(true);
+        await media.file.pullLatest(true);
         await me.refresh(object);
         core.property.set(window, "ui.work.state", false);
     };

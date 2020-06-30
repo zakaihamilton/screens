@@ -42,15 +42,16 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             me.cachePath + "/" + name);
         return target;
     };
-    me.groups = async function (update = false) {
-        var groups = await db.cache.file.listing(me.rootPath, update);
+    me.pullLatest = async function () {
+        await db.events.msg.sendParallel([["storage.fs.delete", "server/metadata"]]);
+        var groups = await db.cache.file.listing(me.rootPath, true);
         for (const group of groups) {
             group.path = me.rootPath + "/" + group.name;
-            const years = await db.cache.file.listing(me.rootPath + "/" + group.name, update);
+            const years = await db.cache.file.listing(me.rootPath + "/" + group.name, true);
             let sessions = [];
             for (const year of years) {
                 year.path = me.rootPath + "/" + group.name + "/" + year.name;
-                sessions.push(...await me.listing(year, group.name, update));
+                sessions.push(...await me.listing(year, group.name, true));
             }
             sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
             sessions.map(item => {
