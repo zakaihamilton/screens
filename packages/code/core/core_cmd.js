@@ -33,7 +33,9 @@ screens.core.cmd = function CoreCmd(me, { core }) {
         }
     };
     me.exit = function (terminal) {
-        terminal.application = null;
-        core.property.set(terminal, "input", "C>");
+        if (terminal) {
+            terminal.application = null;
+            core.property.set(terminal, "input", "C>");
+        }
     };
 };

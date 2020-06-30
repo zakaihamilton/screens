@@ -3,7 +3,7 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me, { core, db, storage }) {
+screens.core.module = function CoreModule(me, { core, db, storage, cmd }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
@@ -322,8 +322,8 @@ screens.core.module = function CoreModule(me, { core, db, storage }) {
                 }
                 if (info.url.startsWith("/upgrade")) {
                     db.events.msg.send(me.id + ".emptyCache");
-                    await core.server.upgrade();
-                    info.body = "Upgrade complete";
+                    cmd.update.cmd(null, "reload");
+                    info.body = "Upgrading...";
                     return;
                 }
                 if (info.url.startsWith("/reload")) {
