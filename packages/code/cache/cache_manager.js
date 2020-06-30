@@ -81,10 +81,19 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
         return cache;
     };
     me.bulk = async (requests) => {
-        for (const request of requests) {
-            const { path, update, unique } = request;
-            request.result = await me.get(path, update, unique);
+        core.mutex.enable(me.id, true);
+        var unlock = await core.mutex.lock(me.id);
+        try {
+            for (const request of requests) {
+                const { path, update, unique } = request;
+                request.result = await me.get(path, update, unique);
+            }
         }
+        catch (err) {
+            // eslint-disable-next-line no-console
+            console.error("failed in bulk operation on requests, error: ", err, " requests: ", requests);
+        }
+        unlock();
         return requests;
     };
     me.push = (path, callback) => {
