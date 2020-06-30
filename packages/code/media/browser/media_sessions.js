@@ -4,12 +4,7 @@
  */
 
 screens.media.sessions = function MediaSessions(me, { core, cache }) {
-    me.init = function () {
-        core.broadcast.register(me, {
-            prepare: "media.sessions.prepare"
-        });
-    };
-    me.prepare = async () => {
+    me.getPaths = async () => {
         const { cdn, bucket, sessions } = await cache.path.get() || {};
         me.cdn = cdn;
         me.bucket = bucket;
@@ -18,13 +13,12 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
     me.list = async function (update) {
         const groups = await me.groups(update);
         const metadataList = await cache.playlists.get("$userId") || [];
-        const { cdn, bucket, sessions } = await cache.path.get() || {};
-        me.cdn = cdn;
-        me.bucket = bucket;
-        me.sessions = sessions;
+        await me.getPaths();
+        const { cdn, bucket, sessions } = me;
         return { groups, metadataList, cdn, bucket, sessions };
     };
     me.groups = async (update) => {
+        await me.getPaths();
         const listing = await cache.listing.get("aws/" + me.sessions, update) || [];
         let groups = [];
         for (const group of listing) {
