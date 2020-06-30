@@ -10,6 +10,7 @@ screens.cmd.update = function CmdUpdate(me, { core, db }) {
         await db.events.msg.send("core.server.run", "npm install");
         await db.events.msg.send("core.server.run", "npm rebuild");
         await db.events.msg.send("core.server.run", "rm ~/screens/cache/*");
+        await db.events.msg.send("core.server.run", "rm ~/screens/metadata/*");
         if (args[1] && args[1] === "reload") {
             await db.events.msg.send("core.server.run", "pm2 flush");
             await db.events.msg.send("core.server.run", "pm2 reload all");
