@@ -13,21 +13,18 @@
             "text": "Player",
             "select": [
                 {
-                    "text": "Refresh",
+                    "text": "Update",
                     "options": {
                         "visible": "admin"
                     },
                     "select": [
                         {
-                            "text": "New",
-                            "select": "app.player.refresh(new)"
+                            "text": "Refresh",
+                            "select": "app.player.refresh"
                         },
                         {
-                            "text": "Existing",
-                            "select": "app.player.refresh(existing)",
-                            "options": {
-                                "disabled": true
-                            }
+                            "text": "Pull Latest Sessions",
+                            "select": "app.player.pullLatest"
                         },
                         {
                             "text": "Resolutions",

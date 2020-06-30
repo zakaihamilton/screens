@@ -10,17 +10,18 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         });
     };
     me.prepare = async () => {
-        const { cdn, bucket, sessions } = await cache.path.get();
+        const { cdn, bucket, sessions } = await cache.path.get() || {};
         me.cdn = cdn;
         me.bucket = bucket;
         me.sessions = sessions;
     };
     me.list = async function (update) {
-        if (update || !me.groups || !me.metadataList) {
-            me.groups = await me.groups(update);
-            me.metadataList = await cache.playlists.get("$userId") || [];
-        }
-        const { groups, metadataList, cdn, bucket, sessions } = me;
+        const groups = await me.groups(update);
+        const metadataList = await cache.playlists.get("$userId") || [];
+        const { cdn, bucket, sessions } = await cache.path.get() || {};
+        me.cdn = cdn;
+        me.bucket = bucket;
+        me.sessions = sessions;
         return { groups, metadataList, cdn, bucket, sessions };
     };
     me.groups = async (update) => {

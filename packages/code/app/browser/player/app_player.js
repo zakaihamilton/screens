@@ -162,16 +162,21 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             metadata.group === groupName && metadata[property]));
         return list.length;
     };
-    me.refresh = async function (object, type) {
+    me.refresh = async function (object) {
         var window = widget.window.get(object);
         core.property.set(window, "ui.work.state", true);
         core.property.set(window, "app.player.format", "Audio");
-        let update = {};
-        update[type] = true;
-        const { groups, metadataList } = await media.sessions.list(update);
+        const { groups, metadataList } = await media.sessions.list(true);
         me.groups = groups;
         me.metadataList = metadataList;
         await me.updateSessions(window);
+        core.property.set(window, "ui.work.state", false);
+    };
+    me.pullLatest = async function (object) {
+        var window = widget.window.get(object);
+        core.property.set(window, "ui.work.state", true);
+        await media.file.groups(true);
+        await me.refresh(object);
         core.property.set(window, "ui.work.state", false);
     };
     me.updateResolutions = async function () {
@@ -348,7 +353,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                         core.property.set(progress, "modal.progress.specific", data);
                     });
                 }
-                await me.refresh(window, "new");
+                await me.refresh(window);
             }
             finally {
                 core.property.set(progress, "close");
