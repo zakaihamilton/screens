@@ -65,13 +65,13 @@ screens.cache.manager = function StorageCache(me, { core, storage }) {
             return await me.update(path, unique);
         }
         let cache = null;
-        if (buffer && buffer.length) {
+        if (buffer && buffer.length && typeof buffer === "string") {
             try {
                 cache = JSON.parse(buffer);
             }
             catch (err) {
                 // eslint-disable-next-line no-console
-                console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err);
+                console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err + " buffer: " + buffer);
             }
         }
         me.push(path, async () => {
