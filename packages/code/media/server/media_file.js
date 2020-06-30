@@ -71,17 +71,6 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
         groups = groups.sort((a, b) => a.name.localeCompare(b.name));
         return groups;
     };
-    me.exists = async function (name) {
-        var groups = await me.groups();
-        for (var group of groups) {
-            for (var session of group.sessions) {
-                if (session.name.includes(name)) {
-                    return group.name;
-                }
-            }
-        }
-        return null;
-    };
     me.listing = async function (parent, group, update = false) {
         let argList = [];
         var files = await db.cache.file.listing(parent.path, update, async (file) => {
@@ -165,7 +154,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
     };
     me.size = async function () {
         var info = { groups: {}, total: 0, count: 0 };
-        var groups = await me.groups(true, true);
+        var groups = await me.pullLatest();
         for (let group of groups) {
             var files = group.sessions;
             ["m4a", "mp4"].map(extension => {
@@ -196,7 +185,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
     };
     me.updateListing = async function () {
         me.log("updateListing");
-        var groups = await me.groups(true, true);
+        var groups = await me.pullLatest();
         for (let group of groups) {
             var files = group.sessions;
             var diskSize = files.reduce((total, item) => total + item.size, 0);
@@ -400,7 +389,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             await me.convertListing("screenshot");
             return;
         }
-        var groups = await me.groups();
+        var groups = await me.pullLatest();
         var argList = [];
         for (let group of groups) {
             var list = group.sessions.filter(session => session.extension === "mp4");
@@ -433,7 +422,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             await me.convertListingQuery("screenshot");
             return;
         }
-        var groups = await me.groups();
+        var groups = await me.pullLatest();
         var argList = [];
         for (let group of groups) {
             let count = 0;

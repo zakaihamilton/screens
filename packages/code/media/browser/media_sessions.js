@@ -92,4 +92,15 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         me.metadataList = await cache.playlists.get("$userId") || [];
         return me.metadataList;
     };
+    me.exists = async function (name) {
+        var groups = await me.groups(false);
+        for (var group of groups) {
+            for (var session of group.sessions) {
+                if (session.name.includes(name)) {
+                    return group.name;
+                }
+            }
+        }
+        return null;
+    };
 };

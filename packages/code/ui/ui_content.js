@@ -367,7 +367,7 @@ screens.ui.content = function UIContent(me, { core, ui, manager, widget, media }
                 if ("app.player" === me.id) {
                     return [];
                 }
-                var group = await media.file.exists(name);
+                var group = await media.sessions.exists(name);
                 if (group) {
                     list.push([
                         "Player",
