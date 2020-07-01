@@ -272,7 +272,7 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
                                                 let html = "";
                                                 const user = core.string.title(events[0].user);
                                                 let classes = ["widget-schedule-event-name", type];
-                                                var label = "<b>" + user + "</b><br>" + name.split(" - ").join("<br>");
+                                                var label = "<b>" + user + "</b>" + name.split(" - ").join("<br>");
                                                 html += ui.html.item({ classes, value: label });
                                                 classes = ["widget-schedule-apps", type];
                                                 html += ui.html.item({ classes }, () => {
