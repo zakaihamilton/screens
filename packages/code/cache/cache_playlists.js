@@ -17,6 +17,6 @@ screens.cache.playlists = function CachePlaylists(me, { cache, db }) {
         playlists = Object.assign({}, playlists);
         const [user, group, title] = path.split("/");
         await db.shared.metadata.use({ group, title, user }, { ...playlists, group, title, user });
-        await me.update(path);
+        await me.updateAll(path);
     };
 };

@@ -3,7 +3,7 @@
  @component MediaFile
  */
 
-screens.media.file = function MediaFile(me, { core, storage, media, db, manager }) {
+screens.media.file = function MediaFile(me, { core, storage, media, db, manager, cache }) {
     me.resolutions = ["640x480", "800x600", "1024x768"];
     me.rootPath = "/sessions";
     me.cachePath = "cache";
@@ -144,6 +144,8 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
                     result = true;
                 }
             }
+            const [, year] = file.session.match(/([0-9]*)-.*/);
+            cache.listing.updateAll(me.awsPath() + "/" + file.group + "/" + year);
             return result;
         });
         if (argList.length) {
@@ -295,6 +297,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             await core.file.delete(local);
             me.log("finished screenshot: " + session);
             await db.events.state.set(me.id, session);
+            cache.listing.updateAll(me.awsPath() + "/" + group + "/" + year);
             result = true;
         }
         catch (err) {
@@ -363,6 +366,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager 
             await core.file.delete(local);
             me.log("finished: " + session);
             await db.events.state.set(me.id, session);
+            cache.listing.updateAll(me.awsPath() + "/" + group + "/" + year);
             result = true;
         }
         catch (err) {

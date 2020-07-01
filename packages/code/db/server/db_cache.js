@@ -52,7 +52,7 @@ screens.db.cache.tokens = function DbCacheTokens(me, { storage }) {
     return "server";
 };
 
-screens.db.cache.file = function DbCacheFile(me, { core, storage, db }) {
+screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.indexes = [
@@ -90,6 +90,10 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db }) {
                         }
                         if (result || !exists) {
                             await db.cache.file.use({ folder, name: file.name }, file);
+                            const { sessions } = await cache.path.get() || {};
+                            if (sessions) {
+                                await cache.duration.updateAll("aws/" + sessions + "/" + folder);
+                            }
                         }
                         if (!exists) {
                             files.push(file);
