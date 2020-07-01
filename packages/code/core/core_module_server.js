@@ -3,7 +3,7 @@
  @component CoreModule
  */
 
-screens.core.module = function CoreModule(me, { core, db, storage, cmd }) {
+screens.core.module = function CoreModule(me, { core, db, cmd }) {
     me.init = function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
