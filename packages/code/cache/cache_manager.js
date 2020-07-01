@@ -23,7 +23,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             cache = await me.load(path);
         }
         else {
-            cache = await core.message.send_server(me.id + ".get", path);
+            cache = await core.message.send_server(me.id + ".get", path, true);
         }
         const body = cache ? JSON.stringify(cache, "", 4) : "";
         const metadataPath = me.metadataPath();

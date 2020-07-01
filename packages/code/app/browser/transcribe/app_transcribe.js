@@ -88,7 +88,7 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
         set: async function (object, name) {
             var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
-            var sessions = me.groups.find(group => groupName === group.name).sessions;
+            var { sessions = [] } = me.groups.find(group => groupName === group.name) || {};
             if (sessions.length) {
                 if (!name) {
                     name = sessions[0].session;
@@ -110,7 +110,7 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
         var groupName = window.options.groupName.toLowerCase();
         core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
-            var sessions = me.groups.find(group => groupName === group.name).sessions;
+            var { sessions = [] } = me.groups.find(group => groupName === group.name) || {};
             if (sessions && sessions.length) {
                 var name = sessions[0].session;
                 core.property.set(window, "app.transcribe.session", name);

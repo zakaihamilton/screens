@@ -62,6 +62,8 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
     ];
     me.listing = async function (folder, update, callback) {
         var files = [];
+        const { sessions } = await cache.path.get() || {};
+        const path = folder.split("/").slice(2).join("/");
         await core.util.performance(folder + (update ? " update" : ""), async () => {
             files = await db.cache.file.list({ folder });
             if (!files || !files.length || update) {
@@ -82,11 +84,6 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
                         }
                         if (result || !exists) {
                             await db.cache.file.use({ folder, name: file.name }, file);
-                            const { sessions } = await cache.path.get() || {};
-                            if (sessions) {
-                                const path = folder.split("/").slice(2).join("/");
-                                await cache.duration.updateAll("aws/" + sessions + "/" + path);
-                            }
                         }
                         if (!exists) {
                             files.push(file);
@@ -95,6 +92,8 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
                 }
             }
         });
+        await cache.duration.updateAll("aws/" + sessions + "/" + path);
+        await cache.listing.updateAll("aws/" + sessions + "/" + path);
         return files;
     };
     return "server";

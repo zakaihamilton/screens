@@ -145,8 +145,6 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                     result = true;
                 }
             }
-            const [, year] = file.session.match(/([0-9]*)-.*/);
-            cache.listing.updateAll("aws/" + me.awsPath() + "/" + file.group + "/" + year);
             return result;
         });
         if (argList.length) {
