@@ -63,21 +63,13 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
     me.listing = async function (folder, update, callback) {
         var files = [];
         await core.util.performance(folder + (update ? " update" : ""), async () => {
-            let updateNew = false, updateExisting = false;
-            if (update && typeof update === "object") {
-                updateNew = update.new;
-                updateExisting = update.existing;
-            }
-            else {
-                updateNew = update;
-            }
             files = await db.cache.file.list({ folder });
-            if (!files || !files.length || updateNew || updateExisting) {
+            if (!files || !files.length || update) {
                 var children = await storage.dropbox.getChildren(folder);
                 for (let file of children) {
                     file.folder = folder;
                     var exists = files && files.find(item => item.name === file.name);
-                    if ((!exists && updateNew) || updateExisting) {
+                    if (!exists || update) {
                         let result = false;
                         if (callback) {
                             try {

@@ -73,6 +73,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
     };
     me.listing = async function (parent, group, update = false) {
         let argList = [];
+        await media.sessions.getPaths();
         var files = await db.cache.file.listing(parent.path, update, async (file) => {
             let result = false;
             file.group = group;
