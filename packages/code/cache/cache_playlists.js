@@ -10,7 +10,11 @@ screens.cache.playlists = function CachePlaylists(me, { cache, db }) {
     me.load = async path => {
         const user = path.split("/").pop();
         const metadata = await db.shared.metadata.list({ user });
-        delete metadata._id;
+        if (metadata) {
+            metadata.forEach(item => {
+                delete item._id;
+            });
+        }
         return metadata;
     };
     me.set = async (path, playlists) => {

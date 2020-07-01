@@ -16,7 +16,8 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         let cache = null;
         const cachePath = me.path(path);
         if (screens.platform === "server") {
-            if (unique && unique === me.unique(path)) {
+            const serverUnique = await me.unique(path);
+            if (unique && unique === serverUnique) {
                 return null;
             }
             cache = await me.load(path);
@@ -24,7 +25,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         else {
             cache = await core.message.send_server(me.id + ".get", path);
         }
-        const body = cache ? JSON.stringify(cache, null, 4) : "";
+        const body = cache ? JSON.stringify(cache, "", 4) : "";
         const metadataPath = me.metadataPath();
         await storage.fs.createPath(metadataPath);
         if (path) {
@@ -80,7 +81,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         if (me.platform === "browser") {
             me.push(path, async () => {
                 const unique = await me.unique(path);
-                return { unique, update, path };
+                return { unique, update: true, path };
             });
         }
         return cache;
@@ -99,6 +100,12 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             console.error("failed in bulk operation on requests, error: ", err, " requests: ", requests);
         }
         unlock();
+        // eslint-disable-next-line no-console
+        const updated = requests.filter(request => request.result);
+        if (updated.length) {
+            // eslint-disable-next-line no-console
+            console.log("updated " + updated.length + " cache requests: " + updated.map(item => item.path).join("\n"));
+        }
         return requests;
     };
     me.push = (path, callback) => {
@@ -132,6 +139,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                     }
                     // eslint-disable-next-line no-console
                     console.log("processing " + requests.length + " bulk requests");
+                    const updated = [];
                     requests = await core.message.send_server(me.id + ".bulk", requests);
                     for (const request of requests) {
                         if (!request.result) {
@@ -142,8 +150,12 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                             await storage.fs.createPath(metadataPath + "/" + request.path);
                         }
                         const cachePath = me.path(request.path);
-                        const body = JSON.stringify(request.result, null, 4);
+                        const body = JSON.stringify(request.result, "", 4);
                         await storage.fs.writeFile(cachePath, body, "utf8");
+                        updated.push(request.path);
+                    }
+                    if (updated.length) {
+                        core.broadcast.send("cacheUpdated", updated);
                     }
                 }
                 catch (err) {

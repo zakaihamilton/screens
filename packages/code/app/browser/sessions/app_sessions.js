@@ -248,6 +248,11 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
             </Direction>
         );
     };
+    me.init = () => {
+        core.broadcast.register(me, {
+            cacheUpdated: "app.sessions.cacheUpdated"
+        });
+    };
     me.groups = [];
     me.sessions = null;
     me.languages = [
@@ -428,5 +433,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
     };
     me.resize = function () {
 
+    };
+    me.cacheUpdated = () => {
+        me.loadData();
     };
 };
