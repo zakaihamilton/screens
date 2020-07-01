@@ -208,7 +208,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
                 </Swimlane>
             </Item>
         ));
-        return (<List itemSize={20} unit="em">
+        return (<List itemSize={19} unit="em">
             {items}
         </List>);
     };
