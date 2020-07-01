@@ -122,7 +122,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, lib, react }
         const [filter] = filterState;
         const [search] = searchState;
         const [direction] = sortDirectionState;
-        let { users } = me.meetings.find(item => item.id === meeting);
+        let { users = [] } = me.meetings.find(item => item.id === meeting) || {};
         me.filters.forEach(filterItem => {
             if (filter.includes(filterItem.id)) {
                 users = filterItem.filter(users);
@@ -363,7 +363,7 @@ screens.app.workshop = function AppWorkshop(me, { core, ui, widget, lib, react }
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.loadMeetings = async function () {
-        me.meetings = await lib.zoom.meetings();
+        me.meetings = await lib.zoom.meetings() || [];
         if (me.redraw) {
             me.redraw();
         }

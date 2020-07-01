@@ -428,10 +428,6 @@
     height: 1.5em;
 }
 
-.widget-window-label.maximize {
-    user-select: text;
-}
-
 .widget-window-label.focus {
     background-color: var(--title-color);
     color: var(--chrome-highlight-color);
