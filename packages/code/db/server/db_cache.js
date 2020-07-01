@@ -69,7 +69,7 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
                 for (let file of children) {
                     file.folder = folder;
                     var exists = files && files.find(item => item.name === file.name);
-                    if (!exists || update) {
+                    if (!exists) {
                         let result = false;
                         if (callback) {
                             try {
@@ -84,7 +84,8 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
                             await db.cache.file.use({ folder, name: file.name }, file);
                             const { sessions } = await cache.path.get() || {};
                             if (sessions) {
-                                await cache.duration.updateAll("aws/" + sessions + "/" + folder);
+                                const path = folder.split("/").slice(2).join("/");
+                                await cache.duration.updateAll("aws/" + sessions + "/" + path);
                             }
                         }
                         if (!exists) {
