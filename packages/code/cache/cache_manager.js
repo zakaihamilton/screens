@@ -14,7 +14,6 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
     };
     me.update = async (path, unique = null) => {
         let cache = null;
-        const cachePath = me.path(path);
         if (screens.platform === "server") {
             const serverUnique = await me.unique(path);
             if (unique && unique === serverUnique) {
@@ -27,14 +26,18 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         else {
             cache = await core.message.send_server(me.id + ".get", path, true);
         }
-        const body = cache ? JSON.stringify(cache, "", 4) : "";
+        await me.write(path, cache);
+        return cache;
+    };
+    me.write = async (path, data) => {
+        const cachePath = me.path(path);
+        const body = data ? JSON.stringify(data, "", 4) : "";
         const metadataPath = me.metadataPath();
         await storage.fs.createPath(metadataPath);
         if (path) {
             await storage.fs.createPath(metadataPath + "/" + path);
         }
         await storage.fs.writeFile(cachePath, body, "utf8");
-        return cache;
     };
     me.updateAll = async (path) => {
         db.events.msg.send(me.id + ".update", path);
@@ -111,7 +114,6 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         return requests;
     };
     me.push = (path, callback) => {
-        const metadataPath = me.metadataPath();
         if (!me.queue) {
             me.queue = [];
         }
@@ -147,13 +149,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                         if (!request.result) {
                             continue;
                         }
-                        await storage.fs.createPath(metadataPath);
-                        if (request.path) {
-                            await storage.fs.createPath(metadataPath + "/" + request.path);
-                        }
-                        const cachePath = me.path(request.path);
-                        const body = JSON.stringify(request.result, "", 4);
-                        await storage.fs.writeFile(cachePath, body, "utf8");
+                        await me.write(path, request.result);
                         updated.push(request.path);
                     }
                     if (updated.length) {
