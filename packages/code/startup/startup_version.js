@@ -3,7 +3,7 @@
  @component StartupVersion
  */
 
-screens.startup.version = function StartupVersion(me, { core, storage }) {
+screens.startup.version = function StartupVersion(me, { core, storage, widget }) {
     me.init = function () {
         core.broadcast.register(me, {
             prepare: "startup.version.prepare"
@@ -27,9 +27,13 @@ screens.startup.version = function StartupVersion(me, { core, storage }) {
         else if (me.platform === "browser") {
             let config = await core.util.config();
             let version = storage.local.get(me.id);
-            if (version && config.version && version !== config.version) {
+            // eslint-disable-next-line no-console
+            console.log("version: " + version + " server version: " + config.version);
+            if (version !== config.version) {
                 storage.local.set(me.id, config.version);
-                await core.util.reload();
+                setTimeout(() => {
+                    core.util.reload("Upgrading from version: " + version + " to version: " + config.version);
+                }, 1000);
             }
         }
     };

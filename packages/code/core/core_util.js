@@ -185,9 +185,9 @@ screens.core.util = function CoreUtil(me, { core, storage, ui }) {
         };
         module.exports = handle;
     };
-    me.reload = async function () {
+    me.reload = async function (text) {
         ui.modal.launch("progress", {
-            "title": "Restarting"
+            "title": text || "Restarting"
         });
         let cacheNames = await caches.keys();
         await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
