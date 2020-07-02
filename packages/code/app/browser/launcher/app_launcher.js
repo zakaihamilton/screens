@@ -38,7 +38,12 @@ screens.app.launcher = function AppLauncher(me, { core, ui, widget }) {
         core.property.set(object, "text", label);
         core.property.set(object, "ui.basic.src", `${name}`);
         core.property.set(object, "ui.basic.display", available);
-        core.property.set(object, "ui.touch.click", "core.app." + name);
+        core.property.set(object, "ui.class.classExtra", "app.launcher.icon");
+        core.property.set(object, "ui.touch.click", async () => {
+            core.property.set(object, "ui.class.add", "loading");
+            await core.app.launch(name);
+            core.property.set(object, "ui.class.remove", "loading");
+        });
         core.property.set(object, "ui.attribute.title", tooltip);
     };
     me.search = async function (object) {

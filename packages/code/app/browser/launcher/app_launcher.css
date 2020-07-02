@@ -204,3 +204,18 @@
         transform: rotate(360deg);
     }
 }
+
+@keyframes app-launcher-loading {
+    from {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(360deg);
+        transform: rotateY(360deg);
+    }
+}
+
+.app-launcher-icon.loading {
+    animation: app-launcher-loading 1s linear infinite;
+}
