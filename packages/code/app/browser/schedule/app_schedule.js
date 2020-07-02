@@ -31,9 +31,6 @@ screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
         });
         await me.refresh(window);
     };
-    me.reset = async function (object) {
-        me.refresh(object);
-    };
     me.refresh = async function (object) {
         var window = widget.window.get(object);
         if (core.property.get(window, "ui.work.state")) {
@@ -76,7 +73,7 @@ screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
         }
     };
     me.resize = function (object) {
-        me.refresh(object);
+        me.refresh(object, true);
     };
     me.work = {
         set: function (object, value) {

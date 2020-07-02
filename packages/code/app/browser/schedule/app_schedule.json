@@ -14,7 +14,7 @@
             "select": [
                 {
                     "text": "Refresh",
-                    "select": "app.schedule.reset"
+                    "select": "app.schedule.refresh"
                 },
                 {
                     "text": "View",
