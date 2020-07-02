@@ -77,20 +77,6 @@
                             }
                         }
                     ]
-                },
-                {
-                    "text": "Group",
-                    "select": [
-                        {
-                            "text": "All",
-                            "select": "app.schedule.group",
-                            "options": {
-                                "state": "select",
-                                "value": ""
-                            }
-                        },
-                        "app.schedule.groupMenuList"
-                    ]
                 }
             ]
         }

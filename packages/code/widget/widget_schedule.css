@@ -92,11 +92,15 @@
     padding-right: 60px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    font-weight: bold;
 }
 
 .widget-schedule-year.night-mode {
     text-shadow: 2px 2px 4px #000000;
+}
+
+.widget-schedule-year.today {
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-month {
@@ -112,11 +116,15 @@
     padding: 7px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    font-weight: bold;
 }
 
 .widget-schedule-month.night-mode {
     text-shadow: 2px 2px 4px #000000;
+}
+
+.widget-schedule-month.today {
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-day {
@@ -131,7 +139,6 @@
     margin: 3px 3px 0px 3px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    font-weight: bold;
     min-width: 180px;
 }
 
@@ -154,11 +161,13 @@
 }
 
 .widget-schedule-day.today {
-    background: var(--phase-three-border);
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-day.background.today {
-    background: var(--alt-background);
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-weekday {
@@ -174,7 +183,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
 }
 
 .widget-schedule-weekday.night-mode {
@@ -182,7 +190,8 @@
 }
 
 .widget-schedule-weekday.today {
-    background: var(--phase-four-border);
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-events-grid {

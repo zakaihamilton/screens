@@ -20,7 +20,9 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             if (unique && unique === serverUnique) {
                 return null;
             }
-            cache = await me.load(path);
+            if (me.load) {
+                cache = await me.load(path);
+            }
         }
         else {
             cache = await core.message.send_server(me.id + ".get", path, true);

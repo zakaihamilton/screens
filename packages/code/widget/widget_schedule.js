@@ -253,9 +253,6 @@ screens.widget.schedule = function WidgetSchedule(me, { core, manager, ui }) {
                                         if (event.date.day !== dayDate.getDate()) {
                                             continue;
                                         }
-                                        if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.group.toLowerCase()) {
-                                            continue;
-                                        }
                                         let match = matches.find(match => match.name.toLowerCase() === event.name.toLowerCase());
                                         if (!match) {
                                             match = { events: [], name: event.name };

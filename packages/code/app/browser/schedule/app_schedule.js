@@ -3,13 +3,12 @@
  @component AppSchedule
  */
 
-screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
+screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.groupListData = app.player.groups;
         me.singleton = ui.element.create(me.json, "workspace", "self");
         await me.prepare(me.singleton);
         return me.singleton;
@@ -21,13 +20,11 @@ screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
         window.currentDate = new Date();
         ui.options.load(me, window, {
             "viewType": "Week",
-            "firstDay": "Saturday",
-            group: ""
+            "firstDay": "Saturday"
         });
         ui.options.choiceSet(me, null, {
             "viewType": me.refresh,
-            "firstDay": me.refresh,
-            "group": me.refresh
+            "firstDay": me.refresh
         });
         await me.refresh(window);
     };
@@ -59,18 +56,6 @@ screens.app.schedule = function AppSchedule(me, { core, app, ui, widget }) {
         var window = widget.window.get(object);
         window.currentDate = new Date();
         me.refresh(object);
-    };
-    me.groupMenuList = {
-        get: function (object) {
-            var info = {
-                list: me.groupListData,
-                property: "name",
-                options: { "state": "select" },
-                group: "group",
-                itemMethod: "app.schedule.group"
-            };
-            return widget.menu.collect(object, info);
-        }
     };
     me.resize = function (object) {
         me.refresh(object, true);
