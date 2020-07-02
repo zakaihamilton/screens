@@ -97,7 +97,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             }
         }
         try {
-            cache = me.read(path);
+            cache = await me.read(path);
         }
         catch (err) {
             return await me.update(path, unique);
@@ -135,7 +135,8 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             // eslint-disable-next-line no-console
             console.log("updated " + updated.length + " cache requests: " + updated.map(item => item.path).join("\n"));
         }
-        return requests;
+        const results = requests.map(request => request.result);
+        return results;
     };
     me.push = (path, callback) => {
         if (!me.queue) {
@@ -168,12 +169,14 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                     // eslint-disable-next-line no-console
                     console.log("processing " + requests.length + " bulk requests");
                     const updated = [];
-                    requests = await core.message.send_server(me.id + ".bulk", requests);
-                    for (const request of requests) {
-                        if (!request.result) {
+                    const results = await core.message.send_server(me.id + ".bulk", requests);
+                    for (let requestIndex = 0; requestIndex < requests.length; requestIndex++) {
+                        const request = requests[requestIndex];
+                        const result = results[requestIndex];
+                        if (!result) {
                             continue;
                         }
-                        await me.write(request.path, request.result);
+                        await me.write(request.path, result);
                         updated.push(request.path);
                     }
                     if (updated.length) {

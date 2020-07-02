@@ -44,6 +44,9 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         const listing = await cache.listing.get(path, update);
         const durations = await cache.duration.get(path, update);
         let sessions = [];
+        if (!listing) {
+            return [];
+        }
         for (const file of listing) {
             const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/);
             const [title, resolution] = name.split("_");
