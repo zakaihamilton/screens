@@ -4,6 +4,11 @@
  */
 
 screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
+    me.init = () => {
+        core.broadcast.register(me, {
+            cacheUpdated: "app.schedule.cacheUpdated"
+        });
+    };
     me.launch = async function () {
         if (core.property.get(me.singleton, "ui.node.parent")) {
             core.property.set(me.singleton, "widget.window.show", true);
@@ -58,7 +63,7 @@ screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
         me.refresh(object);
     };
     me.resize = function (object) {
-        me.refresh(object, true);
+        me.refresh(object);
     };
     me.work = {
         set: function (object, value) {
@@ -76,5 +81,8 @@ screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
                 core.property.set([object.var.schedule], "ui.style.visibility", "visible");
             }
         }
+    };
+    me.cacheUpdated = () => {
+        me.refresh(me.singleton);
     };
 };
