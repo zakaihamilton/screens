@@ -3,7 +3,7 @@
  @component StorageDB
  */
 
-screens.storage.db = function StorageDB(me, { core, db }) {
+screens.storage.db = function StorageDB(me, { core, db, cache }) {
     me.init = async function () {
         me.mongodb = require("mongodb");
         me.clusterHandle = null;
@@ -101,7 +101,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
     };
     me.findById = async function (location, id) {
         var query = { _id: id };
-        var [array, hash] = me.getCache(location, query, "find");
+        var [array, hash] = await me.getCache(location, query, "find");
         if (array) {
             return array;
         }
@@ -109,11 +109,11 @@ screens.storage.db = function StorageDB(me, { core, db }) {
         var result = await core.util.performance(location.componentId + ".findById: " + id, async () => {
             return await collection.findOne(query);
         });
-        me.setCache(location, hash, result);
+        await me.setCache(location, hash, result);
         return result;
     };
     me.find = async function (location, query) {
-        var [array, hash] = me.getCache(location, query, "find");
+        var [array, hash] = await me.getCache(location, query, "find");
         if (array) {
             return array;
         }
@@ -121,7 +121,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
         var result = await core.util.performance(location.componentId + ".find: " + JSON.stringify(query), async () => {
             return await collection.findOne(query);
         });
-        me.setCache(location, hash, result);
+        await me.setCache(location, hash, result);
         return result;
     };
     me.store = async function (location, listOrSingle) {
@@ -195,7 +195,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
         return result;
     };
     me.list = async function (location, query = {}, params) {
-        var [array, hash, queryString] = me.getCache(location, query, params);
+        var [array, hash, queryString] = await me.getCache(location, query, params);
         if (array) {
             return array;
         }
@@ -217,7 +217,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
             }
             return items;
         }, 500);
-        me.setCache(location, hash, array);
+        await me.setCache(location, hash, array);
         return array;
     };
     me.use = async function (location, query, data) {
@@ -247,18 +247,19 @@ screens.storage.db = function StorageDB(me, { core, db }) {
         }));
         return string;
     };
-    me.getCache = function (location, ...params) {
+    me.getCache = async function (location, ...params) {
         var result = null;
         var string = me.queryAsString(params);
         var hash = core.string.hash(string);
         if (location.cache) {
-            result = location.cache[hash];
+            result = await cache.db.read(location.componentId + "/" + hash);
         }
         return [result, hash, string];
     };
-    me.setCache = function (location, hash, value) {
+    me.setCache = async function (location, hash, value) {
         if (location.cache) {
-            location.cache[hash] = value;
+            await cache.db.write(location.componentId + "/" + hash, value);
+            await cache.db.updateAll(location.componentId);
         }
     };
     me.notifyCache = function (location) {
@@ -274,7 +275,7 @@ screens.storage.db = function StorageDB(me, { core, db }) {
     };
     me.emptyCache = function (location) {
         if (location.cache) {
-            location.cache = {};
+            cache.db.delete(location.componentId);
         }
     };
     me.handle = async function (location, query, callback) {

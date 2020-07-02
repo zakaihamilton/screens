@@ -75,7 +75,13 @@ screens.storage.fs = function StorageFS(me, { core }) {
         return result;
     };
     me.delete = async function (path) {
-        const stat = await me.stat(path);
+        let stat = null;
+        try {
+            stat = await me.stat(path);
+        }
+        catch (err) {
+            stat = null;
+        }
         if (stat) {
             if (stat.isDirectory) {
                 const names = await me.readdir(path);
@@ -91,7 +97,13 @@ screens.storage.fs = function StorageFS(me, { core }) {
     };
     me.isDirectory = async function (path) {
         let isDirectory = false;
-        const stat = await me.stat(path);
+        let stat = null;
+        try {
+            stat = await me.stat(path);
+        }
+        catch (err) {
+            stat = null;
+        }
         if (stat && stat.isDirectory) {
             isDirectory = true;
         }

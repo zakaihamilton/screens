@@ -26,7 +26,30 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         else {
             cache = await core.message.send_server(me.id + ".get", path, true);
         }
-        await me.write(path, cache);
+        if (cache) {
+            await me.write(path, cache);
+        }
+        return cache;
+    };
+    me.read = async (path) => {
+        const cachePath = me.path(path);
+        let buffer = null;
+        try {
+            buffer = await storage.fs.readFile(cachePath, "utf8");
+        }
+        catch (err) {
+            buffer = null;
+        }
+        let cache = null;
+        if (buffer && buffer.length && typeof buffer === "string") {
+            try {
+                cache = JSON.parse(buffer);
+            }
+            catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err + " length: " + buffer.length + " buffer: " + buffer);
+            }
+        }
         return cache;
     };
     me.write = async (path, data) => {
@@ -38,6 +61,10 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             await storage.fs.createPath(metadataPath + "/" + path);
         }
         await storage.fs.writeFile(cachePath, body, "utf8");
+    };
+    me.delete = async (path) => {
+        const cachePath = me.path(path);
+        await storage.fs.delete(cachePath);
     };
     me.updateAll = async (path) => {
         db.events.msg.send(me.id + ".update", path);
@@ -62,26 +89,18 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         return unique;
     };
     me.get = async (path, update, unique) => {
-        const cachePath = me.path(path);
+        let cache = null;
         if (update) {
-            return await me.update(path, unique);
+            cache = await me.update(path, unique);
+            if (cache) {
+                return;
+            }
         }
-        let buffer = null;
         try {
-            buffer = await storage.fs.readFile(cachePath, "utf8");
+            cache = me.read(path);
         }
         catch (err) {
             return await me.update(path, unique);
-        }
-        let cache = null;
-        if (buffer && buffer.length && typeof buffer === "string") {
-            try {
-                cache = JSON.parse(buffer);
-            }
-            catch (err) {
-                // eslint-disable-next-line no-console
-                console.error(me.id + ": file '" + path + "' does not have a valid JSON, error: " + err + " length: " + buffer.length + " buffer: " + buffer);
-            }
         }
         if (me.platform === "browser") {
             me.push(path, async () => {
@@ -97,7 +116,12 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         try {
             for (const request of requests) {
                 const { path, update, unique } = request;
-                request.result = await me.get(path, update, unique);
+                if (update) {
+                    request.result = await me.update(path, unique);
+                }
+                else {
+                    request.result = await me.get(path, false, unique);
+                }
             }
         }
         catch (err) {

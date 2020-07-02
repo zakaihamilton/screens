@@ -9,7 +9,7 @@ screens.db.events = function DbEvents() {
 
 screens.db.events.participants = function DbEventsParticipants(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = {};
+    me.cache = true;
     me.options = { capped: true, size: 242880, max: 250 };
     return "server";
 };
