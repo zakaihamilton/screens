@@ -191,7 +191,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                     me.timer = null;
                 }
                 me.busy = false;
-            }, 1000);
+            }, 5000);
         }
     };
 };
