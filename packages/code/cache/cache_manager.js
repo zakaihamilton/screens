@@ -84,7 +84,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             }
         }
         catch (err) {
-            unique = 0;
+            unique = -1;
         }
         return unique;
     };
@@ -173,7 +173,7 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
                         if (!request.result) {
                             continue;
                         }
-                        await me.write(path, request.result);
+                        await me.write(request.path, request.result);
                         updated.push(request.path);
                     }
                     if (updated.length) {
