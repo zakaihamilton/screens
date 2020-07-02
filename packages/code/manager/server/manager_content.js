@@ -4,7 +4,6 @@
  */
 
 screens.manager.content = function ManagerContent(me, { db, user }) {
-    me.cache = {};
     me.lists = async function (userId) {
         if (!userId) {
             userId = this.userId;
@@ -13,9 +12,6 @@ screens.manager.content = function ManagerContent(me, { db, user }) {
         var publicList = await db.shared.content.list({ private: null }, { project });
         var privateList = await db.shared.content.list({ private: userId }, { project });
         return { publicList, privateList };
-    };
-    me.reset = function () {
-        me.cache = {};
     };
     me.list = async function (componentId, isPrivate, userId) {
         if (!userId) {
