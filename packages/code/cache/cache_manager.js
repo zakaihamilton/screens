@@ -93,13 +93,11 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
         if (update) {
             cache = await me.update(path, unique);
             if (cache) {
-                return;
+                return cache;
             }
         }
-        try {
-            cache = await me.read(path);
-        }
-        catch (err) {
+        cache = await me.read(path);
+        if (!cache) {
             return await me.update(path, unique);
         }
         if (me.platform === "browser") {
