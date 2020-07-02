@@ -83,6 +83,8 @@ screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
         }
     };
     me.cacheUpdated = () => {
-        me.refresh(me.singleton);
+        if (me.singleton) {
+            me.refresh(me.singleton);
+        }
     };
 };

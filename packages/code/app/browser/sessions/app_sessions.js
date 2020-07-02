@@ -404,15 +404,16 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         me.singleton = ui.element.create(me.json, "workspace", "self");
     };
     me.loadData = async function (update) {
+        if (!me.redraw) {
+            return;
+        }
         const { groups, metadataList, cdn } = await media.sessions.list(update);
         me.groups = groups;
         me.metadataList = metadataList;
         me.cdn = cdn;
         me.sessions = prepareSessions([].concat.apply([], me.groups.map(group => group.sessions)));
         me.years = Array.from(new Set(me.sessions.map(item => item.year)));
-        if (me.redraw) {
-            me.redraw();
-        }
+        me.redraw();
     };
     me.initOptions = async function (object) {
         var window = widget.window.get(object);
