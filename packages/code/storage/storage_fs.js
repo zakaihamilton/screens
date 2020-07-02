@@ -204,7 +204,13 @@ screens.storage.fs = function StorageFS(me, { core }) {
             if (await me.exists(path)) {
                 break;
             }
-            await me.mkdir(path);
+            try {
+                await me.mkdir(path);
+            }
+            catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(err);
+            }
         }
     };
     me.transfer = async function (from, to) {
