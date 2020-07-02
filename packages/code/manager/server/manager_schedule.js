@@ -37,7 +37,7 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
                 }
             }
         }
-        let sources = await manager.content.associated(null, this.userId);
+        let sources = await manager.content.associated(null);
         for (var source in sources) {
             let list = sources[source];
             for (let app in list) {
@@ -70,5 +70,4 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
     me.toDate = function (date) {
         return new Date(parseInt(date.year), parseInt(date.month), parseInt(date.day));
     };
-    return "server";
 };

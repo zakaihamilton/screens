@@ -211,6 +211,7 @@
     justify-content: stretch;
     align-items: stretch;
     justify-self: stretch;
+    min-height: 8em;
 }
 
 .widget-schedule-event-name {
