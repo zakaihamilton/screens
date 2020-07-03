@@ -122,7 +122,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-            list = list.filter(session => session.extension === "m4a");
+            list = core.json.union(list, "session");
             let count = list.length.toString().length;
             list = list.map((session, index) => {
                 session.number = core.string.padNumber(list.length - index, count);
@@ -157,7 +157,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-        list = list.filter(session => session.extension === "m4a");
+        list = core.json.union(list, "session");
         list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
             metadata.group === groupName && metadata[property]));
         return list.length;
@@ -518,7 +518,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-            list = list.filter(session => session.extension === "m4a");
+            list = core.json.union(list, "session");
             if (!list.length) {
                 return;
             }
@@ -528,7 +528,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-            list = list.filter(session => session.extension === "m4a");
+            list = core.json.union(list, "session");
             if (!list.length) {
                 return;
             }
@@ -540,7 +540,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-        list = list.filter(session => session.extension === "m4a");
+        list = core.json.union(list, "session");
         var index = list.findIndex(session => session.session === window.options.sessionName);
         if (index >= list.length) {
             return;
@@ -552,7 +552,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         var window = widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var { sessions: list = [] } = me.groups.find(group => groupName === group.name) || {};
-        list = list.filter(session => session.extension === "m4a");
+        list = core.json.union(list, "session");
         var index = list.findIndex(session => session.session === window.options.sessionName);
         if (index <= 0) {
             return;

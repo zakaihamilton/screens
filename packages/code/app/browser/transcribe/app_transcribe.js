@@ -65,7 +65,7 @@ screens.app.transcribe = function AppTranscribe(me, { core, ui, media, widget })
             var window = widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
-            list = list.filter(session => session.extension === "m4a");
+            list = core.json.union(list, "session");
             var info = {
                 list,
                 property: "label",
