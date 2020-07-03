@@ -18,15 +18,35 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         return { groups, metadataList, cdn, bucket, sessions };
     };
     me.groups = async (update) => {
+        core.mutex.enable(me.id, true);
+        var unlock = await core.mutex.lock(me.id);
         await me.getPaths();
-        const listing = await cache.listing.get("aws/" + me.sessions, update) || [];
-        let groups = [];
-        for (const group of listing) {
-            const { name } = group;
-            const sessions = await me.group(name, update);
-            groups.push({ name, sessions });
+        const path = "aws/" + me.sessions;
+        if (!await cache.listing.exists(path)) {
+            const results = await core.message.send_server("cache.listing.loadRecursive", path);
+            if (results) {
+                for (const result of results) {
+                    if (result.component) {
+                        await cache[result.component].write(result.path, result.result);
+                    }
+                }
+            }
         }
-        groups = groups.sort((a, b) => a.name.localeCompare(b.name));
+        const listing = await cache.listing.get(path, update) || [];
+        let groups = [];
+        try {
+            for (const group of listing) {
+                const { name } = group;
+                const sessions = await me.group(name, update);
+                groups.push({ name, sessions });
+            }
+            groups = groups.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(err);
+        }
+        unlock();
         return groups;
     };
     me.group = async (groupName, update) => {

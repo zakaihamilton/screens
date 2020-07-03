@@ -32,7 +32,6 @@ setup(() => {
         "core.client",
         "storage.data",
         "storage.dropbox",
-        "manager",
         "core.file",
         "db.library",
         "db.shared",
@@ -41,7 +40,8 @@ setup(() => {
         "media.file",
         "lib.zoom.meetingInfo",
         "lib.zoom.meetings",
-        "cache"
+        "cache",
+        "manager"
     ];
 
     screens.apps = [

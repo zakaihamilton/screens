@@ -3,9 +3,9 @@
  @component CacheDuration
  */
 
-screens.cache.duration = function CacheDuration(me, { cache, db }) {
+screens.cache.duration = function CacheDuration(me, { manager, db }) {
     me.init = async function () {
-        await cache.manager.implement(me);
+        await manager.cache.implement(me);
     };
     me.load = async path => {
         const folder = path.split("/").filter(Boolean).slice(2).join("/");

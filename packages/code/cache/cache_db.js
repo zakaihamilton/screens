@@ -3,8 +3,8 @@
  @component CacheDB
  */
 
-screens.cache.db = function CacheDB(me, { cache }) {
+screens.cache.db = function CacheDB(me, { manager }) {
     me.init = async function () {
-        await cache.manager.implement(me);
+        await manager.cache.implement(me);
     };
 };

@@ -3,9 +3,9 @@
  @component CachePath
  */
 
-screens.cache.path = function CachePath(me, { cache, media }) {
+screens.cache.path = function CachePath(me, { manager, media }) {
     me.init = async function () {
-        await cache.manager.implement(me);
+        await manager.cache.implement(me);
     };
     me.load = async () => {
         const cdn = await media.file.cdn();

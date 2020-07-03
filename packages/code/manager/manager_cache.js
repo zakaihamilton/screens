@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component CacheManager
+ @component ManagerCache
  */
 
-screens.cache.manager = function StorageCache(me, { core, storage, db }) {
+screens.manager.cache = function ManagerCache(me, { core, storage, db }) {
     me.metadataPath = () => {
         if (screens.platform === "server") {
             return "server/metadata";
@@ -30,6 +30,10 @@ screens.cache.manager = function StorageCache(me, { core, storage, db }) {
             await me.write(path, cache);
         }
         return cache;
+    };
+    me.exists = async (path) => {
+        const cachePath = me.path(path);
+        return await storage.fs.exists(cachePath);
     };
     me.read = async (path) => {
         const cachePath = me.path(path);

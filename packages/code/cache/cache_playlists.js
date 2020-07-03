@@ -3,9 +3,9 @@
  @component CachePlaylists
  */
 
-screens.cache.playlists = function CachePlaylists(me, { cache, db }) {
+screens.cache.playlists = function CachePlaylists(me, { manager, db }) {
     me.init = async function () {
-        await cache.manager.implement(me);
+        await manager.cache.implement(me);
     };
     me.load = async path => {
         const user = path.split("/").pop();
