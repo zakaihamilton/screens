@@ -12,9 +12,7 @@ screens.manager.schedule = function ManagerSchedule(me, { core, manager, media }
         var groups = await media.sessions.groups();
         for (let group of groups) {
             let sessions = group.sessions;
-            sessions = sessions.filter(item => {
-                return item.extension === "m4a";
-            });
+            sessions = core.json.union(sessions, "session");
             for (let item of sessions) {
                 const { title } = item;
                 let [, year, month, day] = item.date.split(/(\d{4})-(\d{2})-(\d{2})/);
