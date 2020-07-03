@@ -84,7 +84,7 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
                     session: dateAndTitle,
                     label: core.string.title(dateAndTitle),
                     resolutions: [],
-                    ...durationItem && {
+                    ...durationItem && durationItem.duration && {
                         duration: durationItem.duration,
                         durationText: core.string.formatDuration(durationItem.duration)
                     }

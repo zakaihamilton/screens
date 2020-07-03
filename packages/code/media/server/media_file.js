@@ -112,7 +112,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                     me.log("Retrieving metadata for file: " + file.local);
                     var metadata = await me.info(file.local);
                     if (metadata) {
-                        if (metadata.format) {
+                        if (metadata.format && metadata.format.duration) {
                             file.duration = metadata.format.duration;
                             file.durationText = core.string.formatDuration(file.duration);
                             result = true;
