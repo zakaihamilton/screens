@@ -31,18 +31,25 @@ screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
             "viewType": me.refresh,
             "firstDay": me.refresh
         });
-        await me.refresh(window);
+        await me.refresh(window, true);
     };
-    me.refresh = async function (object) {
+    me.resize = (object) => {
+        me.refresh(object);
+    };
+    me.refresh = async function (object, animate) {
         var window = widget.window.get(object);
         if (core.property.get(window, "ui.work.state")) {
             return;
         }
-        core.property.set(window, "ui.work.state", true);
+        if (animate) {
+            core.property.set(window, "ui.work.state", true);
+        }
         core.property.set(window.var.schedule, "options", window.options);
         core.property.set(window.var.schedule, "current", window.currentDate);
         await core.property.set(window.var.schedule, "redraw");
-        core.property.set(window, "ui.work.state", false);
+        if (animate) {
+            core.property.set(window, "ui.work.state", false);
+        }
     };
     me.event = function (object, event) {
         core.app.launch.apply(null, event.launch);
@@ -50,17 +57,17 @@ screens.app.schedule = function AppSchedule(me, { core, ui, widget }) {
     me.previous = function (object) {
         var window = widget.window.get(object);
         window.currentDate = core.property.get(window.var.schedule, "previousDate");
-        me.refresh(object);
+        me.refresh(object, true);
     };
     me.next = function (object) {
         var window = widget.window.get(object);
         window.currentDate = core.property.get(window.var.schedule, "nextDate");
-        me.refresh(object);
+        me.refresh(object, true);
     };
     me.today = function (object) {
         var window = widget.window.get(object);
         window.currentDate = new Date();
-        me.refresh(object);
+        me.refresh(object, true);
     };
     me.resize = function (object) {
         me.refresh(object);
