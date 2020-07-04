@@ -73,6 +73,9 @@ screens.manager.cache = function ManagerCache(me, { core, storage, db }) {
     me.updateAll = async (path) => {
         db.events.msg.send(me.id + ".update", path);
     };
+    me.deleteAll = async (path) => {
+        db.events.msg.send(me.id + ".delete", path);
+    };
     me.path = path => {
         path = path || "";
         var [, component] = me.id.split(".");

@@ -259,7 +259,7 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
     me.setCache = async function (location, hash, value) {
         if (location.cache) {
             await cache.db.write(location.componentId + "/" + hash, value);
-            await cache.db.updateAll(location.componentId);
+            me.notifyCache(location);
         }
     };
     me.notifyCache = function (location) {
@@ -268,14 +268,14 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
             if (!location.timer) {
                 location.timer = setTimeout(async () => {
                     location.timer = null;
-                    await db.events.msg.send(location.componentId + ".emptyCache");
+                    me.emptyCache(location);
                 }, 5000);
             }
         }
     };
     me.emptyCache = function (location) {
         if (location.cache) {
-            cache.db.delete(location.componentId);
+            cache.db.deleteAll(location.componentId);
         }
     };
     me.handle = async function (location, query, callback) {
