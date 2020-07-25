@@ -67,8 +67,8 @@ screens.manager.cache = function ManagerCache(me, { core, storage, db }) {
         await storage.fs.writeFile(cachePath, body, "utf8");
     };
     me.delete = async (path) => {
-        const cachePath = me.path(path);
-        await storage.fs.delete(cachePath);
+        const metadataPath = me.metadataPath();
+        await storage.fs.delete([metadataPath, path].filter(Boolean).join("/"));
     };
     me.updateAll = async (path) => {
         db.events.msg.send(me.id + ".update", path);

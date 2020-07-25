@@ -147,7 +147,10 @@ screens.storage.fs = function StorageFS(me, { core }) {
                 }
                 if (stat.isDirectory) {
                     item.type = "folder";
-                    if (me.du) {
+                    if (stat.size) {
+                        item.size = stat.size;
+                    }
+                    else if (me.du) {
                         item.size = await me.du(item.path);
                     }
                 }
