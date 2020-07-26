@@ -104,7 +104,7 @@ screens.media.voice = function MediaVoice(me, { core, kab }) {
                 if (!parts.length || !voice) {
                     return;
                 }
-                parts.map(processedText => {
+                parts.filter(Boolean).map(processedText => {
                     var utterance = new SpeechSynthesisUtterance();
                     utterance.voice = voice;
                     utterance.volume = volume;
