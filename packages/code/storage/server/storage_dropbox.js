@@ -35,8 +35,9 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
     };
     me.iterate = async function (service, entries, path, cursor, recursive) {
         var method = cursor ? "filesListFolderContinue" : "filesListFolder";
+        const args = cursor ? { cursor } : { path };
         path = me.fixPath(path);
-        var response = await service[method]({ path: path });
+        var response = await service[method](args);
         entries.push(...response.entries);
         if (response.has_more) {
             await me.iterate(service, entries, path, response.cursor, recursive);

@@ -30,7 +30,7 @@
     "clean-css": "^4.2.3",
     "dom-to-image": "^2.6.0",
     "dotenv": "^8.2.0",
-    "dropbox": "^5.1.0",
+    "dropbox": "^5.2.1",
     "es6-promise": "^4.2.8",
     "eslint": "^5.16.0",
     "fluent-ffmpeg": "^2.1.2",
