@@ -28,7 +28,7 @@ screens.cache.listing = function CacheListing(me, { cache, manager, storage }) {
             results.push({ component: "duration", path: root, result: duration });
         }
         if (stream) {
-            results.push({ component: "stream", path: userName, result: stream });
+            results.push({ component: "stream", path: root, result: stream.filter(item => item.user === userName) });
         }
         return results;
     };

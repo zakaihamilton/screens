@@ -17,10 +17,10 @@ screens.cache.stream = function CacheStream(me, { manager, db }) {
         }
         return streams;
     };
-    me.set = async (path, stream) => {
+    me.set = async (path, sessionName, stream) => {
         stream = Object.assign({}, stream);
-        const [user, group, session] = path.split("/");
-        await db.shared.stream.use({ user, group, session }, { stream });
+        const [user, group] = path.split("/");
+        await db.shared.stream.use({ user, group, session: sessionName }, stream);
         await me.updateAll(path);
     };
 };

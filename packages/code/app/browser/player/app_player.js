@@ -269,8 +269,9 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             }
             source = core.property.get(player, "source");
         }
-        const stream = await cache.stream.get("$userName/" + window.options.groupName.toLowerCase() + "/" + window.options.sessionName);
-        const time = (stream && stream.position) || 0;
+        const stream = await cache.stream.get("$userName/" + window.options.groupName.toLowerCase());
+        const streamItem = stream.find(item => item.session === window.options.sessionName);
+        const time = (streamItem && streamItem.position) || 0;
         let resolution = window.options.resolution;
         if (resolution === "Auto") {
             if (me.videoItem && me.videoItem.resolutions) {
@@ -440,10 +441,11 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
                 me.timeOutHandle = setTimeout(async function () {
                     me.timeOutHandle = null;
                     var position = widget.player.controls.time(window.var.player);
-                    var streamPath = "$userName/" + window.options.groupName.toLowerCase() + "/" + window.options.sessionName;
+                    var streamPath = "$userName/" + window.options.groupName.toLowerCase();
                     const stream = await cache.stream.get(streamPath) || {};
-                    await cache.stream.set(streamPath, {
-                        ...stream,
+                    const streamItem = stream.find(item => item.session === window.options.sessionName);
+                    await cache.stream.set(streamPath, window.options.sessionName, {
+                        ...streamItem,
                         user: "$userName",
                         group: window.options.groupName.toLowerCase(),
                         session: window.options.sessionName,

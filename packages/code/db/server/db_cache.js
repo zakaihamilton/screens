@@ -92,7 +92,6 @@ screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
                 }
             }
         });
-        await cache.stream.updateAll(userName + "/" + sessions + "/" + path);
         await cache.duration.updateAll("aws/" + sessions + "/" + path);
         await cache.listing.updateAll("aws/" + sessions + "/" + path);
         return files;

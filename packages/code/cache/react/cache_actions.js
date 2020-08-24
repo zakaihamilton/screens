@@ -14,7 +14,7 @@ screens.cache.actions = function StorageActions(me, { core, react, cache }) {
         };
         const updatePositions = async () => {
             await cache.stream.update(path);
-        }
+        };
         if (type !== "folder") {
             return null;
         }
