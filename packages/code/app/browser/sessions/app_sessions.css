@@ -13,6 +13,11 @@
     justify-content: space-between;
 }
 
+.app-sessions-row-position {
+    height: 0.15em;
+    background-image: linear-gradient( to right, green, #3CB371);
+}
+
 .app-sessions-loading {
     display: flex;
     align-content: center;
@@ -21,4 +26,38 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+}
+
+.app-sessions-main ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.app-sessions-main ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+.app-sessions-main ::-webkit-scrollbar-thumb {
+    background: #494f54;
+    border: 0px none #494f54;
+    border-radius: 0px;
+}
+.app-sessions-main ::-webkit-scrollbar-thumb:hover {
+    background: #61666b;
+}
+.app-sessions-main ::-webkit-scrollbar-thumb:active {
+    background: #82878b;
+}
+.app-sessions-main ::-webkit-scrollbar-track {
+    background: #373a3c;
+    border: 0px none #373a3c;
+    border-radius: 0px;
+}
+.app-sessions-main ::-webkit-scrollbar-track:hover {
+    background: #373a3c;
+}
+.app-sessions-main ::-webkit-scrollbar-track:active {
+    background: #373a3c;
+}
+.app-sessions-main ::-webkit-scrollbar-corner {
+    background: transparent;
 }

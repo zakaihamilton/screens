@@ -269,7 +269,8 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             }
             source = core.property.get(player, "source");
         }
-        var time = window.options.time;
+        const stream = await cache.stream.get("$userName/" + window.options.groupName.toLowerCase() + "/" + window.options.sessionName);
+        const time = (stream && stream.position) || 0;
         let resolution = window.options.resolution;
         if (resolution === "Auto") {
             if (me.videoItem && me.videoItem.resolutions) {
@@ -298,9 +299,7 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
         core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
-        if ((!source || source === target) && time) {
-            widget.player.controls.seek(player, time);
-        }
+        widget.player.controls.seek(player, time);
         if (window.options.autoPlay) {
             core.property.set(player, "widget.player.controls.play");
         }
@@ -437,8 +436,22 @@ screens.app.player = function AppPlayer(me, { core, media, ui, widget, storage, 
             if (speedName !== window.options.speed) {
                 core.property.set(window, "app.player.speed", speedName);
             }
-            var time = widget.player.controls.time(window.var.player);
-            core.property.set(window, "app.player.time", time);
+            if (!me.timeOutHandle) {
+                me.timeOutHandle = setTimeout(async function () {
+                    me.timeOutHandle = null;
+                    var position = widget.player.controls.time(window.var.player);
+                    var streamPath = "$userName/" + window.options.groupName.toLowerCase() + "/" + window.options.sessionName;
+                    const stream = await cache.stream.get(streamPath) || {};
+                    await cache.stream.set(streamPath, {
+                        ...stream,
+                        user: "$userName",
+                        group: window.options.groupName.toLowerCase(),
+                        session: window.options.sessionName,
+                        userId: "$userId",
+                        position
+                    });
+                }, 1000);
+            }
         }
         var path = widget.player.path(object);
         if (duration) {

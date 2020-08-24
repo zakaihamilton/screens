@@ -23,7 +23,7 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         await me.getPaths();
         const path = "aws/" + me.sessions;
         if (!await cache.listing.exists(path)) {
-            const results = await core.message.send_server("cache.listing.loadRecursive", path);
+            const results = await core.message.send_server("cache.listing.loadRecursive", path, "$userName");
             if (results) {
                 for (const result of results) {
                     if (result.component) {
@@ -63,6 +63,7 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
         const path = "aws/" + me.sessions + "/" + groupName + "/" + yearName;
         const listing = await cache.listing.get(path, update);
         const durations = await cache.duration.get(path, update);
+        const positions = await cache.stream.get("$userName/" + groupName, update);
         let sessions = [];
         if (!listing) {
             return [];
@@ -71,8 +72,12 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
             const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/);
             const [title, resolution] = name.split("_");
             const durationItem = durations.find(item => item.name === file.name);
+            const duration = parseInt((durationItem && durationItem.duration) || 0);
             const dateAndTitle = date + " " + title;
             const sessionName = dateAndTitle + "." + extension;
+            const positionItem = await positions.find(item => item.group === groupName && item.session === dateAndTitle);
+            var position = parseInt((positionItem && positionItem.position) || 0);
+            var watched = (position === 0) ? "not_viewed" : (position === duration) ? "viewed" : "continue";
             let item = sessions.find(item => item.name === name);
             if (!item) {
                 item = {
@@ -87,7 +92,9 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
                     ...durationItem && durationItem.duration && {
                         duration: durationItem.duration,
                         durationText: core.string.formatDuration(durationItem.duration)
-                    }
+                    },
+                    position,
+                    watched
                 };
                 Object.assign(item, me.paths(groupName, file.name));
                 sessions.push(item);
