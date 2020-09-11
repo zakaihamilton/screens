@@ -221,7 +221,8 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
         if (!storage.aws.exists(path)) {
             return null;
         }
-        await db.shared.stream.use({ user: this.userName, group, session: name }, { userId: this.userId, date: new Date().toString() });
+        let stream = await db.shared.stream.find({ user: this.userName, group, session: name }) || {};
+        await db.shared.stream.use({ user: this.userName, group, session: name }, { ...stream, userId: this.userId, date: new Date().toString() });
         return storage.aws.url(path);
     };
     me.streamingList = async function (group, name) {

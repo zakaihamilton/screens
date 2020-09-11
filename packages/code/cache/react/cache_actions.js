@@ -12,6 +12,9 @@ screens.cache.actions = function StorageActions(me, { core, react, cache }) {
         const updateDuration = async () => {
             await cache.duration.update(path);
         };
+        const updatePositions = async () => {
+            await cache.stream.update(path);
+        };
         if (type !== "folder") {
             return null;
         }
@@ -26,6 +29,10 @@ screens.cache.actions = function StorageActions(me, { core, react, cache }) {
             <Item onClick={updateDuration}>
                 <Text language="eng">Update Duration</Text>
                 <Text language="heb">רענן משך</Text>
+            </Item>
+            <Item onClick={updatePositions}>
+                <Text language="eng">Update Positions</Text>
+                <Text language="heb">רענן עמדה</Text>
             </Item>
         </React.Fragment>);
     };

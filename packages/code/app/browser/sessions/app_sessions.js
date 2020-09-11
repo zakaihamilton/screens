@@ -21,7 +21,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         Spinner
     } = react;
 
-    const AppToolbar = ({ languageState, sortState, sortDirectionState, groupState, yearState, searchState }) => {
+    const AppToolbar = ({ languageState, sortState, sortDirectionState, groupState, yearState, searchState, watchState }) => {
         const languageItems = (me.languages || []).map(language => {
             const name = core.string.title(language.name);
             return (<Item key={language.id} id={language.id}>{name}</Item>);
@@ -39,6 +39,9 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         const yearItems = (me.years || []).map(year => {
             return (<Item key={year} id={year}>{year}</Item>);
         });
+        const watchItems = (me.historical || []).map(watch => {
+            return (<Item key={watch.id} id={watch.id}>{watch.name}</Item>);
+        })
         const allItem = (<Item id="all" multiple={false}>
             <Text language="eng">All</Text>
             <Text language="heb">הכל</Text>
@@ -97,6 +100,17 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
                         {yearItems}
                     </DropDown>
                 </Field>
+                <Field label={
+                    <>
+                        <Text language="eng">History</Text>
+                        <Text language="heb">היסטוריה</Text>
+                    </>
+                }>
+                    <DropDown state={watchState}>
+                        {allItem}
+                        {watchItems}
+                    </DropDown>
+                </Field>
                 <Element style={{ flex: 1 }}></Element>
                 <Field label={
                     <>
@@ -146,12 +160,13 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         return items;
     };
 
-    const AppHub = ({ groupState, sortState, sortDirectionState, yearState, searchState }) => {
+    const AppHub = ({ groupState, sortState, sortDirectionState, yearState, searchState, watchState }) => {
         const [group] = groupState;
         const [sort] = sortState;
         const [direction] = sortDirectionState;
         const [year] = yearState;
         const [search] = searchState;
+        const [watch] = watchState;
         let items = me.sessions;
         if (!items) {
             return (<Element className="app-sessions-loading" key="loadingItems">
@@ -173,6 +188,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         };
         items = items.filter(item => group[0] === "all" || group.includes(item.group));
         items = items.filter(item => year[0] === "all" || year.includes(item.year));
+        items = items.filter(item => watch[0] === "all" || watch.includes(item.watched));
         if (search) {
             items = items.filter(item => {
                 return compare(item, ["date", "name", "index", "durationText"], search);
@@ -190,8 +206,10 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
                         const loadSession = () => {
                             core.app.launch("player", item.group, item.session);
                         };
+                        const width = (item.position * 100 / item.duration).toString() + "%";
                         return (
                             <Item key={item.group + item.session} overlay={item.overlay} image={item.image} title={item.name} onClick={loadSession}>
+                                <Element className="app-sessions-row-position" style={{ width }}></Element>
                                 <Element className="app-sessions-row">
                                     <Element>#{item.index}</Element>
                                     {(group[0] === "all" || group.length > 1) && (
@@ -208,7 +226,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
                 </Swimlane>
             </Item>
         ));
-        return (<List itemSize={19} unit="em">
+        return (<List itemSize={20} unit="em">
             {items}
         </List>);
     };
@@ -221,6 +239,7 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
         const sortDirectionState = React.useState("desc");
         const searchState = React.useState("");
         const updateState = React.useState(0);
+        const watchState = React.useState(["all"]);
         const [language] = languageState;
         const direction = me.languages.find(item => item.id === language).direction;
         React.useEffect(() => {
@@ -237,7 +256,8 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
             sortDirectionState,
             yearState,
             searchState,
-            updateState
+            updateState,
+            watchState
         };
         return (
             <Direction direction={direction}>
@@ -267,6 +287,35 @@ screens.app.sessions = function AppSessions(me, { core, ui, widget, media, react
             name: "עברית",
             direction: "rtl",
             locale: "he-IL"
+        }
+    ];
+    me.historical = [
+        {
+            id: "viewed",
+            name: (
+                <>
+                    <Text language="eng">Viewed</Text>
+                    <Text language="heb">נצפה</Text>
+                </>
+            )
+        },
+        {
+            id: "not_viewed",
+            name: (
+                <>
+                    <Text language="eng">Not Viewed</Text>
+                    <Text language="heb">לא נצפה</Text>
+                </>
+            )
+        },
+        {
+            id: "continue",
+            name: (
+                <>
+                    <Text language="eng">Continue Watching</Text>
+                    <Text language="heb">המשך לצפות</Text>
+                </>
+            )
         }
     ];
     me.sortDirection = [

@@ -195,6 +195,9 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
         return result;
     };
     me.list = async function (location, query = {}, params) {
+        if (location.componentId === "db.shared.stream") {
+            console.log("query", query);
+        }
         var [array, hash, queryString] = await me.getCache(location, query, params);
         if (array) {
             return array;
