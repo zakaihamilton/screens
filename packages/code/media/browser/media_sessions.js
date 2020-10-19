@@ -69,6 +69,9 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
             return [];
         }
         for (const file of listing) {
+            if (!(file.name.endsWith(".m4a") || file.name.endsWith(".mp4"))) {
+                continue;
+            }
             const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/);
             const [title, resolution] = name.split("_");
             const durationItem = durations.find(item => item.name === file.name);
