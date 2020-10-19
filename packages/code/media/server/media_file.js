@@ -69,6 +69,32 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
             group.sessions = sessions;
         }
         groups = groups.sort((a, b) => a.name.localeCompare(b.name));
+        const folders = [];
+        for (const group of groups) {
+            const { sessions } = group;
+            for (const session of sessions) {
+                const { session: name, folder, duration, size } = session;
+                let folderEntry = folders.find(item => item.path === folder);
+                if (!folderEntry) {
+                    folderEntry = { path: folder, sessions: [] };
+                    folders.push(folderEntry);
+                }
+                let sessionEntry = folderEntry.sessions.find(item => item.name === name);
+                if (!sessionEntry) {
+                    sessionEntry = { name, duration, size };
+                    folderEntry.sessions.push(sessionEntry);
+                }
+                if (duration) {
+                    sessionEntry.duration = duration;
+                }
+                if (size) {
+                    sessionEntry.size = size;
+                }
+            }
+        }
+        for (const folder of folders) {
+            await storage.aws.uploadData("screens" + folder.path + "/metadata.json", JSON.stringify(folder.sessions, null, 4));
+        }
         return groups;
     };
     me.listing = async function (parent, group, update = false) {
