@@ -4,7 +4,7 @@
  */
 
 screens.media.file = function MediaFile(me, { core, storage, media, db, manager, cache }) {
-    me.resolutions = ["640x480", "800x600", "1024x768"];
+    me.resolutions = [];
     me.rootPath = "/sessions";
     me.cachePath = "cache";
     me.init = function () {
