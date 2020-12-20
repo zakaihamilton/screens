@@ -267,7 +267,9 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
     };
     me.notifyCache = function (location) {
         if (location.cache && location.componentId) {
-            me.emptyCache(location);
+            setTimeout(() => {
+                me.emptyCache(location);
+            }, 10000);
         }
     };
     me.emptyCache = function (location) {
