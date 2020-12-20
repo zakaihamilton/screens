@@ -9,25 +9,21 @@ screens.db.shared = function DbShared() {
 
 screens.db.shared.present = function DbSharedPresent(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     return "server";
 };
 
 screens.db.shared.chat = function DbSharedChat(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     return "server";
 };
 
 screens.db.shared.workshop = function DbSharedWorkshop(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     return "server";
 };
 
 screens.db.shared.highlight = function DbSharedHighlight(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "user": 1,
@@ -39,19 +35,16 @@ screens.db.shared.highlight = function DbSharedHighlight(me, { storage }) {
 
 screens.db.shared.content = function DbSharedContent(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     return "server";
 };
 
 screens.db.shared.metadata = function DbSharedContent(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     return "server";
 };
 
 screens.db.shared.message = function DbSharedContent(me, { core, storage, db }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.listing = async function (user) {
         if (!user) {
             user = this.userId;
@@ -86,7 +79,6 @@ screens.db.shared.message = function DbSharedContent(me, { core, storage, db }) 
 
 screens.db.shared.user = function DbSharedUser(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "user": 1
@@ -97,7 +89,6 @@ screens.db.shared.user = function DbSharedUser(me, { storage }) {
 
 screens.db.shared.stream = function DbSharedStream(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "user": 1,
@@ -110,7 +101,6 @@ screens.db.shared.stream = function DbSharedStream(me, { storage }) {
 
 screens.db.shared.settings = function DbSharedSettings(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "key": 1

@@ -9,7 +9,6 @@ screens.db.cache = function DbCache() {
 
 screens.db.cache.data = function DbCacheData(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "component": 1,
@@ -21,7 +20,6 @@ screens.db.cache.data = function DbCacheData(me, { storage }) {
 
 screens.db.cache.dictionary = function DbCacheDictionary(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "name": 1
@@ -32,7 +30,6 @@ screens.db.cache.dictionary = function DbCacheDictionary(me, { storage }) {
 
 screens.db.cache.metadata = function DbCacheMetadata(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "name": 1
@@ -43,7 +40,6 @@ screens.db.cache.metadata = function DbCacheMetadata(me, { storage }) {
 
 screens.db.cache.tokens = function DbCacheTokens(me, { storage }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "hash": 1
@@ -54,7 +50,6 @@ screens.db.cache.tokens = function DbCacheTokens(me, { storage }) {
 
 screens.db.cache.file = function DbCacheFile(me, { core, storage, db, cache }) {
     me.init = () => storage.db.extension(me);
-    me.cache = true;
     me.indexes = [
         {
             "folder": 1
