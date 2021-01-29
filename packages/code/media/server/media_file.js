@@ -166,7 +166,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                     }
                 }
                 argList.push(["media.file.screenshot", file.group, file.session]);
-                if ((!file.resolutions && resolutions.length) || file.resolutions.length !== resolutions.length) {
+                if ((!file.resolutions && resolutions.length) || (file.resolutions && file.resolutions.length) !== resolutions.length) {
                     file.resolutions = resolutions;
                     result = true;
                 }
