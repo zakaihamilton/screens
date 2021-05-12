@@ -47,7 +47,7 @@
     "npm": "^6.14.10",
     "openssl": "^1.1.0",
     "pm2": "^4.5.1",
-    "postcss": "^7.0.35",
+    "postcss": "^8.2.10",
     "promise-worker": "^2.0.1",
     "promise-worker-bi": "^4.0.2",
     "react": "^16.14.0",
