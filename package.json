@@ -56,7 +56,7 @@
     "request-promise-native": "^1.0.9",
     "temp": "^0.9.4",
     "uglify-es": "^3.3.9",
-    "video.js": "^7.14.0",
+    "video.js": "^7.14.3",
     "videojs-contrib-hls": "^5.15.0",
     "workbox-sw": "^5.1.4",
     "xmlhttprequest": "^1.8.0"
