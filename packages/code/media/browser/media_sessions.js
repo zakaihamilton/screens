@@ -72,7 +72,11 @@ screens.media.sessions = function MediaSessions(me, { core, cache }) {
             if (!(file.name.endsWith(".m4a") || file.name.endsWith(".mp4"))) {
                 continue;
             }
-            const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/);
+            const [, date, name, extension] = file.name.match(/([0-9]*-[0-9]*-[0-9]*) (.*)\.(.*)/) || [];
+            if (!date) {
+                console.log("cannot match:" + file.name);
+                continue;
+            }
             const [title, resolution] = name.split("_");
             const durationItem = durations.find(item => item.name === file.name);
             const duration = parseInt((durationItem && durationItem.duration) || 0);
