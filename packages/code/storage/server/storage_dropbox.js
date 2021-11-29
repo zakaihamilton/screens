@@ -29,20 +29,26 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         me.log("requesting items for path: " + path + " recursive: " + recursive);
         var entries = [];
         var service = await me.getService();
-        await me.iterate(service, entries, path, null, recursive);
-        me.log("returning " + entries.length + " items for path: " + path + " recursive: " + recursive);
+        try {
+            await me.iterate(service, entries, path, null, recursive);
+            me.log("returning " + entries.length + " items for path: " + path + " recursive: " + recursive);
+        }
+        catch (err) {
+            me.log("failed to get items for path: " + path + " recursive: " + recursive + " err" + err);
+            throw err;
+        }
         return entries;
     };
     me.iterate = async function (service, entries, path, cursor, recursive) {
         var method = cursor ? "filesListFolderContinue" : "filesListFolder";
         const args = cursor ? { cursor } : { path };
         path = me.fixPath(path);
-        var response = await service[method](args);
-        entries.push(...response.entries);
-        if (response.has_more) {
-            await me.iterate(service, entries, path, response.cursor, recursive);
+        var { result } = await service[method](args);
+        entries.push(...result.entries);
+        if (result.has_more) {
+            await me.iterate(service, entries, path, result.cursor, recursive);
         } else if (recursive) {
-            for (let item of response.entries) {
+            for (let item of result.entries) {
                 if (item[".tag"] !== "folder") {
                     continue;
                 }
@@ -59,7 +65,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
     me.downloadData = async function (path) {
         var service = await me.getService();
         path = me.fixPath(path);
-        var result = await service.filesGetTemporaryLink({ path: path });
+        var { result } = await service.filesGetTemporaryLink({ path: path });
         var body = "";
         return new Promise((resolve, reject) => {
             me.https.get(result.link, res => {
@@ -78,8 +84,8 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
     me.uploadData = async function (path, data) {
         var service = await me.getService();
         path = me.fixPath(path);
-        var response = await service.filesUpload({ path: path, contents: data });
-        return response;
+        var { result } = await service.filesUpload({ path: path, contents: data });
+        return result;
     };
     me.metadata = async function (path) {
         if (!path || path === "/") {
@@ -90,42 +96,42 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         }
         var service = await me.getService();
         path = me.fixPath(path);
-        var response = service.filesGetMetadata({ path });
-        return response;
+        var { result } = service.filesGetMetadata({ path });
+        return result;
     };
     me.copyFile = async function (source, target) {
         var service = await me.getService();
         var from_path = me.fixPath(source);
         var to_path = me.fixPath(target);
-        var response = await service.filesCopy({
+        var { result } = await service.filesCopy({
             from_path,
             to_path
         });
-        return response;
+        return result;
     };
     me.moveFile = async function (source, target) {
         var service = await me.getService();
         var from_path = me.fixPath(source);
         var to_path = me.fixPath(target);
-        var response = await service.filesMove({
+        var { result } = await service.filesMove({
             from_path,
             to_path
         });
-        return response;
+        return result;
     };
     me.deleteFile = async function (path) {
         const service = await me.getService();
         path = me.fixPath(path);
-        var response = await service.filesDeleteV2({
+        var { result } = await service.filesDeleteV2({
             path
         });
-        return response;
+        return result;
     };
     me.downloadFile = async function (from, to) {
         var path = me.fixPath(from);
         return new Promise(async (resolve, reject) => {
             var service = await me.getService();
-            var result = await service.filesGetTemporaryLink({
+            var { result } = await service.filesGetTemporaryLink({
                 path
             });
             const req = me.https.get(result.link, res => {
@@ -153,7 +159,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                     if (cursor.offset) {
                         var commit = { path: to, mode: "overwrite", mute: false };
                         try {
-                            let result = await service.filesUploadSessionFinish({
+                            let { result } = await service.filesUploadSessionFinish({
                                 cursor: cursor,
                                 commit: commit,
                                 contents: data
@@ -168,7 +174,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                     }
                     else {
                         try {
-                            let result = await service.filesUpload({
+                            let { result } = await service.filesUpload({
                                 path: to,
                                 contents: data
                             });
@@ -203,7 +209,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                 else {
                     core.file.pause(fileSession);
                     try {
-                        var response = await service.filesUploadSessionStart({
+                        var { result } = await service.filesUploadSessionStart({
                             close: false,
                             contents: data
                         });
@@ -213,7 +219,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                         reject(err);
                         return;
                     }
-                    cursor.session_id = response.session_id;
+                    cursor.session_id = result.session_id;
                     cursor.offset += data.length;
                     core.file.resume(fileSession);
                     me.log("uploading " + to + ":" + core.string.formatBytes(cursor.offset) + " / " + core.string.formatBytes(fileSize));
