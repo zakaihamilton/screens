@@ -6,7 +6,6 @@
     <meta name="Description" content="Screens Environment OS">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <script src="https://apis.google.com/js/platform.js"></script>
     <link rel="stylesheet" href="node_modules/bulma/css/bulma.min.css">
     </link>
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/solid.css">
@@ -51,6 +50,11 @@
 </head>
 
 <body onload="startBrowser(__startup_app__, __startup_args__)">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload" data-client_id="635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
 </body>
 
 </html>

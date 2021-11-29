@@ -29,7 +29,7 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
                 return clusterHandle;
             }
             var url = me.keys.url;
-            clusterHandle = await me.mongodb.MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
+            clusterHandle = await me.mongodb.MongoClient.connect(url, {});
             me.clusterHandle = clusterHandle;
             me.log("connected to cluster: " + url);
         }
@@ -55,28 +55,16 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
         if (!db) {
             throw "Cannot find database for location: " + location.toString();
         }
-        var collection = await new Promise((resolve, reject) => {
-            db.collection(location.collection, { strict: location.options ? true : false }, async (error, handle) => {
-                if (error) {
-                    try {
-                        handle = await db.createCollection(location.collection, location.options);
-                        resolve(handle);
-                    }
-                    catch (createError) {
-                        try {
-                            handle = await db.collection(location.collection);
-                        }
-                        catch (getError) {
-                            me.clusterHandle = null;
-                            reject(createError);
-                        }
-                    }
-                }
-                else {
-                    resolve(handle);
-                }
-            });
-        });
+        const collections = (await db.listCollections({}, { nameOnly: true }).toArray()).map(
+            ({ name }) => name
+        );
+        let collection = null;
+        if (!collections.includes(location.collection)) {
+            collection = await db.createCollection(location.collection, location.options);
+        }
+        else {
+            collection = await db.collection(location.collection);
+        }
         if (!collection) {
             throw "Cannot find collection for location: " + location.collection;
         }
