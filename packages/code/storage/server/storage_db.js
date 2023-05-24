@@ -78,7 +78,7 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
     };
     me.objectId = function (id) {
         id = id.toString();
-        var object = me.mongodb.ObjectID(id);
+        var object = new me.mongodb.ObjectId(id);
         return object;
     };
     me.findByIds = async function (location, ids) {
@@ -123,7 +123,7 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
         for (var data of list) {
             if (data) {
                 if (!data._id) {
-                    data._id = me.mongodb.ObjectID().toString();
+                    data._id = (new me.mongodb.ObjectId()).toString();
                 }
                 if (data._id) {
                     await collection.replaceOne({ _id: data._id }, data, { upsert: true });
@@ -147,7 +147,7 @@ screens.storage.db = function StorageDB(me, { core, db, cache }) {
         data.map(async data => {
             if (data) {
                 if (!data._id) {
-                    data._id = me.mongodb.ObjectID().toString();
+                    data._id = (new me.mongodb.ObjectId()).toString();
                 }
                 if (data._id) {
                     await collection.insertOne(data);
