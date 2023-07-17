@@ -153,11 +153,13 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             };
             const command = new me.aws.ListObjectsCommand(listParams);
             const result = await me.s3Client.send(command);
-            if (result.Contents.length > 0 || result.CommonPrefixes.length > 0) {
-                return {
-                    type: "application/x-directory",
-                    name
-                };
+            if (result) {
+                if ((result.Contents && result.Contents.length > 0) || (result.CommonPrefixes && result.CommonPrefixes.length > 0)) {
+                    return {
+                        type: "application/x-directory",
+                        name
+                    };
+                }
             }
         }
         return null;
