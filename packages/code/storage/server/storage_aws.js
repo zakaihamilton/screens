@@ -6,16 +6,22 @@
 screens.storage.aws = function StorageAWS(me, { core }) {
     me.bufferSize = 10 * 1024 * 1024;
     me.init = async function () {
-        const AWS = require("aws-sdk");
+        me.aws = require("@aws-sdk/client-s3");
+        const { createReadStream, createWriteStream } = require("fs");
         const keys = await core.private.keys("aws");
         let { accessKeyId, secretAccessKey, endpoint, cdn, bucket } = keys;
-        endpoint = new AWS.Endpoint(endpoint);
-        me.s3 = new AWS.S3({
-            endpoint,
-            accessKeyId,
-            secretAccessKey
+        const region = endpoint.split(".")[1];
+        const s3Client = new me.aws.S3Client({
+            region,
+            endpoint: "https://" + endpoint,
+            credentials: {
+                accessKeyId,
+                secretAccessKey
+            }
         });
-        me.fs = require("fs");
+        me.s3Client = s3Client;
+        me.createReadStream = createReadStream;
+        me.createWriteStream = createWriteStream;
         me.cdn = cdn;
         me.bucket = bucket;
     };
@@ -28,140 +34,94 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         path = tokens.join("/");
         return [bucketName, path];
     };
-    me.uploadFile = function (from, to) {
+    me.uploadFile = async function (from, to) {
         const [bucketName, path] = me.parseUrl(to);
-        var params = {
+        const uploadParams = {
             Bucket: bucketName,
             Key: path,
-            Body: me.fs.createReadStream(from),
+            Body: me.createReadStream(from),
             ACL: "public-read"
         };
-        var options = {
-            partSize: me.bufferSize,
-            queueSize: 10
-        };
-        return new Promise((resolve, reject) => {
-            me.s3.upload(params, options, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        const command = new me.aws.PutObjectCommand(uploadParams);
+        const response = await me.s3Client.send(command);
+        return response;
     };
-    me.downloadFile = function (from, to) {
+    me.downloadFile = async function (from, to) {
         const [bucketName, path] = me.parseUrl(from);
-        var params = {
+        const downloadParams = {
             Bucket: bucketName,
             Key: path
         };
-        const writeStream = me.fs.createWriteStream(to);
+        const writeStream = me.createWriteStream(to);
+        const command = new me.aws.GetObjectCommand(downloadParams);
+        const response = await me.s3Client.send(command);
+        response.Body.pipe(writeStream);
         return new Promise((resolve, reject) => {
-            let readStream = me.s3.getObject(params).createReadStream({ bufferSize: me.bufferSize });
-            readStream.on("error", reject);
-            readStream.on("end", resolve);
-            readStream.pipe(writeStream);
+            writeStream.on("finish", resolve);
+            writeStream.on("error", reject);
         });
     };
-    me.uploadData = function (url, data) {
+    me.uploadData = async function (url, data) {
         const [bucketName, path] = me.parseUrl(url);
-        var params = {
+        const uploadParams = {
             Bucket: bucketName,
             Key: path,
             Body: data,
             ACL: "public-read"
         };
-        var options = {
-            partSize: me.bufferSize,
-            queueSize: 10
-        };
-        return new Promise((resolve, reject) => {
-            me.s3.upload(params, options, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        const command = new me.aws.PutObjectCommand(uploadParams);
+        const response = await me.s3Client.send(command);
+        return response;
     };
-    me.downloadData = function (url) {
+    me.downloadData = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
-        var params = {
+        const downloadParams = {
             Bucket: bucketName,
             Key: path
         };
-        return core.util.performance(me.id + ": " + url, () => {
-            return new Promise((resolve, reject) => {
-                me.s3.getObject(params, function (err, data) {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        resolve(data.Body.toString());
-                    }
-                });
-            });
-        });
+        const command = new me.aws.GetObjectCommand(downloadParams);
+        const response = await me.s3Client.send(command);
+        return response.Body.toString();
     };
-    me.copyFile = function (from, to) {
+    me.copyFile = async function (from, to) {
         const [fromBucketName, fromPath] = me.parseUrl(from);
         const [toBucketName, toPath] = me.parseUrl(to);
-        var params = {
+        const copyParams = {
             Bucket: toBucketName,
-            CopySource: fromBucketName + "/" + fromPath,
+            CopySource: `/${fromBucketName}/${fromPath}`,
             Key: toPath
         };
-        return new Promise((resolve, reject) => {
-            me.s3.copyObject(params, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        const command = new me.aws.CopyObjectCommand(copyParams);
+        const response = await me.s3Client.send(command);
+        return response;
     };
-    me.moveFile = function (from, to) {
+    me.moveFile = async function (from, to) {
         const [fromBucketName, fromPath] = me.parseUrl(from);
         const [toBucketName, toPath] = me.parseUrl(to);
-        var params = {
+        const copyParams = {
             Bucket: toBucketName,
-            CopySource: encodeURIComponent(fromBucketName + "/" + fromPath),
+            CopySource: encodeURIComponent(`/${fromBucketName}/${fromPath}`),
             Key: toPath
         };
-        return new Promise((resolve, reject) => {
-            me.s3.copyObject(params, async function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    await me.deleteFile(from);
-                    resolve(data);
-                }
-            });
-        });
+        const copyCommand = new me.aws.CopyObjectCommand(copyParams);
+        const copyResponse = await me.s3Client.send(copyCommand);
+        const deleteParams = {
+            Bucket: fromBucketName,
+            Key: fromPath
+        };
+        const deleteCommand = new me.aws.DeleteObjectCommand(deleteParams);
+        await me.s3Client.send(deleteCommand);
+        return copyResponse;
     };
-    me.deleteFile = function (url) {
+    me.deleteFile = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
-        var params = {
+        const deleteParams = {
             Bucket: bucketName,
             Key: path
         };
-        return new Promise((resolve, reject) => {
-            me.s3.deleteObject(params, function (err, data) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        });
+        const command = new me.aws.DeleteObjectCommand(deleteParams);
+        const response = await me.s3Client.send(command);
+        return response;
     };
     me.metadata = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
@@ -172,26 +132,27 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                 name: bucketName
             };
         }
-        var params = {
+        const headParams = {
             Bucket: bucketName,
             Key: path
         };
+        const command = new me.aws.HeadObjectCommand(headParams);
         try {
-            const data = await me.s3.headObject(params).promise();
+            const response = await me.s3Client.send(command);
             return {
-                type: data.ContentType,
+                type: response.ContentType,
                 name,
-                size: data.ContentLength,
-                date: data.LastModified.valueOf()
+                size: response.ContentLength,
+                date: response.LastModified.valueOf()
             };
-        }
-        catch (err) {
-            const params = {
+        } catch (err) {
+            const listParams = {
                 Bucket: bucketName,
                 Delimiter: "/",
-                ...path && { Prefix: path + "/" }
+                ...(path && { Prefix: path + "/" })
             };
-            const result = await me.s3.listObjects(params).promise();
+            const command = new me.aws.ListObjectsCommand(listParams);
+            const result = await me.s3Client.send(command);
             if (result.Contents.length > 0 || result.CommonPrefixes.length > 0) {
                 return {
                     type: "application/x-directory",
@@ -207,55 +168,59 @@ screens.storage.aws = function StorageAWS(me, { core }) {
     };
     me.list = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
-        const params = {
+        const listParams = {
             Bucket: bucketName,
             Delimiter: "/",
-            ...path && { Prefix: path + "/" }
+            ...(path && { Prefix: path + "/" })
         };
         if (!bucketName) {
-            const result = await me.s3.listBuckets({}).promise();
+            const result = await me.s3Client.listBuckets({});
             var buckets = [];
-            result.Buckets.forEach(function (element) {
-                buckets.push({
-                    name: element.Name,
-                    type: "bucket"
+            if (result && result.Buckets) {
+                result.Buckets.forEach(function (element) {
+                    buckets.push({
+                        name: element.Name,
+                        type: "bucket"
+                    });
                 });
-            });
+            }
             return buckets;
         }
         const items = [];
-        for (; ;) {
-            const result = await me.s3.listObjects(params).promise();
-            result.CommonPrefixes.forEach(prefix => {
-                const name = core.path.fileName(prefix.Prefix.substring(0, prefix.Prefix.length - 1), true);
-                items.push({
-                    type: "application/x-directory",
-                    name
+        let continuationToken;
+        do {
+            listParams.ContinuationToken = continuationToken;
+            const command = new me.aws.ListObjectsCommand(listParams);
+            const result = await me.s3Client.send(command);
+            if (result && result.CommonPrefixes) {
+                result.CommonPrefixes.forEach(prefix => {
+                    const name = core.path.fileName(prefix.Prefix.substring(0, prefix.Prefix.length - 1), true);
+                    items.push({
+                        type: "application/x-directory",
+                        name
+                    });
                 });
-            });
-            result.Contents.forEach(content => {
-                const folder = core.path.folderPath(content.Key);
-                if (path !== folder) {
-                    return;
-                }
-                const name = core.path.fileName(content.Key, true);
-                if (!name) {
-                    return;
-                }
-                items.push({
-                    type: content.ContentType,
-                    name,
-                    size: content.ContentLength,
-                    date: content.LastModified.valueOf()
+            }
+            if (result && result.Contents) {
+                result.Contents.forEach(content => {
+                    const folder = core.path.folderPath(content.Key);
+                    if (path !== folder) {
+                        return;
+                    }
+                    const name = core.path.fileName(content.Key, true);
+                    if (!name) {
+                        return;
+                    }
+                    items.push({
+                        type: content.ContentType,
+                        name,
+                        size: content.Size,
+                        date: content.LastModified.valueOf()
+                    });
                 });
-            });
-            if (result.IsTruncated && result.NextMarker) {
-                params.Marker = result.NextMarker;
             }
-            else {
-                break;
-            }
-        }
+            continuationToken = result.NextContinuationToken;
+        } while (continuationToken);
         return items;
     };
     me.url = function (path) {
