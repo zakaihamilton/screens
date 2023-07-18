@@ -4,7 +4,6 @@
  */
 
 screens.storage.aws = function StorageAWS(me, { core }) {
-    me.bufferSize = 10 * 1024 * 1024;
     me.init = async function () {
         me.aws = require("@aws-sdk/client-s3");
         const { createReadStream, createWriteStream } = require("fs");
