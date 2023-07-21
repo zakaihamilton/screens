@@ -108,43 +108,58 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
             file.label = core.string.title(core.path.fileName(file.name));
             Object.assign(file, media.sessions.paths(group, file.name));
             let deleteFile = false;
+            let downloadFile = false;
+            let uploadFile = false;
+            let retriveMetadata = file.local.endsWith(".m4a") && (!file.duration || !file.durationText);
+            if (retriveMetadata) {
+                downloadFile = true;
+            }
             if (!await storage.aws.exists(file.aws)) {
-                let uploadSourcePath = file.local;
-                me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);
-                await manager.file.download(file.remote, file.local);
-                deleteFile = true;
-                /*if (file.local.endsWith(".m4a")) {
-                    uploadSourcePath = file.session + "_tmp.m4a";
-                    try {
-                        await media.ffmpeg.convert(file.local, uploadSourcePath, {});
-                    }
-                    catch (err) {
-                        me.log_error("Cannot convert: " + file.local + " error: " + err);
-                        uploadSourcePath = file.local;
-                    }
-                }*/
-                me.log("Uploading file: " + file.local + ", size: " + file.size);
-                await storage.aws.uploadFile(uploadSourcePath, file.aws);
-                me.log("Finished uploading file: " + file.local);
-                if (uploadSourcePath !== file.local) {
-                    await core.file.delete(uploadSourcePath);
+                downloadFile = true;
+                uploadFile = true;
+            }
+            console.log("managing file: " + file.local + "download: " + downloadFile + " upload: " + uploadFile + "retriveMetadata: " + retriveMetadata);
+            if (downloadFile) {
+                try {
+                    me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);
+                    await manager.file.download(file.remote, file.local);
+                    me.log("downloaded file", file.local);
+                    deleteFile = true;
+                }
+                catch (err) {
+                    console.error("error downloading file: " + file.local + " error: " + err);
+                    throw err;
                 }
             }
-            if (file.local.endsWith(".m4a")) {
-                if (!file.duration || !file.durationText) {
-                    me.log("Downloading file: " + file.local + ", size: " + file.size);
-                    await storage.aws.downloadFile(file.aws, file.local);
-                    deleteFile = true;
-                    me.log("Retrieving metadata for file: " + file.local);
+            if (uploadFile) {
+                try {
+                    let uploadSourcePath = file.local;
+                    me.log("Uploading file: " + file.local + ", size: " + file.size);
+                    await storage.aws.uploadFile(uploadSourcePath, file.aws);
+                    me.log("Uploaded file: " + uploadSourcePath);
+                    result = true;
+                }
+                catch (err) {
+                    console.error("error uploading file: " + file.local + " error: " + err);
+                    throw err;
+                }
+            }
+            if (retriveMetadata) {
+                me.log("Retrieving metadata for file: " + file.local);
+                try {
                     var metadata = await me.info(file.local);
                     if (metadata) {
                         if (metadata.format && metadata.format.duration) {
                             file.duration = metadata.format.duration;
                             file.durationText = core.string.formatDuration(file.duration);
-                            result = true;
                             me.log("Found metadata for file: " + file.local + " duration: " + file.durationText);
+                            result = true;
                         }
                     }
+                }
+                catch (err) {
+                    console.error("error retrieving metadata for file: " + file.local + " error: " + err);
+                    throw err;
                 }
             }
             if (deleteFile) {
