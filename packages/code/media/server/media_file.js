@@ -118,7 +118,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                 downloadFile = true;
                 uploadFile = true;
             }
-            console.log("managing file: " + file.local + "download: " + downloadFile + " upload: " + uploadFile + "retriveMetadata: " + retriveMetadata);
+            console.log("managing file: " + file.local + " download: " + downloadFile + " upload: " + uploadFile + " retriveMetadata: " + retriveMetadata);
             if (downloadFile) {
                 try {
                     me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);

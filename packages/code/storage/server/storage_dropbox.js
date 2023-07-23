@@ -128,15 +128,13 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         return result;
     };
     me.downloadFile = async function (from, to) {
-        var path = me.fixPath(from);
-        return new Promise(async (resolve, reject) => {
-            var service = await me.getService();
-            var { result } = await service.filesGetTemporaryLink({
-                path
-            });
-            const req = me.https.get(result.link, res => {
-                res.pipe(me.fs.createWriteStream(to));
-            });
+        const path = me.fixPath(from);
+        const service = await me.getService();
+        const { result } = await service.filesGetTemporaryLink({ path });
+        const req = me.https.get(result.link, (res) => {
+            res.pipe(me.fs.createWriteStream(to));
+        });
+        return new Promise((resolve, reject) => {
             req.on("close", resolve);
             req.on("error", reject);
         });
