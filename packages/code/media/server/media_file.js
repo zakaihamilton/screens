@@ -140,7 +140,7 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                     me.log("Uploading file: " + file.local + ", size: " + file.size);
                     await storage.aws.uploadFile(file.local, file.aws);
                     me.log("Uploaded file: " + file.local);
-                    const metadata = await storage.dropbox.metadata(file.aws);
+                    const metadata = await storage.aws.metadata(file.aws);
                     if (metadata.size !== file.size) {
                         throw new Error("file size mismatch between size " + metadata.size + " and " + file.size + " for file: " + file.aws);
                     }
