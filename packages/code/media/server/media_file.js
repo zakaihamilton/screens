@@ -123,6 +123,10 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
                 try {
                     me.log("Downloading file: '" + file.local + "' remote: '" + file.remote + "' size: " + file.size);
                     await manager.file.download(file.remote, file.local);
+                    const size = await core.file.size(file.local);
+                    if (size !== file.size) {
+                        throw new Error("file size mismatch between size " + size + " and " + file.size + " for file: " + file.local);
+                    }
                     me.log("downloaded file", file.local);
                     deleteFile = true;
                 }
@@ -133,10 +137,13 @@ screens.media.file = function MediaFile(me, { core, storage, media, db, manager,
             }
             if (uploadFile) {
                 try {
-                    let uploadSourcePath = file.local;
                     me.log("Uploading file: " + file.local + ", size: " + file.size);
-                    await storage.aws.uploadFile(uploadSourcePath, file.aws);
-                    me.log("Uploaded file: " + uploadSourcePath);
+                    await storage.aws.uploadFile(file.local, file.aws);
+                    me.log("Uploaded file: " + file.local);
+                    const metadata = await storage.dropbox.metadata(file.aws);
+                    if (metadata.size !== file.size) {
+                        throw new Error("file size mismatch between size " + metadata.size + " and " + file.size + " for file: " + file.aws);
+                    }
                     result = true;
                 }
                 catch (err) {
