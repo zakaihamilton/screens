@@ -62,22 +62,45 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         var folderRef = service.filesCreateFolder({ path: path, autorename: false });
         return folderRef;
     };
-    me.downloadData = async function (path) {
-        var service = await me.getService();
-        path = me.fixPath(path);
-        var { result } = await service.filesGetTemporaryLink({ path: path });
-        var body = "";
+    me.downloadFile = async function (from, to) {
+        const path = me.fixPath(from);
+        const service = await me.getService();
+        const { result } = await service.filesGetTemporaryLink({ path });
+        const url = result.link;
+
         return new Promise((resolve, reject) => {
-            me.https.get(result.link, res => {
-                res.on("data", function (chunk) {
-                    body += chunk;
+            const req = me.https.get(url, (res) => {
+                const totalSize = parseInt(res.headers["content-length"]);
+                let downloadedSize = 0;
+
+                if (res.statusCode !== 200) {
+                    reject(new Error("Failed to download file: " + from + ", status code: " + res.statusCode));
+                    return;
+                }
+
+                const writeStream = me.fs.createWriteStream(to);
+
+                res.on("data", (chunk) => {
+                    downloadedSize += chunk.length;
+                    // Progress tracking: Calculate percentage and display progress
+                    const progress = (downloadedSize / totalSize) * 100;
+                    console.log("Downloading: " + progress.toFixed(2) + "%");
                 });
-                res.on("close", function () {
-                    resolve(body);
+
+                res.pipe(writeStream);
+
+                writeStream.on("finish", () => {
+                    console.log("Download completed");
+                    resolve();
                 });
-                res.on("error", function (e) {
-                    reject(e);
+
+                writeStream.on("error", (err) => {
+                    reject(new Error("Failed to write file: " + to + ", error: " + err.message));
                 });
+            });
+
+            req.on("error", (err) => {
+                reject(new Error("Failed to download file: " + from + ", error: " + err.message));
             });
         });
     };
