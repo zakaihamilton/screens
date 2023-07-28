@@ -70,13 +70,13 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
 
         return new Promise((resolve, reject) => {
             const req = me.https.get(url, (res) => {
-                const totalSize = parseInt(res.headers["content-length"]);
-                let downloadedSize = 0;
-
-                if (res.statusCode !== 200) {
+                if (res.statusCode !== 200 && res.statusCode !== 206) {
                     reject(new Error("Failed to download file: " + from + ", status code: " + res.statusCode));
                     return;
                 }
+
+                const totalSize = parseInt(res.headers["content-length"]);
+                let downloadedSize = 0;
 
                 const writeStream = me.fs.createWriteStream(to);
 
@@ -87,21 +87,31 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                     console.log("Downloading: " + progress.toFixed(2) + "%");
                 });
 
-                res.pipe(writeStream);
-
-                writeStream.on("finish", () => {
+                res.on("end", () => {
                     console.log("Download completed");
+                    writeStream.end(); // Close the write stream after download is complete
                     resolve();
                 });
 
-                writeStream.on("error", (err) => {
-                    reject(new Error("Failed to write file: " + to + ", error: " + err.message));
+                res.on("error", (err) => {
+                    writeStream.end(); // Close the write stream on error
+                    reject(new Error("Failed to download file: " + from + ", error: " + err.message));
                 });
+
+                res.pipe(writeStream);
             });
 
             req.on("error", (err) => {
                 reject(new Error("Failed to download file: " + from + ", error: " + err.message));
             });
+
+            // Add a timeout to prevent the process from hanging indefinitely
+            req.setTimeout(30000, () => {
+                req.abort();
+                reject(new Error("Download timed out"));
+            });
+
+            req.end(); // Initiate the request
         });
     };
     me.uploadData = async function (path, data) {
