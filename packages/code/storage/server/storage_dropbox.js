@@ -69,16 +69,23 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         const url = result.link;
 
         return new Promise((resolve, reject) => {
-            const req = me.https.get(url, (res) => {
+            let downloadedSize = 0;
+            let totalSize = 0;
+
+            const writeStream = me.fs.createWriteStream(to);
+
+            const req = me.https.get(url, { method: "GET" }, (res) => {
                 if (res.statusCode !== 200 && res.statusCode !== 206) {
                     reject(new Error("Failed to download file: " + from + ", status code: " + res.statusCode));
                     return;
                 }
 
-                const totalSize = parseInt(res.headers["content-length"]);
-                let downloadedSize = 0;
-
-                const writeStream = me.fs.createWriteStream(to);
+                if (res.headers["content-range"]) {
+                    const contentRange = res.headers["content-range"].split("/");
+                    totalSize = parseInt(contentRange[1]);
+                } else {
+                    totalSize = parseInt(res.headers["content-length"]);
+                }
 
                 res.on("data", (chunk) => {
                     downloadedSize += chunk.length;
@@ -94,7 +101,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                 });
 
                 res.on("error", (err) => {
-                    writeStream.end(); // Close the write stream on error
+                    writeStream.end();
                     reject(new Error("Failed to download file: " + from + ", error: " + err.message));
                 });
 
@@ -102,12 +109,14 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
             });
 
             req.on("error", (err) => {
+                writeStream.end();
                 reject(new Error("Failed to download file: " + from + ", error: " + err.message));
             });
 
             // Add a timeout to prevent the process from hanging indefinitely
             req.setTimeout(30000, () => {
                 req.abort();
+                writeStream.end();
                 reject(new Error("Download timed out"));
             });
 
