@@ -71,6 +71,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
         return new Promise((resolve, reject) => {
             let downloadedSize = 0;
             let totalSize = 0;
+            let currentProgress = 0;
 
             const writeStream = me.fs.createWriteStream(to);
 
@@ -91,7 +92,10 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                     downloadedSize += chunk.length;
                     // Progress tracking: Calculate percentage and display progress
                     const progress = (downloadedSize / totalSize) * 100;
-                    console.log("Downloading: " + progress.toFixed(2) + "%");
+                    if (currentProgress < parseInt(progress.toFixed(0)) + 10) {
+                        console.log("Downloading: " + progress.toFixed(2) + "%");
+                        currentProgress = parseInt(progress.toFixed(0));
+                    }
                 });
 
                 res.on("end", () => {
