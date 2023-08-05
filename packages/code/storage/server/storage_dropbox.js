@@ -95,7 +95,7 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
                     if (!timerHandle) {
                         timerHandle = setTimeout(() => {
                             timerHandle = null;
-                            console.log(progress);
+                            console.log("Downloading: " + progress.toFixed(2) + "%");
                         }, 1000);
                     }
                 });
