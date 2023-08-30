@@ -41,9 +41,32 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             Body: me.createReadStream(from),
             ACL: "public-read"
         };
-        const command = new me.aws.PutObjectCommand(uploadParams);
-        const response = await me.s3Client.send(command);
-        return response;
+
+        console.log("uploading: " + from + " to: " + to);
+
+        let timerHandle = null;
+        const managedUpload = me.s3Client.upload(uploadParams);
+
+        managedUpload.on("httpUploadProgress", function (progress) {
+            const uploadedBytes = progress.loaded;
+            const totalBytes = progress.total;
+            const percentCompleted = (uploadedBytes / totalBytes) * 100;
+            if (!timerHandle) {
+                timerHandle = setTimeout(() => {
+                    timerHandle = null;
+                    console.log("Uploading: " + percentCompleted.toFixed(2) + "%");
+                }, 1000);
+            }
+        });
+
+        try {
+            const response = await managedUpload.promise();
+            console.log("Upload completed.");
+            return response;
+        } catch (error) {
+            console.error("Upload failed:", error);
+            throw error;
+        }
     };
     me.downloadFile = async function (from, to) {
         const [bucketName, path] = me.parseUrl(from);
