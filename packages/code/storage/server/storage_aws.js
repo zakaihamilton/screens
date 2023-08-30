@@ -44,13 +44,16 @@ screens.storage.aws = function StorageAWS(me, { core }) {
 
         console.log("uploading: " + from + " to: " + to);
 
+        const command = new me.aws.PutObjectCommand(uploadParams);
+
         let timerHandle = null;
-        const managedUpload = me.s3Client.upload(uploadParams);
+        const managedUpload = me.s3Client.send(command);
 
         managedUpload.on("httpUploadProgress", function (progress) {
             const uploadedBytes = progress.loaded;
             const totalBytes = progress.total;
             const percentCompleted = (uploadedBytes / totalBytes) * 100;
+
             if (!timerHandle) {
                 timerHandle = setTimeout(() => {
                     timerHandle = null;
@@ -60,7 +63,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
         });
 
         try {
-            const response = await managedUpload.promise();
+            const response = await managedUpload;
             console.log("Upload completed.");
             return response;
         } catch (error) {
