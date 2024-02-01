@@ -4,11 +4,12 @@
  */
 
 screens.core.module = function CoreModule(me, { core, db, cmd }) {
-    me.init = function () {
+    me.init = async function () {
         core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require("autoprefixer");
         me.postcss = require("postcss");
-        me.mime = require("mime");
+        const { default: mime } = await import("mime");
+        me.mime = mime;
         me.cache = {};
     };
     me.path_file_to_component = function (filePath) {
