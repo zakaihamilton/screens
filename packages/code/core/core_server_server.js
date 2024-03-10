@@ -26,7 +26,7 @@ screens.core.server = function CoreServer(me) {
     me.run = async function (cmd) {
         me.log("running: " + cmd);
         return new Promise((resolve, reject) => {
-            me.cmd.get(cmd, (err, data) => {
+            me.cmd.run(cmd, (err, data) => {
                 if (err) {
                     reject(err);
                 }
