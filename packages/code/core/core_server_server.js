@@ -46,7 +46,7 @@ screens.core.server = function CoreServer(me) {
         await me.run("git checkout package.json");
         await me.run("git pull");
         await me.run("npm install");
-        await me.run("pm2 reload all");
+        await me.run("pm2 reload all --force");
     };
     me.ip = function () {
         const net = require("net");
