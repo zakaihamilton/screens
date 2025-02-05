@@ -10,7 +10,7 @@ screens.gen.short = function genShorts(me, { core }) {
         me.ffmpeg.setFfprobePath(ffprobePath);
         me.path = require("path");
         me.createCanvas = require("canvas").createCanvas;
-        me.fs = require("fs/promises");
+        me.fs = require("fs");
         me.util = require("util");
         me.exec = me.util.promisify(require("child_process").exec);
         core.property.link("core.http.receive", "gen.short.receive", true);
@@ -18,12 +18,12 @@ screens.gen.short = function genShorts(me, { core }) {
     };
 
     me.generate = async function (seed = 0) {
-        const width = 256;
-        const height = 256;
+        const width = 512;
+        const height = 512;
         const fps = 30;
-        const duration = 5;
+        const duration = 10;
         const totalFrames = fps * duration;
-        const maxSquares = 20;
+        const maxSquares = 50;
 
         seed = seed || Math.floor(Date.now() % 1000) + 1;
 
@@ -32,11 +32,14 @@ screens.gen.short = function genShorts(me, { core }) {
         const videoPath = me.path.join("cache", "video", seed.toString() + ".mp4");
 
         try {
-            await me.fs.rm(frameDir, { recursive: true, force: true }).catch(() => { });
-            await me.fs.unlink(videoPath).catch(() => { });
+            await me.fs.promises.rm(frameDir, { recursive: true, force: true }).catch(() => { });
+            if (me.fs.existsSync(videoPath)) {
+                console.log(`Video already exists: ${videoPath}`);
+                return videoPath;
+            }
 
-            await me.fs.mkdir(videoFolder, { recursive: true });
-            await me.fs.mkdir(frameDir, { recursive: true });
+            await me.fs.promises.mkdir(videoFolder, { recursive: true });
+            await me.fs.promises.mkdir(frameDir, { recursive: true });
 
             const framePromises = [];
             for (let frameNum = 0; frameNum < totalFrames; frameNum++) {
@@ -65,10 +68,10 @@ screens.gen.short = function genShorts(me, { core }) {
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error("Error creating video:", error);
-            await me.fs.rm(frameDir, { recursive: true, force: true }).catch(() => { });
-            await me.fs.unlink(videoPath).catch(() => { });
+            await me.fs.promises.rm(frameDir, { recursive: true, force: true }).catch(() => { });
+            await me.fs.promises.unlink(videoPath).catch(() => { });
         } finally {
-            await me.fs.rm(frameDir, { recursive: true, force: true }).catch(() => { });
+            await me.fs.promises.rm(frameDir, { recursive: true, force: true }).catch(() => { });
         }
     };
 
@@ -86,15 +89,15 @@ screens.gen.short = function genShorts(me, { core }) {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, width, height);
 
-        const prng = me.mulberry32(seed); // Seed only for consistent color
-        const color = me.getColor(seed); // Single color per video
+        const prng = me.mulberry32(seed);
+        const color = me.getColor(seed);
 
         let squaresAnimated = 0;
 
         for (let y = 0; y < numSquaresY; y++) {
             for (let x = 0; x < numSquaresX; x++) {
                 if (prng() < 0.1 && squaresAnimated < maxSquares) {
-                    const cellPrng = me.mulberry32(seed + x * 100 + y * 1000); // PRNG for cell movement
+                    const cellPrng = me.mulberry32(seed + x * 100 + y * 1000);
 
                     const directionX = cellPrng() < 0.5 ? 1 : -1;
                     const directionY = cellPrng() < 0.5 ? 1 : -1;
@@ -103,7 +106,7 @@ screens.gen.short = function genShorts(me, { core }) {
                     const offsetY = Math.floor(Math.cos((frameNum + x * 3 + y * 2 + cellPrng() * 1000) * 0.1 * directionY)) * squareHeight;
 
                     const drawX = x * squareWidth + offsetX;
-                    const drawY = y * squareHeight + offsetY;
+                    const drawY = (y + 3) * squareHeight + offsetY;
 
                     ctx.fillStyle = color; // Use the single video color
                     ctx.fillRect(drawX, drawY, squareWidth, squareHeight);
@@ -118,9 +121,10 @@ screens.gen.short = function genShorts(me, { core }) {
 
     me.getColor = function (combinedSeed) {
         const prng = me.mulberry32(combinedSeed);
-        const r = Math.floor(prng() * 256);
-        const g = Math.floor(prng() * 256);
-        const b = Math.floor(prng() * 256);
+        const minVal = 150; // Minimum value for R, G, B (adjust as needed)
+        const r = Math.floor(prng() * (256 - minVal)) + minVal;
+        const g = Math.floor(prng() * (256 - minVal)) + minVal;
+        const b = Math.floor(prng() * (256 - minVal)) + minVal;
         return `rgb(${r}, ${g}, ${b})`;
     };
 
@@ -136,7 +140,7 @@ screens.gen.short = function genShorts(me, { core }) {
     me.createAndSaveFrame = async function (frameDir, seed, frameNum, width, height, maxSquares) {
         const canvas = me.createFrame(seed, frameNum, width, height, maxSquares);
         const buffer = canvas.toBuffer("image/png");
-        await me.fs.writeFile(`${frameDir}/frame_${frameNum.toString().padStart(4, "0")}.png`, buffer);
+        await me.fs.promises.writeFile(`${frameDir}/frame_${frameNum.toString().padStart(4, "0")}.png`, buffer);
     };
 
     me.receive = async function (info) {
