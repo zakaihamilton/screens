@@ -44,8 +44,22 @@ screens.gen.short = function genShorts(me, { core }) {
             }
             await Promise.all(framePromises);
 
-            const ffmpegCommand = `ffmpeg -framerate ${fps} -i ${frameDir}/frame_%04d.png -c:v libx264 -pix_fmt yuv420p ${videoPath}`;
-            await me.exec(ffmpegCommand);
+            await new Promise((resolve, reject) => {
+                me.ffmpeg()
+                    .input(`${frameDir}/frame_%04d.png`)
+                    .inputOptions([`-framerate ${fps}`])
+                    .videoCodec("libx264")
+                    .output(videoPath)
+                    .on("end", () => {
+                        console.log(`Video created successfully: ${videoPath}`);
+                        resolve();
+                    })
+                    .on("error", (err) => {
+                        console.error(`Error creating video: ${err.message}`);
+                        reject();
+                    })
+                    .run();
+            });
 
             return videoPath;
         } catch (error) {
