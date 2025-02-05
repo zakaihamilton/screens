@@ -20,8 +20,8 @@ screens.gen.short = function genShorts(me, { core }) {
     me.generate = async function (seed = 0) {
         const width = 512;
         const height = 512;
-        const fps = 30;
-        const duration = 10;
+        const fps = 5;
+        const duration = 20;
         const totalFrames = fps * duration;
         const maxSquares = 50;
 
