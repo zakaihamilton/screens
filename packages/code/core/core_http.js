@@ -64,6 +64,7 @@ screens.core.http = function CoreHttp(me, { core, db }) {
         var port = me.port;
         var requestHandler = function (request, response) {
             response.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+            response.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
             if (!secure && me.forwardUrl) {
                 response.writeHead(301, {
                     Location: me.forwardUrl + request.url
