@@ -172,14 +172,10 @@ screens.storage.aws = function StorageAWS(me, { core }) {
     };
     me.list = async function (url) {
         const [bucketName, path] = me.parseUrl(url);
-        const listParams = {
-            Bucket: bucketName,
-            Delimiter: "/",
-            ...(path && { Prefix: path + "/" })
-        };
+
         if (!bucketName) {
             const result = await me.s3Client.listBuckets({});
-            var buckets = [];
+            const buckets = [];
             if (result && result.Buckets) {
                 result.Buckets.forEach(function (element) {
                     buckets.push({
@@ -190,12 +186,23 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             }
             return buckets;
         }
+
+        const listParams = {
+            Bucket: bucketName,
+            Delimiter: "/",
+            ...(path && { Prefix: path + "/" })
+        };
+
         const items = [];
         let continuationToken;
+
         do {
-            listParams.ContinuationToken = continuationToken;
-            const command = new me.aws.ListObjectsCommand(listParams);
+            if (continuationToken) {
+                listParams.ContinuationToken = continuationToken;
+            }
+            const command = new me.aws.ListObjectsV2Command(listParams);
             const result = await me.s3Client.send(command);
+
             if (result && result.CommonPrefixes) {
                 result.CommonPrefixes.forEach(prefix => {
                     const name = core.path.fileName(prefix.Prefix.substring(0, prefix.Prefix.length - 1), true);
@@ -205,12 +212,9 @@ screens.storage.aws = function StorageAWS(me, { core }) {
                     });
                 });
             }
+
             if (result && result.Contents) {
                 result.Contents.forEach(content => {
-                    const folder = core.path.folderPath(content.Key);
-                    if (path !== folder) {
-                        return;
-                    }
                     const name = core.path.fileName(content.Key, true);
                     if (!name) {
                         return;
@@ -225,6 +229,7 @@ screens.storage.aws = function StorageAWS(me, { core }) {
             }
             continuationToken = result.NextContinuationToken;
         } while (continuationToken);
+
         return items;
     };
     me.url = function (path) {
