@@ -10,6 +10,11 @@
     -webkit-user-drag: none;
     touch-action: none;
     background-color: var(--desktop);
+    z-index: -1;
+}
+
+body.logged-in .widget-desktop-container {
+    z-index: 0;
 }
 
 .widget-desktop-background {
@@ -70,8 +75,11 @@ body {
     background-color: rgb(10, 10, 10, 0.5);
 }
 
-@media screen and (min-width: 1000px), print {
-    .modal-card, .modal-content {
+@media screen and (min-width: 1000px),
+print {
+
+    .modal-card,
+    .modal-content {
         width: 95%;
     }
 }
@@ -101,7 +109,8 @@ body {
     background-color: var(--background);
 }
 
-.table td.is-dark, .table th.is-dark {
+.table td.is-dark,
+.table th.is-dark {
     border-color: var(--border-color);
 }
 

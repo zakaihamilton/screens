@@ -38,6 +38,12 @@ screens.widget.desktop = function WidgetDesktop(me, { core, ui }) {
             ]
         }
     };
+    me.init = function () {
+        core.listener.register(me.signin, core.login.id);
+    };
+    me.signin = function () {
+        document.body.classList.add("logged-in");
+    };
     me.reload = function () {
         ui.modal.launch("question", {
             "title": "Reload",
