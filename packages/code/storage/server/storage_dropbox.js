@@ -16,7 +16,16 @@ screens.storage.dropbox = function StorageDropBox(me, { core }) {
             return me.handle;
         }
         var fetch = require("isomorphic-fetch");
-        me.handle = new me.dropbox({ accessToken: me.keys["access-token"], fetch: fetch });
+        if (!me.keys["refresh-token"] || !me.keys["app-key"] || !me.keys["app-secret"]) {
+            console.error("Dropbox keys are not configured for the refresh token flow.");
+            throw new Error("Missing Dropbox app-key, app-secret, or refresh-token.");
+        }
+        me.handle = new me.dropbox({
+            refreshToken: me.keys["refresh-token"],
+            clientId: me.keys["app-key"],
+            clientSecret: me.keys["app-secret"],
+            fetch: fetch
+        });
         return me.handle;
     };
     me.fixPath = function (path) {
